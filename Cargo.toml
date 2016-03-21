@@ -1,0 +1,12 @@
+[package]
+description = "Base Package for all parity webapplications"
+name = "parity-webapp"
+version = "0.1.0"
+license = "GPL-3.0"
+authors = ["Ethcore <admin@ethcore.io"]
+
+[dependencies]
+clippy = { version = "0.0.54", optional = true }
+
+[features]
+dev = ["clippy"]
