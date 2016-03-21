@@ -3,7 +3,7 @@ use std::default::Default;
 #[derive(Clone)]
 pub struct File {
 	pub path: &'static str,
-	pub content: &'static str,
+	pub content: &'static [u8],
 	pub content_type: &'static str,
 }
 
