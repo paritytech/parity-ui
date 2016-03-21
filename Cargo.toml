@@ -6,4 +6,4 @@ license = "GPL-3.0"
 authors = ["Ethcore <admin@ethcore.io"]
 
 [dependencies]
-parity-webapp = { path = "../parity-webapp" }
+parity-webapp = { git = "https://github.com/tomusdrw/parity-webapp.git" }
