@@ -19,21 +19,20 @@ write(`/// This file is generated. Do not edit it by hand.`);
 write(`extern crate parity_webapp;`);
 write('');
 write('use std::default::Default;');
+write('use std::collections::HashMap;');
 write('use parity_webapp::WebApp;');
 write('use parity_webapp::File;');
 
 write('');
 // generate structure
 write(`pub struct ${name} {`);
-write(files.map(safeName).map((f) => `  ${f}: File,`).join('\n'))
+write(`  files: HashMap<&'static str, File>,`);
 write(`}`);
 write('');
 // generate implementation
 write(`impl WebApp for ${name} {`);
-write(`  fn files(&self) -> Vec<&File> {`);
-write(`    vec![`);
-write(`    ` + files.map(safeName).map((f) => `&self.${f}`).join(',\n'));
-write(`    ]`);
+write(`  fn file(&self, path: &str) -> Option<&File> {`);
+write(`    self.files.get(path)`);
 write(`  }`);
 write(`}`);
 write('');
@@ -51,23 +50,31 @@ write(files.map((f) => {
 // generate default
 write(`impl Default for ${name} {`);
 write(`  fn default() -> Self {`);
-write(`  ${name} {`);
-write(files.map((f) => {
-  const safe = safeName(f);
-  const type = contentType(f);
-  let content = "";
-
-  if (!isBinaryType(type)) {
-    content = `include_str!("./web/${f}").as_bytes()`;
-  } else {
-    content = `&CONST_${safe.toUpperCase()}`;
-  }
-  return ` ${safe}: File { path: "${f}", content_type: "${type}", content: ${content} },`;
-}).join('\n'));
-write(`  }`);
+write(`    let files = {`);
+write(`      let mut files = HashMap::new();`);
+write(fillFiles(files).map((f) => `      ${f}`).join('\n'));
+write(`      files`);
+write(`    };`);
+write(`    ${name} {`);
+write(`      files: files,`);
+write(`    }`);
 write(`  }`);
 write(`}`);
-write('');
+
+function fillFiles(files) {
+  return files.map((f) => {
+    const safe = safeName(f);
+    const type = contentType(f);
+    let content = "";
+
+    if (!isBinaryType(type)) {
+      content = `include_str!("./web/${f}").as_bytes()`;
+    } else {
+      content = `&CONST_${safe.toUpperCase()}`;
+    }
+    return `files.put("${f}", File { path: "${f}", content_type: "${type}", content: ${content} });`;
+  });
+}
 
 function readBinary(f) {
   return Array.from(fs.readFileSync(f).values());

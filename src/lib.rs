@@ -8,7 +8,7 @@ pub struct File {
 }
 
 pub trait WebApp : Default + Send + Sync {
-  fn files(&self) -> Vec<&File>;
+  fn file(&self, path: &str) -> Option<&File>;
 }
 
 #[cfg(test)]
