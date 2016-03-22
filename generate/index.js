@@ -72,7 +72,7 @@ function fillFiles(files) {
     } else {
       content = `&CONST_${safe.toUpperCase()}`;
     }
-    return `files.put("${f}", File { path: "${f}", content_type: "${type}", content: ${content} });`;
+    return `files.insert("${f}", File { path: "${f}", content_type: "${type}", content: ${content} });`;
   });
 }
 
