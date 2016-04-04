@@ -1,6 +1,6 @@
-var rucksack = require('rucksack-css')
-var webpack = require('webpack')
-var path = require('path')
+var rucksack = require('rucksack-css');
+var webpack = require('webpack');
+var path = require('path');
 
 module.exports = {
   context: path.join(__dirname, './client'),
@@ -11,7 +11,7 @@ module.exports = {
   },
   output: {
     path: path.join(__dirname, './static'),
-    filename: 'bundle.js',
+    filename: 'bundle.js'
   },
   module: {
     loaders: [
@@ -40,8 +40,8 @@ module.exports = {
           'react-hot',
           'babel-loader'
         ]
-      },
-    ],
+      }
+    ]
   },
   resolve: {
     extensions: ['', '.js', '.jsx']
@@ -61,4 +61,4 @@ module.exports = {
     contentBase: './client',
     hot: true
   }
-}
+};
