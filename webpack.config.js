@@ -2,19 +2,27 @@ var rucksack = require('rucksack-css');
 var webpack = require('webpack');
 var path = require('path');
 
+var ENV = process.env.NODE_ENV || 'development';
+
 module.exports = {
   context: path.join(__dirname, './client'),
   entry: {
-    jsx: './index.js',
-    html: './index.html',
-    vendor: ['react']
+    index: './index.js'
   },
   output: {
     path: path.join(__dirname, './static'),
-    filename: 'bundle.js'
+    filename: '[name].js'
   },
   module: {
     loaders: [
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        loaders: [
+          'react-hot', // TODO should be only in dev
+          'babel'
+        ]
+      },
       {
         test: /\.html$/,
         loader: 'file?name=[name].[ext]'
@@ -23,9 +31,9 @@ module.exports = {
         test: /\.css$/,
         include: /client/,
         loaders: [
-          'style-loader',
-          'css-loader?modules&sourceMap&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]',
-          'postcss-loader'
+          'style',
+          'css?modules&sourceMap&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]',
+          'postcss'
         ]
       },
       {
@@ -34,12 +42,16 @@ module.exports = {
         loader: 'style!css'
       },
       {
-        test: /\.(js|jsx)$/,
-        exclude: /node_modules/,
-        loaders: [
-          'react-hot',
-          'babel-loader'
-        ]
+        test: /\.(png|jpg|)$/,
+        loader: 'file-loader'
+      },
+      {
+        test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        loader: 'url-loader?limit=10000&mimetype=application/font-woff'
+      },
+      {
+        test: /\.(ttf|eot|svg|otf)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        loader: 'file-loader'
       }
     ]
   },
@@ -52,9 +64,13 @@ module.exports = {
     })
   ],
   plugins: [
-    new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.bundle.js'),
+    // TODO [todr] some png file is missing in dapp-styles package!
+    new webpack.NormalModuleReplacementPlugin(
+      /dapp-styles\/hex-grid-tile\.png$/,
+      require.resolve('dapp-styles/hex-grid-tile.png')
+    ),
     new webpack.DefinePlugin({
-      'process.env': { NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development') }
+      'process.env': { NODE_ENV: JSON.stringify(ENV) }
     })
   ],
   devServer: {
