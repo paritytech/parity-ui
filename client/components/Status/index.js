@@ -1,45 +1,86 @@
 
 import React, { Component, PropTypes } from 'react';
+import Box from '../Box';
 
 export default class Status extends Component {
+
+  renderNodeName () {
+    const { status } = this.props;
+    return (
+      <span>
+        {status.name || 'Node'}
+      </span>
+    );
+  }
+
+  renderSettings () {
+    const {status, settings} = this.props;
+    return (
+      <div className='row'>
+        <div className='col col-12'>
+          <h1>{this.renderNodeName()} <strong>settings</strong></h1>
+        </div>
+        <div className='col col-6'>
+          <h3>Chain</h3>
+          <input type='text' readOnly value={settings.chain} />
+          <h3>Peers</h3>
+          <input type='text' readOnly value={`${status.peers}/${settings.maxPeers}`} />
+          <h3>Network port</h3>
+          <input type='text' readOnly value={settings.networkPort} />
+        </div>
+        <div className='col col-6'>
+          <h3>RPC Enabled</h3>
+          <input type='text' readOnly value={settings.rpcEnabled} />
+          <h3>RPC Interface</h3>
+          <input type='text' readOnly value={settings.rpcInterface} />
+          <h3>RPC Port</h3>
+          <input type='text' readOnly value={settings.rpcPort} />
+        </div>
+      </div>
+    );
+  }
+
+  renderMiningDetails () {
+    const {mining} = this.props;
+
+    return (
+      <div className='row clear'>
+        <div className='col col-12'>
+          <h1><span>Mining</span> settings</h1>
+        </div>
+        <div className='col col-6'>
+          <h3>Author</h3>
+          <input type='text' readOnly value={mining.author} />
+          <h3>Extradata</h3>
+          <input type='text' readOnly value={mining.extraData} />
+        </div>
+        <div className='col col-6'>
+          <h3>Minimal Gas Price</h3>
+          <input type='text' readOnly value={mining.minGasPrice} />
+          <h3>Gas floor target</h3>
+          <input type='text' readOnly value={mining.gasFloorTarget} />
+        </div>
+      </div>
+    );
+  }
+
   render () {
+    const {status} = this.props;
+
     return (
       <div className='dapp-flex-content'>
         <main className='dapp-content'>
-          <div className='dapp-box'>
-            <h2>Best Block</h2>
-            <h1>#{this.props.status.bestBlock}</h1>
+
+          <div className='row clear'>
+            <div className='col col-12'>
+              <Box title='Best Block' value={`#${status.bestBlock}`} />
+              <Box title='Hash Rate' value={`${status.hashrate} H/s`} />
+            </div>
           </div>
-          <div className='dapp-box'>
-            <h2>Hash Rate</h2>
-            <h1><span>{this.props.status.hashrate}</span></h1>
-          </div>
-        </main>
 
-        <main className='dapp-content'>
-          Nodename:
-          Current:
-            Best Block
-            Hashrate
-            Peers
-            Pending Transactions
-            Version
-
-          Settings:
-            Chain
-            network:
-              Port
-              Peers
-            Rpc?
-              iface,port,cors,apis
-
-          Mining Settings:
-            Author
-            Extradata
-            mingasprice
-            gas floor target
-
-          Accounts:
+          {this.renderSettings()}
+          {this.renderMiningDetails()}
+          {/* this.renderAccounts()? */}
         </main>
       </div>
     );
@@ -47,8 +88,24 @@ export default class Status extends Component {
 }
 
 Status.propTypes = {
+  mining: PropTypes.objectOf({
+    author: PropTypes.string.isRequired,
+    extraData: PropTypes.string.isRequired,
+    minGasPrice: PropTypes.string.isRequired,
+    gasFloorTarget: PropTypes.string.isRequired
+  }).isRequired,
+  settings: PropTypes.objectOf({
+    chain: PropTypes.string.isRequired,
+    networkPort: PropTypes.number.isRequired,
+    maxPeers: PropTypes.number.isRequired,
+    rpcEnabled: PropTypes.bool.isRequired,
+    rpcInterface: PropTypes.string.isRequired,
+    rpcPort: PropTypes.number.isRequired
+  }).isRequired,
   status: PropTypes.objectOf({
+    name: PropTypes.string,
     bestBlock: PropTypes.string.isRequired,
-    hashrate: PropTypes.string.isRequired
-  })
+    hashrate: PropTypes.string.isRequired,
+    peers: PropTypes.number.isRequired
+  }).isRequired
 };

@@ -13,20 +13,20 @@ class App extends Component {
     return (
       <div className={style.normal}>
         <Header nodeName={this.props.status.name} />
-        <Status status={this.props.status} />
+        <Status {...this.props} />
         <Footer version={this.props.status.version} />
       </div>
     );
   }
 }
 App.propTypes = {
-  status: PropTypes.object.isRequired
+  status: PropTypes.object.isRequired,
+  settings: PropTypes.object.isRequired,
+  mining: PropTypes.object.isRequired
 };
 
 function mapStateToProps (state) {
-  return {
-    status: state.status
-  };
+  return state;
 }
 
 function mapDispatchToProps (dispatch) {
