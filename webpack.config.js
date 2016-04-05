@@ -42,6 +42,14 @@ module.exports = {
         loader: 'style!css'
       },
       {
+        test: /\.less$/,
+        loaders: [
+          'style',
+          'css',
+          'less'
+        ]
+      },
+      {
         test: /\.(png|jpg|)$/,
         loader: 'file-loader'
       },
@@ -64,7 +72,15 @@ module.exports = {
     })
   ],
   plugins: [
-    // TODO [todr] some png file is missing in dapp-styles package!
+    // TODO [todr] paths in dapp-styles is hardcoded for meteor, we need to rewrite it here
+    new webpack.NormalModuleReplacementPlugin(
+      /ethereum_dapp-styles/,
+      function (a) {
+        a.request = a.request.replace('./packages/ethereum_dapp-styles', '.');
+        a.request = a.request.replace('./lib/packages/ethereum_dapp-styles', '.');
+        return a;
+      }
+    ),
     new webpack.NormalModuleReplacementPlugin(
       /dapp-styles\/hex-grid-tile\.png$/,
       require.resolve('dapp-styles/hex-grid-tile.png')

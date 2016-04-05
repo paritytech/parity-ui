@@ -1,5 +1,5 @@
 import './index.html';
-import 'dapp-styles/dist/dapp-styles.css';
+import 'dapp-styles/dapp-styles.less';
 
 import { Router, Route, browserHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
