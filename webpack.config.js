@@ -95,6 +95,8 @@ module.exports = {
     ];
 
     if (isProd) {
+      plugins.push(new webpack.optimize.OccurrenceOrderPlugin(false));
+      plugins.push(new webpack.optimize.DedupePlugin());
       plugins.push(new webpack.optimize.UglifyJsPlugin({
         screwIe8: true,
         compress: {
