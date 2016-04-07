@@ -1,4 +1,5 @@
 
+import {Link} from 'react-router';
 import React, { Component, PropTypes } from 'react';
 
 export default class Header extends Component {
@@ -13,17 +14,24 @@ export default class Header extends Component {
         <nav>
           <ul>
             <li>
-              <a href='#' className='active'>
+              <Link to={'/'} activeClassName='active'>
                 <i className='icon-globe'></i>
                 <span>Status</span>
-              </a>
+              </Link>
             </li>
             <li>
-              <a href='#'>
+              <Link to={'/accounts'} activeClassName='active'>
                 <i className='icon-users'></i>
                 <span>Accounts</span>
-              </a>
+              </Link>
             </li>
+            <li>
+              <Link to={'/apps'} activeClassName='active'>
+                <i className='icon-grid'></i>
+                <span>Apps</span>
+              </Link>
+            </li>
+
           </ul>
         </nav>
       </header>
