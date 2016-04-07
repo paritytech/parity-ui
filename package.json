@@ -22,6 +22,7 @@
     "classnames": "^2.2.3",
     "css-loader": "^0.23.1",
     "file-loader": "^0.8.5",
+    "json-loader": "^0.5.4",
     "less": "^2.6.1",
     "less-loader": "^2.2.3",
     "postcss-loader": "^0.8.1",
@@ -43,7 +44,8 @@
     "webpack-hot-middleware": "^2.7.1"
   },
   "dependencies": {
-    "dapp-styles": "^0.2.2"
+    "dapp-styles": "^0.2.2",
+    "web3": "^0.15.3"
   },
   "config": {
     "pre-git": {

@@ -27,6 +27,10 @@ module.exports = {
         ]
       },
       {
+        test: /\.json$/,
+        loaders: ['json']
+      },
+      {
         test: /\.html$/,
         loader: 'file?name=[name].[ext]'
       },
@@ -109,6 +113,11 @@ module.exports = {
   }()),
   devServer: {
     contentBase: './client',
-    hot: !isProd
+    hot: !isProd,
+    proxy: {
+      '/rpc*': {
+        target: 'http://localhost:8545'
+      }
+    }
   }
 };

@@ -9,12 +9,18 @@ import * as TodoActions from '../../actions/todos';
 import style from './style.css';
 
 class App extends Component {
+
   render () {
+    const {status} = this.props;
+
     return (
       <div className={style.normal}>
-        <Header nodeName={this.props.status.name} />
+        <Header
+          nodeName={status.name}
+          error={status.error}
+        />
         <Status {...this.props} />
-        <Footer version={this.props.status.version} />
+        <Footer version={status.version} />
       </div>
     );
   }

@@ -1,0 +1,15 @@
+.title {
+  position: relative;
+  top: -8px;
+  left: -8px;
+}
+.title h1, .title h2 {
+  margin: 0;
+}
+.title h2 {
+  text-transform: none;
+  font-weight: 300;
+}
+.error {
+  color: #C20E25 !important;
+}

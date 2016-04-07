@@ -11,6 +11,7 @@ import App from './containers/App';
 import Accounts from './containers/Accounts';
 import AppList from './containers/AppList';
 import configure from './store';
+import {Web3Provider} from './provider/web3-provider';
 
 const store = configure();
 const history = syncHistoryWithStore(hashHistory, store);
@@ -25,3 +26,5 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('root')
 );
+
+new Web3Provider(store).start();

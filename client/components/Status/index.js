@@ -88,13 +88,13 @@ export default class Status extends Component {
 }
 
 Status.propTypes = {
-  mining: PropTypes.objectOf({
+  mining: PropTypes.shape({
     author: PropTypes.string.isRequired,
     extraData: PropTypes.string.isRequired,
     minGasPrice: PropTypes.string.isRequired,
     gasFloorTarget: PropTypes.string.isRequired
   }).isRequired,
-  settings: PropTypes.objectOf({
+  settings: PropTypes.shape({
     chain: PropTypes.string.isRequired,
     networkPort: PropTypes.number.isRequired,
     maxPeers: PropTypes.number.isRequired,
@@ -102,7 +102,7 @@ Status.propTypes = {
     rpcInterface: PropTypes.string.isRequired,
     rpcPort: PropTypes.number.isRequired
   }).isRequired,
-  status: PropTypes.objectOf({
+  status: PropTypes.shape({
     name: PropTypes.string,
     bestBlock: PropTypes.string.isRequired,
     hashrate: PropTypes.string.isRequired,

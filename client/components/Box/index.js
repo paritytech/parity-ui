@@ -27,5 +27,5 @@ export default class Box extends Component {
 Box.propTypes = {
   title: PropTypes.string.isRequired,
   value: PropTypes.string,
-  children: PropTypes.element.isRequired
+  children: PropTypes.element
 };

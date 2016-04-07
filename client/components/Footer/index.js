@@ -1,13 +1,14 @@
 
 import React, { Component, PropTypes } from 'react';
+import styles from './styles.css';
 
 export default class Footer extends Component {
 
   render () {
     return (
-      <footer className='dapp-content'>
+      <div className={styles.footer}>
         Powered by: {this.props.version}
-      </footer>
+      </div>
     );
   }
 }

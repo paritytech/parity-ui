@@ -1,15 +1,38 @@
 
 import {Link} from 'react-router';
 import React, { Component, PropTypes } from 'react';
+import style from './styles.css';
 
 export default class Header extends Component {
+
+  renderError () {
+    const {error} = this.props;
+    if (!error) {
+      return;
+    }
+
+    return (
+      <nav>
+        <ul>
+        <li>
+          <a className={style.error} disabled title={`${error}`}>
+            <i className='icon-power'></i>
+            <span>Offline</span>
+          </a>
+        </li>
+        </ul>
+      </nav>
+    );
+  }
+
   render () {
     return (
       <header className='dapp-header'>
-        <hgroup className='dapp-title'>
+        <hgroup className={style.title}>
           <h1><span>Status</span> <small>Page</small></h1>
           <h2>{this.props.nodeName}</h2>
         </hgroup>
+        {this.renderError()}
         <div className='dapp-flex-item'></div>
         <nav>
           <ul>
@@ -40,6 +63,7 @@ export default class Header extends Component {
 }
 
 Header.propTypes = {
-  nodeName: PropTypes.string.isRequired
+  nodeName: PropTypes.string.isRequired,
+  error: PropTypes.oneOfType([PropTypes.string, PropTypes.bool])
 };
 
