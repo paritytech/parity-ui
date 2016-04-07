@@ -3,8 +3,11 @@ var webpack = require('webpack');
 var path = require('path');
 
 var ENV = process.env.NODE_ENV || 'development';
+var isProd = ENV === 'production';
 
 module.exports = {
+  debug: !isProd,
+  cache: !isProd,
   context: path.join(__dirname, './client'),
   entry: {
     index: './index.js'
@@ -18,8 +21,8 @@ module.exports = {
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        loaders: [
-          'react-hot', // TODO should be only in dev
+        loaders: isProd ? ['babel'] : [
+          'react-hot',
           'babel'
         ]
       },
@@ -71,26 +74,39 @@ module.exports = {
       autoprefixer: true
     })
   ],
-  plugins: [
-    // TODO [todr] paths in dapp-styles is hardcoded for meteor, we need to rewrite it here
-    new webpack.NormalModuleReplacementPlugin(
-      /ethereum_dapp-styles/,
-      function (a) {
-        a.request = a.request.replace('./packages/ethereum_dapp-styles', '.');
-        a.request = a.request.replace('./lib/packages/ethereum_dapp-styles', '.');
-        return a;
-      }
-    ),
-    new webpack.NormalModuleReplacementPlugin(
-      /dapp-styles\/hex-grid-tile\.png$/,
-      require.resolve('dapp-styles/hex-grid-tile.png')
-    ),
-    new webpack.DefinePlugin({
-      'process.env': { NODE_ENV: JSON.stringify(ENV) }
-    })
-  ],
+  plugins: (function(){
+    var plugins = [
+      // TODO [todr] paths in dapp-styles is hardcoded for meteor, we need to rewrite it here
+      new webpack.NormalModuleReplacementPlugin(
+        /ethereum_dapp-styles/,
+        function (a) {
+          a.request = a.request.replace('./packages/ethereum_dapp-styles', '.');
+          a.request = a.request.replace('./lib/packages/ethereum_dapp-styles', '.');
+          return a;
+        }
+      ),
+      new webpack.NormalModuleReplacementPlugin(
+        /dapp-styles\/hex-grid-tile\.png$/,
+        require.resolve('dapp-styles/hex-grid-tile.png')
+      ),
+      new webpack.DefinePlugin({
+        'process.env': { NODE_ENV: JSON.stringify(ENV) }
+      })
+    ];
+
+    if (isProd) {
+      plugins.push(new webpack.optimize.UglifyJsPlugin({
+        screwIe8: true,
+        compress: {
+          warnings: false
+        }
+      }));
+    }
+
+    return plugins;
+  }()),
   devServer: {
     contentBase: './client',
-    hot: true
+    hot: !isProd
   }
 };
