@@ -74,7 +74,7 @@ module.exports = {
       autoprefixer: true
     })
   ],
-  plugins: (function(){
+  plugins: (function () {
     var plugins = [
       // TODO [todr] paths in dapp-styles is hardcoded for meteor, we need to rewrite it here
       new webpack.NormalModuleReplacementPlugin(
