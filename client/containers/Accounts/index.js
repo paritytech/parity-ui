@@ -10,7 +10,11 @@ class Accounts extends Component {
     return (
       <div className={style.normal}>
         <Header nodeName={this.props.status.name} />
-        <h1>Accounts</h1>
+        <div className='dapp-flex-content'>
+          <main className='dapp-content'>
+            <h1>Accounts</h1>
+          </main>
+        </div>
         <Footer version={this.props.status.version} />
       </div>
     );
