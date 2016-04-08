@@ -15,7 +15,9 @@ class AppList extends Component {
 
   componentDidMount () {
     // TODO [todr] move to state
-    fetch('/api/apps')
+    fetch('/api/apps', {
+      credentials: 'same-origin'
+    })
       .then((res) => res.json())
       .then((data) => this.setState({
         apps: data
