@@ -7,9 +7,7 @@ export class Web3Provider {
   constructor (store) {
     this.store = store;
     this.delay = 500;
-    this.web3 = new Web3(new Web3.providers.HttpProvider(
-      `http://${window.location.host}/rpc`
-    ));
+    this.web3 = new Web3(new Web3.providers.HttpProvider('/rpc/'));
   }
 
   onStart () {
