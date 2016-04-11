@@ -34,6 +34,13 @@ export default handleActions({
     };
   },
 
+  'update peerCount' (state, action) {
+    return {
+      ...state,
+      peers: `${action.payload}`
+    };
+  },
+
   'update version' (state, action) {
     return {
       ...resetError(state),

@@ -22,6 +22,20 @@ export const actionHandlers = {
       ...state,
       minGasPrice: `${action.payload}`
     };
+  },
+
+  'update gasFloorTarget' (state, action) {
+    return {
+      ...state,
+      gasFloorTarget: `${action.payload}`
+    };
+  },
+
+  'update extraData' (state, action) {
+    return {
+      ...state,
+      extraData: `${action.payload}`
+    };
   }
 
 };
