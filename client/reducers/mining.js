@@ -9,4 +9,12 @@ const initialState = {
 };
 
 export default handleActions({
+
+  'update address' (state, action) {
+    return {
+      ...state,
+      author: `${action.payload}`
+    };
+  }
+
 }, initialState);

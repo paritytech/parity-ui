@@ -1,6 +1,7 @@
 
 import Web3 from 'web3';
-import * as Actions from '../actions/status';
+import * as StatusActions from '../actions/status';
+import * as MiningActions from '../actions/mining';
 
 export class Web3Provider {
 
@@ -11,22 +12,32 @@ export class Web3Provider {
   }
 
   onStart () {
-    this.invoke(this.web3.version.getNode, Actions.updateVersion);
+    this.invoke(this.web3.version.getNode, StatusActions.updateVersion);
   }
 
   onTick () {
-    this.invoke(this.web3.eth.getHashrate, Actions.updateHashrate);
-    this.invoke(this.web3.eth.getBlockNumber, Actions.updateBlockNumber);
+    let p1 = this.invoke(this.web3.eth.getHashrate, StatusActions.updateHashrate);
+    let p2 = this.invoke(this.web3.eth.getBlockNumber, StatusActions.updateBlockNumber);
+    let p3 = this.getAddress();
+    return Promise.all([p1, p2, p3]).catch(() => {});
   }
 
   invoke (method, action) {
-    method((err, res) => {
-      if (err) {
-        this.store.dispatch(Actions.error(err));
-        return;
-      }
-      this.store.dispatch(action(res));
+    return new Promise((resolve, reject) => {
+      method((err, res) => {
+        if (err) {
+          this.store.dispatch(StatusActions.error(err));
+          reject(err);
+        } else {
+          this.store.dispatch(action(res));
+          resolve();
+        }
+      });
     });
+  }
+
+  getAddress () {
+    this.invoke(this.web3.eth.getCoinbase, MiningActions.updateAddress);
   }
 
   nextDelay () {
@@ -45,12 +56,14 @@ export class Web3Provider {
       if (!running) {
         return;
       }
-      that.onTick();
-      setTimeout(refresh, that.nextDelay());
+      that.onTick().then(() => {
+        setTimeout(refresh, that.nextDelay());
+      });
     }
 
     this.onStart();
     refresh();
     return () => running = false;
   }
+
 }
