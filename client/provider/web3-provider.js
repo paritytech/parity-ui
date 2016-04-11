@@ -16,28 +16,28 @@ export class Web3Provider {
   }
 
   onTick () {
-    let p1 = this.invoke(this.web3.eth.getHashrate, StatusActions.updateHashrate);
-    let p2 = this.invoke(this.web3.eth.getBlockNumber, StatusActions.updateBlockNumber);
-    let p3 = this.getAddress();
-    return Promise.all([p1, p2, p3]).catch(() => {});
+    return Promise.all([
+      this.invoke(this.web3.eth.getHashrate).then(StatusActions.updateHashrate),
+      this.invoke(this.web3.eth.getBlockNumber).then(StatusActions.updateBlockNumber),
+      this.invoke(this.web3.eth.getCoinbase).then(MiningActions.updateAddress),
+      this.invoke(this.web3.eth.getGasPrice).then(MiningActions.updateGasPrice)
+    ]).then((res) => {
+      res.map(this.store.dispatch);
+    }).catch((err) => {
+      this.store.dispatch(StatusActions.error(err));
+    });
   }
 
   invoke (method, action) {
     return new Promise((resolve, reject) => {
       method((err, res) => {
         if (err) {
-          this.store.dispatch(StatusActions.error(err));
           reject(err);
         } else {
-          this.store.dispatch(action(res));
-          resolve();
+          resolve(res);
         }
       });
     });
-  }
-
-  getAddress () {
-    this.invoke(this.web3.eth.getCoinbase, MiningActions.updateAddress);
   }
 
   nextDelay () {

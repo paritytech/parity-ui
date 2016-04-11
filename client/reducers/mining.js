@@ -8,13 +8,22 @@ const initialState = {
   gasFloorTarget: '1235123515'
 };
 
-export default handleActions({
+export const actionHandlers = {
 
   'update address' (state, action) {
     return {
       ...state,
       author: `${action.payload}`
     };
+  },
+
+  'update gasPrice' (state, action) {
+    return {
+      ...state,
+      minGasPrice: `${action.payload}`
+    };
   }
 
-}, initialState);
+};
+
+export default handleActions(actionHandlers, initialState);
