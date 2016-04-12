@@ -1,6 +1,6 @@
 
 import React, { Component, PropTypes } from 'react';
-import {isHex, openInNewTab} from '../../provider/util-provider';
+import {isHex} from '../../provider/util-provider';
 import rlp from 'rlp';
 import formatNumber from 'format-number';
 import bytes from 'bytes';
@@ -55,13 +55,23 @@ export default class Status extends Component {
 
   renderMiningDetails () {
     const {mining} = this.props;
-    // when extraData isn't hex, rlp.decode will error out
+    // when extraData isn't hex (i.e. when loading), rlp.decode will error out
     const extraData = !isHex(mining.extraData) ? mining.extraData : rlp.decode(mining.extraData).toString().replace(/,/g, ' ');
-
-    let onAuthorClick = () => openInNewTab(`https://etherchain.org/account/${mining.author}`);
 
     let onMinGasPriceChange = (evt) => {
       this.props.actions.modifyMinGasPrice(+evt.target.value);
+    };
+
+    let onExtraDataChange = (evt) => {
+      this.props.actions.modifyExtraData(evt.target.value);
+    };
+
+    let onAuthorChange = (evt) => {
+      this.props.actions.modifyAuthor(evt.target.value);
+    };
+
+    let onGasFloorTargetChange = (evt) => {
+      this.props.actions.modifyGasFloorTarget(+evt.target.value);
     };
 
     return (
@@ -71,18 +81,23 @@ export default class Status extends Component {
         </div>
         <div className='col col-6'>
           <h3>Author</h3>
-          <input type='text' onClick={onAuthorClick} readOnly value={mining.author} />
+          <EditableInput
+            value={mining.author}
+            onSubmit={onAuthorChange}/>
           <h3>Extradata</h3>
-          <input type='text' value={extraData} />
+          <EditableInput
+            value={extraData}
+            onSubmit={onExtraDataChange}/>
         </div>
         <div className='col col-6'>
           <h3>Minimal Gas Price</h3>
-
           <EditableInput
             value={mining.minGasPrice}
             onSubmit={onMinGasPriceChange}/>
           <h3>Gas floor target</h3>
-          <input type='text' readOnly value={mining.gasFloorTarget} />
+          <EditableInput
+            value={mining.gasFloorTarget}
+            onSubmit={onGasFloorTargetChange}/>
         </div>
       </div>
     );
@@ -134,7 +149,10 @@ Status.propTypes = {
     hashrate: PropTypes.string.isRequired,
     peers: PropTypes.number.isRequired
   }).isRequired,
-  actions: PropTypes({
-    modifyMinGasPrice: PropTypes.func.isRequired
+  actions: PropTypes.shape({
+    modifyMinGasPrice: PropTypes.func.isRequired,
+    modifyAuthor: PropTypes.func.isRequired,
+    modifyGasFloorTarget: PropTypes.func.isRequired,
+    modifyExtraData: PropTypes.func.isRequired
   }).isRequired
 };

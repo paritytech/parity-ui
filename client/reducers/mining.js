@@ -10,7 +10,7 @@ const initialState = {
 
 export const actionHandlers = {
 
-  'update address' (state, action) {
+  'update author' (state, action) {
     return {
       ...state,
       author: `${action.payload}`

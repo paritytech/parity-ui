@@ -34,12 +34,14 @@ const methods = [
   new Method({
     name: 'setGasFloorTarget',
     call: 'ethcore_setGasFloorTarget',
-    params: 1
+    params: 1,
+    inputFormatter: [utils.toHex]
   }),
   new Method({
     name: 'setAuthor',
     call: 'ethcore_setAuthor',
-    params: 1
+    params: 1,
+    inputFormatter: [formatters.inputAddressFormatter]
   })
 ];
 

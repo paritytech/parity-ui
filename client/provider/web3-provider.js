@@ -20,7 +20,7 @@ export class Web3Provider extends Web3Base {
       this.invoke(this.web3.eth.getHashrate).then(StatusActions.updateHashrate),
       this.invoke(this.web3.eth.getBlockNumber).then(StatusActions.updateBlockNumber),
       this.invoke(this.web3.net.getPeerCount).then(StatusActions.updatePeerCount),
-      this.invoke(this.web3.eth.getCoinbase).then(MiningActions.updateAddress),
+      this.invoke(this.web3.eth.getCoinbase).then(MiningActions.updateAuthor),
       this.invoke(this.ethcoreWeb3.getMinGasPrice).then(MiningActions.updateMinGasPrice),
       this.invoke(this.ethcoreWeb3.getGasFloorTarget).then(MiningActions.updateGasFloorTarget),
       this.invoke(this.ethcoreWeb3.getExtraData).then(MiningActions.updateExtraData)
