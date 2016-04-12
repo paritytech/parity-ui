@@ -37,7 +37,7 @@ export default handleActions({
   'update peerCount' (state, action) {
     return {
       ...state,
-      peers: `${action.payload}`
+      peers: action.payload
     };
   },
 
