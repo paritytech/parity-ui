@@ -1,6 +1,9 @@
 
 import React, { Component, PropTypes } from 'react';
 import Box from '../Box';
+import rlp from 'rlp';
+import formatNumber from 'format-number';
+import bytes from 'bytes';
 
 export default class Status extends Component {
 
@@ -42,6 +45,8 @@ export default class Status extends Component {
 
   renderMiningDetails () {
     const {mining} = this.props;
+    let isHex = str => str.match('[0-9A-F]+');
+    const extraData = !isHex(mining.extraData) ? mining.extraData : rlp.decode(mining.extraData).toString().replace(/,/g, ' ');
 
     return (
       <div className='row clear'>
@@ -52,7 +57,7 @@ export default class Status extends Component {
           <h3>Author</h3>
           <input type='text' readOnly value={mining.author} />
           <h3>Extradata</h3>
-          <input type='text' readOnly value={mining.extraData} />
+          <input type='text' readOnly value={extraData} />
         </div>
         <div className='col col-6'>
           <h3>Minimal Gas Price</h3>
@@ -66,6 +71,8 @@ export default class Status extends Component {
 
   render () {
     const {status} = this.props;
+    const bestBlock = formatNumber()(status.bestBlock);
+    const hashrate = bytes(status.bytes) || 0;
 
     return (
       <div className='dapp-flex-content'>
@@ -73,8 +80,8 @@ export default class Status extends Component {
 
           <div className='row clear'>
             <div className='col col-12'>
-              <Box title='Best Block' value={`#${status.bestBlock}`} />
-              <Box title='Hash Rate' value={`${status.hashrate} H/s`} />
+              <Box title='Best Block' value={bestBlock} />
+              <Box title='Hash Rate' value={`${hashrate} H/s`} />
             </div>
           </div>
 

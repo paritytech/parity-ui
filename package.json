@@ -44,7 +44,10 @@
     "webpack-hot-middleware": "^2.7.1"
   },
   "dependencies": {
+    "bytes": "2.3.0",
     "dapp-styles": "^0.2.2",
+    "format-number": "2.0.1",
+    "rlp": "2.0.0",
     "web3": "^0.15.3"
   },
   "config": {
