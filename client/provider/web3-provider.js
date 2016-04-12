@@ -1,7 +1,18 @@
 
+import {isBigNumber} from './util-provider';
 import {Web3Base} from './web3-base';
 import * as StatusActions from '../actions/status';
 import * as MiningActions from '../actions/mining';
+
+const state = {
+  hashrate: 0,
+  blockNumber: 0,
+  peerCount: 0,
+  author: '',
+  minGasPrice: 0,
+  gasFloorTarget: 0,
+  extraData: ''
+};
 
 export class Web3Provider extends Web3Base {
 
@@ -24,9 +35,9 @@ export class Web3Provider extends Web3Base {
       this.invoke(this.ethcoreWeb3.getMinGasPrice).then(MiningActions.updateMinGasPrice),
       this.invoke(this.ethcoreWeb3.getGasFloorTarget).then(MiningActions.updateGasFloorTarget),
       this.invoke(this.ethcoreWeb3.getExtraData).then(MiningActions.updateExtraData)
-    ]).then((res) => {
-      res.map(this.store.dispatch);
-    }).catch((err) => {
+    ])
+    .then(res => res.map(this.dispatchIfStateChanged.bind(this)))
+    .catch((err) => {
       this.store.dispatch(StatusActions.error(err));
     });
   }
@@ -67,6 +78,19 @@ export class Web3Provider extends Web3Base {
     this.onStart();
     refresh();
     return () => running = false;
+  }
+
+  dispatchIfStateChanged (action) {
+    const prop = action.type.split(' ')[1];
+    const val = state[prop];
+    if (val === action.payload) {
+      return;
+    }
+    if (isBigNumber(val) && val.equals(action.payload)) {
+      return;
+    }
+    state[prop] = action.payload;
+    this.store.dispatch(action);
   }
 
 }
