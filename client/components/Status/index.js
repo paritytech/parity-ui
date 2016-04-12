@@ -1,6 +1,7 @@
 
 import React, { Component, PropTypes } from 'react';
 import Box from '../Box';
+import {isHex, openInNewTab} from '../../provider/util-provider';
 import rlp from 'rlp';
 import formatNumber from 'format-number';
 import bytes from 'bytes';
@@ -45,8 +46,10 @@ export default class Status extends Component {
 
   renderMiningDetails () {
     const {mining} = this.props;
-    let isHex = str => str.match('[0-9A-F]+');
+    // when extraData isn't hex, rlp.decode will error out
     const extraData = !isHex(mining.extraData) ? mining.extraData : rlp.decode(mining.extraData).toString().replace(/,/g, ' ');
+
+    let onAuthorClick = () => openInNewTab(`https://etherchain.org/account/${mining.author}`);
 
     return (
       <div className='row clear'>
@@ -55,7 +58,7 @@ export default class Status extends Component {
         </div>
         <div className='col col-6'>
           <h3>Author</h3>
-          <input type='text' readOnly value={mining.author} />
+          <input type='text' onClick={onAuthorClick} readOnly value={mining.author} />
           <h3>Extradata</h3>
           <input type='text' readOnly value={extraData} />
         </div>
