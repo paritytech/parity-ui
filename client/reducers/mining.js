@@ -17,7 +17,7 @@ export const actionHandlers = {
     };
   },
 
-  'update gasPrice' (state, action) {
+  'update minGasPrice' (state, action) {
     return {
       ...state,
       minGasPrice: `${action.payload}`

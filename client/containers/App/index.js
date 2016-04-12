@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import Status from '../../components/Status';
-import * as TodoActions from '../../actions/todos';
+import * as ModifyMiningActions from '../../actions/modify-mining';
 import style from './style.css';
 
 class App extends Component {
@@ -37,7 +37,7 @@ function mapStateToProps (state) {
 
 function mapDispatchToProps (dispatch) {
   return {
-    actions: bindActionCreators(TodoActions, dispatch)
+    actions: bindActionCreators(ModifyMiningActions, dispatch)
   };
 }
 

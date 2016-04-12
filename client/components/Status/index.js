@@ -1,12 +1,21 @@
 
 import React, { Component, PropTypes } from 'react';
-import Box from '../Box';
 import {isHex, openInNewTab} from '../../provider/util-provider';
 import rlp from 'rlp';
 import formatNumber from 'format-number';
 import bytes from 'bytes';
 
+import Box from '../Box';
+import EditableInput from '../EditableInput';
+
 export default class Status extends Component {
+
+  constructor (...args) {
+    super(...args);
+    this.state = {
+      minGasPrice: 0
+    };
+  }
 
   renderNodeName () {
     const { status } = this.props;
@@ -51,6 +60,10 @@ export default class Status extends Component {
 
     let onAuthorClick = () => openInNewTab(`https://etherchain.org/account/${mining.author}`);
 
+    let onMinGasPriceChange = (evt) => {
+      this.props.actions.modifyMinGasPrice(+evt.target.value);
+    };
+
     return (
       <div className='row clear'>
         <div className='col col-12'>
@@ -60,11 +73,14 @@ export default class Status extends Component {
           <h3>Author</h3>
           <input type='text' onClick={onAuthorClick} readOnly value={mining.author} />
           <h3>Extradata</h3>
-          <input type='text' readOnly value={extraData} />
+          <input type='text' value={extraData} />
         </div>
         <div className='col col-6'>
           <h3>Minimal Gas Price</h3>
-          <input type='text' readOnly value={mining.minGasPrice} />
+
+          <EditableInput
+            value={mining.minGasPrice}
+            onSubmit={onMinGasPriceChange}/>
           <h3>Gas floor target</h3>
           <input type='text' readOnly value={mining.gasFloorTarget} />
         </div>
@@ -117,5 +133,8 @@ Status.propTypes = {
     bestBlock: PropTypes.string.isRequired,
     hashrate: PropTypes.string.isRequired,
     peers: PropTypes.number.isRequired
+  }).isRequired,
+  actions: PropTypes({
+    modifyMinGasPrice: PropTypes.func.isRequired
   }).isRequired
 };

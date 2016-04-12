@@ -1,16 +1,14 @@
 
-import Web3 from 'web3';
-import EthcoreWeb3 from './web3-ethcore-provider';
+import {Web3Base} from './web3-base';
 import * as StatusActions from '../actions/status';
 import * as MiningActions from '../actions/mining';
 
-export class Web3Provider {
+export class Web3Provider extends Web3Base {
 
   constructor (store) {
+    super();
     this.store = store;
     this.delay = 500;
-    this.web3 = new Web3(new Web3.providers.HttpProvider('/rpc/'));
-    this.ethcoreWeb3 = new EthcoreWeb3(this.web3);
   }
 
   onStart () {
@@ -23,7 +21,7 @@ export class Web3Provider {
       this.invoke(this.web3.eth.getBlockNumber).then(StatusActions.updateBlockNumber),
       this.invoke(this.web3.net.getPeerCount).then(StatusActions.updatePeerCount),
       this.invoke(this.web3.eth.getCoinbase).then(MiningActions.updateAddress),
-      this.invoke(this.web3.eth.getGasPrice).then(MiningActions.updateGasPrice),
+      this.invoke(this.ethcoreWeb3.getMinGasPrice).then(MiningActions.updateMinGasPrice),
       this.invoke(this.ethcoreWeb3.getGasFloorTarget).then(MiningActions.updateGasFloorTarget),
       this.invoke(this.ethcoreWeb3.getExtraData).then(MiningActions.updateExtraData)
     ]).then((res) => {
@@ -33,7 +31,7 @@ export class Web3Provider {
     });
   }
 
-  invoke (method, action) {
+  invoke (method) {
     return new Promise((resolve, reject) => {
       method((err, res) => {
         if (err) {
