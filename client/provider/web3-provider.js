@@ -6,11 +6,12 @@ import * as MiningActions from '../actions/mining';
 
 export class Web3Provider extends Web3Base {
 
-  constructor (store) {
-    super();
+  constructor (web3, ethcoreWeb3, store) {
+    super(web3, ethcoreWeb3);
     this.store = store;
     this.delay = 500;
     this.state = {};
+    this.running = false;
   }
 
   onStart () {
@@ -56,27 +57,24 @@ export class Web3Provider extends Web3Base {
   }
 
   start () {
-    let running = true;
-    let that = this;
-
-    function refresh () {
-      if (!running) {
-        return;
-      }
-      that.onTick().then(() => {
-        setTimeout(refresh, that.nextDelay());
-      });
-    }
-
+    this.running = true;
     this.onStart();
-    refresh();
-    return () => running = false;
+    this.refreshTick();
+    return () => this.running = false;
+  }
+
+  refreshTick () {
+    if (!this.running) {
+      return;
+    }
+    this.onTick().then(() => {
+      setTimeout(::this.refreshTick, ::this.nextDelay());
+    });
   }
 
   filterChanged (actions) {
     return actions.filter(action => {
-      const prop = actionProp(action);
-      const val = this.state[prop];
+      const val = this.state[this.actionProp(action)];
       if (isBigNumber(val)) {
         return !val.equals(action.payload);
       } else {
@@ -87,14 +85,13 @@ export class Web3Provider extends Web3Base {
 
   updateState (actions) {
     return actions.map(action => {
-      const prop = actionProp(action);
-      this.state[prop] = action.payload;
+      this.state[this.actionProp(action)] = action.payload;
       return action;
     });
   }
 
-}
+  actionProp (action) {
+    return action.type.split(' ')[1];
+  }
 
-function actionProp (action) {
-  return action.type.split(' ')[1];
 }

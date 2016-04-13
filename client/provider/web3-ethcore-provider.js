@@ -1,20 +1,22 @@
 import Method from 'web3/lib/web3/method';
 import formatters from 'web3/lib/web3/formatters';
 import utils from 'web3/lib/utils/utils';
-import rlp from 'rlp';
+import ExtraDataManipulator from './extra-data-manipulator-provider';
+
+const extraDataManipulator = new ExtraDataManipulator();
 
 const methods = [
   new Method({
     name: 'getExtraData',
     call: 'ethcore_extraData',
     params: 0,
-    outputFormatter: rlpDecodeExtraData
+    outputFormatter: extraDataManipulator.decode
   }),
   new Method({
     name: 'setExtraData',
     call: 'ethcore_setExtraData',
     params: 1,
-    inputFormatter: [rlpEncodeExtraData]
+    inputFormatter: [extraDataManipulator.encode]
   }),
   new Method({
     name: 'getMinGasPrice',
@@ -61,14 +63,3 @@ class Ethcore {
 }
 
 export default Ethcore;
-
-const version = 0x010000;
-const separator = '/';
-
-function rlpEncodeExtraData (str) {
-  return `0x${rlp.encode([version].concat(str.split(separator))).toString('hex')}`;
-}
-
-function rlpDecodeExtraData (str) {
-  return rlp.decode(str).slice(1).join(separator);
-}

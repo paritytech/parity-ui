@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "lint": "semistandard",
-    "test": "echo \"Error: no test specified\" && exit 0",
+    "test": "mocha --compilers js:babel-core/register client/**/*.spec.js -w",
+    "testOnce": "mocha --compilers js:babel-core/register client/**/*.spec.js",
     "start": "webpack-dev-server -d --history-api-fallback --hot --inline --progress --colors --port 3000",
     "build": "NODE_ENV=production webpack --progress --colors",
     "commit": "commit-wizard"
@@ -20,11 +21,13 @@
     "babel-preset-react": "^6.5.0",
     "babel-preset-stage-0": "^6.5.0",
     "babel-runtime": "^6.5.0",
+    "chai": "3.5.0",
     "chromedriver": "2.21.2",
     "classnames": "^2.2.3",
     "css-loader": "^0.23.1",
     "file-loader": "^0.8.5",
     "json-loader": "^0.5.4",
+    "karma-babel-preprocessor": "6.0.1",
     "less": "^2.6.1",
     "less-loader": "^2.2.3",
     "nightwatch": "0.8.18",
@@ -42,6 +45,8 @@
     "selenium-server-standalone-jar": "2.53.0",
     "selenium-webdriver": "2.53.1",
     "semistandard": "^7.0.5",
+    "sinon": "1.17.3",
+    "sinon-chai": "2.8.0",
     "style-loader": "^0.13.0",
     "url-loader": "^0.5.7",
     "webpack": "^1.12.14",
@@ -49,6 +54,7 @@
     "webpack-hot-middleware": "^2.7.1"
   },
   "dependencies": {
+    "bignumber.js": "2.3.0",
     "bytes": "2.3.0",
     "dapp-styles": "^0.2.2",
     "format-number": "2.0.1",
@@ -65,7 +71,7 @@
       ],
       "pre-push": [
         "npm run lint",
-        "npm run test"
+        "npm run testOnce"
       ],
       "post-commit": [],
       "post-checkout": [],
