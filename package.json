@@ -49,7 +49,9 @@
   },
   "config": {
     "pre-git": {
-      "pre-commit": [],
+      "pre-commit": [
+        "./scripts/check-master.sh"
+      ],
       "pre-push": [
         "npm run lint",
         "npm run test"
