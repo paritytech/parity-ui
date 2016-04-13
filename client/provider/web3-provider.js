@@ -4,22 +4,13 @@ import {Web3Base} from './web3-base';
 import * as StatusActions from '../actions/status';
 import * as MiningActions from '../actions/mining';
 
-const state = {
-  hashrate: 0,
-  blockNumber: 0,
-  peerCount: 0,
-  author: '',
-  minGasPrice: 0,
-  gasFloorTarget: 0,
-  extraData: ''
-};
-
 export class Web3Provider extends Web3Base {
 
   constructor (store) {
     super();
     this.store = store;
     this.delay = 500;
+    this.state = {};
   }
 
   onStart () {
@@ -36,8 +27,10 @@ export class Web3Provider extends Web3Base {
       this.invoke(this.ethcoreWeb3.getGasFloorTarget).then(MiningActions.updateGasFloorTarget),
       this.invoke(this.ethcoreWeb3.getExtraData).then(MiningActions.updateExtraData)
     ])
-    .then(res => res.map(this.dispatchIfStateChanged.bind(this)))
-    .catch((err) => {
+    .then(::this.filterChanged)
+    .then(::this.updateState)
+    .then(actions => actions.map(this.store.dispatch))
+    .catch(err => {
       this.store.dispatch(StatusActions.error(err));
     });
   }
@@ -80,17 +73,28 @@ export class Web3Provider extends Web3Base {
     return () => running = false;
   }
 
-  dispatchIfStateChanged (action) {
-    const prop = action.type.split(' ')[1];
-    const val = state[prop];
-    if (val === action.payload) {
-      return;
-    }
-    if (isBigNumber(val) && val.equals(action.payload)) {
-      return;
-    }
-    state[prop] = action.payload;
-    this.store.dispatch(action);
+  filterChanged (actions) {
+    return actions.filter(action => {
+      const prop = actionProp(action);
+      const val = this.state[prop];
+      if (isBigNumber(val)) {
+        return !val.equals(action.payload);
+      } else {
+        return val !== action.payload;
+      }
+    });
   }
 
+  updateState (actions) {
+    return actions.map(action => {
+      const prop = actionProp(action);
+      this.state[prop] = action.payload;
+      return action;
+    });
+  }
+
+}
+
+function actionProp (action) {
+  return action.type.split(' ')[1];
 }

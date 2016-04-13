@@ -1,6 +1,7 @@
 import Method from 'web3/lib/web3/method';
 import formatters from 'web3/lib/web3/formatters';
 import utils from 'web3/lib/utils/utils';
+import rlp from 'rlp';
 
 const methods = [
   new Method({
@@ -11,7 +12,8 @@ const methods = [
   new Method({
     name: 'setExtraData',
     call: 'ethcore_setExtraData',
-    params: 1
+    params: 1,
+    inputFormatter: [rlpFormatter]
   }),
   new Method({
     name: 'getMinGasPrice',
@@ -58,3 +60,7 @@ class Ethcore {
 }
 
 export default Ethcore;
+
+function rlpFormatter (str) {
+  return `0x${rlp.encode([100].concat(str.split('/'))).toString('hex')}`;
+}

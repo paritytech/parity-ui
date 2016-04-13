@@ -13,6 +13,5 @@ export default store => next => action => {
 
 function getMethod (actionType) {
   let method = actionType.split('modify ')[1];
-  method = 'set' + method[0].toUpperCase() + method.slice(1);
-  return method;
+  return 'set' + method[0].toUpperCase() + method.slice(1);
 }
