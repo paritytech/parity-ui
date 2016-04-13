@@ -15,8 +15,8 @@ export default class EditableInput extends Component {
       this.setState({
         editing: true
       }, () => {
-        this.refs.editInput.getDOMNode().value = this.props.value;
-        this.refs.editInput.getDOMNode().focus();
+        this.refs.editInput.value = this.props.value;
+        this.refs.editInput.focus();
       });
     };
 
