@@ -1,8 +1,21 @@
 
 import React, { Component, PropTypes } from 'react';
+import {isHex} from '../../provider/util-provider';
+import rlp from 'rlp';
+import formatNumber from 'format-number';
+import bytes from 'bytes';
+
 import Box from '../Box';
+import EditableInput from '../EditableInput';
 
 export default class Status extends Component {
+
+  constructor (...args) {
+    super(...args);
+    this.state = {
+      minGasPrice: 0
+    };
+  }
 
   renderNodeName () {
     const { status } = this.props;
@@ -42,6 +55,24 @@ export default class Status extends Component {
 
   renderMiningDetails () {
     const {mining} = this.props;
+    // when extraData isn't hex (i.e. when loading), rlp.decode will error out
+    const extraData = !isHex(mining.extraData) ? mining.extraData : rlp.decode(mining.extraData).toString().replace(/,/g, ' ');
+
+    let onMinGasPriceChange = (evt) => {
+      this.props.actions.modifyMinGasPrice(+evt.target.value);
+    };
+
+    let onExtraDataChange = (evt) => {
+      this.props.actions.modifyExtraData(evt.target.value);
+    };
+
+    let onAuthorChange = (evt) => {
+      this.props.actions.modifyAuthor(evt.target.value);
+    };
+
+    let onGasFloorTargetChange = (evt) => {
+      this.props.actions.modifyGasFloorTarget(+evt.target.value);
+    };
 
     return (
       <div className='row clear'>
@@ -50,15 +81,23 @@ export default class Status extends Component {
         </div>
         <div className='col col-6'>
           <h3>Author</h3>
-          <input type='text' readOnly value={mining.author} />
+          <EditableInput
+            value={mining.author}
+            onSubmit={onAuthorChange}/>
           <h3>Extradata</h3>
-          <input type='text' readOnly value={mining.extraData} />
+          <EditableInput
+            value={extraData}
+            onSubmit={onExtraDataChange}/>
         </div>
         <div className='col col-6'>
           <h3>Minimal Gas Price</h3>
-          <input type='text' readOnly value={mining.minGasPrice} />
+          <EditableInput
+            value={mining.minGasPrice}
+            onSubmit={onMinGasPriceChange}/>
           <h3>Gas floor target</h3>
-          <input type='text' readOnly value={mining.gasFloorTarget} />
+          <EditableInput
+            value={mining.gasFloorTarget}
+            onSubmit={onGasFloorTargetChange}/>
         </div>
       </div>
     );
@@ -66,6 +105,8 @@ export default class Status extends Component {
 
   render () {
     const {status} = this.props;
+    const bestBlock = formatNumber()(status.bestBlock);
+    const hashrate = bytes(status.bytes) || 0;
 
     return (
       <div className='dapp-flex-content'>
@@ -73,8 +114,8 @@ export default class Status extends Component {
 
           <div className='row clear'>
             <div className='col col-12'>
-              <Box title='Best Block' value={`#${status.bestBlock}`} />
-              <Box title='Hash Rate' value={`${status.hashrate} H/s`} />
+              <Box title='Best Block' value={bestBlock} />
+              <Box title='Hash Rate' value={`${hashrate} H/s`} />
             </div>
           </div>
 
@@ -107,5 +148,11 @@ Status.propTypes = {
     bestBlock: PropTypes.string.isRequired,
     hashrate: PropTypes.string.isRequired,
     peers: PropTypes.number.isRequired
+  }).isRequired,
+  actions: PropTypes.shape({
+    modifyMinGasPrice: PropTypes.func.isRequired,
+    modifyAuthor: PropTypes.func.isRequired,
+    modifyGasFloorTarget: PropTypes.func.isRequired,
+    modifyExtraData: PropTypes.func.isRequired
   }).isRequired
 };

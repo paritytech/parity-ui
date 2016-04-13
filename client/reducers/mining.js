@@ -2,11 +2,42 @@
 import { handleActions } from 'redux-actions';
 
 const initialState = {
-  author: '0x1231231asdfa412341234',
-  extraData: '0x',
-  minGasPrice: '25000000',
-  gasFloorTarget: '1235123515'
+  author: 'loading...',
+  extraData: 'loading...',
+  minGasPrice: 'loading...',
+  gasFloorTarget: 'loading...'
 };
 
-export default handleActions({
-}, initialState);
+export const actionHandlers = {
+
+  'update author' (state, action) {
+    return {
+      ...state,
+      author: `${action.payload}`
+    };
+  },
+
+  'update minGasPrice' (state, action) {
+    return {
+      ...state,
+      minGasPrice: `${action.payload}`
+    };
+  },
+
+  'update gasFloorTarget' (state, action) {
+    return {
+      ...state,
+      gasFloorTarget: `${action.payload}`
+    };
+  },
+
+  'update extraData' (state, action) {
+    return {
+      ...state,
+      extraData: `${action.payload}`
+    };
+  }
+
+};
+
+export default handleActions(actionHandlers, initialState);
