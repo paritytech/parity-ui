@@ -1,7 +1,5 @@
 
 import React, { Component, PropTypes } from 'react';
-import {isHex} from '../../provider/util-provider';
-import rlp from 'rlp';
 import formatNumber from 'format-number';
 import bytes from 'bytes';
 
@@ -9,13 +7,6 @@ import Box from '../Box';
 import EditableInput from '../EditableInput';
 
 export default class Status extends Component {
-
-  constructor (...args) {
-    super(...args);
-    this.state = {
-      minGasPrice: 0
-    };
-  }
 
   renderNodeName () {
     const { status } = this.props;
@@ -55,8 +46,6 @@ export default class Status extends Component {
 
   renderMiningDetails () {
     const {mining} = this.props;
-    // when extraData isn't hex (i.e. when loading), rlp.decode will error out
-    const extraData = !isHex(mining.extraData) ? mining.extraData : rlp.decode(mining.extraData).toString().replace(/,/g, ' ');
 
     let onMinGasPriceChange = (evt) => {
       this.props.actions.modifyMinGasPrice(+evt.target.value);
@@ -86,7 +75,7 @@ export default class Status extends Component {
             onSubmit={onAuthorChange}/>
           <h3>Extradata</h3>
           <EditableInput
-            value={extraData}
+            value={mining.extraData}
             onSubmit={onExtraDataChange}/>
         </div>
         <div className='col col-6'>

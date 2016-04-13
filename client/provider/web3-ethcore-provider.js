@@ -7,13 +7,14 @@ const methods = [
   new Method({
     name: 'getExtraData',
     call: 'ethcore_extraData',
-    params: 0
+    params: 0,
+    outputFormatter: rlpDecode
   }),
   new Method({
     name: 'setExtraData',
     call: 'ethcore_setExtraData',
     params: 1,
-    inputFormatter: [rlpFormatter]
+    inputFormatter: [rlpEncode]
   }),
   new Method({
     name: 'getMinGasPrice',
@@ -61,6 +62,13 @@ class Ethcore {
 
 export default Ethcore;
 
-function rlpFormatter (str) {
-  return `0x${rlp.encode([100].concat(str.split('/'))).toString('hex')}`;
+const version = 0x010000;
+const separator = '/';
+
+function rlpEncode (str) {
+  return `0x${rlp.encode([version].concat(str.split(separator))).toString('hex')}`;
+}
+
+function rlpDecode (str) {
+  return rlp.decode(str).slice(1).join(separator);
 }
