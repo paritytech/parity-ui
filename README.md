@@ -1,8 +1,13 @@
 # How to create parity webapplication.
+1. Clone this repository.
+   
+   ```bash
+   $ git clone https://github.com/tomusdrw/parity-webapp.git
+   ```
 1. Create a new directory for your webapp. (`./parity-myapp`)
 
    ```bash
-   $ mkdir -p parity-myapp/src/web
+   $ mkdir -p ./parity-myapp/src/web
    ```
 
 1. Copy your frontend files to `./parity-myapp/src/web` (bundled ones)
