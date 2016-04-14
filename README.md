@@ -36,7 +36,7 @@
 1. Commit the results and put it to some github repo.
 
    ```bash
-   $ git add . && git commit -am "My first parity webapp".
+   $ git init && git add . && git commit -am "My first parity webapp".
    ```
 
 # How to include your webapp in `parity`?
