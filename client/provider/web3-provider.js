@@ -1,5 +1,6 @@
 
-import {isBigNumber} from './util-provider';
+import {isBigNumber} from 'web3/lib/utils/utils';
+import {toPromise} from './util-provider';
 import {Web3Base} from './web3-base';
 import * as StatusActions from '../actions/status';
 import * as MiningActions from '../actions/mining';
@@ -15,36 +16,24 @@ export class Web3Provider extends Web3Base {
   }
 
   onStart () {
-    this.invoke(this.web3.version.getNode, StatusActions.updateVersion);
+    toPromise(this.web3.version.getNode, StatusActions.updateVersion);
   }
 
   onTick () {
     return Promise.all([
-      this.invoke(this.web3.eth.getHashrate).then(StatusActions.updateHashrate),
-      this.invoke(this.web3.eth.getBlockNumber).then(StatusActions.updateBlockNumber),
-      this.invoke(this.web3.net.getPeerCount).then(StatusActions.updatePeerCount),
-      this.invoke(this.web3.eth.getCoinbase).then(MiningActions.updateAuthor),
-      this.invoke(this.ethcoreWeb3.getMinGasPrice).then(MiningActions.updateMinGasPrice),
-      this.invoke(this.ethcoreWeb3.getGasFloorTarget).then(MiningActions.updateGasFloorTarget),
-      this.invoke(this.ethcoreWeb3.getExtraData).then(MiningActions.updateExtraData)
+      toPromise(this.web3.eth.getHashrate).then(StatusActions.updateHashrate),
+      toPromise(this.web3.eth.getBlockNumber).then(StatusActions.updateBlockNumber),
+      toPromise(this.web3.net.getPeerCount).then(StatusActions.updatePeerCount),
+      toPromise(this.web3.eth.getCoinbase).then(MiningActions.updateAuthor),
+      toPromise(this.ethcoreWeb3.getMinGasPrice).then(MiningActions.updateMinGasPrice),
+      toPromise(this.ethcoreWeb3.getGasFloorTarget).then(MiningActions.updateGasFloorTarget),
+      toPromise(this.ethcoreWeb3.getExtraData).then(MiningActions.updateExtraData)
     ])
     .then(::this.filterChanged)
     .then(::this.updateState)
     .then(actions => actions.map(this.store.dispatch))
     .catch(err => {
       this.store.dispatch(StatusActions.error(err));
-    });
-  }
-
-  invoke (method) {
-    return new Promise((resolve, reject) => {
-      method((err, res) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(res);
-        }
-      });
     });
   }
 
@@ -68,7 +57,7 @@ export class Web3Provider extends Web3Base {
       return;
     }
     this.onTick().then(() => {
-      setTimeout(::this.refreshTick, ::this.nextDelay());
+      setTimeout(::this.refreshTick, this.nextDelay());
     });
   }
 

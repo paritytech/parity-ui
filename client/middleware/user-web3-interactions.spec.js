@@ -33,6 +33,11 @@ describe('MIDDLEWARE: User Web3 interactions', () => {
     middleware(action);
 
     // then
+    expect(
+      cut.ethcoreWeb3[cut.getMethod('modify extraData')]
+      .calledWith(action.payload)
+    ).to.be.true;
+    expect(action.type).to.equal('update extraData');
     expect(next.calledWith({
       type: 'update extraData',
       payload: extraData
