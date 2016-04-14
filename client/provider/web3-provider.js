@@ -1,49 +1,39 @@
 
-import {isBigNumber} from './util-provider';
+import {isBigNumber} from 'web3/lib/utils/utils';
+import {toPromise} from './util-provider';
 import {Web3Base} from './web3-base';
 import * as StatusActions from '../actions/status';
 import * as MiningActions from '../actions/mining';
 
 export class Web3Provider extends Web3Base {
 
-  constructor (store) {
-    super();
+  constructor (web3, ethcoreWeb3, store) {
+    super(web3, ethcoreWeb3);
     this.store = store;
     this.delay = 500;
     this.state = {};
+    this.running = false;
   }
 
   onStart () {
-    this.invoke(this.web3.version.getNode, StatusActions.updateVersion);
+    toPromise(this.web3.version.getNode, StatusActions.updateVersion);
   }
 
   onTick () {
     return Promise.all([
-      this.invoke(this.web3.eth.getHashrate).then(StatusActions.updateHashrate),
-      this.invoke(this.web3.eth.getBlockNumber).then(StatusActions.updateBlockNumber),
-      this.invoke(this.web3.net.getPeerCount).then(StatusActions.updatePeerCount),
-      this.invoke(this.web3.eth.getCoinbase).then(MiningActions.updateAuthor),
-      this.invoke(this.ethcoreWeb3.getMinGasPrice).then(MiningActions.updateMinGasPrice),
-      this.invoke(this.ethcoreWeb3.getGasFloorTarget).then(MiningActions.updateGasFloorTarget),
-      this.invoke(this.ethcoreWeb3.getExtraData).then(MiningActions.updateExtraData)
+      toPromise(this.web3.eth.getHashrate).then(StatusActions.updateHashrate),
+      toPromise(this.web3.eth.getBlockNumber).then(StatusActions.updateBlockNumber),
+      toPromise(this.web3.net.getPeerCount).then(StatusActions.updatePeerCount),
+      toPromise(this.web3.eth.getCoinbase).then(MiningActions.updateAuthor),
+      toPromise(this.ethcoreWeb3.getMinGasPrice).then(MiningActions.updateMinGasPrice),
+      toPromise(this.ethcoreWeb3.getGasFloorTarget).then(MiningActions.updateGasFloorTarget),
+      toPromise(this.ethcoreWeb3.getExtraData).then(MiningActions.updateExtraData)
     ])
     .then(::this.filterChanged)
     .then(::this.updateState)
     .then(actions => actions.map(this.store.dispatch))
     .catch(err => {
       this.store.dispatch(StatusActions.error(err));
-    });
-  }
-
-  invoke (method) {
-    return new Promise((resolve, reject) => {
-      method((err, res) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(res);
-        }
-      });
     });
   }
 
@@ -56,27 +46,24 @@ export class Web3Provider extends Web3Base {
   }
 
   start () {
-    let running = true;
-    let that = this;
-
-    function refresh () {
-      if (!running) {
-        return;
-      }
-      that.onTick().then(() => {
-        setTimeout(refresh, that.nextDelay());
-      });
-    }
-
+    this.running = true;
     this.onStart();
-    refresh();
-    return () => running = false;
+    this.refreshTick();
+    return () => this.running = false;
+  }
+
+  refreshTick () {
+    if (!this.running) {
+      return;
+    }
+    this.onTick().then(() => {
+      setTimeout(::this.refreshTick, this.nextDelay());
+    });
   }
 
   filterChanged (actions) {
     return actions.filter(action => {
-      const prop = actionProp(action);
-      const val = this.state[prop];
+      const val = this.state[this.actionProp(action)];
       if (isBigNumber(val)) {
         return !val.equals(action.payload);
       } else {
@@ -87,14 +74,13 @@ export class Web3Provider extends Web3Base {
 
   updateState (actions) {
     return actions.map(action => {
-      const prop = actionProp(action);
-      this.state[prop] = action.payload;
+      this.state[this.actionProp(action)] = action.payload;
       return action;
     });
   }
 
-}
+  actionProp (action) {
+    return action.type.split(' ')[1];
+  }
 
-function actionProp (action) {
-  return action.type.split(' ')[1];
 }
