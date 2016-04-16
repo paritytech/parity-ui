@@ -5,12 +5,12 @@ import {outputBigNumberFormatter} from 'web3/lib/web3/formatters.js';
 
 // import {toPromise} from '../provider/util-provider';
 import ExtraDataManipulator from '../provider/extra-data-manipulator-provider';
-import {updateRpcPostmanResponse} from '../actions/rpc-postman';
+import {updateRPCResponse} from '../actions/rpc';
 
 const extraDataManipulator = new ExtraDataManipulator();
 
 export default store => next => action => {
-  if (action.type !== 'fire rpcPostman') {
+  if (action.type !== 'fire RPC') {
     return next(action);
   }
 
@@ -23,13 +23,13 @@ export default store => next => action => {
       console.error(err);
     }
     const result = formatResult(body.result, outputFormatter);
-    const action = updateRpcPostmanResponse(result);
+    const action = updateRPCResponse(result);
     store.dispatch(action);
   });
   return next(action);
 };
 
-function getOptions (method, params) {
+export function getOptions (method, params) {
   return {
     url: '/rpc/',
     method: 'POST',
@@ -42,7 +42,7 @@ function getOptions (method, params) {
   };
 }
 
-function formatResult (result, formatter) {
+export function formatResult (result, formatter) {
   if (!formatter) {
     return `${result}`;
   }
@@ -55,7 +55,7 @@ function formatResult (result, formatter) {
   return `${formatter(result)}`;
 }
 
-function formatParams (params, inputFormatters) {
+export function formatParams (params, inputFormatters) {
   if (!inputFormatters || !inputFormatters.length) {
     return params;
   }

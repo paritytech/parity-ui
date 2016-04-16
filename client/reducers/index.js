@@ -4,12 +4,12 @@ import { combineReducers } from 'redux';
 import status from './status';
 import settings from './settings';
 import mining from './mining';
-import rpcPostman from './rpc-postman';
+import rpc from './rpc';
 
 export default combineReducers({
   routing,
   status,
   settings,
-  rpcPostman,
+  rpc,
   mining
 });

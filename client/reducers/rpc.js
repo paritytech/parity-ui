@@ -7,7 +7,7 @@ const initialState = {
 
 export const actionHandlers = {
 
-  'update rpcPostmanResponse' (state, action) {
+  'update RPCResponse' (state, action) {
     console.warn('action', action);
     return {
       ...state,

@@ -55,7 +55,7 @@ export default class Header extends Component {
               </Link>
             </li>
             <li>
-              <Link to={'/postman'} activeClassName='active'>
+              <Link to={'/rpc'} activeClassName='active'>
                 <i className='icon-call-out'></i>
                 <span>RPC Requests</span>
               </Link>

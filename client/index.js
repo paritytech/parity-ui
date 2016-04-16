@@ -7,11 +7,11 @@ import { Provider } from 'react-redux';
 import ReactDOM from 'react-dom';
 import React from 'react';
 
-import { logger, WebInteractions, rpcPostman } from './middleware';
+import { logger, WebInteractions, RPCMiddleware } from './middleware';
 import App from './containers/App';
 import Accounts from './containers/Accounts';
 import AppList from './containers/AppList';
-import Postman from './containers/Postman';
+import RPC from './containers/RPC';
 import configure from './store';
 import {Web3Provider} from './provider/web3-provider';
 import Web3 from 'web3';
@@ -21,7 +21,7 @@ const web3 = new Web3(new Web3.providers.HttpProvider('/rpc/'));
 const ethcoreWeb3 = new EthcoreWeb3(web3);
 const web3Interactions = new WebInteractions(web3, ethcoreWeb3);
 
-const storeMiddlewares = [logger, web3Interactions.toMiddleware(), rpcPostman];
+const storeMiddlewares = [logger, web3Interactions.toMiddleware(), RPCMiddleware];
 
 const store = configure(storeMiddlewares);
 const history = syncHistoryWithStore(hashHistory, store);
@@ -32,7 +32,7 @@ ReactDOM.render(
       <Route path={'/'} component={App} />
       <Route path={'/accounts'} component={Accounts} />
       <Route path={'/apps'} component={AppList} />
-      <Route path={'/postman'} component={Postman} />
+      <Route path={'/rpc'} component={RPC} />
     </Router>
   </Provider>,
   document.getElementById('root')

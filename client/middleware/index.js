@@ -1,10 +1,10 @@
 
 import logger from './logger';
 import WebInteractions from './user-web3-interactions';
-import rpcPostman from './rpc-postman';
+import RPCMiddleware from './rpc';
 
 export {
   logger,
-  rpcPostman,
+  RPCMiddleware,
   WebInteractions
 };
