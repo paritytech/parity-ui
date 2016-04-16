@@ -28,10 +28,25 @@ class RPC extends Component {
           error={this.props.status.error}
         />
         <h1>Postman in the house!</h1>
+        {this.renderPrevCalls()}
         {this.renderMethodList()}
         {this.renderForm()}
-        <pre>Response: {this.props.rpc.lastResponse}</pre>
         <Footer version={this.props.status.version} />
+      </div>
+    );
+  }
+
+  renderPrevCalls () {
+    let prevCalls = this.props.rpc.prevCalls.map(
+      c => <tr><th>{c.name}</th><th>{c.params.toString()}</th><th>{c.response}</th></tr>
+    );
+    return (
+      <div>
+        <h2>History</h2>
+        <table>
+          <thead><tr><th>Method</th><th>Params</th><th>Response</th></tr></thead>
+          <tbody>{prevCalls}</tbody>
+        </table>
       </div>
     );
   }
@@ -103,7 +118,7 @@ function mapDispatchToProps (dispatch) {
 RPC.propTypes = {
   status: PropTypes.object.isRequired,
   rpc: PropTypes.shape({
-    lastResponse: PropTypes.any.isRequired
+    prevCalls: PropTypes.array.isRequired
   }).isRequired,
   actions: PropTypes.shape({
     fireRPC: PropTypes.func.isRequired

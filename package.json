@@ -61,6 +61,7 @@
     "format-number": "2.0.1",
     "lodash": "4.11.1",
     "rlp": "2.0.0",
+    "store": "1.3.20",
     "web3": "^0.15.3"
   },
   "semistandard": {

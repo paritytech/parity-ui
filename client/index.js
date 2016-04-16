@@ -7,8 +7,9 @@ import { Provider } from 'react-redux';
 import ReactDOM from 'react-dom';
 import React from 'react';
 
+import localStore from 'store';
 import request from 'browser-request';
-import { logger, WebInteractions, RPCMiddleware } from './middleware';
+import Middlewares from './middleware';
 import App from './containers/App';
 import Accounts from './containers/Accounts';
 import AppList from './containers/AppList';
@@ -20,10 +21,12 @@ import EthcoreWeb3 from './provider/web3-ethcore-provider';
 
 const web3 = new Web3(new Web3.providers.HttpProvider('/rpc/'));
 const ethcoreWeb3 = new EthcoreWeb3(web3);
-const web3Interactions = new WebInteractions(web3, ethcoreWeb3);
-const rPCMiddleware = new RPCMiddleware(request);
+const web3Interactions = new Middlewares.WebInteractions(web3, ethcoreWeb3);
+const rpcMiddleware = new Middlewares.RPC(request);
+const rpcPushResponseMiddleware = new Middlewares.RPCPushResponse();
+const localStorageMiddleware = new Middlewares.LocalStorage(localStore);
 
-const storeMiddlewares = [logger, web3Interactions.toMiddleware(), rPCMiddleware.toMiddleware()];
+const storeMiddlewares = [Middlewares.logger, web3Interactions.toMiddleware(), rpcMiddleware.toMiddleware(), rpcPushResponseMiddleware.toMiddleware(), localStorageMiddleware.toMiddleware()];
 
 const store = configure(storeMiddlewares);
 const history = syncHistoryWithStore(hashHistory, store);

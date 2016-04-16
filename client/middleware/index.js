@@ -1,10 +1,14 @@
 
 import logger from './logger';
 import WebInteractions from './user-web3-interactions';
-import RPCMiddleware from './rpc';
+import RPC from './rpc';
+import RPCPushResponse from './rpc-push-response';
+import LocalStorage from './localstorage';
 
-export {
+export default {
   logger,
-  RPCMiddleware,
+  RPC,
+  RPCPushResponse,
+  LocalStorage,
   WebInteractions
 };

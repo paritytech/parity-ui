@@ -1,19 +1,20 @@
 
 import {handleActions} from 'redux-actions';
+import localStore from 'store';
 
 const initialState = {
-  lastResponse: 'No request has been made (yet!)'
+  prevCalls: localStore.get('rpcPrevCalls') || []
 };
 
 export const actionHandlers = {
 
-  'update RPCResponse' (state, action) {
-    console.warn('action', action);
+  'unshift RPCResponse' (state, action) {
     return {
       ...state,
-      lastResponse: action.payload
+      prevCalls: [action.payload].concat(state.prevCalls)
     };
   }
+
 };
 
 export default handleActions(actionHandlers, initialState);

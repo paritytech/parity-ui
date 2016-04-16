@@ -29,8 +29,9 @@ export default class RPCMiddleware {
           return store.dispatch(RPCActions.error(err));
         }
         const result = this.formatResult(body.result, outputFormatter);
-        const action2 = RPCActions.updateRPCResponse(result);
-        store.dispatch(action2);
+        const pushRpcResponsePayload = { name: method, params: action.payload.params, response: result };
+        const pushRpcResponseAction = RPCActions.unshiftRPCReponse(pushRpcResponsePayload);
+        store.dispatch(pushRpcResponseAction);
       });
       return next(action);
     };
