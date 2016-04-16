@@ -82,7 +82,7 @@ class RPC extends Component {
       return;
     }
     return _.find(rpcMethods.arr, {name: selectedMethod.name})
-            .params.map(p => 
+            .params.map(p =>
                     <div>
                       <label>{p}</label><input ref={p} />
                     </div>);

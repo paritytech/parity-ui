@@ -7,7 +7,7 @@ import * as MiningActions from '../actions/modify-mining';
 describe('MIDDLEWARE: User Web3 interactions', () => {
   let cut;
 
-  beforeEach('Mock web3', () => {
+  beforeEach('Mock cut', () => {
     const web3 = null;
     const ethcoreWeb3 = {
       setExtraData: sinon.spy()
