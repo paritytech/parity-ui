@@ -108,8 +108,8 @@ export default class Status extends Component {
             </div>
           </div>
 
-          {this.renderSettings()}
           {this.renderMiningDetails()}
+          {this.renderSettings()}
           {/* this.renderAccounts()? */}
         </main>
       </div>
