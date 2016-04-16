@@ -13,13 +13,6 @@ import rpcMethods from './rpc-methods.json';
 
 class RPC extends Component {
 
-  constructor (...args) {
-    super(...args);
-    this.state = {
-      selectedMethod: rpcMethods.arr[0]
-    };
-  }
-
   render () {
     return (
       <div>
@@ -59,7 +52,8 @@ class RPC extends Component {
     return (
       <div>
         <label htmlFor='selectedMethod'>Choose Method</label>
-        <select id='selectedMethod' onChange={::this.handleMethodChange}>
+        <select id='selectedMethod' value={this.props.rpc.selectedMethod.name}
+                onChange={::this.handleMethodChange}>
           {methods}
         </select>
       </div>
@@ -68,7 +62,7 @@ class RPC extends Component {
 
   handleMethodChange (evt) {
     let method = _.find(rpcMethods.arr, {name: evt.target.value});
-    this.setState({selectedMethod: method});
+    this.props.actions.selectRpcMethod(method);
   }
 
   renderForm () {
@@ -81,7 +75,7 @@ class RPC extends Component {
   }
 
   onRpcFire () {
-    let {selectedMethod} = this.state;
+    let {selectedMethod} = this.props.rpc;
     const params = selectedMethod.params.map(p => this.refs[p].value);
     this.props.actions.fireRPC({
       method: selectedMethod.name,
@@ -92,7 +86,7 @@ class RPC extends Component {
   }
 
   renderInputs () {
-    let {selectedMethod} = this.state;
+    let {selectedMethod} = this.props.rpc;
     if (!selectedMethod.params) {
       return;
     }
@@ -118,10 +112,12 @@ function mapDispatchToProps (dispatch) {
 RPC.propTypes = {
   status: PropTypes.object.isRequired,
   rpc: PropTypes.shape({
-    prevCalls: PropTypes.array.isRequired
+    prevCalls: PropTypes.array.isRequired,
+    selectedMethod: PropTypes.object.isRequired
   }).isRequired,
   actions: PropTypes.shape({
-    fireRPC: PropTypes.func.isRequired
+    fireRPC: PropTypes.func.isRequired,
+    selectRpcMethod: PropTypes.func.isRequired
   }).isRequired
 };
 

@@ -24,7 +24,7 @@ const ethcoreWeb3 = new EthcoreWeb3(web3);
 const web3Interactions = new Middlewares.WebInteractions(web3, ethcoreWeb3);
 const rpcMiddleware = new Middlewares.RPC(request);
 const rpcPushResponseMiddleware = new Middlewares.RPCPushResponse();
-const localStorageMiddleware = new Middlewares.LocalStorage(localStore);
+const localStorageMiddleware = new Middlewares.LocalStorage();
 
 const storeMiddlewares = [Middlewares.logger, web3Interactions.toMiddleware(), rpcMiddleware.toMiddleware(), rpcPushResponseMiddleware.toMiddleware(), localStorageMiddleware.toMiddleware()];
 
@@ -44,3 +44,4 @@ ReactDOM.render(
 );
 
 new Web3Provider(web3, ethcoreWeb3, store).start();
+window.store = localStore;

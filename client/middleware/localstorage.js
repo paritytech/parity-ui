@@ -1,9 +1,7 @@
 
-export default class localStorageMiddleware {
+import localStore from 'store';
 
-  constructor (_localStore) {
-    this._localStore = _localStore;
-  }
+export default class localStorageMiddleware {
 
   toMiddleware () {
     return store => next => action => {
@@ -12,9 +10,14 @@ export default class localStorageMiddleware {
       }
 
       const {key, value} = action.payload;
-      const newArr = [value].concat(this._localStore.get(key) || []);
-      this._localStore.set(key, newArr);
+      this.unshift(key, value);
       return next(action);
     };
+  }
+
+  // remove if/when PR is accepted: https://github.com/marcuswestin/store.js/pull/153
+  unshift (key, value) {
+    const newArr = [value].concat(localStore.get(key) || []);
+    localStore.set(key, newArr);
   }
 }
