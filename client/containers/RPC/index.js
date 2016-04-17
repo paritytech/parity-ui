@@ -93,10 +93,11 @@ class RPC extends Component {
     return _.find(rpcMethods.arr, {name: selectedMethod.name})
             .params.map((p, i) =>
                     <div>
-                      <label>{p}</label><input defaultValue={::this.getSelectedMethodParams(i)} ref={p} />
+                      <label>{p}</label><input /*defaultValue={::this.getSelectedMethodParams(i)}*/ ref={p} />
                     </div>);
   }
 
+  // @TODO :: bug - gets wrong params
   getSelectedMethodParams (index) {
     const {rpc} = this.props;
     const prevCall = _.find(rpc.prevCalls, {name: rpc.selectedMethod.name});
