@@ -68,14 +68,18 @@ export default class RPCMiddleware {
       return params;
     }
 
-    return params.map(param => {
-      inputFormatters.forEach(formatter => {
-        if (formatter === 'encodeExtraData') {
-          formatter = extraDataManipulator.encode;
-        }
-        // @TODO: add rest of formatters
-        param = formatter(param);
-      });
+    return params.map((param, i) => {
+      let formatter = inputFormatters[i];
+
+      if (!formatter) {
+        return param;
+      }
+
+      if (formatter === 'encodeExtraData') {
+        formatter = extraDataManipulator.encode;
+      }
+      // @TODO: add rest of formatters
+      param = formatter(param);
       return param;
     });
   }
