@@ -23,10 +23,10 @@ const web3 = new Web3(new Web3.providers.HttpProvider('/rpc/'));
 const ethcoreWeb3 = new EthcoreWeb3(web3);
 const web3Interactions = new Middlewares.WebInteractions(web3, ethcoreWeb3);
 const rpcMiddleware = new Middlewares.RPC(request);
-const rpcPushResponseMiddleware = new Middlewares.RPCPushResponse();
+const rpcUnshiftResponseMiddleware = new Middlewares.RPCUnshiftResponse();
 const localStorageMiddleware = new Middlewares.LocalStorage();
 
-const storeMiddlewares = [Middlewares.logger, web3Interactions.toMiddleware(), rpcMiddleware.toMiddleware(), rpcPushResponseMiddleware.toMiddleware(), localStorageMiddleware.toMiddleware()];
+const storeMiddlewares = [Middlewares.logger, web3Interactions.toMiddleware(), rpcMiddleware.toMiddleware(), rpcUnshiftResponseMiddleware.toMiddleware(), localStorageMiddleware.toMiddleware()];
 
 const store = configure(storeMiddlewares);
 const history = syncHistoryWithStore(hashHistory, store);

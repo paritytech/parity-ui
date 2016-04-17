@@ -1,7 +1,7 @@
 
 import {unshiftToLocalStorage} from '../actions/localstorage';
 
-export default class RPCPushResponseMiddleware {
+export default class RPCUnshiftResponseMiddleware {
 
   toMiddleware () {
     return store => next => action => {

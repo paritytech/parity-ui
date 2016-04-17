@@ -1,7 +1,8 @@
 
 
 // import utils from 'web3/lib/utils/utils';
-import {outputBigNumberFormatter} from 'web3/lib/web3/formatters.js';
+import web3Formatters from 'web3/lib/web3/formatters.js';
+import web3Utils from 'web3/lib/utils/utils.js';
 
 // import {toPromise} from '../provider/util-provider';
 import ExtraDataManipulator from '../provider/extra-data-manipulator-provider';
@@ -29,9 +30,9 @@ export default class RPCMiddleware {
           return store.dispatch(RPCActions.error(err));
         }
         const result = this.formatResult(body.result, outputFormatter);
-        const pushRpcResponsePayload = { name: method, params: action.payload.params, response: result };
-        const pushRpcResponseAction = RPCActions.unshiftRPCReponse(pushRpcResponsePayload);
-        store.dispatch(pushRpcResponseAction);
+        const unshiftRpcResponsePayload = { name: method, params: action.payload.params, response: result };
+        const unshiftRpcResponseAction = RPCActions.unshiftRPCReponse(unshiftRpcResponsePayload);
+        store.dispatch(unshiftRpcResponseAction);
       });
       return next(action);
     };
@@ -55,11 +56,17 @@ export default class RPCMiddleware {
       return `${result}`;
     }
 
-    if (formatter === 'BigNumber') {
-      formatter = outputBigNumberFormatter;
+    // mostly we use web3Formatters (the last "else" case)
+    // otherwise we use our own, or web3Utils
+    // @TODO :: impement our formatters with a convention (currenty we have only extraDataManipulator as a formatter)
+    if (formatter === 'decodeExtraData') {
+      formatter = extraDataManipulator.decode;
+    } else if (formatter.indexOf('utils.') > -1) {
+      formatter = web3Utils[formatter.split('.')[1]];
+    } else {
+      formatter = web3Formatters[formatter];
     }
 
-    // @TODO: add rest of formatters
     return `${formatter(result)}`;
   }
 
@@ -75,12 +82,18 @@ export default class RPCMiddleware {
         return param;
       }
 
+      // mostly we use web3Formatters (the last "else" case)
+      // otherwise we use our own, or web3Utils
+      // @TODO :: impement our formatters with a convention (currenty we have only extraDataManipulator as a formatter)
       if (formatter === 'encodeExtraData') {
         formatter = extraDataManipulator.encode;
+      } else if (formatter.indexOf('utils.') > -1) {
+        formatter = web3Utils[formatter.split('.')[1]];
+      } else {
+        formatter = web3Formatters[formatter];
       }
-      // @TODO: add rest of formatters
-      param = formatter(param);
-      return param;
+
+      return formatter(param);
     });
   }
 }
