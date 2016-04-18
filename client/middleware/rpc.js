@@ -1,16 +1,12 @@
 
-
-// import utils from 'web3/lib/utils/utils';
+// import {toPromise} from '../provider/util-provider';
 import web3Formatters from 'web3/lib/web3/formatters.js';
 import web3Utils from 'web3/lib/utils/utils.js';
+import * as RpcActions from '../actions/rpc';
+import RpcProvider from '../provider/rpc-provider';
+const rpcProvider = new RpcProvider(web3Formatters, web3Utils);
 
-// import {toPromise} from '../provider/util-provider';
-import ExtraDataManipulator from '../provider/extra-data-manipulator-provider';
-import * as RPCActions from '../actions/rpc';
-
-const extraDataManipulator = new ExtraDataManipulator();
-
-export default class RPCMiddleware {
+export default class RpcMiddleware {
 
   constructor (request) {
     this._request = request;
@@ -18,23 +14,34 @@ export default class RPCMiddleware {
 
   toMiddleware () {
     return store => next => action => {
-      if (action.type !== 'fire RPC') {
+      if (action.type !== 'fire rpc') {
         return next(action);
       }
 
-      const {method, inputFormatters, outputFormatter} = action.payload;
-      const params = this.formatParams(action.payload.params, inputFormatters);
+      const {method, inputFormatters, outputFormatter, params} = action.payload;
+      const formattedParams = rpcProvider.formatParams(params, inputFormatters);
       // @TODO: convert to promise
-      this._request(::this.getOptions(method, params), (err, response, body) => {
-        if (err) {
-          return store.dispatch(RPCActions.error(err));
-        }
-        const result = this.formatResult(body.result, outputFormatter);
-        const unshiftRpcResponsePayload = { name: method, params: action.payload.params, response: result };
-        const unshiftRpcResponseAction = RPCActions.unshiftRPCReponse(unshiftRpcResponsePayload);
-        store.dispatch(unshiftRpcResponseAction);
-      });
+      this._request(
+        this.getOptions(method, formattedParams),
+        this.responseHandler(store, method, params, outputFormatter)
+      );
       return next(action);
+    };
+  }
+
+  responseHandler (store, method, params, outputFormatter) {
+    return (err, response, body) => {
+      if (err) {
+        return store.dispatch(RpcActions.error(err));
+      }
+
+      const result = rpcProvider.formatResult(body.result, outputFormatter);
+      const addRpcResponseAction = RpcActions.addRpcReponse({
+        name: method,
+        params: params,
+        response: result
+      });
+      store.dispatch(addRpcResponseAction);
     };
   }
 
@@ -51,49 +58,4 @@ export default class RPCMiddleware {
     };
   }
 
-  formatResult (result, formatter) {
-    if (!formatter) {
-      return `${result}`;
-    }
-
-    // mostly we use web3Formatters (the last "else" case)
-    // otherwise we use our own, or web3Utils
-    // @TODO :: impement our formatters with a convention (currenty we have only extraDataManipulator as a formatter)
-    if (formatter === 'decodeExtraData') {
-      formatter = extraDataManipulator.decode;
-    } else if (formatter.indexOf('utils.') > -1) {
-      formatter = web3Utils[formatter.split('.')[1]];
-    } else {
-      formatter = web3Formatters[formatter];
-    }
-
-    return `${formatter(result)}`;
-  }
-
-  formatParams (params, inputFormatters) {
-    if (!inputFormatters || !inputFormatters.length) {
-      return params;
-    }
-
-    return params.map((param, i) => {
-      let formatter = inputFormatters[i];
-
-      if (!formatter) {
-        return param;
-      }
-
-      // mostly we use web3Formatters (the last "else" case)
-      // otherwise we use our own, or web3Utils
-      // @TODO :: impement our formatters with a convention (currenty we have only extraDataManipulator as a formatter)
-      if (formatter === 'encodeExtraData') {
-        formatter = extraDataManipulator.encode;
-      } else if (formatter.indexOf('utils.') > -1) {
-        formatter = web3Utils[formatter.split('.')[1]];
-      } else {
-        formatter = web3Formatters[formatter];
-      }
-
-      return formatter(param);
-    });
-  }
 }

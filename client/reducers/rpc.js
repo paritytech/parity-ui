@@ -1,18 +1,26 @@
 
 import {handleActions} from 'redux-actions';
-import localStore from 'store';
+import rpcMetods from '../data/rpc.json';
 
 const initialState = {
-  prevCalls: localStore.get('rpcPrevCalls') || [],
-  selectedMethod: localStore.get('rpcPrevCalls')[0] || {}
+  prevCalls: [],
+  selectedMethod: rpcMetods.methods[0]
 };
 
 export const actionHandlers = {
 
-  'unshift RPCResponse' (state, action) {
+  'add rpcResponse' (state, action) {
     return {
       ...state,
       prevCalls: [action.payload].concat(state.prevCalls)
+    };
+  },
+
+  'sync rpcStateFromLocalStorage' (state, action) {
+    return {
+      ...state,
+      prevCalls: action.payload.prevCalls,
+      selectedMethod: action.payload.selectedMethod
     };
   },
 

@@ -33,11 +33,11 @@ export default class Status extends Component {
           <input type='text' readOnly value={settings.networkPort} />
         </div>
         <div className='col col-6'>
-          <h3>RPC Enabled</h3>
+          <h3>Rpc Enabled</h3>
           <input type='text' readOnly value={settings.rpcEnabled} />
-          <h3>RPC Interface</h3>
+          <h3>Rpc Interface</h3>
           <input type='text' readOnly value={settings.rpcInterface} />
-          <h3>RPC Port</h3>
+          <h3>Rpc Port</h3>
           <input type='text' readOnly value={settings.rpcPort} />
         </div>
       </div>

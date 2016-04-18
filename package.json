@@ -30,6 +30,7 @@
     "karma-babel-preprocessor": "6.0.1",
     "less": "^2.6.1",
     "less-loader": "^2.2.3",
+    "mock-local-storage": "1.0.2",
     "nightwatch": "0.8.18",
     "postcss-loader": "^0.8.1",
     "pre-git": "^3.8.1",

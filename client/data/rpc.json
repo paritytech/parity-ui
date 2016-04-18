@@ -1,8 +1,8 @@
 {
-  "arr": [
+  "methods": [
     { "name": "ethcore_minGasPrice", "params": [], "order": [], "returns" : "", "outputFormatter": "outputBigNumberFormatter"},
     { "name": "ethcore_extraData", "params": [], "order": [], "returns" : "", "outputFormatter": "decodeExtraData"},
-    { "name": "ethcore_setExtraData", "params": [""], "order": [], "returns" : "", "inputFormatters": ["encodeExtraData"] },
+    { "name": "ethcore_setExtraData", "params": ["Extra data"], "order": [], "returns" : "", "inputFormatters": ["encodeExtraData"] },
     { "name": "ethcore_setMinGasPrice", "params": [""], "order": [], "returns" : "", "inputFormatter": ["utils.toHex"]},
     { "name": "ethcore_gasFloorTarget", "params": [], "order": [], "returns" : "", "outputFormatter": "outputBigNumberFormatter"},
     { "name": "ethcore_setGasFloorTarget", "params": [""], "order": [], "returns" : "", "inputFormatter": ["utils.toHex"]},
