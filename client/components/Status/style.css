@@ -1,17 +1,22 @@
 .inputTrigger { 
-  display: none; 
   left: 310px;
   bottom: 4px;
   position: absolute;
   cursor: pointer;
-  animation: fadein .3s;
+  opacity: 0;
 }
 
 *:hover > .inputTrigger { 
-  display: block; 
+  opacity: 1.0;
 }
 
-@keyframes fadein {
-  0%   { opacity: 0; }
-  100% { opacity: 1; }
+.row {
+  margin-left: -10px;
+  margin-right: -10px;
 }
+.row::after {
+  display: table;
+  clear: both;
+  content: '';
+}
+

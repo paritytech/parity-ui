@@ -1,12 +1,13 @@
 
 import React, { Component, PropTypes } from 'react';
 
+import style from './styles.css';
+
 export default class EditableValue extends Component {
 
   constructor (...args) {
     super(...args);
     this.state = {
-      editing: false,
       value: this.props.value
     };
   }
@@ -27,15 +28,13 @@ export default class EditableValue extends Component {
   }
 
   onBlur (evt) {
-    this.setState({
-      editing: false
-    });
     this.props.onSubmit(evt.target.value);
   }
 
   render () {
     return (
       <input
+        className={style.input}
         type='text'
         value={this.state.value}
         onChange={::this.onChange}

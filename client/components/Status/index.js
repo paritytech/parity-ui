@@ -25,17 +25,29 @@ export default class Status extends Component {
         <h1><span>Network</span> settings</h1>
         <h3>Chain</h3>
         <Value value={settings.chain} />
-        <h3>Peers</h3>
-        <Value value={`${status.peers}/${settings.maxPeers}`} />
-        <h3>Network port</h3>
-        <Value value={settings.networkPort} />
+        <div className={style.row}>
+          <div className='col col-6 mobile-full'>
+            <h3>Peers</h3>
+            <Value value={`${status.peers}/${settings.maxPeers}`} />
+          </div>
+          <div className='col col-6 mobile-full'>
+            <h3>Network port</h3>
+            <Value value={settings.networkPort} />
+          </div>
+        </div>
 
         <h3>RPC Enabled</h3>
         <Value value={settings.rpcEnabled ? 'yes' : 'no'} />
-        <h3>RPC Interface</h3>
-        <Value value={settings.rpcInterface} />
-        <h3>RPC Port</h3>
-        <Value value={settings.rpcPort} />
+        <div className={style.row}>
+          <div className='col col-6 mobile-full'>
+            <h3>RPC Interface</h3>
+            <Value value={settings.rpcInterface} />
+          </div>
+          <div className='col col-6 mobile-full'>
+            <h3>RPC Port</h3>
+            <Value value={settings.rpcPort} />
+          </div>
+        </div>
       </div>
     );
   }
@@ -99,7 +111,7 @@ export default class Status extends Component {
               <div className='col col-4 tablet-full mobile-full'>
                 <div className='col col-12 tablet-col-1-2 mobile-full'>
                   <h1><span>Best</span> Block</h1>
-                  <h1>{bestBlock}</h1>
+                  <h1>#{bestBlock}</h1>
                 </div>
                 <div className='col col-12 tablet-col-1-2 mobile-full'>
                   <h1><span>Hash</span> Rate</h1>
