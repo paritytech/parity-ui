@@ -71,10 +71,12 @@ export default class Status extends Component {
         <div className='col col-6'>
           <h3>Author</h3>
           <EditableInput
+            {...this._test('author')}
             value={mining.author}
             onSubmit={onAuthorChange}/>
           <h3>Extradata</h3>
           <EditableInput
+            {...this._test('extra-data')}
             value={mining.extraData}
             onSubmit={onExtraDataChange}/>
         </div>

@@ -69,6 +69,9 @@ module.exports = {
         test: /\.(ttf|eot|svg|otf)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
         loader: 'file-loader'
       }
+    ],
+    noParse: [
+      /node_modules\/sinon/
     ]
   },
   resolve: {

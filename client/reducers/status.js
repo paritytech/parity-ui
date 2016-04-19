@@ -15,7 +15,7 @@ export default handleActions({
   error (state, action) {
     return {
       ...state,
-      error: action.payload,
+      error: action.payload.toString(),
       noOfErrors: state.noOfErrors + 1
     };
   },

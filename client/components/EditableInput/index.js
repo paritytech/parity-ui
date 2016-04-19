@@ -28,10 +28,21 @@ export default class EditableInput extends Component {
     };
 
     return (
-      <div>
+      <div {...this._testInherit()}>
         {this.state.editing}
-        <input type='text' style={this.state.editing ? {display: 'none'} : {}} value={this.props.value} onClick={onClick}/>
-        <input type='text' style={!this.state.editing ? {display: 'none'} : {}} onBlur={onBlur} ref='editInput' />
+        <input
+          type='text'
+          style={this.state.editing ? {display: 'none'} : {}}
+          value={this.props.value}
+          readOnly
+          onClick={onClick}
+        />
+        <input
+          type='text'
+          style={!this.state.editing ? {display: 'none'} : {}}
+          onBlur={onBlur}
+          ref='editInput'
+        />
       </div>
     );
   }
