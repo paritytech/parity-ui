@@ -4,10 +4,11 @@
   "description": "Ethereum Node Status page",
   "main": "index.js",
   "scripts": {
+    "webpack": "webpack",
     "lint": "semistandard",
     "test": "mocha --compilers js:babel-core/register client/**/*.spec.js -w",
     "testOnce": "mocha --compilers js:babel-core/register client/**/*.spec.js",
-    "start": "webpack-dev-server -d --history-api-fallback --hot --inline --progress --colors --port 3000",
+    "start": "webpack-dev-server --history-api-fallback --hot --inline --progress --colors --port 3000 --output-pathinfo",
     "build": "NODE_ENV=production webpack --progress --colors",
     "commit": "commit-wizard"
   },

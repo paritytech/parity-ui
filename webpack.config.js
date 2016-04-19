@@ -8,6 +8,7 @@ var isProd = ENV === 'production';
 module.exports = {
   debug: !isProd,
   cache: !isProd,
+  devtool: isProd ? '#source-map' : '#cheap-module-eval-source-map',
   context: path.join(__dirname, './client'),
   entry: {
     index: './index.js'
@@ -71,7 +72,8 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: ['', '.js', '.jsx']
+    extensions: ['', '.js', '.jsx'],
+    unsafeCache: true,
   },
   postcss: [
     rucksack({
