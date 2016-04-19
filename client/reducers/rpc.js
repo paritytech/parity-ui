@@ -24,6 +24,13 @@ export const actionHandlers = {
     };
   },
 
+  'reset rpcPrevCalls' (state, action) {
+    return {
+      ...state,
+      prevCalls: []
+    };
+  },
+
   'select rpcMethod' (state, action) {
     return {
       ...state,

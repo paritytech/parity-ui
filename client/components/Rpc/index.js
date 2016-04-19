@@ -2,6 +2,7 @@
 import React, { Component, PropTypes } from 'react';
 import _ from 'lodash';
 
+import style from './style.css';
 import rpcData from '../../data/rpc.json';
 
 export default class Rpc extends Component {
@@ -20,6 +21,14 @@ export default class Rpc extends Component {
             {this.renderForm()}
           </div>
           <div className='col col-9'>
+            <h2>Call History</h2>
+            <a
+              title='Reset RPC history'
+              onClick={::this.props.actions.resetRpcPrevCalls}
+              className={style.right}
+              >
+              <i className='icon-trash'></i>
+            </a>
             {this.renderPrevCalls()}
           </div>
         </div>
@@ -33,7 +42,6 @@ export default class Rpc extends Component {
     );
     return (
       <div>
-        <h2>Call History</h2>
         <table>
           <thead><tr><th>Method</th><th>Params</th><th>Response</th></tr></thead>
           <tbody>{prevCalls}</tbody>
@@ -94,6 +102,7 @@ export default class Rpc extends Component {
                       <input ref={e => this._inputs[p.name] = e} />
                     </div>);
   }
+
 }
 
 Rpc.propTypes = {
@@ -103,6 +112,7 @@ Rpc.propTypes = {
   }).isRequired,
   actions: PropTypes.shape({
     fireRpc: PropTypes.func.isRequired,
-    selectRpcMethod: PropTypes.func.isRequired
+    selectRpcMethod: PropTypes.func.isRequired,
+    resetRpcPrevCalls: PropTypes.func.isRequired
   }).isRequired
 };
