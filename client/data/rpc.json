@@ -1,10 +1,10 @@
 {
   "methods": [
-    { "name": "ethcore_minGasPrice", "params": [], "order": [], "returns" : "", "outputFormatter": "outputBigNumberFormatter"},
+    { "name": "ethcore_minGasPrice", "params": [], "order": [], "returns" : "", "outputFormatter": "toBigNumber"},
     { "name": "ethcore_extraData", "params": [], "order": [], "returns" : "", "outputFormatter": "decodeExtraData"},
     { "name": "ethcore_setExtraData", "params": ["Extra data"], "order": [], "returns" : "", "inputFormatters": ["encodeExtraData"] },
     { "name": "ethcore_setMinGasPrice", "params": [""], "order": [], "returns" : "", "inputFormatter": ["utils.toHex"]},
-    { "name": "ethcore_gasFloorTarget", "params": [], "order": [], "returns" : "", "outputFormatter": "outputBigNumberFormatter"},
+    { "name": "ethcore_gasFloorTarget", "params": [], "order": [], "returns" : "", "outputFormatter": "toBigNumber"},
     { "name": "ethcore_setGasFloorTarget", "params": [""], "order": [], "returns" : "", "inputFormatter": ["utils.toHex"]},
     { "name": "ethcore_setAuthor", "params": [""], "order": [], "returns" : "", "inputFormatter": ["inputAddressFormatter"]},
     { "name": "eth_protocolVersion", "params": [], "order": [], "returns" : "" },
@@ -14,7 +14,7 @@
     { "name": "eth_gasPrice", "params": [], "order": [], "returns" : "" },
     { "name": "eth_accounts", "params": [], "order": [], "returns" : [] },
     { "name": "eth_blockNumber", "params": [], "order": [], "returns" : ""},
-    { "name": "eth_getBalance", "params": ["address", "block"], "order": [], "returns" : "", "inputFormatters": ["inputAddressFormatter", "inputDefaultBlockNumberFormatter"], "outputFormatter": "outputBigNumberFormatter"},
+    { "name": "eth_getBalance", "params": ["address", "block"], "order": [], "returns" : "", "inputFormatters": ["inputAddressFormatter", "inputDefaultBlockNumberFormatter"], "outputFormatter": "toBigNumber"},
     { "name": "eth_getStorageAt", "params": ["", "", ""], "order": [], "returns": "", "inputFormatters": [null, "utils.toHex", "inputDefaultBlockNumberFormatter"]},
     { "name": "eth_getTransactionCount", "params": ["", ""], "order": [], "returns" : "", "inputFormatter": [null, "inputDefaultBlockNumberFormatter"], "outputFormatter": "utils.toDecimal"},
     { "name": "eth_pendingTransactions", "params": [], "order": [], "returns" : ""},
