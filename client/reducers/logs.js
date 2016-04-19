@@ -20,7 +20,7 @@ export const actionHandlers = {
       ...state,
       logs: action.payload
     };
-  },
+  }
 
 };
 

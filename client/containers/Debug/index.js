@@ -1,11 +1,9 @@
 
 import React, { Component, PropTypes } from 'react';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import Debug from '../../components/Debug';
-import style from './style.css';
 
 class DebugPage extends Component {
 

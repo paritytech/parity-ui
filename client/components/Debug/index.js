@@ -1,6 +1,5 @@
 
 import React, { Component, PropTypes } from 'react';
-import bytes from 'bytes';
 
 import style from './style.css';
 
@@ -32,12 +31,12 @@ export default class Debug extends Component {
 Debug.propTypes = {
   logs: PropTypes.shape({
     levels: PropTypes.string.isRequired,
-    logs: PropTypes.arrayOf(PropTypes.string).isRequired,
+    logs: PropTypes.arrayOf(PropTypes.string).isRequired
   }).isRequired,
   status: PropTypes.shape({
     name: PropTypes.string,
     bestBlock: PropTypes.string.isRequired,
     hashrate: PropTypes.string.isRequired,
     peers: PropTypes.number.isRequired
-  }).isRequired,
+  }).isRequired
 };
