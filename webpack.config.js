@@ -73,7 +73,7 @@ module.exports = {
   },
   resolve: {
     extensions: ['', '.js', '.jsx'],
-    unsafeCache: true,
+    unsafeCache: true
   },
   postcss: [
     rucksack({
