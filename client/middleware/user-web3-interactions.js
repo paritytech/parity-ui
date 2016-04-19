@@ -9,8 +9,6 @@ export default class WebInteractions extends Web3Base {
       let delegate;
       if (action.type.indexOf('modify ') > -1) {
         delegate = ::this.onModify;
-      } else if (action.type === 'reset extraData') {
-        delegate = ::this.onResetExtraData;
       } else {
         next(action);
         return;
@@ -27,12 +25,6 @@ export default class WebInteractions extends Web3Base {
   onModify (store, next, action) {
     this.ethcoreWeb3[this.getMethod(action.type)](action.payload);
     action.type = action.type.replace('modify ', 'update ');
-    return next(action);
-  }
-
-  onResetExtraData (store, next, action) {
-    const extraData = store.getState().status.version.split('/').slice(0, 2).join('/');
-    store.dispatch(modifyExtraData(extraData));
     return next(action);
   }
 

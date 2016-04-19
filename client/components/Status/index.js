@@ -64,12 +64,6 @@ export default class Status extends Component {
       this.props.actions.modifyGasFloorTarget(+evt.target.value);
     };
 
-    const onResetExtraData = () => {
-      this.props.actions.resetExtraData();
-    };
-
-    const defaultExtraData = this.props.status.version.split('/').slice(0, 2).join('/');
-
     return (
       <div className='row clear'>
         <div className='col col-12'>
@@ -85,14 +79,7 @@ export default class Status extends Component {
             <EditableInput
               value={mining.extraData}
               onSubmit={onExtraDataChange}>
-              <a
-              style={mining.extraData === defaultExtraData ? {display: 'none'} : {}}
-                className={style.inputTrigger}
-                onClick={onResetExtraData}
-                title={`Reset to ${defaultExtraData}`}
-                >
-                <i className='icon-anchor'></i>
-              </a>
+              {this.renderResetData()}
             </EditableInput>
           </div>
         </div>
@@ -108,6 +95,34 @@ export default class Status extends Component {
         </div>
       </div>
     );
+  }
+
+  renderResetData () {
+    const {mining} = this.props;
+
+    const defaultExtraData = this.getDefaultExtraData();
+
+    if (mining.extraData === defaultExtraData) {
+      return;
+    }
+
+    return (
+      <a
+        className={style.inputTrigger}
+        onClick={::this.onResetExtraData}
+        title={`Reset to ${defaultExtraData}`}
+        >
+        <i className='icon-anchor'></i>
+      </a>
+    );
+  }
+
+  onResetExtraData () {
+    this.props.actions.modifyExtraData(this.getDefaultExtraData());
+  }
+
+  getDefaultExtraData () {
+    return this.props.status.version.split('/').slice(0, 3).join('/');
   }
 
   render () {
