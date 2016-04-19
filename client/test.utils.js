@@ -23,17 +23,15 @@ function testHook (name) {
 
 // Backend mocking framework
 if (isIntegrationTests) {
-
   const sinon = require('sinon/pkg/sinon');
 
   class FakeRpcServer {
-  
     constructor () {
       this.xhr = null;
       this.middlewares = [];
     }
 
-    start() {
+    start () {
       this.xhr = sinon.useFakeXMLHttpRequest();
       this.xhr.onCreate = ::this.handleRequest;
       return () => this.xhr.restore();
@@ -49,7 +47,7 @@ if (isIntegrationTests) {
       });
     }
 
-    handleRequest(req) {
+    handleRequest (req) {
       setTimeout(() => {
         req.body = JSON.parse(req.requestBody);
         const middlewaresForMethod = this.middlewares
@@ -65,26 +63,24 @@ if (isIntegrationTests) {
             return middleware(req);
           }, false);
 
-          
-          if (!response) {
-            return req.respond(405, {
-              'Content-Type': 'application/json'
-            }, JSON.stringify({
-              jsonrpc: '2.0',
-              id: req.body.id,
-              result: null
-            }));
-          }
-
-          return req.respond(200, {
+        if (!response) {
+          return req.respond(405, {
             'Content-Type': 'application/json'
           }, JSON.stringify({
             jsonrpc: '2.0',
             id: req.body.id,
-            result: response
+            result: null
           }));
+        }
 
-        });
+        return req.respond(200, {
+          'Content-Type': 'application/json'
+        }, JSON.stringify({
+          jsonrpc: '2.0',
+          id: req.body.id,
+          result: response
+        }));
+      });
     }
   }
 

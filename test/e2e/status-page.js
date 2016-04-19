@@ -1,18 +1,18 @@
-"use strict";
+'use strict';
 
 const url = 'http://localhost:3000';
 
 module.exports = {
   tags: ['statuspage'],
-  'Navigate to status page'(client) {
+  'Navigate to status page' (client) {
     client.url(url).pause(1000);
   },
 
-  'assert'(client) {
+  'assert' (client) {
     client.expect.element('hgroup').to.be.present;
   },
 
-  'change extradata'(client) {
+  'change extradata' (client) {
     let extraData = '[data-test="Status-extra-data"]';
     client.expect.element(`${extraData} input:first-child`).to.be.visible;
 
@@ -26,12 +26,12 @@ module.exports = {
       `${extraData} input:first-child`,
       ['parity']
     );
-    
+
     // Then blur
     client.click('body');
   },
 
-  after(client) {
+  after (client) {
     client.end();
   }
 };
