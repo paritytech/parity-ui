@@ -8,7 +8,7 @@ import Status from '../../components/Status';
 import * as ModifyMiningActions from '../../actions/modify-mining';
 import style from './style.css';
 
-class App extends Component {
+class StatusPage extends Component {
 
   render () {
     const {status} = this.props;
@@ -25,7 +25,7 @@ class App extends Component {
     );
   }
 }
-App.propTypes = {
+StatusPage.propTypes = {
   status: PropTypes.object.isRequired,
   settings: PropTypes.object.isRequired,
   mining: PropTypes.object.isRequired
@@ -44,4 +44,4 @@ function mapDispatchToProps (dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(App);
+)(StatusPage);
