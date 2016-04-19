@@ -21,7 +21,7 @@ export default class Status extends Component {
   renderSettings () {
     const {status, settings} = this.props;
     return (
-      <div className='col col-4'>
+      <div className='col col-4 tablet-col-1-2 mobile-full'>
         <h1><span>Network</span> settings</h1>
         <h3>Chain</h3>
         <Value value={settings.chain} />
@@ -60,7 +60,7 @@ export default class Status extends Component {
     };
 
     return (
-      <div className='col col-4'>
+      <div className='col col-4 tablet-col-1-2 mobile-full'>
         <h1><span>Mining</span> settings</h1>
         <h3>Author</h3>
         <EditableValue
@@ -94,16 +94,21 @@ export default class Status extends Component {
     return (
       <div className='dapp-flex-content'>
         <main className='dapp-content'>
-
-          <div className='row clear'>
-            <div className='col col-4'>
-              <h1><span>Best</span> Block</h1>
-              <h1>{bestBlock}</h1>
-              <h1><span>Hash</span> Rate</h1>
-              <h1>{`${hashrate} H/s`}</h1>
+          <div className='dapp-container'>
+            <div className='row clear'>
+              <div className='col col-4 tablet-full mobile-full'>
+                <div className='col col-12 tablet-col-1-2 mobile-full'>
+                  <h1><span>Best</span> Block</h1>
+                  <h1>{bestBlock}</h1>
+                </div>
+                <div className='col col-12 tablet-col-1-2 mobile-full'>
+                  <h1><span>Hash</span> Rate</h1>
+                  <h1>{`${hashrate} H/s`}</h1>
+                </div>
+              </div>
+              {this.renderMiningDetails()}
+              {this.renderSettings()}
             </div>
-            {this.renderMiningDetails()}
-            {this.renderSettings()}
           </div>
         </main>
       </div>
