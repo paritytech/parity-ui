@@ -20,7 +20,7 @@ const web3 = new Web3(new Web3.providers.HttpProvider('/rpc/'));
 const ethcoreWeb3 = new EthcoreWeb3(web3);
 const web3Interactions = new WebInteractions(web3, ethcoreWeb3);
 
-const storeMiddlewares = [logger, web3Interactions.toMiddleware(), web3Interactions.toResetExtraDataMiddleware()];
+const storeMiddlewares = [logger, web3Interactions.toMiddleware()];
 
 const store = configure(storeMiddlewares);
 const history = syncHistoryWithStore(hashHistory, store);

@@ -48,21 +48,27 @@ export default class Status extends Component {
   renderMiningDetails () {
     const {mining} = this.props;
 
-    let onMinGasPriceChange = (evt) => {
+    const onMinGasPriceChange = (evt) => {
       this.props.actions.modifyMinGasPrice(+evt.target.value);
     };
 
-    let onExtraDataChange = (evt) => {
+    const onExtraDataChange = (evt) => {
       this.props.actions.modifyExtraData(evt.target.value);
     };
 
-    let onAuthorChange = (evt) => {
+    const onAuthorChange = (evt) => {
       this.props.actions.modifyAuthor(evt.target.value);
     };
 
-    let onGasFloorTargetChange = (evt) => {
+    const onGasFloorTargetChange = (evt) => {
       this.props.actions.modifyGasFloorTarget(+evt.target.value);
     };
+
+    const onResetExtraData = () => {
+      this.props.actions.resetExtraData();
+    };
+
+    const defaultExtraData = this.props.status.version.split('/').slice(0, 2).join('/');
 
     return (
       <div className='row clear'>
@@ -79,7 +85,12 @@ export default class Status extends Component {
             <EditableInput
               value={mining.extraData}
               onSubmit={onExtraDataChange}>
-              <a className={style.inputTrigger} onClick={this.props.actions.resetExtraData} title='Reset Extra Data'>
+              <a
+              style={mining.extraData === defaultExtraData ? {display: 'none'} : {}}
+                className={style.inputTrigger}
+                onClick={onResetExtraData}
+                title={`Reset to ${defaultExtraData}`}
+                >
                 <i className='icon-anchor'></i>
               </a>
             </EditableInput>
@@ -142,6 +153,7 @@ Status.propTypes = {
   }).isRequired,
   status: PropTypes.shape({
     name: PropTypes.string,
+    version: PropTypes.string.isRequired,
     bestBlock: PropTypes.string.isRequired,
     hashrate: PropTypes.string.isRequired,
     peers: PropTypes.number.isRequired
