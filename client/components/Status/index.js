@@ -3,6 +3,7 @@ import React, { Component, PropTypes } from 'react';
 import formatNumber from 'format-number';
 import bytes from 'bytes';
 
+import style from './style.css';
 import Box from '../Box';
 import EditableInput from '../EditableInput';
 
@@ -74,9 +75,15 @@ export default class Status extends Component {
             value={mining.author}
             onSubmit={onAuthorChange}/>
           <h3>Extradata</h3>
-          <EditableInput
-            value={mining.extraData}
-            onSubmit={onExtraDataChange}/>
+          <div>
+            <EditableInput
+              value={mining.extraData}
+              onSubmit={onExtraDataChange}>
+              <a className={style.inputTrigger} onClick={this.props.actions.resetExtraData} title='Reset Extra Data'>
+                <i className='icon-anchor'></i>
+              </a>
+            </EditableInput>
+          </div>
         </div>
         <div className='col col-6'>
           <h3>Minimal Gas Price</h3>
@@ -108,13 +115,14 @@ export default class Status extends Component {
             </div>
           </div>
 
-          {this.renderSettings()}
           {this.renderMiningDetails()}
+          {this.renderSettings()}
           {/* this.renderAccounts()? */}
         </main>
       </div>
     );
   }
+
 }
 
 Status.propTypes = {
@@ -142,6 +150,7 @@ Status.propTypes = {
     modifyMinGasPrice: PropTypes.func.isRequired,
     modifyAuthor: PropTypes.func.isRequired,
     modifyGasFloorTarget: PropTypes.func.isRequired,
-    modifyExtraData: PropTypes.func.isRequired
+    modifyExtraData: PropTypes.func.isRequired,
+    resetExtraData: PropTypes.func.isRequired
   }).isRequired
 };

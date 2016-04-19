@@ -1,6 +1,8 @@
 
 import React, { Component, PropTypes } from 'react';
 
+import style from './style.css';
+
 export default class EditableInput extends Component {
 
   constructor (...args) {
@@ -28,10 +30,11 @@ export default class EditableInput extends Component {
     };
 
     return (
-      <div>
+      <div className={style.relative}>
         {this.state.editing}
         <input type='text' style={this.state.editing ? {display: 'none'} : {}} value={this.props.value} onClick={onClick}/>
         <input type='text' style={!this.state.editing ? {display: 'none'} : {}} onBlur={onBlur} ref='editInput' />
+        {this.props.children}
       </div>
     );
   }
@@ -39,5 +42,6 @@ export default class EditableInput extends Component {
 
 EditableInput.propTypes = {
   onSubmit: PropTypes.func.isRequired,
+  children: PropTypes.element,
   value: PropTypes.any
 };

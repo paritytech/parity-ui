@@ -1,5 +1,6 @@
 
 import {Web3Base} from '../provider/web3-base';
+import {modifyExtraData} from '../actions/modify-mining';
 
 export default class WebInteractions extends Web3Base {
 
@@ -13,6 +14,18 @@ export default class WebInteractions extends Web3Base {
         this.ethcoreWeb3[this.getMethod(action.type)](action.payload);
         action.type = action.type.replace('modify ', 'update ');
       }
+      return next(action);
+    };
+  }
+
+  toResetExtraDataMiddleware () {
+    return store => next => action => {
+      if (action.type !== 'reset extraData') {
+        return next(action);
+      }
+
+      // TODO :: get real value
+      store.dispatch(modifyExtraData('Parity / 2.1'));
       return next(action);
     };
   }
