@@ -1,7 +1,7 @@
 import './index.html';
 import 'dapp-styles/dapp-styles.less';
 
-import { Router, Route, browserHistory } from 'react-router';
+import { Router, Route, hashHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 import { Provider } from 'react-redux';
 import ReactDOM from 'react-dom';
@@ -9,6 +9,7 @@ import React from 'react';
 
 import { logger, WebInteractions } from './middleware';
 import Status from './containers/Status';
+import Debug from './containers/Debug';
 import Accounts from './containers/Accounts';
 import AppList from './containers/AppList';
 import configure from './store';
@@ -23,16 +24,15 @@ const web3Interactions = new WebInteractions(web3, ethcoreWeb3);
 const storeMiddlewares = [logger, web3Interactions.toMiddleware(), web3Interactions.toResetExtraDataMiddleware()];
 
 const store = configure(storeMiddlewares);
-const history = syncHistoryWithStore(browserHistory, store);
-
-const prefix = '/status';
+const history = syncHistoryWithStore(hashHistory, store);
 
 ReactDOM.render(
   <Provider store={store}>
     <Router history={history}>
-      <Route path={`${status}/`} component={Status} />
-      <Route path={`${status}/accounts`} component={Accounts} />
-      <Route path={`${status}/apps`} component={AppList} />
+      <Route path={`/`} component={Status} />
+      <Route path={`/debug`} component={Debug} />
+      <Route path={`/accounts`} component={Accounts} />
+      <Route path={`/apps`} component={AppList} />
     </Router>
   </Provider>,
   document.getElementById('root')
