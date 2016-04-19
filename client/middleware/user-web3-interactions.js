@@ -1,6 +1,5 @@
 
 import {Web3Base} from '../provider/web3-base';
-import {modifyExtraData} from '../actions/modify-mining';
 
 export default class WebInteractions extends Web3Base {
 
