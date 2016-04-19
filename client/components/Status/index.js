@@ -20,7 +20,7 @@ export default class Status extends Component {
   renderSettings () {
     const {status, settings} = this.props;
     return (
-      <div className='row'>
+      <div className='row' {...this._test('container')} >
         <div className='col col-12'>
           <h1>{this.renderNodeName()} <strong>settings</strong></h1>
         </div>
