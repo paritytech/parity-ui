@@ -4,15 +4,20 @@ import rpcMetods from '../data/rpc.json';
 
 const initialState = {
   prevCalls: [],
+  callNo: 1,
   selectedMethod: rpcMetods.methods[0]
 };
 
 export const actionHandlers = {
 
   'add rpcResponse' (state, action) {
+    action.payload.callNo = state.callNo;
+    const calls = [action.payload].concat(state.prevCalls);
+    const maxCalls = 64;
     return {
       ...state,
-      prevCalls: [action.payload].concat(state.prevCalls)
+      callNo: state.callNo + 1,
+      prevCalls: calls.slice(0, maxCalls)
     };
   },
 
@@ -20,6 +25,7 @@ export const actionHandlers = {
     return {
       ...state,
       prevCalls: action.payload.prevCalls,
+      callNo: action.payload.callNo,
       selectedMethod: action.payload.selectedMethod
     };
   },
@@ -27,6 +33,7 @@ export const actionHandlers = {
   'reset rpcPrevCalls' (state, action) {
     return {
       ...state,
+      callNo: 1,
       prevCalls: []
     };
   },
