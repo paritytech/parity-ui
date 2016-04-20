@@ -17,10 +17,12 @@ export default class Debug extends Component {
     return (
       <div className='dapp-flex-content'>
         <main className={`dapp-content ${style.container}`}>
-          <h1><span>Debugging</span> logs</h1>
-          <h2>{this.props.debug.levels || '-'}</h2>
-          <div className={style.logs}>
-            {this.renderLogs()}
+          <div className={'dapp-container'}>
+            <h1><span>Debugging</span> logs</h1>
+            <h2>{this.props.debug.levels || '-'}</h2>
+            <div className={style.logs}>
+              {this.renderLogs()}
+            </div>
           </div>
         </main>
       </div>
