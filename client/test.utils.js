@@ -1,4 +1,5 @@
 import {Component} from 'react';
+import mockedResponses from '../test/mocked-responses.json';
 
 const isProd = process.env.NODE_ENV === 'production';
 const isIntegrationTests = process.env.NODE_ENV === 'tests';
@@ -10,14 +11,22 @@ Component.prototype._testInherit = isProd ? noop : testHookInherit;
 
 function noop (name) {}
 
-function testHookInherit () {
+function testHookInherit (name) {
+  let hook = this.props[TEST_HOOK];
+  if (name) {
+    hook += `-${name}`;
+  }
   return {
-    [TEST_HOOK]: this.props[TEST_HOOK]
+    [TEST_HOOK]: hook
   };
 }
 function testHook (name) {
+  let hook = this.constructor.name;
+  if (name) {
+    hook += `-${name}`;
+  }
   return {
-    [TEST_HOOK]: `${this.constructor.name}-${name}`
+    [TEST_HOOK]: hook
   };
 }
 
@@ -86,9 +95,7 @@ if (isIntegrationTests) {
 
   const fakeRpc = new FakeRpcServer();
   fakeRpc.start();
-  fakeRpc.simpleRpc('eth_hashrate', '0x38a');
-  fakeRpc.simpleRpc('eth_blockNumber', 1234);
-  fakeRpc.simpleRpc('net_peerCount', 15);
+  mockedResponses.rpc.forEach(method => fakeRpc.simpleRpc(method.name, method.response));
 
   // export fakeRpc to mock stuff in tests
   window.fakeRpc = fakeRpc;

@@ -20,7 +20,7 @@ class StatusPage extends Component {
           disconnected={status.disconnected}
         />
         <Status {...this.props} />
-        <Footer version={status.version} />
+        <Footer version={status.version} {...this._test('footer')} />
       </div>
     );
   }

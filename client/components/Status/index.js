@@ -21,7 +21,7 @@ export default class Status extends Component {
   renderSettings () {
     const {status, settings} = this.props;
     return (
-      <div {...this._test('container')}>
+      <div {...this._test('settings')}>
         <h1><span>Network</span> settings</h1>
         <h3>Chain</h3>
         <Value value={settings.chain} />
@@ -74,6 +74,7 @@ export default class Status extends Component {
               </div>
               <div className='col col-5 tablet-col-1-2 mobile-full'>
                 <MiningSettings
+                  {...this._test('mining')}
                   mining={this.props.mining}
                   actions={this.props.actions}
                   version={this.props.status.version}
