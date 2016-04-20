@@ -156,12 +156,12 @@ function customFunctions () {
       name: 'ethcore_setExtraData',
       desc: 'Changes extra data for newly mined blocks',
       params: ['`DATA`- Extra Data'],
-      returns: true
+      returns: false
     }, {
       name: 'ethcore_setMinGasPrice',
       desc: 'Changes minimal gas price for transaction to be accepted to the queue.',
       params: ['`QUANTITY` - Minimal gas price'],
-      returns: true
+      returns: false
     }, {
       name: 'ethcore_gasFloorTarget',
       desc: 'Returns current target for gas floor',
@@ -171,12 +171,12 @@ function customFunctions () {
       name: 'ethcore_setGasFloorTarget',
       desc: 'Changes current gas floor target.',
       params: ['`QUANTITY` - Gas Floor Target'],
-      returns: true
+      returns: false
     }, {
       name: 'ethcore_setAuthor',
       desc: 'Changes author (coinbase) for mined blocks.',
       params: ['`DATA`, 20 Bytes - Address'],
-      returns: true
+      returns: false
     }
   ];
 }

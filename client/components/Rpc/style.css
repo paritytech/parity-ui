@@ -19,6 +19,7 @@ div:hover > .removeIcon {
 }
 
 .call {
+  cursor: pointer;
   border-bottom: 2px solid #CCC6C6;
   margin-bottom: 18.4px;  
   background: #f5f4f2;

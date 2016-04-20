@@ -6,11 +6,13 @@ import marked from 'marked';
 import style from './style.css';
 import rpcData from '../../data/rpc.json';
 
+const rpcMethods = _.sortBy(rpcData.methods, 'name');
+
 export default class Rpc extends Component {
 
   constructor (...args) {
     super(...args);
-    this._inputs = {};
+    this.state = {};
   }
 
   renderClear () {
@@ -56,7 +58,11 @@ export default class Rpc extends Component {
   renderPrevCalls () {
     return this.props.rpc.prevCalls.map(
       (c, idx) => (
-        <div key={idx} className={style.call}>
+        <div
+          key={idx}
+          className={style.call}
+          onClick={() => this.onHistoryClick(this.props.rpc.prevCalls[idx])}
+          >
           <span className={style.callNo}>#{c.callNo}</span>
           <pre>{c.name}({c.params.toString()})</pre>
           <pre>{c.response}</pre>
@@ -80,7 +86,7 @@ export default class Rpc extends Component {
           <h3>Parameters</h3>
           {this.renderInputs()}
           <h3>Returns</h3>
-          <div dangerouslySetInnerHTML={{__html: marked(selectedMethod.returns)}} />
+          {this.renderMarkdown(selectedMethod.returns)}
         </div>
         <button
           className={`dapp-block-button ${style.button}`}
@@ -93,7 +99,7 @@ export default class Rpc extends Component {
   }
 
   renderMethodList () {
-    const methods = rpcData.methods.map(m =>
+    const methods = rpcMethods.map(m =>
       <option key={m.name} value={m.name}>{m.name}</option>
     );
 
@@ -109,35 +115,47 @@ export default class Rpc extends Component {
           {methods}
         </select>
         <div>
-          {this.renderDescription(selectedMethod)}
+          {this.renderMarkdown(selectedMethod.desc)}
         </div>
       </div>
     );
   }
 
-  renderDescription (selectedMethod) {
-    if (!selectedMethod.desc) {
+  renderMarkdown (val) {
+    if (!val) {
       return;
     }
 
     return (
-      <div dangerouslySetInnerHTML={{__html: marked(selectedMethod.desc)}} />
+      <div dangerouslySetInnerHTML={{__html: marked(val)}} />
     );
   }
 
   handleMethodChange (evt) {
-    let method = _.find(rpcData.methods, {name: evt.target.value});
+    let method = _.find(rpcMethods, {name: evt.target.value});
     this.props.actions.selectRpcMethod(method);
   }
 
   onRpcFire () {
     let {selectedMethod} = this.props.rpc;
-    const params = selectedMethod.params.map(p => this._inputs[p].value);
+    const params = selectedMethod.params.map(p => this.state[`params_${p}`]);
     this.props.actions.fireRpc({
       method: selectedMethod.name,
       outputFormatter: selectedMethod.outputFormatter,
       inputFormatters: selectedMethod.inputFormatters,
       params: params
+    });
+  }
+
+  onHistoryClick (call) {
+    let method = _.find(rpcMethods, {name: call.name});
+    this.props.actions.selectRpcMethod(method);
+
+    // and set parameter values
+    method.params.map((param, idx) => {
+      this.setState({
+        [`params_${param}`]: call.params[idx]
+      });
     });
   }
 
@@ -150,14 +168,17 @@ export default class Rpc extends Component {
       );
     }
 
-    return _.find(rpcData.methods, {name: selectedMethod.name})
+    return _.find(rpcMethods, {name: selectedMethod.name})
             .params.map(
               p => (
-                <label>
+                <label key={p}>
                   <input
                     className={style.input}
                     placeholder={p}
-                    ref={e => this._inputs[p] = e}
+                    value={this.state[`params_${p}`]}
+                    onChange={(evt) => this.setState({
+                      [`params_${p}`]: evt.target.value
+                    })}
                     />
                 </label>
               )
