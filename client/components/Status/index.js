@@ -98,6 +98,34 @@ export default class Status extends Component {
     );
   }
 
+  renderResetData () {
+    const {mining} = this.props;
+
+    const defaultExtraData = this.getDefaultExtraData();
+
+    if (mining.extraData === defaultExtraData) {
+      return;
+    }
+
+    return (
+      <a
+        className={style.inputTrigger}
+        onClick={::this.onResetExtraData}
+        title={`Reset to ${defaultExtraData}`}
+        >
+        <i className='icon-anchor'></i>
+      </a>
+    );
+  }
+
+  onResetExtraData () {
+    this.props.actions.modifyExtraData(this.getDefaultExtraData());
+  }
+
+  getDefaultExtraData () {
+    return this.props.status.version.split('/').slice(0, 3).join('/');
+  }
+
   render () {
     const {status} = this.props;
     const bestBlock = formatNumber()(status.bestBlock);
@@ -146,6 +174,7 @@ Status.propTypes = {
   }).isRequired,
   status: PropTypes.shape({
     name: PropTypes.string,
+    version: PropTypes.string.isRequired,
     bestBlock: PropTypes.string.isRequired,
     hashrate: PropTypes.string.isRequired,
     peers: PropTypes.number.isRequired
