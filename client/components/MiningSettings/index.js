@@ -1,7 +1,6 @@
 
 import React, { Component, PropTypes } from 'react';
 
-import style from './style.css';
 import EditableValue from '../EditableValue';
 
 export default class MiningSettings extends Component {
@@ -35,9 +34,9 @@ export default class MiningSettings extends Component {
         <h3>Extradata</h3>
         <EditableValue
           value={mining.extraData}
-          onSubmit={onExtraDataChange}>
-          {this.renderResetData()}
-        </EditableValue>
+          onSubmit={onExtraDataChange}
+          defaultValue={this.getDefaultExtraData()}
+          />
         <h3>Minimal Gas Price</h3>
         <EditableValue
           value={mining.minGasPrice}
@@ -48,30 +47,6 @@ export default class MiningSettings extends Component {
           onSubmit={onGasFloorTargetChange}/>
       </div>
     );
-  }
-
-  renderResetData () {
-    const {mining} = this.props;
-
-    const defaultExtraData = this.getDefaultExtraData();
-
-    if (mining.extraData === defaultExtraData) {
-      return;
-    }
-
-    return (
-      <a
-        className={style.inputTrigger}
-        onClick={::this.onResetExtraData}
-        title={`Reset to ${defaultExtraData}`}
-        >
-        <i className='icon-anchor'></i>
-      </a>
-    );
-  }
-
-  onResetExtraData () {
-    this.props.actions.modifyExtraData(this.getDefaultExtraData());
   }
 
   getDefaultExtraData () {
