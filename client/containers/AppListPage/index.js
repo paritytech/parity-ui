@@ -5,7 +5,7 @@ import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import style from './style.css';
 
-class AppList extends Component {
+class AppListPage extends Component {
   constructor (...args) {
     super(...args);
     this.state = {
@@ -38,13 +38,18 @@ class AppList extends Component {
   render () {
     return (
       <div className={style.normal}>
-        <Header nodeName={this.props.status.name} />
+        <Header
+          nodeName={this.props.status.name}
+          error={this.props.status.error}
+          />
         <div className='dapp-flex-content'>
           <main className='dapp-content'>
-            <h1>List of installed apps</h1>
-            <ul>
-            {this.renderApps()}
-            </ul>
+            <div className={'dapp-container'}>
+              <h1>List of installed apps</h1>
+              <ul>
+              {this.renderApps()}
+              </ul>
+            </div>
           </main>
         </div>
         <Footer version={this.props.status.version} />
@@ -52,7 +57,7 @@ class AppList extends Component {
     );
   }
 }
-AppList.propTypes = {
+AppListPage.propTypes = {
   status: PropTypes.object.isRequired
 };
 
@@ -67,4 +72,4 @@ function mapDispatchToProps (dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(AppList);
+)(AppListPage);

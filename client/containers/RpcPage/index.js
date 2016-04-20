@@ -9,7 +9,7 @@ import Rpc from '../../components/Rpc';
 import './style.css';
 import * as RpcActions from '../../actions/rpc';
 
-class RpcContainer extends Component {
+class RpcPage extends Component {
 
   render () {
     return (
@@ -36,11 +36,11 @@ function mapDispatchToProps (dispatch) {
   };
 }
 
-RpcContainer.propTypes = {
+RpcPage.propTypes = {
   status: PropTypes.object.isRequired
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(RpcContainer);
+)(RpcPage);
