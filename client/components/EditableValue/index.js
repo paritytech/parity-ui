@@ -49,9 +49,14 @@ export default class EditableValue extends Component {
     this.props.onSubmit(this.state.value);
   }
 
+  onResetToDefault () {
+    this.props.onSubmit(this.props.defaultValue);
+  }
+
   render () {
     return (
       <div className={`${valueStyles.valueContainer} ${style.container}`}>
+        {this.renderResetButton()}
         <div className={this.state.inEditMode ? style.iconsVisible : style.icons}>
           {this.props.children}
           {this.renderButtons()}
@@ -67,12 +72,32 @@ export default class EditableValue extends Component {
     );
   }
 
+  renderResetButton () {
+    if (this.state.inEditMode) {
+      return;
+    }
+    if (!this.props.defaultValue || this.state.value === this.props.defaultValue) {
+      return;
+    }
+
+    return (
+      <a
+        key={'reset'}
+        className={`${style.icon} ${style.firstIcon}`}
+        onClick={::this.onResetToDefault}
+        title={`Reset to ${this.props.defaultValue}`}
+        >
+        <i className='icon-anchor'></i>
+      </a>
+    );
+  }
+
   renderButtons () {
     if (this.state.inEditMode) {
       return [
         <a
           key={'submit'}
-          className={`${style.icon} ${style.success}`}
+          className={style.iconSuccess}
           onClick={::this.onSubmit}
           >
           <i className='icon-check'></i>
@@ -89,8 +114,10 @@ export default class EditableValue extends Component {
 
     return (
       <a
+        key={'edit'}
         className={style.icon}
         onClick={::this.onOpenEdit}
+        title='Edit'
         >
         <i className='icon-pencil'></i>
       </a>
@@ -102,5 +129,6 @@ export default class EditableValue extends Component {
 EditableValue.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   value: PropTypes.string,
+  defaultValue: PropTypes.string,
   children: PropTypes.element
 };
