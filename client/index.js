@@ -11,11 +11,11 @@ import localStore from 'store';
 import request from 'browser-request';
 import Web3 from 'web3';
 
-import Status from './containers/Status';
-import Debug from './containers/Debug';
-import Accounts from './containers/Accounts';
-import AppList from './containers/AppList';
-import Rpc from './containers/Rpc';
+import StatusPage from './containers/StatusPage';
+import DebugPage from './containers/DebugPage';
+import AccountsPage from './containers/AccountsPage';
+import AppListPage from './containers/AppListPage';
+import RpcPage from './containers/RpcPage';
 
 import Middlewares from './middleware';
 import configure from './store';
@@ -37,11 +37,11 @@ const history = syncHistoryWithStore(hashHistory, store);
 ReactDOM.render(
   <Provider store={store}>
     <Router history={history}>
-      <Route path={`/`} component={Status} />
-      <Route path={`/debug`} component={Debug} />
-      <Route path={`/accounts`} component={Accounts} />
-      <Route path={`/apps`} component={AppList} />
-      <Route path={`/rpc`} component={Rpc} />
+      <Route path={`/`} component={StatusPage} />
+      <Route path={`/debug`} component={DebugPage} />
+      <Route path={`/accounts`} component={AccountsPage} />
+      <Route path={`/apps`} component={AppListPage} />
+      <Route path={`/rpc`} component={RpcPage} />
     </Router>
   </Provider>,
   document.getElementById('root')
