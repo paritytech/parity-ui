@@ -9,7 +9,10 @@ class AccountsPage extends Component {
   render () {
     return (
       <div className={style.normal}>
-        <Header nodeName={this.props.status.name} />
+        <Header
+          nodeName={this.props.status.name}
+          error={this.props.status.error}
+          />
         <div className='dapp-flex-content'>
           <main className='dapp-content'>
             <h1>Accounts</h1>
