@@ -793,7 +793,7 @@
       "params": [
         "`DATA`- Extra Data"
       ],
-      "returns": true,
+      "returns": false,
       "inputFormatters": [
         "encodeExtraData"
       ],
@@ -805,7 +805,7 @@
       "params": [
         "`QUANTITY` - Minimal gas price"
       ],
-      "returns": true,
+      "returns": false,
       "inputFormatters": [
         "utils.toHex"
       ],
@@ -827,7 +827,7 @@
       "params": [
         "`QUANTITY` - Gas Floor Target"
       ],
-      "returns": true,
+      "returns": false,
       "inputFormatters": [
         "utils.toHex"
       ],
@@ -839,7 +839,7 @@
       "params": [
         "`DATA`, 20 Bytes - Address"
       ],
-      "returns": true,
+      "returns": false,
       "inputFormatters": [
         "inputAddressFormatter"
       ],
