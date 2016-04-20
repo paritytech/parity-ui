@@ -23,7 +23,11 @@ export class Web3Provider extends Web3Base {
   }
 
   onTick () {
-    return Promise.all(this.tickArr.map(obj => {
+    return Promise.all(this.tickArr.map((obj, idx) => {
+      if (!obj.actionMaker) {
+        console.error(obj);
+        throw new Error(`Missing action creator for no ${idx}`);
+      }
       return toPromise(obj.method).then(obj.actionMaker)
         .catch(err => {
           this.store.dispatch(StatusActions.error(err));
@@ -49,7 +53,7 @@ export class Web3Provider extends Web3Base {
       {method: this.ethcoreWeb3.getGasFloorTarget, actionMaker: MiningActions.updateGasFloorTarget},
       {method: this.ethcoreWeb3.getExtraData, actionMaker: MiningActions.updateExtraData},
       {method: this.ethcoreWeb3.getDevLogsLevels, actionMaker: DebugActions.updateDevLogsLevels},
-      {method: this.ethcoreWeb3.getDevLogs, actionMaker: DebugActions.updateDevLog}
+      {method: this.ethcoreWeb3.getDevLogs, actionMaker: DebugActions.updateDevLogs}
     ];
   }
 
