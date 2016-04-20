@@ -47,3 +47,7 @@ div:hover > .removeIcon {
   overflow: auto;
   max-height: 60vh;
 }
+
+h3 + label > input {
+  margin-top: 0;
+}

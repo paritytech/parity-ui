@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-"use strict";
+'use strict';
 
 const fs = require('fs');
 const nl = /\n+/;
@@ -40,8 +40,7 @@ function parseSingleMethod (data) {
   };
 }
 
-
-function extractParams(params) {
+function extractParams (params) {
   if (params[0] === 'none') {
     return [];
   }
@@ -53,206 +52,207 @@ function extractParams(params) {
   });
 }
 
-function nonEmpty(a) {
+function nonEmpty (a) {
   return a.filter(x => x);
 }
 
 function customFunctions () {
   return [
-  {
-    name: 'eth_pendingTransactions',
-    desc: '?',
-    params: [],
-    returns: false
-  },
-  {
-    name: 'eth_flush',
-    desc: '?',
-    params: [],
-    returns: false
-  },
-  {
-    name: 'eth_newFilterEx',
-    desc: '?',
-    params: [''],
-    returns: false
-  },
-  {
-    name: 'eth_getFilterChangesEx',
-    desc: '?',
-    params: [''],
-    returns: false
-  },
-  {
-    name: 'eth_getFilterLogsEx',
-    desc: '?',
-    params: [''],
-    returns: false
-  },
-  {
-    name: 'eth_getLogsEx',
-    desc: '?',
-    params: ['?'],
-    returns: false
-  },
-  {
-    name: 'eth_register',
-    desc: '?',
-    params: ['?'],
-    returns: false
-  },
-  {
-    name: 'eth_unregister',
-    desc: '?',
-    params: ['?'],
-    returns: false
-  },
-  {
-    name: 'eth_fetchQueuedTransactions',
-    desc: '?',
-    params: ['?'],
-    returns: false
-  },
-  {
-    name: 'eth_signTransaction',
-    desc: '?',
-    params: ['?'],
-    returns: false
-  },
-  {
-    name: 'eth_inspectTransaction',
-    desc: '?',
-    params: ['?'],
-    returns: false
-  },
-  {
-    name: 'eth_notePassword',
-    desc: '?',
-    params: ['?'],
-    returns: false
-  },
-  {
-    name: 'personal_newAccount',
-    desc: 'Creates new account',
-    params: ['`DATA` - Password'],
-    returns: false
-  },
-  {
-    name: 'personal_unlockAccount',
-    desc: '?',
-    params: ['?', '?', '?'],
-    returns: false
-  },
-  {
-    name: 'ethcore_minGasPrice',
-    desc: 'Returns currently set minimal gas price',
-    params: [],
-    returns: '`QUANTITY` - Minimal Gas Price'
-  }, {
-    name: 'ethcore_extraData',
-    desc: 'Returns currently set extra data',
-    params: [],
-    returns: '`DATA` - Extra data'
-  }, {
-    name: 'ethcore_setExtraData',
-    desc: 'Changes extra data for newly mined blocks',
-    params: ['`DATA`- Extra Data'],
-    returns: true
-  }, {
-    name: 'ethcore_setMinGasPrice',
-    desc: 'Changes minimal gas price for transaction to be accepted to the queue.',
-    params: ['`QUANTITY` - Minimal gas price'],
-    returns: true
-  }, {
-    name: 'ethcore_gasFloorTarget',
-    desc: 'Returns current target for gas floor',
-    params: [],
-    returns: ['`QUANTITY` - Gas Floor Target']
-  }, {
-    name: 'ethcore_setGasFloorTarget',
-    desc: 'Changes current gas floor target.',
-    params: ['`QUANTITY` - Gas Floor Target'],
-    returns: true
-  }, {
-    name: 'ethcore_setAuthor',
-    desc: 'Changes author (coinbase) for mined blocks.',
-    params: ['`DATA`, 20 Bytes - Address'],
-    returns: true
-  }];
+    {
+      name: 'eth_pendingTransactions',
+      desc: '?',
+      params: [],
+      returns: false
+    },
+    {
+      name: 'eth_flush',
+      desc: '?',
+      params: [],
+      returns: false
+    },
+    {
+      name: 'eth_newFilterEx',
+      desc: '?',
+      params: [''],
+      returns: false
+    },
+    {
+      name: 'eth_getFilterChangesEx',
+      desc: '?',
+      params: [''],
+      returns: false
+    },
+    {
+      name: 'eth_getFilterLogsEx',
+      desc: '?',
+      params: [''],
+      returns: false
+    },
+    {
+      name: 'eth_getLogsEx',
+      desc: '?',
+      params: ['?'],
+      returns: false
+    },
+    {
+      name: 'eth_register',
+      desc: '?',
+      params: ['?'],
+      returns: false
+    },
+    {
+      name: 'eth_unregister',
+      desc: '?',
+      params: ['?'],
+      returns: false
+    },
+    {
+      name: 'eth_fetchQueuedTransactions',
+      desc: '?',
+      params: ['?'],
+      returns: false
+    },
+    {
+      name: 'eth_signTransaction',
+      desc: '?',
+      params: ['?'],
+      returns: false
+    },
+    {
+      name: 'eth_inspectTransaction',
+      desc: '?',
+      params: ['?'],
+      returns: false
+    },
+    {
+      name: 'eth_notePassword',
+      desc: '?',
+      params: ['?'],
+      returns: false
+    },
+    {
+      name: 'personal_newAccount',
+      desc: 'Creates new account',
+      params: ['`DATA` - Password'],
+      returns: false
+    },
+    {
+      name: 'personal_unlockAccount',
+      desc: '?',
+      params: ['?', '?', '?'],
+      returns: false
+    },
+    {
+      name: 'ethcore_minGasPrice',
+      desc: 'Returns currently set minimal gas price',
+      params: [],
+      returns: '`QUANTITY` - Minimal Gas Price'
+    }, {
+      name: 'ethcore_extraData',
+      desc: 'Returns currently set extra data',
+      params: [],
+      returns: '`DATA` - Extra data'
+    }, {
+      name: 'ethcore_setExtraData',
+      desc: 'Changes extra data for newly mined blocks',
+      params: ['`DATA`- Extra Data'],
+      returns: true
+    }, {
+      name: 'ethcore_setMinGasPrice',
+      desc: 'Changes minimal gas price for transaction to be accepted to the queue.',
+      params: ['`QUANTITY` - Minimal gas price'],
+      returns: true
+    }, {
+      name: 'ethcore_gasFloorTarget',
+      desc: 'Returns current target for gas floor',
+      params: [],
+      returns: ['`QUANTITY` - Gas Floor Target']
+    }, {
+      name: 'ethcore_setGasFloorTarget',
+      desc: 'Changes current gas floor target.',
+      params: ['`QUANTITY` - Gas Floor Target'],
+      returns: true
+    }, {
+      name: 'ethcore_setAuthor',
+      desc: 'Changes author (coinbase) for mined blocks.',
+      params: ['`DATA`, 20 Bytes - Address'],
+      returns: true
+    }
+  ];
 }
 
-function getOutputFormatters() {
+function getOutputFormatters () {
   return {
-    "ethcore_minGasPrice": "toBigNumber",
-    "ethcore_extraData": "decodeExtraData",
-    "ethcore_gasFloorTarget": "toBigNumber",
-    "eth_getBalance": "toBigNumber",
-    "eth_getTransactionCount": "utils.toDecimal",
-    "eth_getTransactionByHash": "outputTransactionFormatter",
-    "eth_getTransactionReceipt": "outputTransactionReceiptFormatter",
-    "eth_estimateGas": "utils.toDecimal",
-    "net_peerCount": "utils.toDecimal"
+    'ethcore_minGasPrice': 'toBigNumber',
+    'ethcore_extraData': 'decodeExtraData',
+    'ethcore_gasFloorTarget': 'toBigNumber',
+    'eth_getBalance': 'toBigNumber',
+    'eth_getTransactionCount': 'utils.toDecimal',
+    'eth_getTransactionByHash': 'outputTransactionFormatter',
+    'eth_getTransactionReceipt': 'outputTransactionReceiptFormatter',
+    'eth_estimateGas': 'utils.toDecimal',
+    'net_peerCount': 'utils.toDecimal'
   };
 }
 
-function getInputFormatters() {
+function getInputFormatters () {
   return {
-    "ethcore_setExtraData": [
-      "encodeExtraData"
+    'ethcore_setExtraData': [
+      'encodeExtraData'
     ],
-    "ethcore_setMinGasPrice": [
-      "utils.toHex"
+    'ethcore_setMinGasPrice': [
+      'utils.toHex'
     ],
-    "ethcore_setGasFloorTarget": [
-      "utils.toHex"
+    'ethcore_setGasFloorTarget': [
+      'utils.toHex'
     ],
-    "ethcore_setAuthor": [
-      "inputAddressFormatter"
+    'ethcore_setAuthor': [
+      'inputAddressFormatter'
     ],
-    "eth_getBalance": [
-      "inputAddressFormatter",
-      "inputDefaultBlockNumberFormatter"
+    'eth_getBalance': [
+      'inputAddressFormatter',
+      'inputDefaultBlockNumberFormatter'
     ],
-    "eth_getStorageAt": [
+    'eth_getStorageAt': [
       null,
-      "utils.toHex",
-      "inputDefaultBlockNumberFormatter"
+      'utils.toHex',
+      'inputDefaultBlockNumberFormatter'
     ],
-    "eth_getTransactionCount": [
+    'eth_getTransactionCount': [
       null,
-      "inputDefaultBlockNumberFormatter"
+      'inputDefaultBlockNumberFormatter'
     ],
-    "eth_getCode": [
-      "inputAddressFormatter",
-      "inputDefaultBlockNumberFormatter"
+    'eth_getCode': [
+      'inputAddressFormatter',
+      'inputDefaultBlockNumberFormatter'
     ],
-    "eth_sendTransaction": [
-      "inputTransactionFormatter"
+    'eth_sendTransaction': [
+      'inputTransactionFormatter'
     ],
-    "eth_call": [
-      "inputCallFormatter",
-      "inputDefaultBlockNumberFormatter"
+    'eth_call': [
+      'inputCallFormatter',
+      'inputDefaultBlockNumberFormatter'
     ],
-    "eth_sign": [
-      "inputAddressFormatter",
+    'eth_sign': [
+      'inputAddressFormatter',
       null
     ],
-    "eth_sendRawTransaction": [
+    'eth_sendRawTransaction': [
       null
     ],
-    "eth_estimateGas": [
-      "inputCallFormatter"
+    'eth_estimateGas': [
+      'inputCallFormatter'
     ],
-    "personal_newAccount": [
+    'personal_newAccount': [
       null
     ],
-    "personal_unlockAccount": [
+    'personal_unlockAccount': [
       null,
       null,
       null
     ],
-    "shh_post": [
-      "inputPostFormatter"
+    'shh_post': [
+      'inputPostFormatter'
     ]
   };
 }

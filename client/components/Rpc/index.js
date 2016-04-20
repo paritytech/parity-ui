@@ -1,6 +1,7 @@
 
 import React, { Component, PropTypes } from 'react';
 import _ from 'lodash';
+import marked from 'marked';
 
 import style from './style.css';
 import rpcData from '../../data/rpc.json';
@@ -65,6 +66,8 @@ export default class Rpc extends Component {
   }
 
   renderForm () {
+    const {selectedMethod} = this.props.rpc;
+
     return (
       <div>
         <h2 className={style.header}>
@@ -74,7 +77,10 @@ export default class Rpc extends Component {
         </h2>
         <div className='row'>
           {this.renderMethodList()}
+          <h3>Parameters</h3>
           {this.renderInputs()}
+          <h3>Returns</h3>
+          <div dangerouslySetInnerHTML={{__html: marked(selectedMethod.returns)}} />
         </div>
         <button
           className={`dapp-block-button ${style.button}`}
@@ -91,15 +97,31 @@ export default class Rpc extends Component {
       <option key={m.name} value={m.name}>{m.name}</option>
     );
 
+    const {selectedMethod} = this.props.rpc;
     return (
-      <select
-        className={style.input}
-        id='selectedMethod'
-        value={this.props.rpc.selectedMethod.name}
-        onChange={::this.handleMethodChange}
-        >
-        {methods}
-      </select>
+      <div>
+        <select
+          className={style.input}
+          id='selectedMethod'
+          value={selectedMethod.name}
+          onChange={::this.handleMethodChange}
+          >
+          {methods}
+        </select>
+        <div>
+          {this.renderDescription(selectedMethod)}
+        </div>
+      </div>
+    );
+  }
+
+  renderDescription (selectedMethod) {
+    if (!selectedMethod.desc) {
+      return;
+    }
+
+    return (
+      <div dangerouslySetInnerHTML={{__html: marked(selectedMethod.desc)}} />
     );
   }
 
@@ -121,22 +143,23 @@ export default class Rpc extends Component {
 
   renderInputs () {
     let {selectedMethod} = this.props.rpc;
-    if (!selectedMethod.params) {
-      return;
+
+    if (!selectedMethod.params || !selectedMethod.params.length) {
+      return (
+        <span>none</span>
+      );
     }
 
     return _.find(rpcData.methods, {name: selectedMethod.name})
             .params.map(
               p => (
-                <div>
-                  <label>
-                    <input
-                      className={style.input}
-                      placeholder={p}
-                      ref={e => this._inputs[p] = e}
-                      />
-                  </label>
-                </div>
+                <label>
+                  <input
+                    className={style.input}
+                    placeholder={p}
+                    ref={e => this._inputs[p] = e}
+                    />
+                </label>
               )
             );
   }

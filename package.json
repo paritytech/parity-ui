@@ -63,6 +63,7 @@
     "dapp-styles": "^0.2.2",
     "format-number": "2.0.1",
     "lodash": "4.11.1",
+    "marked": "^0.3.5",
     "rlp": "2.0.0",
     "store": "1.3.20",
     "web3": "^0.15.3"
