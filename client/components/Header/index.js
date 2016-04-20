@@ -29,8 +29,8 @@ export default class Header extends Component {
     return (
       <header className='dapp-header'>
         <hgroup className={style.title}>
-          <h1><span>Status</span> <small>Page</small></h1>
-          <h2>{this.props.nodeName}</h2>
+          <h1>Status Page</h1>
+          <h3>{this.props.nodeName}</h3>
         </hgroup>
         {this.renderError()}
         <div className='dapp-flex-item'></div>
@@ -40,6 +40,12 @@ export default class Header extends Component {
               <Link to={'/'} activeClassName='active'>
                 <i className='icon-globe'></i>
                 <span>Status</span>
+              </Link>
+            </li>
+            <li>
+              <Link to={'/rpc'} activeClassName='active'>
+                <i className='icon-call-out'></i>
+                <span>Rpc Requests</span>
               </Link>
             </li>
             <li>
@@ -60,13 +66,6 @@ export default class Header extends Component {
                 <span>Apps</span>
               </Link>
             </li>
-            <li>
-              <Link to={'/rpc'} activeClassName='active'>
-                <i className='icon-call-out'></i>
-                <span>Rpc Requests</span>
-              </Link>
-            </li>
-
           </ul>
         </nav>
       </header>

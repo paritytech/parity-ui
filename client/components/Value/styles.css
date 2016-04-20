@@ -3,3 +3,6 @@
   margin-top: 0;
   width: 100%;
 }
+.valueContainer {
+  position: relative;
+}
