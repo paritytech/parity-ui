@@ -7,16 +7,20 @@ export default class Value extends Component {
 
   render () {
     return (
-      <input
-        className={styles.value}
-        type='text'
-        value={this.props.value}
-        readOnly
-        />
+      <div className={styles.inputContainer}>
+        <input
+          className={styles.value}
+          type='text'
+          value={this.props.value}
+          readOnly
+          />
+        {this.props.children}
+      </div>
     );
   }
 }
 
 Value.propTypes = {
-  value: PropTypes.any
+  value: PropTypes.any,
+  children: PropTypes.element
 };
