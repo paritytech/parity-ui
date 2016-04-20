@@ -1,4 +1,5 @@
 
+import {isArray, eq} from 'lodash';
 import {isBigNumber} from 'web3/lib/utils/utils';
 import {toPromise} from './util-provider';
 import {Web3Base} from './web3-base';
@@ -69,6 +70,8 @@ export class Web3Provider extends Web3Base {
       const val = this.state[this.actionProp(action)];
       if (isBigNumber(val)) {
         return !val.equals(action.payload);
+      } if (isArray(val)) {
+        return eq(val, action.payload);
       } else {
         return val !== action.payload;
       }
