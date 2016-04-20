@@ -17,7 +17,7 @@ class StatusPage extends Component {
       <div className={style.normal}>
         <Header
           nodeName={status.name}
-          error={status.error}
+          disconnected={status.disconnected}
         />
         <Status {...this.props} />
         <Footer version={status.version} />
