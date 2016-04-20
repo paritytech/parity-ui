@@ -58,7 +58,6 @@
   },
   "dependencies": {
     "bignumber.js": "2.3.0",
-    "bluebird": "3.3.5",
     "browser-request": "0.3.3",
     "bytes": "2.3.0",
     "dapp-styles": "^0.2.2",

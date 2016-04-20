@@ -1,5 +1,4 @@
 
-import Promise from 'bluebird';
 import {isArray, eq, compact} from 'lodash';
 import {isBigNumber} from 'web3/lib/utils/utils';
 import {toPromise} from './util-provider';
@@ -24,13 +23,13 @@ export class Web3Provider extends Web3Base {
   }
 
   onTick () {
-    return Promise.map(this.tickArr, obj => {
+    return Promise.all(this.tickArr.map(obj => {
       return toPromise(obj.method).then(obj.actionMaker)
         .catch(err => {
           this.store.dispatch(StatusActions.error(err));
           return false; // don't process errors in the promise chain
         });
-    })
+    }))
     .then(compact)
     .then(::this.filterChanged)
     .then(::this.updateState)
