@@ -6,8 +6,13 @@ export default class Footer extends Component {
 
   render () {
     return (
-      <div className={styles.footer}>
-        Powered by: {this.props.version}
+      <div>
+        <div className={styles.footer}>
+          <a href='http://ethcore.io'>ethcore.io</a>
+          <span className={styles.right}>
+            Powered by: {this.props.version}
+          </span>
+        </div>
       </div>
     );
   }
