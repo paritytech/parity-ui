@@ -9,7 +9,11 @@
     "test": "mocha --compilers js:babel-core/register client/**/*.spec.js -w",
     "testOnce": "mocha --compilers js:babel-core/register client/**/*.spec.js",
     "start": "webpack-dev-server -d --history-api-fallback --hot --inline --progress --colors --port 3000",
-    "build": "NODE_ENV=production webpack --progress --colors",
+    "prebuild": "npm run clean",
+    "build": "NODE_ENV=production webpack --progress --colors && cp Cargo.toml static",
+    "clean": "rm static -rf || true",
+    "prezip": "npm run build",
+    "zip": "cd static && zip ../status.zip * -r",
     "commit": "commit-wizard"
   },
   "license": "MIT",
