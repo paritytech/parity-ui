@@ -3,8 +3,9 @@ import React, { Component, PropTypes } from 'react';
 import formatNumber from 'format-number';
 import bytes from 'bytes';
 
-import Box from '../Box';
-import EditableInput from '../EditableInput';
+import style from './style.css';
+import EditableValue from '../EditableValue';
+import Value from '../Value';
 
 export default class Status extends Component {
 
@@ -20,25 +21,32 @@ export default class Status extends Component {
   renderSettings () {
     const {status, settings} = this.props;
     return (
-      <div className='row' {...this._test('container')} >
-        <div className='col col-12'>
-          <h1>{this.renderNodeName()} <strong>settings</strong></h1>
+      <div className='col col-4 tablet-col-1-2 mobile-full' {...this._test('container')}>
+        <h1><span>Network</span> settings</h1>
+        <h3>Chain</h3>
+        <Value value={settings.chain} />
+        <div className={style.row}>
+          <div className='col col-6 mobile-full'>
+            <h3>Peers</h3>
+            <Value value={`${status.peers}/${settings.maxPeers}`} />
+          </div>
+          <div className='col col-6 mobile-full'>
+            <h3>Network port</h3>
+            <Value value={settings.networkPort} />
+          </div>
         </div>
-        <div className='col col-6'>
-          <h3>Chain</h3>
-          <input type='text' readOnly value={settings.chain} />
-          <h3>Peers</h3>
-          <input type='text' readOnly value={`${status.peers}/${settings.maxPeers}`} />
-          <h3>Network port</h3>
-          <input type='text' readOnly value={settings.networkPort} />
-        </div>
-        <div className='col col-6'>
-          <h3>Rpc Enabled</h3>
-          <input type='text' readOnly value={settings.rpcEnabled} />
-          <h3>Rpc Interface</h3>
-          <input type='text' readOnly value={settings.rpcInterface} />
-          <h3>Rpc Port</h3>
-          <input type='text' readOnly value={settings.rpcPort} />
+
+        <h3>RPC Enabled</h3>
+        <Value value={settings.rpcEnabled ? 'yes' : 'no'} />
+        <div className={style.row}>
+          <div className='col col-6 mobile-full'>
+            <h3>RPC Interface</h3>
+            <Value value={settings.rpcInterface} />
+          </div>
+          <div className='col col-6 mobile-full'>
+            <h3>RPC Port</h3>
+            <Value value={settings.rpcPort} />
+          </div>
         </div>
       </div>
     );
@@ -47,49 +55,47 @@ export default class Status extends Component {
   renderMiningDetails () {
     const {mining} = this.props;
 
-    let onMinGasPriceChange = (evt) => {
-      this.props.actions.modifyMinGasPrice(+evt.target.value);
+    let onMinGasPriceChange = (newVal) => {
+      this.props.actions.modifyMinGasPrice(+newVal);
     };
 
-    let onExtraDataChange = (evt) => {
-      this.props.actions.modifyExtraData(evt.target.value);
+    let onExtraDataChange = (newVal) => {
+      this.props.actions.modifyExtraData(newVal);
     };
 
-    let onAuthorChange = (evt) => {
-      this.props.actions.modifyAuthor(evt.target.value);
+    let onAuthorChange = (newVal) => {
+      this.props.actions.modifyAuthor(newVal);
     };
 
-    let onGasFloorTargetChange = (evt) => {
-      this.props.actions.modifyGasFloorTarget(+evt.target.value);
+    let onGasFloorTargetChange = (newVal) => {
+      this.props.actions.modifyGasFloorTarget(+newVal);
     };
 
     return (
-      <div className='row clear'>
-        <div className='col col-12'>
-          <h1><span>Mining</span> settings</h1>
-        </div>
-        <div className='col col-6'>
-          <h3>Author</h3>
-          <EditableInput
-            {...this._test('author')}
-            value={mining.author}
-            onSubmit={onAuthorChange}/>
-          <h3>Extradata</h3>
-          <EditableInput
-            {...this._test('extra-data')}
-            value={mining.extraData}
-            onSubmit={onExtraDataChange}/>
-        </div>
-        <div className='col col-6'>
-          <h3>Minimal Gas Price</h3>
-          <EditableInput
-            value={mining.minGasPrice}
-            onSubmit={onMinGasPriceChange}/>
-          <h3>Gas floor target</h3>
-          <EditableInput
-            value={mining.gasFloorTarget}
-            onSubmit={onGasFloorTargetChange}/>
-        </div>
+      <div className='col col-4 tablet-col-1-2 mobile-full'>
+        <h1><span>Mining</span> settings</h1>
+        <h3>Author</h3>
+        <EditableValue
+          {...this._test('author')}
+          value={mining.author}
+          onSubmit={onAuthorChange}/>
+        <h3>Extradata</h3>
+        <EditableValue
+          {...this._test('extra-data')}
+          value={mining.extraData}
+          onSubmit={onExtraDataChange}>
+          <a className={style.inputTrigger} onClick={this.props.actions.resetExtraData} title='Reset Extra Data'>
+            <i className='icon-anchor'></i>
+          </a>
+        </EditableValue>
+        <h3>Minimal Gas Price</h3>
+        <EditableValue
+          value={mining.minGasPrice}
+          onSubmit={onMinGasPriceChange}/>
+        <h3>Gas floor target</h3>
+        <EditableValue
+          value={mining.gasFloorTarget}
+          onSubmit={onGasFloorTargetChange}/>
       </div>
     );
   }
@@ -102,21 +108,27 @@ export default class Status extends Component {
     return (
       <div className='dapp-flex-content'>
         <main className='dapp-content'>
-
-          <div className='row clear'>
-            <div className='col col-12'>
-              <Box title='Best Block' value={bestBlock} />
-              <Box title='Hash Rate' value={`${hashrate} H/s`} />
+          <div className='dapp-container'>
+            <div className='row clear'>
+              <div className='col col-4 tablet-full mobile-full'>
+                <div className='col col-12 tablet-col-1-2 mobile-full'>
+                  <h1><span>Best</span> Block</h1>
+                  <h1>#{bestBlock}</h1>
+                </div>
+                <div className='col col-12 tablet-col-1-2 mobile-full'>
+                  <h1><span>Hash</span> Rate</h1>
+                  <h1>{`${hashrate} H/s`}</h1>
+                </div>
+              </div>
+              {this.renderMiningDetails()}
+              {this.renderSettings()}
             </div>
           </div>
-
-          {this.renderSettings()}
-          {this.renderMiningDetails()}
-          {/* this.renderAccounts()? */}
         </main>
       </div>
     );
   }
+
 }
 
 Status.propTypes = {
@@ -144,6 +156,7 @@ Status.propTypes = {
     modifyMinGasPrice: PropTypes.func.isRequired,
     modifyAuthor: PropTypes.func.isRequired,
     modifyGasFloorTarget: PropTypes.func.isRequired,
-    modifyExtraData: PropTypes.func.isRequired
+    modifyExtraData: PropTypes.func.isRequired,
+    resetExtraData: PropTypes.func.isRequired
   }).isRequired
 };
