@@ -5,11 +5,11 @@
   "main": "index.js",
   "scripts": {
     "webpack": "webpack",
-    "start-test": "NODE_ENV=tests npm start",
+    "startTest": "NODE_ENV=tests npm start",
     "nightwatch": "NODE_ENV=tests nightwatch",
     "lint": "semistandard",
     "ci": "npm run lint && npm run testOnce",
-    "test": "mocha --compilers js:babel-core/register 'client/**/*.spec.js' -w",
+    "test": "npm run testOnce -- -w",
     "testOnce": "mocha --compilers js:babel-core/register 'client/**/*.spec.js'",
     "start": "webpack-dev-server -d --history-api-fallback --hot --inline --progress --colors --port 3000",
     "prebuild": "npm run clean",

@@ -7,7 +7,7 @@ export default class Value extends Component {
 
   render () {
     return (
-      <div 
+      <div
         className={styles.inputContainer}
         {...this._testInherit()}
         >
