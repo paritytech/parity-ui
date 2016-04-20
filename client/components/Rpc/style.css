@@ -1,5 +1,13 @@
-.right {
+.removeIcon {
   float: right;
+  color: #bbb;
+  cursor: pointer;
+  transition: opacity ease-in-out 0.2s;
+  transition-delay: 0.2s;
+  opacity: 0;
+}
+div:hover > .removeIcon {
+  opacity: 1.0;
 }
 
 .header {
@@ -15,6 +23,7 @@
   margin-bottom: 18.4px;  
   background: #f5f4f2;
 }
+
 .call:first-child {
   border-color: #6691C2;
 }
@@ -26,6 +35,7 @@
   padding-top: 0;
   color: #bbb;
 }
+
 .callNo {
   float: right;
   color: #ccc;

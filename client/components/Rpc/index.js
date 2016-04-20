@@ -12,6 +12,22 @@ export default class Rpc extends Component {
     this._inputs = {};
   }
 
+  renderClear () {
+    if (!this.props.rpc.prevCalls.length) {
+      return;
+    }
+
+    return (
+      <a
+        title='Clear RPC calls history'
+        onClick={::this.props.actions.resetRpcPrevCalls}
+        className={style.removeIcon}
+        >
+        <i className='icon-trash'></i>
+      </a>
+    );
+  }
+
   render () {
     return (
       <div className='dapp-flex-content'>
@@ -23,13 +39,7 @@ export default class Rpc extends Component {
                 {this.renderForm()}
               </div>
               <div className='col col-6'>
-                <a
-                  title='Clear RPC calls history'
-                  onClick={::this.props.actions.resetRpcPrevCalls}
-                  className={style.right}
-                  >
-                  <i className='icon-trash'></i>
-                </a>
+                {this.renderClear()}
                 <h2 className={style.header}>History</h2>
                 <div className={`${style.history} row`}>
                   {this.renderPrevCalls()}
