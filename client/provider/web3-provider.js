@@ -1,9 +1,11 @@
 
+import {isArray, eq} from 'lodash';
 import {isBigNumber} from 'web3/lib/utils/utils';
 import {toPromise} from './util-provider';
 import {Web3Base} from './web3-base';
 import * as StatusActions from '../actions/status';
 import * as MiningActions from '../actions/mining';
+import * as DebugActions from '../actions/debug';
 
 export class Web3Provider extends Web3Base {
 
@@ -27,7 +29,9 @@ export class Web3Provider extends Web3Base {
       toPromise(this.web3.eth.getCoinbase).then(MiningActions.updateAuthor),
       toPromise(this.ethcoreWeb3.getMinGasPrice).then(MiningActions.updateMinGasPrice),
       toPromise(this.ethcoreWeb3.getGasFloorTarget).then(MiningActions.updateGasFloorTarget),
-      toPromise(this.ethcoreWeb3.getExtraData).then(MiningActions.updateExtraData)
+      toPromise(this.ethcoreWeb3.getExtraData).then(MiningActions.updateExtraData),
+      toPromise(this.ethcoreWeb3.getDevLogsLevels).then(DebugActions.updateDevLogsLevels),
+      toPromise(this.ethcoreWeb3.getDevLogs).then(DebugActions.updateDevLogs)
     ])
     .then(::this.filterChanged)
     .then(::this.updateState)
@@ -66,6 +70,8 @@ export class Web3Provider extends Web3Base {
       const val = this.state[this.actionProp(action)];
       if (isBigNumber(val)) {
         return !val.equals(action.payload);
+      } if (isArray(val)) {
+        return eq(val, action.payload);
       } else {
         return val !== action.payload;
       }

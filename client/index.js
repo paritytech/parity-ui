@@ -13,11 +13,13 @@ import localStore from 'store';
 import request from 'browser-request';
 import Web3 from 'web3';
 
-import Middlewares from './middleware';
-import App from './containers/App';
+import Status from './containers/Status';
+import Debug from './containers/Debug';
 import Accounts from './containers/Accounts';
 import AppList from './containers/AppList';
 import Rpc from './containers/Rpc';
+
+import Middlewares from './middleware';
 import configure from './store';
 import {Web3Provider} from './provider/web3-provider';
 import EthcoreWeb3 from './provider/web3-ethcore-provider';
@@ -37,10 +39,11 @@ const history = syncHistoryWithStore(hashHistory, store);
 ReactDOM.render(
   <Provider store={store}>
     <Router history={history}>
-      <Route path={'/'} component={App} />
-      <Route path={'/accounts'} component={Accounts} />
-      <Route path={'/apps'} component={AppList} />
-      <Route path={'/rpc'} component={Rpc} />
+      <Route path={`/`} component={Status} />
+      <Route path={`/debug`} component={Debug} />
+      <Route path={`/accounts`} component={Accounts} />
+      <Route path={`/apps`} component={AppList} />
+      <Route path={`/rpc`} component={Rpc} />
     </Router>
   </Provider>,
   document.getElementById('root')

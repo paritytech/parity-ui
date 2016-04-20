@@ -47,6 +47,7 @@ export default handleActions({
       version: action.payload
     };
   }
+
 }, initialState);
 
 function resetError (state) {

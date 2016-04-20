@@ -47,6 +47,16 @@ const methods = [
     call: 'ethcore_setAuthor',
     params: 1,
     inputFormatter: [formatters.inputAddressFormatter]
+  }),
+  new Method({
+    name: 'getDevLogs',
+    call: 'ethcore_devLogs',
+    params: 0
+  }),
+  new Method({
+    name: 'getDevLogsLevels',
+    call: 'ethcore_devLogsLevels',
+    params: 0
   })
 ];
 
