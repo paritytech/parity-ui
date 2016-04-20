@@ -6,8 +6,8 @@
   "scripts": {
     "lint": "semistandard",
     "ci": "npm run lint && npm run testOnce",
-    "test": "mocha --compilers js:babel-core/register \"client/**/*.spec.js\" -w",
-    "testOnce": "mocha --compilers js:babel-core/register \"client/**/*.spec.js\"",
+    "test": "mocha --compilers js:babel-core/register 'client/**/*.spec.js' -w",
+    "testOnce": "mocha --compilers js:babel-core/register 'client/**/*.spec.js'",
     "start": "webpack-dev-server -d --history-api-fallback --hot --inline --progress --colors --port 3000",
     "build": "NODE_ENV=production webpack --progress --colors",
     "commit": "commit-wizard"
