@@ -1,4 +1,39 @@
-.value {
+.input {
   margin-top: 0;
   width: 100%;
+  padding-left: 10px;
+  padding-right: 50px;
+}
+
+.icon {
+  display: block;
+  cursor: pointer;
+  flex: 1;
+  margin: 3px 3px;
+  color: #bbb;
+}
+
+.success {
+  color: #8bc34a;
+}
+
+.icon i {
+  vertical-align: middle;
+}
+
+.icons, .iconsVisible {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  opacity: 0;
+  transition: opacity ease-in-out .2s;
+  transition-delay: 0.2s;
+}
+.iconsVisible {
+  opacity: 1.0;
+}
+.container:hover .icons {
+  opacity: 1.0;
 }

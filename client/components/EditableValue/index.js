@@ -9,12 +9,13 @@ export default class EditableValue extends Component {
   constructor (...args) {
     super(...args);
     this.state = {
-      value: this.props.value
+      value: this.props.value,
+      inEditMode: false
     };
   }
 
   componentWillReceiveProps (newProps) {
-    if (newProps.value === this.state.value) {
+    if (newProps.value === this.state.value || this.state.inEditMode) {
       return;
     }
     this.setState({
@@ -22,30 +23,80 @@ export default class EditableValue extends Component {
     });
   }
 
-  onChange (ev) {
+  onChange (evt) {
     this.setState({
-      value: ev.target.value
+      value: evt.target.value
     });
   }
 
-  onBlur (evt) {
-    this.props.onSubmit(evt.target.value);
+  onOpenEdit (evt) {
+    this.setState({
+      inEditMode: true
+    });
+  }
+
+  onCancel (evt) {
+    this.setState({
+      inEditMode: false,
+      value: this.props.value
+    });
+  }
+
+  onSubmit () {
+    this.setState({
+      inEditMode: false
+    });
+    this.props.onSubmit(this.state.value);
   }
 
   render () {
     return (
-      <div className={valueStyles.valueContainer}>
+      <div className={`${valueStyles.valueContainer} ${style.container}`}>
+        <div className={this.state.inEditMode ? style.iconsVisible : style.icons}>
+          {this.props.children}
+          {this.renderButtons()}
+        </div>
         <input
-          className={style.value}
+          className={this.state.inEditMode ? style.input : valueStyles.value}
           type='text'
           value={this.state.value}
           onChange={::this.onChange}
-          onBlur={::this.onBlur}
+          readOnly={!this.state.inEditMode}
           />
-        {this.props.children}
       </div>
     );
   }
+
+  renderButtons () {
+    if (this.state.inEditMode) {
+      return [
+        <a
+          key={'submit'}
+          className={`${style.icon} ${style.success}`}
+          onClick={::this.onSubmit}
+          >
+          <i className='icon-check'></i>
+        </a>,
+        <a
+          key={'cancel'}
+          className={style.icon}
+          onClick={::this.onCancel}
+          >
+          <i className='icon-close'></i>
+        </a>
+      ];
+    }
+
+    return (
+      <a
+        className={style.icon}
+        onClick={::this.onOpenEdit}
+        >
+        <i className='icon-pencil'></i>
+      </a>
+    );
+  }
+
 }
 
 EditableValue.propTypes = {
