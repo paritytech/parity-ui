@@ -25,7 +25,7 @@ class DebugPage extends Component {
 }
 DebugPage.propTypes = {
   status: PropTypes.object.isRequired,
-  logs: PropTypes.object.isRequired
+  debug: PropTypes.object.isRequired
 };
 
 function mapStateToProps (state) {

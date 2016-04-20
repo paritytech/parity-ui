@@ -29,7 +29,13 @@ export default class Rpc extends Component {
 
   renderPrevCalls () {
     let prevCalls = this.props.rpc.prevCalls.map(
-      c => <tr><th>{c.name}</th><th>{c.params.toString()}</th><th>{c.response}</th></tr>
+      (c, idx) => (
+        <tr key={idx}>
+          <th>{c.name}</th>
+          <th>{c.params.toString()}</th>
+          <th>{c.response}</th>
+        </tr>
+      )
     );
     return (
       <div>

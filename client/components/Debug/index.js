@@ -6,9 +6,10 @@ import style from './style.css';
 export default class Debug extends Component {
 
   renderLogs () {
-    let logs = this.props.logs.logs.slice().reverse();
-    return logs.map(log => (
-      <pre className={style.log} key={log}>{log}</pre>
+    return this.props.debug.logs.slice().reverse().map(log => (
+      <pre className={style.log} key={log}>
+        {log}
+      </pre>
     ));
   }
 
@@ -17,7 +18,7 @@ export default class Debug extends Component {
       <div className='dapp-flex-content'>
         <main className={`dapp-content ${style.container}`}>
           <h1><span>Debugging</span> logs</h1>
-          <h2>{this.props.logs.levels ? this.props.logs.levels : '-'}</h2>
+          <h2>{this.props.debug.levels || '-'}</h2>
           <div className={style.logs}>
             {this.renderLogs()}
           </div>
@@ -29,7 +30,7 @@ export default class Debug extends Component {
 }
 
 Debug.propTypes = {
-  logs: PropTypes.shape({
+  debug: PropTypes.shape({
     levels: PropTypes.string.isRequired,
     logs: PropTypes.arrayOf(PropTypes.string).isRequired
   }).isRequired,

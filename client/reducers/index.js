@@ -4,7 +4,7 @@ import { combineReducers } from 'redux';
 import status from './status';
 import settings from './settings';
 import mining from './mining';
-import logs from './logs';
+import debug from './debug';
 import rpc from './rpc';
 
 export default combineReducers({
@@ -13,5 +13,5 @@ export default combineReducers({
   settings,
   mining,
   rpc,
-  logs
+  debug
 });
