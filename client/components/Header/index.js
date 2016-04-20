@@ -43,6 +43,12 @@ export default class Header extends Component {
               </Link>
             </li>
             <li>
+              <Link to={'/rpc'} activeClassName='active'>
+                <i className='icon-call-out'></i>
+                <span>Rpc Requests</span>
+              </Link>
+            </li>
+            <li>
               <Link to={'/debug'} activeClassName='active'>
                 <i className='icon-bar-chart'></i>
                 <span>Debug</span>
@@ -60,13 +66,6 @@ export default class Header extends Component {
                 <span>Apps</span>
               </Link>
             </li>
-            <li>
-              <Link to={'/rpc'} activeClassName='active'>
-                <i className='icon-call-out'></i>
-                <span>Rpc Requests</span>
-              </Link>
-            </li>
-
           </ul>
         </nav>
       </header>
