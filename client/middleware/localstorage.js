@@ -10,6 +10,7 @@ export default class localStorageMiddleware {
       let delegate;
       switch (action.type) {
         case 'add rpcResponse': delegate = ::this.onAddRpcResponse; break;
+        case 'reset rpcPrevCalls': delegate = ::this.onResetRpcCalls; break;
         case 'init app': delegate = ::this.onInitApp; break;
         default:
           next(action);
@@ -39,6 +40,11 @@ export default class localStorageMiddleware {
 
   onAddRpcResponse (store, next, action) {
     this.unshift('rpcPrevCalls', action.payload);
+    return next(action);
+  }
+
+  onResetRpcCalls (store, next, action) {
+    localStore.set('rpcPrevCalls', []);
     return next(action);
   }
 
