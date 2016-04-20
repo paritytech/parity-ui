@@ -1,22 +1,22 @@
 import Method from 'web3/lib/web3/method';
 import formatters from 'web3/lib/web3/formatters';
 import utils from 'web3/lib/utils/utils';
-import ExtraDataManipulator from './extra-data-manipulator-provider';
+import RpcProvider from './rpc-provider';
 
-const extraDataManipulator = new ExtraDataManipulator();
+const rpcProvider = new RpcProvider();
 
 const methods = [
   new Method({
     name: 'getExtraData',
     call: 'ethcore_extraData',
     params: 0,
-    outputFormatter: extraDataManipulator.decode
+    outputFormatter: rpcProvider.decode
   }),
   new Method({
     name: 'setExtraData',
     call: 'ethcore_setExtraData',
     params: 1,
-    inputFormatter: [extraDataManipulator.encode]
+    inputFormatter: [rpcProvider.encode]
   }),
   new Method({
     name: 'getMinGasPrice',
