@@ -1,34 +1,31 @@
 
 import React, { Component, PropTypes } from 'react';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
-import Status from '../../components/Status';
-import * as ModifyMiningActions from '../../actions/modify-mining';
-import style from './style.css';
+import Debug from '../../components/Debug';
 
-class App extends Component {
+class DebugPage extends Component {
 
   render () {
     const {status} = this.props;
 
     return (
-      <div className={style.normal}>
+      <div>
         <Header
           nodeName={status.name}
           error={status.error}
         />
-        <Status {...this.props} />
+        <Debug {...this.props} />
         <Footer version={status.version} />
       </div>
     );
   }
+
 }
-App.propTypes = {
+DebugPage.propTypes = {
   status: PropTypes.object.isRequired,
-  settings: PropTypes.object.isRequired,
-  mining: PropTypes.object.isRequired
+  debug: PropTypes.object.isRequired
 };
 
 function mapStateToProps (state) {
@@ -36,12 +33,11 @@ function mapStateToProps (state) {
 }
 
 function mapDispatchToProps (dispatch) {
-  return {
-    actions: bindActionCreators(ModifyMiningActions, dispatch)
-  };
+  return {};
 }
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(App);
+)(DebugPage);
+

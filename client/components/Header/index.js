@@ -43,6 +43,12 @@ export default class Header extends Component {
               </Link>
             </li>
             <li>
+              <Link to={'/debug'} activeClassName='active'>
+                <i className='icon-bar-chart'></i>
+                <span>Debug</span>
+              </Link>
+            </li>
+            <li style={{display: 'none'}}>
               <Link to={'/accounts'} activeClassName='active'>
                 <i className='icon-users'></i>
                 <span>Accounts</span>

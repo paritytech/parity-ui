@@ -1,0 +1,31 @@
+.inputTrigger { 
+  display: none; 
+  left: 310px;
+  bottom: 4px;
+  position: absolute;
+  cursor: pointer;
+  animation: fadein .3s;
+}
+
+*:hover > .inputTrigger { 
+  display: block; 
+}
+
+@keyframes fadein {
+  0%   { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.logs {
+  width: 100%;
+  overflow: auto;
+  background: #F5F4F2;
+}
+.log {
+  margin: 0;
+  white-space: nowrap;
+  overflow: visible;
+}
+.container {
+  width: 100%;
+}

@@ -29,7 +29,7 @@ class AppList extends Component {
       return;
     }
     return this.state.apps.map((app) => (
-      <li>
+      <li key={app}>
         <a href={`/${app}/`}>{app}</a>
       </li>
     ));
