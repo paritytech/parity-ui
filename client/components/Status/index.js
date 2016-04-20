@@ -62,7 +62,7 @@ export default class Status extends Component {
         <main className='dapp-content'>
           <div className='dapp-container'>
             <div className='row clear'>
-              <div className='col col-4 tablet-full mobile-full'>
+              <div className='col col-3 tablet-full mobile-full'>
                 <div className='col col-12 tablet-col-1-2 mobile-full'>
                   <h1><span>Best</span> Block</h1>
                   <h1>#{bestBlock}</h1>
@@ -72,7 +72,7 @@ export default class Status extends Component {
                   <h1>{`${hashrate} H/s`}</h1>
                 </div>
               </div>
-              <div className='col col-4 tablet-col-1-2 mobile-full'>
+              <div className='col col-5 tablet-col-1-2 mobile-full'>
                 <MiningSettings
                   mining={this.props.mining}
                   actions={this.props.actions}
