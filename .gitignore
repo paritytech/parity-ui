@@ -5,3 +5,4 @@ static
 *.log*
 *.swp
 reports
+/*.zip
