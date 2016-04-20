@@ -37,31 +37,31 @@ export default class Header extends Component {
         <nav>
           <ul>
             <li>
-              <Link to={'/'} activeClassName='active'>
+              <Link to={'/'} activeClassName='active' {...this._test('home-link')}>
                 <i className='icon-globe'></i>
                 <span>Status</span>
               </Link>
             </li>
             <li>
-              <Link to={'/rpc'} activeClassName='active'>
+              <Link to={'/rpc'} activeClassName='active' {...this._test('rpc-link')}>
                 <i className='icon-call-out'></i>
                 <span>Rpc Requests</span>
               </Link>
             </li>
             <li>
-              <Link to={'/debug'} activeClassName='active'>
+              <Link to={'/debug'} activeClassName='active' {...this._test('debug-link')}>
                 <i className='icon-bar-chart'></i>
                 <span>Debug</span>
               </Link>
             </li>
             <li style={{display: 'none'}}>
-              <Link to={'/accounts'} activeClassName='active'>
+              <Link to={'/accounts'} activeClassName='active' {...this._test('accounts-link')}>
                 <i className='icon-users'></i>
                 <span>Accounts</span>
               </Link>
             </li>
             <li>
-              <Link to={'/apps'} activeClassName='active'>
+              <Link to={'/apps'} activeClassName='active' {...this._test('apps-link')}>
                 <i className='icon-grid'></i>
                 <span>Apps</span>
               </Link>

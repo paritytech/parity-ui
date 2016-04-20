@@ -24,28 +24,46 @@ export default class Status extends Component {
       <div {...this._test('settings')}>
         <h1><span>Network</span> settings</h1>
         <h3>Chain</h3>
-        <Value value={settings.chain} />
+        <Value
+          value={settings.chain}
+          {...this._test('chain')}
+          />
         <div className={style.row}>
           <div className='col col-6 mobile-full'>
             <h3>Peers</h3>
-            <Value value={`${status.peers}/${settings.maxPeers}`} />
+            <Value
+              value={`${status.peers}/${settings.maxPeers}`}
+              {...this._test('peers')}
+              />
           </div>
           <div className='col col-6 mobile-full'>
             <h3>Network port</h3>
-            <Value value={settings.networkPort} />
+            <Value
+              value={settings.networkPort}
+              {...this._test('network-port')}
+              />
           </div>
         </div>
 
         <h3>RPC Enabled</h3>
-        <Value value={settings.rpcEnabled ? 'yes' : 'no'} />
+        <Value
+          value={settings.rpcEnabled ? 'yes' : 'no'}
+          {...this._test('rpc-enabled')}
+          />
         <div className={style.row}>
           <div className='col col-6 mobile-full'>
             <h3>RPC Interface</h3>
-            <Value value={settings.rpcInterface} />
+            <Value
+              value={settings.rpcInterface}
+              {...this._test('rpc-interface')}
+              />
           </div>
           <div className='col col-6 mobile-full'>
             <h3>RPC Port</h3>
-            <Value value={settings.rpcPort} />
+            <Value
+              value={settings.rpcPort}
+              {...this._test('rpc-port')}
+              />
           </div>
         </div>
       </div>
@@ -55,7 +73,7 @@ export default class Status extends Component {
   render () {
     const {status} = this.props;
     const bestBlock = formatNumber()(status.bestBlock);
-    const hashrate = bytes(status.bytes) || 0;
+    const hashrate = bytes(status.hashrate) || 0;
 
     return (
       <div className='dapp-flex-content'>
@@ -65,11 +83,11 @@ export default class Status extends Component {
               <div className='col col-3 tablet-full mobile-full'>
                 <div className='col col-12 tablet-col-1-2 mobile-full'>
                   <h1><span>Best</span> Block</h1>
-                  <h1>#{bestBlock}</h1>
+                  <h1 {...this._test('best-block')}>#{bestBlock}</h1>
                 </div>
                 <div className='col col-12 tablet-col-1-2 mobile-full'>
                   <h1><span>Hash</span> Rate</h1>
-                  <h1>{`${hashrate} H/s`}</h1>
+                  <h1 {...this._test('hashrate')}>{`${hashrate} H/s`}</h1>
                 </div>
               </div>
               <div className='col col-5 tablet-col-1-2 mobile-full'>

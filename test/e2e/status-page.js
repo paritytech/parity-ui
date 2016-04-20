@@ -7,7 +7,11 @@ module.exports = {
   tags: ['statuspage'],
   'Navigate to status page' (client) {
     client.url(url).pause(1000);
+  },
+
+  'Assert ui' (client) {
     client.expect.element('hgroup').to.be.present;
+    ['home', 'rpc', 'debug', 'apps', 'accounts'].map(assertNav.bind(client));
     client.expect.element(el('Status-mining')).to.be.present;
     client.expect.element(el('Status-settings')).to.be.present;
     client.expect.element(el('StatusPage-footer')).to.be.present;
@@ -20,6 +24,24 @@ module.exports = {
       { selector: 'min-gas-price', name: 'ethcore_minGasPrice' },
       { selector: 'gas-floor-target', name: 'ethcore_gasFloorTarget' }
     ].map(assertMiningSettings.bind(client));
+  },
+
+  'Assert status' (client) {
+    [
+      { selector: 'best-block', name: 'eth_blockNumber' },
+      { selector: 'hashrate', name: 'eth_hashrate' }
+    ].map(assertStatus.bind(client));
+  },
+
+  'Assert network' (client) {
+    [
+      // { selector: 'chain', name: '' },
+      // { selector: 'network-port', name: '' },
+      // { selector: 'rpc-enabled', name: '' },
+      // { selector: 'rpc-interface', name: '' },
+      // { selector: 'rpc-port', name: 'eth_hashrate' }
+      { selector: 'peers', name: 'net_peerCount' }
+    ].map(assertNetwork.bind(client));
   },
 
   'change extradata' (client) {
@@ -56,4 +78,23 @@ function assertMiningSettings (method) {
   const mockedMethod = mockedResponses.rpc.find(m => m.name === method.name);
   expected = mockedMethod.formattedResponse || mockedMethod.response;
   this.expect.element(el(`MiningSettings-${method.selector}`, 'input')).to.have.value.that.equals(expected);
+}
+
+function assertStatus (method) {
+  let expected;
+  const mockedMethod = mockedResponses.rpc.find(m => m.name === method.name);
+  expected = mockedMethod.formattedResponse || mockedMethod.response;
+  this.expect.element(el(`Status-${method.selector}`)).text.to.contain(expected);
+}
+
+function assertNetwork (method) {
+  let expected;
+  const mockedMethod = mockedResponses.rpc.find(m => m.name === method.name);
+  expected = mockedMethod.formattedResponse || mockedMethod.response;
+  this.expect.element(el(`Status-${method.selector}`, 'input')).to.have.value.that.contain(expected);
+}
+
+function assertNav (link) {
+  const selector = `Header-${link}-link`;
+  this.expect.element(el(selector)).to.be.present;
 }
