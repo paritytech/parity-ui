@@ -17,21 +17,23 @@ export default class Rpc extends Component {
       <div className='dapp-flex-content'>
         <main className='dapp-content'>
           <div className='dapp-container'>
-            <h1>Postman in the house!</h1>
+            <h1><span>RPC</span> requests</h1>
             <div className='row'>
-              <div className='col col-3'>
+              <div className='col col-6'>
                 {this.renderForm()}
               </div>
-              <div className='col col-9'>
-                <h2>Call History</h2>
+              <div className='col col-6'>
                 <a
-                  title='Reset RPC history'
+                  title='Clear RPC calls history'
                   onClick={::this.props.actions.resetRpcPrevCalls}
                   className={style.right}
                   >
                   <i className='icon-trash'></i>
                 </a>
-                {this.renderPrevCalls()}
+                <h2 className={style.header}>History</h2>
+                <div className={'row'}>
+                  {this.renderPrevCalls()}
+                </div>
               </div>
             </div>
           </div>
@@ -41,32 +43,34 @@ export default class Rpc extends Component {
   }
 
   renderPrevCalls () {
-    let prevCalls = this.props.rpc.prevCalls.map(
+    return this.props.rpc.prevCalls.map(
       (c, idx) => (
-        <tr key={idx}>
-          <th>{c.name}</th>
-          <th>{c.params.toString()}</th>
-          <th>{c.response}</th>
-        </tr>
+        <div key={idx} className={style.call}>
+          <pre>{c.name}({c.params.toString()})</pre>
+          <pre>{c.response}</pre>
+        </div>
       )
-    );
-    return (
-      <div>
-        <table>
-          <thead><tr><th>Method</th><th>Params</th><th>Response</th></tr></thead>
-          <tbody>{prevCalls}</tbody>
-        </table>
-      </div>
     );
   }
 
   renderForm () {
     return (
       <div>
-        <label htmlFor='selectedMethod'>Choose Method</label>
-        {this.renderMethodList()}
-        {this.renderInputs()}
-        <input type='submit' onClick={::this.onRpcFire} value='Fire!' />
+        <h2 className={style.header}>
+          <label htmlFor='selectedMethod'>
+            Call Method
+          </label>
+        </h2>
+        <div className='row'>
+          {this.renderMethodList()}
+          {this.renderInputs()}
+        </div>
+        <button
+          className={`dapp-block-button ${style.button}`}
+          onClick={::this.onRpcFire}
+          >
+          Fire!
+        </button>
       </div>
     );
   }
@@ -77,8 +81,12 @@ export default class Rpc extends Component {
     );
 
     return (
-      <select id='selectedMethod' value={this.props.rpc.selectedMethod.name}
-              onChange={::this.handleMethodChange}>
+      <select
+        className={style.input}
+        id='selectedMethod'
+        value={this.props.rpc.selectedMethod.name}
+        onChange={::this.handleMethodChange}
+        >
         {methods}
       </select>
     );
@@ -91,7 +99,7 @@ export default class Rpc extends Component {
 
   onRpcFire () {
     let {selectedMethod} = this.props.rpc;
-    const params = selectedMethod.params.map(p => this._inputs[p.name].value);
+    const params = selectedMethod.params.map(p => this._inputs[p].value);
     this.props.actions.fireRpc({
       method: selectedMethod.name,
       outputFormatter: selectedMethod.outputFormatter,
@@ -105,12 +113,21 @@ export default class Rpc extends Component {
     if (!selectedMethod.params) {
       return;
     }
+
     return _.find(rpcData.methods, {name: selectedMethod.name})
-            .params.map(p =>
-                    <div>
-                      <div><label>{p}</label></div>
-                      <input ref={e => this._inputs[p.name] = e} />
-                    </div>);
+            .params.map(
+              p => (
+                <div>
+                  <label>
+                    <input
+                      className={style.input}
+                      placeholder={p}
+                      ref={e => this._inputs[p] = e}
+                      />
+                  </label>
+                </div>
+              )
+            );
   }
 
 }

@@ -45,7 +45,7 @@ class AppListPage extends Component {
         <div className='dapp-flex-content'>
           <main className='dapp-content'>
             <div className={'dapp-container'}>
-              <h1>List of installed apps</h1>
+              <h1><span>Installed</span> apps</h1>
               <ul>
               {this.renderApps()}
               </ul>

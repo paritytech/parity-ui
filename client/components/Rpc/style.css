@@ -1,1 +1,26 @@
-.right { float: right; }
+.right {
+  float: right;
+}
+
+.header {
+  margin: 0;
+}
+
+.input {
+  width: 100%;
+}
+
+.call {
+  border-bottom: 2px solid #CCC6C6;
+  margin-top: 18.4px;  
+}
+.call:first-child {
+  border-color: #6691C2;
+}
+
+.call pre {
+  margin: 0;
+}
+.call pre:nth-child(2) {
+  color: #bbb;
+}
