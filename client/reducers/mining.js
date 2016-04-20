@@ -11,7 +11,6 @@ const initialState = {
 export const actionHandlers = {
 
   'update author' (state, action) {
-    console.info('update author yo!');
     return {
       ...state,
       author: `${action.payload}`

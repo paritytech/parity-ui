@@ -2,6 +2,7 @@
 import React, { Component, PropTypes } from 'react';
 
 import style from './styles.css';
+import valueStyles from '../Value/styles.css';
 
 export default class EditableValue extends Component {
 
@@ -33,19 +34,22 @@ export default class EditableValue extends Component {
 
   render () {
     return (
-      <input
-        {...this._testInherit()}
-        className={style.input}
-        type='text'
-        value={this.state.value}
-        onChange={::this.onChange}
-        onBlur={::this.onBlur}
-        />
+      <div className={valueStyles.valueContainer} {...this._testInherit()}>
+        <input
+          className={style.value}
+          type='text'
+          value={this.state.value}
+          onChange={::this.onChange}
+          onBlur={::this.onBlur}
+          />
+        {this.props.children}
+      </div>
     );
   }
 }
 
 EditableValue.propTypes = {
   onSubmit: PropTypes.func.isRequired,
-  value: PropTypes.string
+  value: PropTypes.string,
+  children: PropTypes.element
 };

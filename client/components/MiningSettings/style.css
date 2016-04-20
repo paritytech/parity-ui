@@ -1,0 +1,12 @@
+.inputTrigger { 
+  right: 4px;
+  bottom: 4px;
+  position: absolute;
+  cursor: pointer;
+  opacity: 0;
+}
+
+*:hover > .inputTrigger { 
+  opacity: 1.0;
+}
+
