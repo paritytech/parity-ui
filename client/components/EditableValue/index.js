@@ -55,7 +55,10 @@ export default class EditableValue extends Component {
 
   render () {
     return (
-      <div className={`${valueStyles.valueContainer} ${style.container}`}>
+      <form
+        className={`${valueStyles.valueContainer} ${style.container}`}
+        onSubmit={::this.onSubmit}
+        >
         {this.renderResetButton()}
         <div className={this.state.inEditMode ? style.iconsVisible : style.icons}>
           {this.props.children}
@@ -68,7 +71,7 @@ export default class EditableValue extends Component {
           onChange={::this.onChange}
           readOnly={!this.state.inEditMode}
           />
-      </div>
+      </form>
     );
   }
 
