@@ -4,4 +4,4 @@ static
 .module-cache
 *.log*
 *.swp
-
+reports
