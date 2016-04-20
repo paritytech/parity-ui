@@ -4,8 +4,8 @@ import formatNumber from 'format-number';
 import bytes from 'bytes';
 
 import style from './style.css';
-import EditableValue from '../EditableValue';
 import Value from '../Value';
+import MiningSettings from '../MiningSettings';
 
 export default class Status extends Component {
 
@@ -21,7 +21,7 @@ export default class Status extends Component {
   renderSettings () {
     const {status, settings} = this.props;
     return (
-      <div className='col col-4 tablet-col-1-2 mobile-full'>
+      <div>
         <h1><span>Network</span> settings</h1>
         <h3>Chain</h3>
         <Value value={settings.chain} />
@@ -52,80 +52,6 @@ export default class Status extends Component {
     );
   }
 
-  renderMiningDetails () {
-    const {mining} = this.props;
-
-    let onMinGasPriceChange = (newVal) => {
-      this.props.actions.modifyMinGasPrice(+newVal);
-    };
-
-    let onExtraDataChange = (newVal) => {
-      this.props.actions.modifyExtraData(newVal);
-    };
-
-    let onAuthorChange = (newVal) => {
-      this.props.actions.modifyAuthor(newVal);
-    };
-
-    let onGasFloorTargetChange = (newVal) => {
-      this.props.actions.modifyGasFloorTarget(+newVal);
-    };
-
-    return (
-      <div className='col col-4 tablet-col-1-2 mobile-full'>
-        <h1><span>Mining</span> settings</h1>
-        <h3>Author</h3>
-        <EditableValue
-          value={mining.author}
-          onSubmit={onAuthorChange}/>
-        <h3>Extradata</h3>
-        <EditableValue
-          value={mining.extraData}
-          onSubmit={onExtraDataChange}>
-          <a className={style.inputTrigger} onClick={this.props.actions.resetExtraData} title='Reset Extra Data'>
-            <i className='icon-anchor'></i>
-          </a>
-        </EditableValue>
-        <h3>Minimal Gas Price</h3>
-        <EditableValue
-          value={mining.minGasPrice}
-          onSubmit={onMinGasPriceChange}/>
-        <h3>Gas floor target</h3>
-        <EditableValue
-          value={mining.gasFloorTarget}
-          onSubmit={onGasFloorTargetChange}/>
-      </div>
-    );
-  }
-
-  renderResetData () {
-    const {mining} = this.props;
-
-    const defaultExtraData = this.getDefaultExtraData();
-
-    if (mining.extraData === defaultExtraData) {
-      return;
-    }
-
-    return (
-      <a
-        className={style.inputTrigger}
-        onClick={::this.onResetExtraData}
-        title={`Reset to ${defaultExtraData}`}
-        >
-        <i className='icon-anchor'></i>
-      </a>
-    );
-  }
-
-  onResetExtraData () {
-    this.props.actions.modifyExtraData(this.getDefaultExtraData());
-  }
-
-  getDefaultExtraData () {
-    return this.props.status.version.split('/').slice(0, 3).join('/');
-  }
-
   render () {
     const {status} = this.props;
     const bestBlock = formatNumber()(status.bestBlock);
@@ -146,8 +72,16 @@ export default class Status extends Component {
                   <h1>{`${hashrate} H/s`}</h1>
                 </div>
               </div>
-              {this.renderMiningDetails()}
-              {this.renderSettings()}
+              <div className='col col-4 tablet-col-1-2 mobile-full'>
+                <MiningSettings
+                  mining={this.props.mining}
+                  actions={this.props.actions}
+                  version={this.props.status.version}
+                  />
+              </div>
+              <div className='col col-4 tablet-col-1-2 mobile-full'>
+                {this.renderSettings()}
+              </div>
             </div>
           </div>
         </main>
@@ -158,12 +92,7 @@ export default class Status extends Component {
 }
 
 Status.propTypes = {
-  mining: PropTypes.shape({
-    author: PropTypes.string.isRequired,
-    extraData: PropTypes.string.isRequired,
-    minGasPrice: PropTypes.string.isRequired,
-    gasFloorTarget: PropTypes.string.isRequired
-  }).isRequired,
+  mining: PropTypes.object.isRequired,
   settings: PropTypes.shape({
     chain: PropTypes.string.isRequired,
     networkPort: PropTypes.number.isRequired,
@@ -179,11 +108,5 @@ Status.propTypes = {
     hashrate: PropTypes.string.isRequired,
     peers: PropTypes.number.isRequired
   }).isRequired,
-  actions: PropTypes.shape({
-    modifyMinGasPrice: PropTypes.func.isRequired,
-    modifyAuthor: PropTypes.func.isRequired,
-    modifyGasFloorTarget: PropTypes.func.isRequired,
-    modifyExtraData: PropTypes.func.isRequired,
-    resetExtraData: PropTypes.func.isRequired
-  }).isRequired
+  actions: PropTypes.object.isRequired
 };

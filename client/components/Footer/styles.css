@@ -1,9 +1,14 @@
 .footer {
   position: fixed;
-  bottom: 0px;
-  right: 0px;
-  padding: 2px 4px;
-  font-size: 13px;
-  color: rgb(85, 85, 85);
-  background: rgba(230, 225, 225, 0.5);
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.7);
+  border-top: 1px solid #6691C2;
+  padding: 10px;
+  margin: 50px 0 0;
+  color: #6691C2;
+}
+.right {
+  float: right;
 }
