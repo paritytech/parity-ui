@@ -3,10 +3,10 @@
   top: -8px;
   left: -8px;
 }
-.title h1, .title h2 {
+.title h1, .title h3 {
   margin: 0;
 }
-.title h2 {
+.title h3 {
   text-transform: none;
   font-weight: 300;
 }

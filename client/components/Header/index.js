@@ -29,8 +29,8 @@ export default class Header extends Component {
     return (
       <header className='dapp-header'>
         <hgroup className={style.title}>
-          <h1><span>Status</span> <small>Page</small></h1>
-          <h2>{this.props.nodeName}</h2>
+          <h1>Status Page</h1>
+          <h3>{this.props.nodeName}</h3>
         </hgroup>
         {this.renderError()}
         <div className='dapp-flex-item'></div>
