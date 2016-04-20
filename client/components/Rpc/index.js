@@ -14,24 +14,28 @@ export default class Rpc extends Component {
 
   render () {
     return (
-      <div>
-        <h1>Postman in the house!</h1>
-        <div className='row'>
-          <div className='col col-3'>
-            {this.renderForm()}
+      <div className='dapp-flex-content'>
+        <main className='dapp-content'>
+          <div className='dapp-container'>
+            <h1>Postman in the house!</h1>
+            <div className='row'>
+              <div className='col col-3'>
+                {this.renderForm()}
+              </div>
+              <div className='col col-9'>
+                <h2>Call History</h2>
+                <a
+                  title='Reset RPC history'
+                  onClick={::this.props.actions.resetRpcPrevCalls}
+                  className={style.right}
+                  >
+                  <i className='icon-trash'></i>
+                </a>
+                {this.renderPrevCalls()}
+              </div>
+            </div>
           </div>
-          <div className='col col-9'>
-            <h2>Call History</h2>
-            <a
-              title='Reset RPC history'
-              onClick={::this.props.actions.resetRpcPrevCalls}
-              className={style.right}
-              >
-              <i className='icon-trash'></i>
-            </a>
-            {this.renderPrevCalls()}
-          </div>
-        </div>
+        </main>
       </div>
     );
   }

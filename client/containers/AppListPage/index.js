@@ -44,10 +44,12 @@ class AppListPage extends Component {
           />
         <div className='dapp-flex-content'>
           <main className='dapp-content'>
-            <h1>List of installed apps</h1>
-            <ul>
-            {this.renderApps()}
-            </ul>
+            <div className={'dapp-container'}>
+              <h1>List of installed apps</h1>
+              <ul>
+              {this.renderApps()}
+              </ul>
+            </div>
           </main>
         </div>
         <Footer version={this.props.status.version} />
