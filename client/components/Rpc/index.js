@@ -31,7 +31,7 @@ export default class Rpc extends Component {
                   <i className='icon-trash'></i>
                 </a>
                 <h2 className={style.header}>History</h2>
-                <div className={'row'}>
+                <div className={`${style.history} row`}>
                   {this.renderPrevCalls()}
                 </div>
               </div>
@@ -46,6 +46,7 @@ export default class Rpc extends Component {
     return this.props.rpc.prevCalls.map(
       (c, idx) => (
         <div key={idx} className={style.call}>
+          <span className={style.callNo}>#{c.callNo}</span>
           <pre>{c.name}({c.params.toString()})</pre>
           <pre>{c.response}</pre>
         </div>
