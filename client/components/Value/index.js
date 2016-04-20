@@ -5,10 +5,6 @@ import styles from './styles.css';
 
 export default class Value extends Component {
 
-  constructor (...args) {
-    super(...args);
-  }
-
   render () {
     return (
       <input
