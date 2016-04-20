@@ -1,5 +1,6 @@
 
-import {isArray, eq} from 'lodash';
+import Promise from 'bluebird';
+import {isArray, eq, compact} from 'lodash';
 import {isBigNumber} from 'web3/lib/utils/utils';
 import {toPromise} from './util-provider';
 import {Web3Base} from './web3-base';
@@ -15,6 +16,7 @@ export class Web3Provider extends Web3Base {
     this.delay = 500;
     this.state = {};
     this.running = false;
+    this.tickArr = this.getTickArr();
   }
 
   onStart () {
@@ -22,23 +24,34 @@ export class Web3Provider extends Web3Base {
   }
 
   onTick () {
-    return Promise.all([
-      toPromise(this.web3.eth.getHashrate).then(StatusActions.updateHashrate),
-      toPromise(this.web3.eth.getBlockNumber).then(StatusActions.updateBlockNumber),
-      toPromise(this.web3.net.getPeerCount).then(StatusActions.updatePeerCount),
-      toPromise(this.web3.eth.getCoinbase).then(MiningActions.updateAuthor),
-      toPromise(this.ethcoreWeb3.getMinGasPrice).then(MiningActions.updateMinGasPrice),
-      toPromise(this.ethcoreWeb3.getGasFloorTarget).then(MiningActions.updateGasFloorTarget),
-      toPromise(this.ethcoreWeb3.getExtraData).then(MiningActions.updateExtraData),
-      toPromise(this.ethcoreWeb3.getDevLogsLevels).then(DebugActions.updateDevLogsLevels),
-      toPromise(this.ethcoreWeb3.getDevLogs).then(DebugActions.updateDevLogs)
-    ])
+    return Promise.map(this.tickArr, obj => {
+      return toPromise(obj.method).then(obj.actionMaker)
+        .catch(err => {
+          this.store.dispatch(StatusActions.error(err));
+          return false; // don't process errors in the promise chain
+        });
+    })
+    .then(compact)
     .then(::this.filterChanged)
     .then(::this.updateState)
     .then(actions => actions.map(this.store.dispatch))
     .catch(err => {
       this.store.dispatch(StatusActions.error(err));
     });
+  }
+
+  getTickArr () {
+    return [
+      {method: this.web3.eth.getHashrate, actionMaker: StatusActions.updateHashrate},
+      {method: this.web3.eth.getBlockNumber, actionMaker: StatusActions.updateBlockNumber},
+      {method: this.web3.net.getPeerCount, actionMaker: StatusActions.updatePeerCount},
+      {method: this.web3.eth.getCoinbase, actionMaker: MiningActions.updateAuthor},
+      {method: this.ethcoreWeb3.getMinGasPrice, actionMaker: MiningActions.updateMinGasPrice},
+      {method: this.ethcoreWeb3.getGasFloorTarget, actionMaker: MiningActions.updateGasFloorTarget},
+      {method: this.ethcoreWeb3.getExtraData, actionMaker: MiningActions.updateExtraData},
+      {method: this.ethcoreWeb3.getDevLogsLevels, actionMaker: DebugActions.updateDevLogsLevels},
+      {method: this.ethcoreWeb3.getDevLogs, actionMaker: DebugActions.updateDevLog}
+    ];
   }
 
   nextDelay () {
