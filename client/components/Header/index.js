@@ -6,8 +6,8 @@ import style from './styles.css';
 export default class Header extends Component {
 
   renderError () {
-    const {error} = this.props;
-    if (!error) {
+    const {disconnected} = this.props;
+    if (!disconnected) {
       return;
     }
 
@@ -15,7 +15,7 @@ export default class Header extends Component {
       <nav>
         <ul>
         <li>
-          <a className={style.error} disabled title={`${error}`}>
+          <a className={style.error} disabled title={`${disconnected}`}>
             <i className='icon-power'></i>
             <span>Offline</span>
           </a>
@@ -75,6 +75,5 @@ export default class Header extends Component {
 
 Header.propTypes = {
   nodeName: PropTypes.string.isRequired,
-  error: PropTypes.oneOfType([PropTypes.string, PropTypes.bool])
+  disconnected: PropTypes.bool
 };
-

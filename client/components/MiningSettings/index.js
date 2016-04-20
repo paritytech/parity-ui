@@ -1,7 +1,11 @@
 
 import React, { Component, PropTypes } from 'react';
 
+import formatNumber from 'format-number';
 import EditableValue from '../EditableValue';
+import {numberFromString} from './numberFromString';
+
+const toNiceNumber = formatNumber();
 
 export default class MiningSettings extends Component {
 
@@ -9,7 +13,7 @@ export default class MiningSettings extends Component {
     const {mining, actions} = this.props;
 
     let onMinGasPriceChange = (newVal) => {
-      actions.modifyMinGasPrice(+newVal);
+      actions.modifyMinGasPrice(numberFromString(newVal));
     };
 
     let onExtraDataChange = (newVal) => {
@@ -21,7 +25,7 @@ export default class MiningSettings extends Component {
     };
 
     let onGasFloorTargetChange = (newVal) => {
-      actions.modifyGasFloorTarget(+newVal);
+      actions.modifyGasFloorTarget(numberFromString(newVal));
     };
 
     return (
@@ -39,11 +43,11 @@ export default class MiningSettings extends Component {
           />
         <h3>Minimal Gas Price</h3>
         <EditableValue
-          value={mining.minGasPrice}
+          value={toNiceNumber(mining.minGasPrice)}
           onSubmit={onMinGasPriceChange}/>
         <h3>Gas floor target</h3>
         <EditableValue
-          value={mining.gasFloorTarget}
+          value={toNiceNumber(mining.gasFloorTarget)}
           onSubmit={onGasFloorTargetChange}/>
       </div>
     );

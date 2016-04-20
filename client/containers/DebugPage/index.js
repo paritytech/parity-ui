@@ -14,7 +14,7 @@ class DebugPage extends Component {
       <div>
         <Header
           nodeName={status.name}
-          error={status.error}
+          disconnected={status.disconnected}
         />
         <Debug {...this.props} />
         <Footer version={status.version} />

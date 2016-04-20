@@ -15,7 +15,7 @@ export default handleActions({
   error (state, action) {
     return {
       ...state,
-      error: action.payload.toString(),
+      disconnected: (action.payload.message === 'Invalid JSON RPC response: ""'),
       noOfErrors: state.noOfErrors + 1
     };
   },
@@ -53,7 +53,7 @@ export default handleActions({
 function resetError (state) {
   return {
     ...state,
-    error: false,
+    disconnected: false,
     noOfErrors: 0
   };
 }

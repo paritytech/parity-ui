@@ -19,6 +19,7 @@ div:hover > .removeIcon {
 }
 
 .call {
+  cursor: pointer;
   border-bottom: 2px solid #CCC6C6;
   margin-bottom: 18.4px;  
   background: #f5f4f2;
@@ -46,4 +47,8 @@ div:hover > .removeIcon {
   padding-top: 0;
   overflow: auto;
   max-height: 60vh;
+}
+
+h3 + label > input {
+  margin-top: 0;
 }
