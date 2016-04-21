@@ -33,6 +33,11 @@ export default class EditableValue extends Component {
     this.setState({
       inEditMode: true
     });
+
+    if (!this._input) {
+      return;
+    }
+    this._input.focus();
   }
 
   onCancel (evt) {
@@ -69,6 +74,7 @@ export default class EditableValue extends Component {
           type='text'
           value={this.state.value}
           onClick={::this.onOpenEdit}
+          ref={el => this._input = el}
           onChange={::this.onChange}
           readOnly={!this.state.inEditMode}
           />
@@ -80,6 +86,7 @@ export default class EditableValue extends Component {
     if (this.state.inEditMode) {
       return;
     }
+
     if (!this.props.defaultValue || this.state.value === this.props.defaultValue) {
       return;
     }
