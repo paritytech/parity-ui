@@ -15,21 +15,21 @@ export default handleActions({
     return {
       ...state,
       chain: action.payload
-    }; 
+    };
   },
 
   'update netPort' (state, action) {
     return {
       ...state,
       networkPort: action.payload
-    }; 
+    };
   },
 
   'update netMaxPeers' (state, action) {
     return {
       ...state,
       maxPeers: action.payload
-    }; 
+    };
   },
 
   'update rpcSettings' (state, action) {
@@ -40,7 +40,6 @@ export default handleActions({
       rpcEnabled: rpc.enabled,
       rpcInterface: rpc.interface,
       rpcPort: rpc.port
-    }; 
-  },
-
+    };
+  }
 }, initialState);

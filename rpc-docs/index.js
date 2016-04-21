@@ -207,6 +207,11 @@ function customFunctions () {
       desc: 'Returns basic settings of rpc (enabled, port, interface).',
       params: [],
       returns: '`OBJECT` - JSON object containing rpc settings'
+    }, {
+      name: 'ethcore_nodeName',
+      desc: 'Returns node name (identity)',
+      params: [],
+      returns: '`DATA` - Node name'
     }
   ];
 }

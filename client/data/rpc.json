@@ -896,6 +896,14 @@
       "returns": "`OBJECT` - JSON object containing rpc settings",
       "inputFormatters": [],
       "outputFormatters": null
+    },
+    {
+      "name": "ethcore_nodeName",
+      "desc": "Returns node name (identity)",
+      "params": [],
+      "returns": "`DATA` - Node name",
+      "inputFormatters": [],
+      "outputFormatters": null
     }
   ]
 }

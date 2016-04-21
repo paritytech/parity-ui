@@ -10,3 +10,4 @@ export const updateNetMaxPeers = createAction('update netMaxPeers');
 export const updateNetChain = createAction('update netChain');
 export const updateNetPort = createAction('update netPort');
 export const updateRpcSettings = createAction('update rpcSettings');
+export const updateNodeName = createAction('update nodeName');

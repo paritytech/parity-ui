@@ -8,7 +8,7 @@ const initialState = {
   bestBlock: 'loading...',
   hashrate: 'loading...',
   peers: 0,
-  version: '-',
+  version: '-'
 };
 
 export default handleActions({
@@ -45,6 +45,13 @@ export default handleActions({
     return {
       ...resetError(state),
       version: action.payload
+    };
+  },
+
+  'update nodeName' (state, action) {
+    return {
+      ...resetError(state),
+      name: action.payload || ' '
     };
   }
 

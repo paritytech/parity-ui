@@ -77,6 +77,11 @@ const methods = [
     name: 'getRpcSettings',
     call: 'ethcore_rpcSettings',
     params: 0
+  }),
+  new Method({
+    name: 'getNodeName',
+    call: 'ethcore_nodeName',
+    params: 0
   })
 ];
 

@@ -19,7 +19,13 @@ export class Web3Provider extends Web3Base {
   }
 
   onStart () {
-    toPromise(this.web3.version.getNode, StatusActions.updateVersion);
+    toPromise(this.web3.version.getNode)
+      .then(StatusActions.updateVersion)
+      .then(::this.store.dispatch)
+      .catch(err => {
+        console.error(err);
+        this.store.dispatch(StatusActions.error(err));
+      });
   }
 
   onTick () {
@@ -30,6 +36,7 @@ export class Web3Provider extends Web3Base {
       }
       return toPromise(obj.method).then(obj.actionMaker)
         .catch(err => {
+          console.error(err);
           this.store.dispatch(StatusActions.error(err));
           return false; // don't process errors in the promise chain
         });
@@ -39,6 +46,7 @@ export class Web3Provider extends Web3Base {
     .then(::this.updateState)
     .then(actions => actions.map(this.store.dispatch))
     .catch(err => {
+      console.error(err);
       this.store.dispatch(StatusActions.error(err));
     });
   }
@@ -57,7 +65,8 @@ export class Web3Provider extends Web3Base {
       {method: this.ethcoreWeb3.getNetChain, actionMaker: StatusActions.updateNetChain},
       {method: this.ethcoreWeb3.getNetPort, actionMaker: StatusActions.updateNetPort},
       {method: this.ethcoreWeb3.getNetMaxPeers, actionMaker: StatusActions.updateNetMaxPeers},
-      {method: this.ethcoreWeb3.getRpcSettings, actionMaker: StatusActions.updateRpcSettings}
+      {method: this.ethcoreWeb3.getRpcSettings, actionMaker: StatusActions.updateRpcSettings},
+      {method: this.ethcoreWeb3.getNodeName, actionMaker: StatusActions.updateNodeName}
     ];
   }
 
