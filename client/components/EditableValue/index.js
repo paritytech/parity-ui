@@ -33,6 +33,11 @@ export default class EditableValue extends Component {
     this.setState({
       inEditMode: true
     });
+
+    if (!this._input) {
+      return;
+    }
+    this._input.focus();
   }
 
   onCancel (evt) {
@@ -58,6 +63,7 @@ export default class EditableValue extends Component {
       <form
         className={`${valueStyles.valueContainer} ${style.container}`}
         onSubmit={::this.onSubmit}
+        {...this._testInherit()}
         >
         {this.renderResetButton()}
         <div className={this.state.inEditMode ? style.iconsVisible : style.icons}>
@@ -68,6 +74,8 @@ export default class EditableValue extends Component {
           className={this.state.inEditMode ? style.input : valueStyles.value}
           type='text'
           value={this.state.value}
+          onClick={::this.onOpenEdit}
+          ref={el => this._input = el}
           onChange={::this.onChange}
           readOnly={!this.state.inEditMode}
           />
@@ -79,6 +87,7 @@ export default class EditableValue extends Component {
     if (this.state.inEditMode) {
       return;
     }
+
     if (!this.props.defaultValue || this.state.value === this.props.defaultValue) {
       return;
     }
@@ -89,6 +98,7 @@ export default class EditableValue extends Component {
         className={`${style.icon} ${style.firstIcon}`}
         onClick={::this.onResetToDefault}
         title={`Reset to ${this.props.defaultValue}`}
+        {...this._testInherit('reset')}
         >
         <i className='icon-anchor'></i>
       </a>
@@ -102,6 +112,7 @@ export default class EditableValue extends Component {
           key={'submit'}
           className={style.iconSuccess}
           onClick={::this.onSubmit}
+          {...this._testInherit('submit')}
           >
           <i className='icon-check'></i>
         </a>,
@@ -109,6 +120,7 @@ export default class EditableValue extends Component {
           key={'cancel'}
           className={style.icon}
           onClick={::this.onCancel}
+          {...this._testInherit('cancel')}
           >
           <i className='icon-close'></i>
         </a>
@@ -121,6 +133,7 @@ export default class EditableValue extends Component {
         className={style.icon}
         onClick={::this.onOpenEdit}
         title='Edit'
+        {...this._testInherit('edit')}
         >
         <i className='icon-pencil'></i>
       </a>

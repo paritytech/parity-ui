@@ -1,4 +1,4 @@
-/* global describe, xit, it, beforeEach, expect */
+/* global describe, it, beforeEach, expect */
 
 import sinon from 'sinon';
 import WebInteractions from './user-web3-interactions';
@@ -19,7 +19,7 @@ describe('MIDDLEWARE: WEB3 INTERACTIONS', () => {
     expect(cut.getMethod('modify minGasPrice')).to.equal('setMinGasPrice');
   });
 
-  xit('should not invoke web3 when a non modify action is dispatched', () => {
+  it('should not invoke web3 when a non modify action is dispatched', () => {
     // given
     const store = null;
     const next = sinon.spy();
@@ -32,13 +32,10 @@ describe('MIDDLEWARE: WEB3 INTERACTIONS', () => {
     middleware(action);
 
     // then
-    // todo [adgo] 18.04.2016 - remove this. it logs correctly but returns undefined when passed to "expect"
-    console.log('**********next**********');
-    console.log(next.calledWith(action));
-    console.log(typeof next.calledWith(action));
-    console.log('**********next**********');
     expect(next.calledWith(action)).to.be.true;
-    expect(cut.ethcoreWeb3.notCalled).to.be.true;
+    Object.keys(cut.ethcoreWeb3).map((func) => {
+      expect(cut.ethcoreWeb3[func].notCalled).to.be.true;
+    });
   });
 
   it('should invoke web3 when a modify action is dispatched', () => {

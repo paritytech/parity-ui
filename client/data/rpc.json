@@ -6,7 +6,7 @@
       "params": [],
       "returns": "`String` - The current client version",
       "inputFormatters": [],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "web3_sha3",
@@ -16,7 +16,7 @@
       ],
       "returns": "`DATA` - The SHA3 result of the given string.",
       "inputFormatters": [],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "net_version",
@@ -24,7 +24,7 @@
       "params": [],
       "returns": "`String` - The current network protocol version",
       "inputFormatters": [],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "net_listening",
@@ -32,7 +32,7 @@
       "params": [],
       "returns": "`Boolean` - `true` when listening, otherwise `false`.",
       "inputFormatters": [],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "net_peerCount",
@@ -40,7 +40,7 @@
       "params": [],
       "returns": "`QUANTITY` - integer of the number of connected peers.",
       "inputFormatters": [],
-      "outputFormatters": "utils.toDecimal"
+      "outputFormatter": "utils.toDecimal"
     },
     {
       "name": "eth_protocolVersion",
@@ -48,7 +48,7 @@
       "params": [],
       "returns": "`String` - The current ethereum protocol version",
       "inputFormatters": [],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "eth_syncing",
@@ -56,7 +56,7 @@
       "params": [],
       "returns": "`Object|Boolean`, An object with sync status data or `FALSE`, when not syncing:",
       "inputFormatters": [],
-      "outputFormatters": null
+      "outputFormatter": "outputSyncingFormatter"
     },
     {
       "name": "eth_coinbase",
@@ -64,7 +64,7 @@
       "params": [],
       "returns": "`DATA`, 20 bytes - the current coinbase address.",
       "inputFormatters": [],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "eth_mining",
@@ -72,7 +72,7 @@
       "params": [],
       "returns": "`Boolean` - returns `true` of the client is mining, otherwise `false`.",
       "inputFormatters": [],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "eth_hashrate",
@@ -80,7 +80,7 @@
       "params": [],
       "returns": "`QUANTITY` - number of hashes per second.",
       "inputFormatters": [],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "eth_gasPrice",
@@ -88,7 +88,7 @@
       "params": [],
       "returns": "`QUANTITY` - integer of the current gas price in wei.",
       "inputFormatters": [],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "eth_accounts",
@@ -96,7 +96,7 @@
       "params": [],
       "returns": "`Array of DATA`, 20 Bytes - addresses owned by the client.",
       "inputFormatters": [],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "eth_blockNumber",
@@ -104,7 +104,7 @@
       "params": [],
       "returns": "`QUANTITY` - integer of the current block number the client is on.",
       "inputFormatters": [],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "eth_getBalance",
@@ -118,7 +118,7 @@
         "inputAddressFormatter",
         "inputDefaultBlockNumberFormatter"
       ],
-      "outputFormatters": "toBigNumber"
+      "outputFormatter": "outputBigNumberFormatter"
     },
     {
       "name": "eth_getStorageAt",
@@ -134,7 +134,7 @@
         "utils.toHex",
         "inputDefaultBlockNumberFormatter"
       ],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "eth_getTransactionCount",
@@ -148,7 +148,7 @@
         null,
         "inputDefaultBlockNumberFormatter"
       ],
-      "outputFormatters": "utils.toDecimal"
+      "outputFormatter": "utils.toDecimal"
     },
     {
       "name": "eth_getBlockTransactionCountByHash",
@@ -158,7 +158,7 @@
       ],
       "returns": "`QUANTITY` - integer of the number of transactions in this block.",
       "inputFormatters": [],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "eth_getBlockTransactionCountByNumber",
@@ -168,7 +168,7 @@
       ],
       "returns": "`QUANTITY` - integer of the number of transactions in this block.",
       "inputFormatters": [],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "eth_getUncleCountByBlockHash",
@@ -178,7 +178,7 @@
       ],
       "returns": "`QUANTITY` - integer of the number of uncles in this block.",
       "inputFormatters": [],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "eth_getUncleCountByBlockNumber",
@@ -188,7 +188,7 @@
       ],
       "returns": "`QUANTITY` - integer of the number of uncles in this block.",
       "inputFormatters": [],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "eth_getCode",
@@ -202,7 +202,7 @@
         "inputAddressFormatter",
         "inputDefaultBlockNumberFormatter"
       ],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "eth_sign",
@@ -216,7 +216,7 @@
         "inputAddressFormatter",
         null
       ],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "eth_sendTransaction",
@@ -228,7 +228,7 @@
       "inputFormatters": [
         "inputTransactionFormatter"
       ],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "eth_sendRawTransaction",
@@ -240,7 +240,7 @@
       "inputFormatters": [
         null
       ],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "eth_call",
@@ -254,7 +254,7 @@
         "inputCallFormatter",
         "inputDefaultBlockNumberFormatter"
       ],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "eth_estimateGas",
@@ -264,7 +264,7 @@
       "inputFormatters": [
         "inputCallFormatter"
       ],
-      "outputFormatters": "utils.toDecimal"
+      "outputFormatter": "utils.toDecimal"
     },
     {
       "name": "eth_getBlockByHash",
@@ -275,7 +275,7 @@
       ],
       "returns": "`Object` - A block object, or `null` when no block was found:",
       "inputFormatters": [],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "eth_getBlockByNumber",
@@ -286,7 +286,7 @@
       ],
       "returns": "See [eth_getBlockByHash](#eth_getblockbyhash)",
       "inputFormatters": [],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "eth_getTransactionByHash",
@@ -296,7 +296,7 @@
       ],
       "returns": "`Object` - A transaction object, or `null` when no transaction was found:",
       "inputFormatters": [],
-      "outputFormatters": "outputTransactionFormatter"
+      "outputFormatter": "outputTransactionFormatter"
     },
     {
       "name": "eth_getTransactionByBlockHashAndIndex",
@@ -307,7 +307,7 @@
       ],
       "returns": "See [eth_getBlockByHash](#eth_gettransactionbyhash)",
       "inputFormatters": [],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "eth_getTransactionByBlockNumberAndIndex",
@@ -318,7 +318,7 @@
       ],
       "returns": "See [eth_getBlockByHash](#eth_gettransactionbyhash)",
       "inputFormatters": [],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "eth_getTransactionReceipt",
@@ -328,7 +328,7 @@
       ],
       "returns": "`Object` - A transaction receipt object, or `null` when no receipt was found:",
       "inputFormatters": [],
-      "outputFormatters": "outputTransactionReceiptFormatter"
+      "outputFormatter": "outputTransactionReceiptFormatter"
     },
     {
       "name": "eth_getUncleByBlockHashAndIndex",
@@ -339,7 +339,7 @@
       ],
       "returns": "See [eth_getBlockByHash](#eth_getblockbyhash)",
       "inputFormatters": [],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "eth_getUncleByBlockNumberAndIndex",
@@ -350,7 +350,7 @@
       ],
       "returns": "See [eth_getBlockByHash](#eth_getblockbyhash)",
       "inputFormatters": [],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "eth_getCompilers",
@@ -358,7 +358,7 @@
       "params": [],
       "returns": "`Array` - Array of available compilers.",
       "inputFormatters": [],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "eth_compileSolidity",
@@ -368,7 +368,7 @@
       ],
       "returns": "`DATA` - The compiled source code.",
       "inputFormatters": [],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "eth_compileLLL",
@@ -378,7 +378,7 @@
       ],
       "returns": "`DATA` - The compiled source code.",
       "inputFormatters": [],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "eth_compileSerpent",
@@ -388,7 +388,7 @@
       ],
       "returns": "`DATA` - The compiled source code.",
       "inputFormatters": [],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "eth_newFilter",
@@ -396,7 +396,7 @@
       "params": [],
       "returns": "1. `Object` - The filter options:",
       "inputFormatters": [],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "eth_newBlockFilter",
@@ -404,7 +404,7 @@
       "params": [],
       "returns": "`QUANTITY` - A filter id.",
       "inputFormatters": [],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "eth_newPendingTransactionFilter",
@@ -412,7 +412,7 @@
       "params": [],
       "returns": "`QUANTITY` - A filter id.",
       "inputFormatters": [],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "eth_uninstallFilter",
@@ -422,7 +422,7 @@
       ],
       "returns": "`Boolean` - `true` if the filter was successfully uninstalled, otherwise `false`.",
       "inputFormatters": [],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "eth_getFilterChanges",
@@ -432,7 +432,7 @@
       ],
       "returns": "`Array` - Array of log objects, or an empty array if nothing has changed since last poll.",
       "inputFormatters": [],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "eth_getFilterLogs",
@@ -442,7 +442,7 @@
       ],
       "returns": "See [eth_getFilterChanges](#eth_getfilterchanges)",
       "inputFormatters": [],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "eth_getLogs",
@@ -452,7 +452,7 @@
       ],
       "returns": "See [eth_getFilterChanges](#eth_getfilterchanges)",
       "inputFormatters": [],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "eth_getWork",
@@ -460,7 +460,7 @@
       "params": [],
       "returns": "`Array` - Array with the following properties:",
       "inputFormatters": [],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "eth_submitWork",
@@ -472,7 +472,7 @@
       ],
       "returns": "`Boolean` - returns `true` if the provided solution is valid, otherwise `false`.",
       "inputFormatters": [],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "eth_submitHashrate",
@@ -483,7 +483,7 @@
       ],
       "returns": "`Boolean` - returns `true` if submitting went through succesfully and `false` otherwise.",
       "inputFormatters": [],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "db_putString",
@@ -495,7 +495,7 @@
       ],
       "returns": "`Boolean` - returns `true` if the value was stored, otherwise `false`.",
       "inputFormatters": [],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "db_getString",
@@ -506,7 +506,7 @@
       ],
       "returns": "`String` - The previously stored string.",
       "inputFormatters": [],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "db_putHex",
@@ -518,7 +518,7 @@
       ],
       "returns": "`Boolean` - returns `true` if the value was stored, otherwise `false`.",
       "inputFormatters": [],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "db_getHex",
@@ -529,7 +529,7 @@
       ],
       "returns": "`DATA` - The previously stored data.",
       "inputFormatters": [],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "shh_version",
@@ -537,7 +537,7 @@
       "params": [],
       "returns": "`String` - The current whisper protocol version",
       "inputFormatters": [],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "shh_post",
@@ -549,7 +549,7 @@
       "inputFormatters": [
         "inputPostFormatter"
       ],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "shh_newIdentity",
@@ -557,7 +557,7 @@
       "params": [],
       "returns": "`DATA`, 60 Bytes - the address of the new identiy.",
       "inputFormatters": [],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "shh_hasIdentity",
@@ -567,7 +567,7 @@
       ],
       "returns": "`Boolean` - returns `true` if the client holds the privatekey for that identity, otherwise `false`.",
       "inputFormatters": [],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "shh_newGroup",
@@ -575,7 +575,7 @@
       "params": [],
       "returns": "`DATA`, 60 Bytes - the address of the new group. (?)",
       "inputFormatters": [],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "shh_addToGroup",
@@ -585,7 +585,7 @@
       ],
       "returns": "`Boolean` - returns `true` if the identity was successfully added to the group, otherwise `false` (?).",
       "inputFormatters": [],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "shh_newFilter",
@@ -595,7 +595,7 @@
       ],
       "returns": "`QUANTITY` - The newly created filter.",
       "inputFormatters": [],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "shh_uninstallFilter",
@@ -605,7 +605,7 @@
       ],
       "returns": "`Boolean` - `true` if the filter was successfully uninstalled, otherwise `false`.",
       "inputFormatters": [],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "shh_getFilterChanges",
@@ -615,7 +615,7 @@
       ],
       "returns": "`Array` - Array of messages received since last poll:",
       "inputFormatters": [],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "shh_getMessages",
@@ -625,7 +625,7 @@
       ],
       "returns": "See [shh_getFilterChanges](#shh_getfilterchanges)",
       "inputFormatters": [],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "eth_pendingTransactions",
@@ -633,7 +633,7 @@
       "params": [],
       "returns": false,
       "inputFormatters": [],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "eth_flush",
@@ -641,7 +641,7 @@
       "params": [],
       "returns": false,
       "inputFormatters": [],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "eth_newFilterEx",
@@ -651,7 +651,7 @@
       ],
       "returns": false,
       "inputFormatters": [],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "eth_getFilterChangesEx",
@@ -661,7 +661,7 @@
       ],
       "returns": false,
       "inputFormatters": [],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "eth_getFilterLogsEx",
@@ -671,7 +671,7 @@
       ],
       "returns": false,
       "inputFormatters": [],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "eth_getLogsEx",
@@ -681,7 +681,7 @@
       ],
       "returns": false,
       "inputFormatters": [],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "eth_register",
@@ -691,7 +691,7 @@
       ],
       "returns": false,
       "inputFormatters": [],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "eth_unregister",
@@ -701,7 +701,7 @@
       ],
       "returns": false,
       "inputFormatters": [],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "eth_fetchQueuedTransactions",
@@ -711,7 +711,7 @@
       ],
       "returns": false,
       "inputFormatters": [],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "eth_signTransaction",
@@ -721,7 +721,7 @@
       ],
       "returns": false,
       "inputFormatters": [],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "eth_inspectTransaction",
@@ -731,7 +731,7 @@
       ],
       "returns": false,
       "inputFormatters": [],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "eth_notePassword",
@@ -741,7 +741,7 @@
       ],
       "returns": false,
       "inputFormatters": [],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "personal_newAccount",
@@ -753,7 +753,7 @@
       "inputFormatters": [
         null
       ],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "personal_unlockAccount",
@@ -769,7 +769,7 @@
         null,
         null
       ],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "ethcore_minGasPrice",
@@ -777,7 +777,7 @@
       "params": [],
       "returns": "`QUANTITY` - Minimal Gas Price",
       "inputFormatters": [],
-      "outputFormatters": "toBigNumber"
+      "outputFormatter": "outputBigNumberFormatter"
     },
     {
       "name": "ethcore_extraData",
@@ -785,7 +785,7 @@
       "params": [],
       "returns": "`DATA` - Extra data",
       "inputFormatters": [],
-      "outputFormatters": "decodeExtraData"
+      "outputFormatter": "decodeExtraData"
     },
     {
       "name": "ethcore_setExtraData",
@@ -797,7 +797,7 @@
       "inputFormatters": [
         "encodeExtraData"
       ],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "ethcore_setMinGasPrice",
@@ -809,7 +809,7 @@
       "inputFormatters": [
         "utils.toHex"
       ],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "ethcore_gasFloorTarget",
@@ -819,7 +819,7 @@
         "`QUANTITY` - Gas Floor Target"
       ],
       "inputFormatters": [],
-      "outputFormatters": "toBigNumber"
+      "outputFormatter": "outputBigNumberFormatter"
     },
     {
       "name": "ethcore_setGasFloorTarget",
@@ -831,7 +831,7 @@
       "inputFormatters": [
         "utils.toHex"
       ],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "ethcore_setAuthor",
@@ -843,7 +843,7 @@
       "inputFormatters": [
         "inputAddressFormatter"
       ],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "ethcore_setTransactionsLimit",
@@ -855,7 +855,7 @@
       "inputFormatters": [
         "utils.toHex"
       ],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "ethcore_transactionsLimit",
@@ -863,7 +863,7 @@
       "params": [],
       "returns": "`QUANTITY` - Current max number of transactions in queue.",
       "inputFormatters": [],
-      "outputFormatters": "toBigNumber"
+      "outputFormatter": "toBigNumber"
     },
     {
       "name": "ethcore_netChain",
@@ -871,7 +871,7 @@
       "params": [],
       "returns": "`DATA` - chain name",
       "inputFormatters": [],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "ethcore_netMaxPeers",
@@ -879,7 +879,7 @@
       "params": [],
       "returns": "`QUANTITY` - Maximal number of peers",
       "inputFormatters": [],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "ethcore_netPort",
@@ -887,7 +887,7 @@
       "params": [],
       "returns": "`QUANTITY` - Port Number",
       "inputFormatters": [],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "ethcore_rpcSettings",
@@ -895,7 +895,7 @@
       "params": [],
       "returns": "`OBJECT` - JSON object containing rpc settings",
       "inputFormatters": [],
-      "outputFormatters": null
+      "outputFormatter": null
     },
     {
       "name": "ethcore_nodeName",
@@ -903,7 +903,7 @@
       "params": [],
       "returns": "`DATA` - Node name",
       "inputFormatters": [],
-      "outputFormatters": null
+      "outputFormatter": null
     }
   ]
 }

@@ -52,3 +52,8 @@ div:hover > .removeIcon {
 h3 + label > input {
   margin-top: 0;
 }
+
+.response {
+  white-space: nowrap;
+  overflow-x: auto;
+}

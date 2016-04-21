@@ -1,5 +1,4 @@
 
-// import utils from 'web3/lib/utils/utils';
 import rlp from 'rlp';
 
 const version = 0x010000;
@@ -14,7 +13,7 @@ export default class RpcProvider {
 
   formatResult (result, formatter) {
     if (!formatter) {
-      return `${result}`;
+      return JSON.stringify(result);
     }
 
     // mostly we use web3Formatters (the last "else" case)
@@ -26,7 +25,6 @@ export default class RpcProvider {
     } else {
       formatter = this._web3Formatters[formatter];
     }
-
     return `${formatter(result)}`;
   }
 

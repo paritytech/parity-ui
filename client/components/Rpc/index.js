@@ -65,7 +65,7 @@ export default class Rpc extends Component {
           >
           <span className={style.callNo}>#{c.callNo}</span>
           <pre>{c.name}({c.params.toString()})</pre>
-          <pre>{c.response}</pre>
+          <pre className={style.response}>{c.response}</pre>
         </div>
       )
     );

@@ -1,6 +1,8 @@
 import './index.html';
 import 'dapp-styles/dapp-styles.less';
 
+import './test.utils';
+
 import { Router, Route, hashHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 import { Provider } from 'react-redux';
