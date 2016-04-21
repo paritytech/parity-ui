@@ -68,6 +68,7 @@ export default class EditableValue extends Component {
           className={this.state.inEditMode ? style.input : valueStyles.value}
           type='text'
           value={this.state.value}
+          onClick={::this.onOpenEdit}
           onChange={::this.onChange}
           readOnly={!this.state.inEditMode}
           />
