@@ -6,7 +6,7 @@ export default class Footer extends Component {
 
   render () {
     return (
-      <div>
+      <div {...this._testInherit()}>
         <div className={styles.footer}>
           <a href='http://ethcore.io'>ethcore.io</a>
           <span className={styles.right}>

@@ -18,9 +18,10 @@ class StatusPage extends Component {
         <Header
           nodeName={status.name}
           disconnected={status.disconnected}
+          {...this._test('header')}
         />
         <Status {...this.props} />
-        <Footer version={status.version} />
+        <Footer version={status.version} {...this._test('footer')} />
       </div>
     );
   }

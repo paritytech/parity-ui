@@ -29,26 +29,33 @@ export default class MiningSettings extends Component {
     };
 
     return (
-      <div>
+      <div {...this._testInherit()}>
         <h1><span>Mining</span> settings</h1>
         <h3>Author</h3>
         <EditableValue
           value={mining.author}
-          onSubmit={onAuthorChange}/>
+          onSubmit={onAuthorChange}
+          {...this._test('author')}
+          />
         <h3>Extradata</h3>
         <EditableValue
           value={mining.extraData}
           onSubmit={onExtraDataChange}
+          {...this._test('extra-data')}
           defaultValue={this.getDefaultExtraData()}
           />
         <h3>Minimal Gas Price</h3>
         <EditableValue
           value={toNiceNumber(mining.minGasPrice)}
-          onSubmit={onMinGasPriceChange}/>
+          onSubmit={onMinGasPriceChange}
+          {...this._test('min-gas-price')}
+          />
         <h3>Gas floor target</h3>
         <EditableValue
           value={toNiceNumber(mining.gasFloorTarget)}
-          onSubmit={onGasFloorTargetChange}/>
+          onSubmit={onGasFloorTargetChange}
+          {...this._test('gas-floor-target')}
+          />
       </div>
     );
   }

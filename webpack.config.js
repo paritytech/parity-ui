@@ -8,6 +8,7 @@ var isProd = ENV === 'production';
 module.exports = {
   debug: !isProd,
   cache: !isProd,
+  devtool: isProd ? '#source-map' : '#cheap-module-eval-source-map',
   context: path.join(__dirname, './client'),
   entry: {
     index: './index.js'
@@ -68,10 +69,14 @@ module.exports = {
         test: /\.(ttf|eot|svg|otf)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
         loader: 'file-loader'
       }
+    ],
+    noParse: [
+      /node_modules\/sinon/
     ]
   },
   resolve: {
-    extensions: ['', '.js', '.jsx']
+    extensions: ['', '.js', '.jsx'],
+    unsafeCache: true
   },
   postcss: [
     rucksack({
