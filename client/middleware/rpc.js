@@ -4,7 +4,7 @@ import web3Formatters from 'web3/lib/web3/formatters.js';
 import web3Utils from 'web3/lib/utils/utils.js';
 import * as RpcActions from '../actions/rpc';
 import RpcProvider from '../provider/rpc-provider';
-const rpcProvider = new RpcProvider(web3Formatters, web3Utils);
+const rpcProvider = new RpcProvider(web3Utils, web3Formatters);
 
 export default class RpcMiddleware {
 

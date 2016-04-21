@@ -24,7 +24,7 @@ fs.writeFileSync(`${__dirname}/../client/data/rpc.json`, JSON.stringify({
 function addFormatters (method) {
   const name = method.name;
   method.inputFormatters = getInputFormatters()[name] || [];
-  method.outputFormatters = getOutputFormatters()[name] || null;
+  method.outputFormatter = getOutputFormatters()[name] || null;
   return method;
 }
 
@@ -183,14 +183,15 @@ function customFunctions () {
 
 function getOutputFormatters () {
   return {
-    'ethcore_minGasPrice': 'toBigNumber',
+    'ethcore_minGasPrice': 'outputBigNumberFormatter',
     'ethcore_extraData': 'decodeExtraData',
-    'ethcore_gasFloorTarget': 'toBigNumber',
-    'eth_getBalance': 'toBigNumber',
+    'ethcore_gasFloorTarget': 'outputBigNumberFormatter',
+    'eth_getBalance': 'outputBigNumberFormatter',
     'eth_getTransactionCount': 'utils.toDecimal',
     'eth_getTransactionByHash': 'outputTransactionFormatter',
     'eth_getTransactionReceipt': 'outputTransactionReceiptFormatter',
     'eth_estimateGas': 'utils.toDecimal',
+    'eth_syncing': 'outputSyncingFormatter',
     'net_peerCount': 'utils.toDecimal'
   };
 }
