@@ -4,20 +4,23 @@
   "description": "Ethereum Node Status page",
   "main": "index.js",
   "scripts": {
+    "start": "webpack-dev-server -d --history-api-fallback --hot --inline --progress --colors --port 3000",
     "webpack": "webpack",
-    "nightwatch": "NODE_ENV=tests nightwatch",
+    
+    "commit": "commit-wizard",
     "lint": "semistandard",
-    "ci": "npm run nightwatch -- -e saucelabs",
+    "ci": "npm run lint & npm run testOnce & npm run nightwatchCI",
     "test": "npm run testOnce -- -w",
     "testOnce": "mocha --compilers js:babel-core/register 'client/**/*.spec.js'",
-    "start": "webpack-dev-server -d --history-api-fallback --hot --inline --progress --colors --port 3000",
+    "nightwatch": "NODE_ENV=tests nightwatch",
+    "nightwatchCI": "npm run nightwatch  -- -e saucelabs",
     "startTest": "NODE_ENV=tests npm start",
+    
     "prebuild": "npm run clean",
     "build": "NODE_ENV=production webpack --progress --colors && cp Cargo.toml static",
     "clean": "rm static -rf || true",
     "prezip": "npm run build",
-    "zip": "cd static && zip ../status.zip * -r",
-    "commit": "commit-wizard"
+    "zip": "cd static && zip ../status.zip * -r"
   },
   "license": "MIT",
   "devDependencies": {
@@ -85,8 +88,6 @@
         "./scripts/check-master.sh"
       ],
       "pre-push": [
-        "npm run lint",
-        "npm run testOnce"
       ],
       "post-commit": [],
       "post-checkout": [],
