@@ -3,24 +3,25 @@ language: node_js
 node_js:
   - '5'
 
+env:
+  global:
+    - CXX=g++-4.8
+    # SAUCE_USERNAME
+    - secure: "ekgApR8RUUyQVlG4U6HA85AuFZFcM697MdVeNFeceIY9hozSB0pI/GMRysThN58sNP2m8j0HPz9tEUiOJrW2gyj8t56ZZ9jJrru0dPbNIyQsQLafRslV372+tQxk0B/hC1LvvGcYNoveAgCaRzKYJSDs41a5YXrknH0i0s5Z7M1yU7KHT1JV6JfymeY8QjITQqmjXVjbUDZLc+BTww08sg+EM1EpJJCRNAk7TBouI6odLRyg0mZf6O/Zd7M/a95trzlk32ULgegdDXlohQrqXEBIHcw71OauI7ZvCaIRE+DDVQ2tvnISit9fxmqyLelOB0viLDW6JIPeglFntepivpLWzBI42TNTdpKm8t0wGHJ54pMyzSziKH4JSwKcUpLLlQp0bxfo+JZBfEgzxfjfp1wpJCMZBKMj5YrBmlVxrizGwe4WuT7ZqQ6IeOV1t/F2twNGLdUgTCYHyeBejgQOMsEFtVCHIC71zZ4EzSmGeolPIhf6csegy4gphaMh1Ymwh+x9QYoq3grNAf7t3575frFO3t2y3CRbwh0+3JQkvQuJ9FuJoRAX5zlplvot3Xx8P1Y5LPZsejL2bxvPCvk76aVINQV5HeL1qZdZV06mgJtI+pYthWFSKse2Ho+NtZcrI082OdOIDtNYBbCEG4Gw+WwU8R53tEufNaEO2rMoPls="
+    # SAUCE_ACCESS_KEY
+    - secure: "aXMVEMSDJkImOoNQdK4bialK9/wj8X56rs4wyOwYyN5ZJHEKNqdopyfFXU65IENGbFHnpDVU1MMj9E2cU8QtjKm5F19w1pjPSV4kNEXZIVbnF4x9kDS7Sob9IMFLA3KZbsiOdnHzs6EuVk6KlPbqUMzd+g23+unPsaenFUGVLV1GgaAPLCOvCkxVUsMnixR3RQU1InI46EK7GcHFwXusiiDAaL55Ymj26LqwaY5fiM1TunNFEBH2klq6mTl3wnMBRioexwsfhGplOszBH7AwFywNARz2jJIbYLmbihXi3CifZk+rslWPPI04uIRgtdwsbKDed/t0sK3YPT+Z1N3NUK4LGyeGes5TejbKg0l+/ygxJLFMvaQLGy04zDfLVK8f+e7jOzIg3fqtsOmD9dSW4SkKF24EuYCdO3H1elOU4atwk1/3JRtxXjxcDWzFkrUetOdoEJhtjUWJhfNxmlybxRiQyHetfXegkgu7jU9GNiHegdFK2oMxNwGOv/2gUcMrUheQ/Zue0rZaEZLA2mNteXaE+A8KkB0/RYefyWcfLTaA/WpXpc3lncGwKX2Z4r4IhjG+qlB1WN5xkRa9/xH54U1+JjgF/omC1PS7YlLWywNt/IAmUrbDgn/Z0KKtS+WYQdrDrMlwTKp1/rkVKZ+FhFNuQj2HJVURK9G0f8GWS7o="
+
 matrix:
   include:
   - env: SCRIPT=lint
   - env: SCRIPT=testOnce
   - env: SCRIPT=nightwatchCI
     addons:
-      sauce_connect:
-        username: "ethcoreHQ"
-        access_key:
-          secure: "tJNfOFHhHUaeUNX2FWf0qzY8oblvVxxW6SL5C2rVmhm3qAtPX6xc7JYZTlZAmLG5rjCnF8wVuAoYjZUihVjundBiAP8NZ5+aEr8s0lxo9m8wKaXM9vs2/rNNuuaxLgvd9KZE445d6xeek1lTAsK+A2jji/eGcFOK8MWHpJh8ZrRK7Vjd1vPDrw4MLoA5kAmyYqrzqqDcBrtVdDYyuGIhDZHMQTHB5ry5rkQYhfMsJXqAUD83bGkrH6TpHUv5LlveJapCTCpAy/4vfhLzDZrz7XCwJd7600Ue0q5U6aixe3NGUx+v3jHVCqj9VP/7BI5nYoTTaezylQEAovzF5gnOI+sMZZRUpZexbruAyPz9FkvalOGbgHFb35yL4jpHgTY5Lif+bdR2/wjQmOT+nomVd7FS9HTDNl5sTG8t8o07ygj9HBJmeFL1IEE6iH4npQd2E3P7HGj5XbdX6/xZA0eB9jtxw81geblYW2hTtCpJ6om8Xn/oJJY30Lboza/83hecL+82XKcy7AUIX/jSgenzB0NSVvObGx4fpABEQPq6Ab+KMBTxiCdFoqm4St1YJpvCxYjIbyKaSkE+2yeDyHpZOeUOoQJyAgYD1Gnrrt0dRCvMQm8A1VhcE9IIJPHnCQ4zDywkJyvaEDOo+P93eSUl4ENRwYbBzW1VcuIMjdkRt3E="
+      sauce_connect: true
 
 cache:
   directories:
     - node_modules
-
-env:
-  global:
-    - CXX=g++-4.8
 
 before_script:
   - if [ "$SCRIPT" == "nightwatchCI" ]; then npm run startTest & fi
