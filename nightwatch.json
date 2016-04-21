@@ -47,7 +47,7 @@
       "selenium_host" : "ondemand.saucelabs.com",
       "selenium_port" : 80,
       "username" : "ethcoreHQ",
-      "access_key" : "d8781b6a-0899-4a6e-9138-b808d4d1ded3",
+      "access_key" : "${SAUCE_ACCESS_KEY}",
       "use_ssl" : false,
       "silent" : true,
       "output" : true,
