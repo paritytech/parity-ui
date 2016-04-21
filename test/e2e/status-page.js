@@ -74,23 +74,20 @@ function el (base, innerSelector) {
 }
 
 function assertMiningSettings (method) {
-  let expected;
   const mockedMethod = mockedResponses.rpc.find(m => m.name === method.name);
-  expected = mockedMethod.formattedResponse || mockedMethod.response;
+  let expected = mockedMethod.formattedResponse || mockedMethod.response;
   this.expect.element(el(`MiningSettings-${method.selector}`, 'input')).to.have.value.that.equals(expected);
 }
 
 function assertStatus (method) {
-  let expected;
   const mockedMethod = mockedResponses.rpc.find(m => m.name === method.name);
-  expected = mockedMethod.formattedResponse || mockedMethod.response;
+  let expected = mockedMethod.formattedResponse || mockedMethod.response;
   this.expect.element(el(`Status-${method.selector}`)).text.to.contain(expected);
 }
 
 function assertNetwork (method) {
-  let expected;
   const mockedMethod = mockedResponses.rpc.find(m => m.name === method.name);
-  expected = mockedMethod.formattedResponse || mockedMethod.response;
+  let expected = mockedMethod.formattedResponse || mockedMethod.response;
   this.expect.element(el(`Status-${method.selector}`, 'input')).to.have.value.that.contain(expected);
 }
 
