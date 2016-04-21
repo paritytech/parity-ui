@@ -57,6 +57,26 @@ const methods = [
     name: 'getDevLogsLevels',
     call: 'ethcore_devLogsLevels',
     params: 0
+  }),
+  new Method({
+    name: 'getNetChain',
+    call: 'ethcore_netChain',
+    params: 0
+  }),
+  new Method({
+    name: 'getNetMaxPeers',
+    call: 'ethcore_netMaxPeers',
+    params: 0
+  }),
+  new Method({
+    name: 'getNetPort',
+    call: 'ethcore_netPort',
+    params: 0
+  }),
+  new Method({
+    name: 'getRpcSettings',
+    call: 'ethcore_rpcSettings',
+    params: 0
   })
 ];
 

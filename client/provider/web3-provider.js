@@ -53,7 +53,11 @@ export class Web3Provider extends Web3Base {
       {method: this.ethcoreWeb3.getGasFloorTarget, actionMaker: MiningActions.updateGasFloorTarget},
       {method: this.ethcoreWeb3.getExtraData, actionMaker: MiningActions.updateExtraData},
       {method: this.ethcoreWeb3.getDevLogsLevels, actionMaker: DebugActions.updateDevLogsLevels},
-      {method: this.ethcoreWeb3.getDevLogs, actionMaker: DebugActions.updateDevLogs}
+      {method: this.ethcoreWeb3.getDevLogs, actionMaker: DebugActions.updateDevLogs},
+      {method: this.ethcoreWeb3.getNetChain, actionMaker: StatusActions.updateNetChain},
+      {method: this.ethcoreWeb3.getNetPort, actionMaker: StatusActions.updateNetPort},
+      {method: this.ethcoreWeb3.getNetMaxPeers, actionMaker: StatusActions.updateNetMaxPeers},
+      {method: this.ethcoreWeb3.getRpcSettings, actionMaker: StatusActions.updateRpcSettings}
     ];
   }
 

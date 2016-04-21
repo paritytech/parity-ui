@@ -844,6 +844,58 @@
         "inputAddressFormatter"
       ],
       "outputFormatters": null
+    },
+    {
+      "name": "ethcore_setTransactionsLimit",
+      "desc": "Changes limit for transactions in queue.",
+      "params": [
+        "`QUANTITY` - New Limit"
+      ],
+      "returns": false,
+      "inputFormatters": [
+        "utils.toHex"
+      ],
+      "outputFormatters": null
+    },
+    {
+      "name": "ethcore_transactionsLimit",
+      "desc": "Changes limit for transactions in queue.",
+      "params": [],
+      "returns": "`QUANTITY` - Current max number of transactions in queue.",
+      "inputFormatters": [],
+      "outputFormatters": "toBigNumber"
+    },
+    {
+      "name": "ethcore_netChain",
+      "desc": "Returns the name of the connected chain.",
+      "params": [],
+      "returns": "`DATA` - chain name",
+      "inputFormatters": [],
+      "outputFormatters": null
+    },
+    {
+      "name": "ethcore_netMaxPeers",
+      "desc": "Returns maximal number of peers.",
+      "params": [],
+      "returns": "`QUANTITY` - Maximal number of peers",
+      "inputFormatters": [],
+      "outputFormatters": null
+    },
+    {
+      "name": "ethcore_netPort",
+      "desc": "Returns network port the node is listening on.",
+      "params": [],
+      "returns": "`QUANTITY` - Port Number",
+      "inputFormatters": [],
+      "outputFormatters": null
+    },
+    {
+      "name": "ethcore_rpcSettings",
+      "desc": "Returns basic settings of rpc (enabled, port, interface).",
+      "params": [],
+      "returns": "`OBJECT` - JSON object containing rpc settings",
+      "inputFormatters": [],
+      "outputFormatters": null
     }
   ]
 }
