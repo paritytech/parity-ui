@@ -33,12 +33,14 @@ export default class localStorageMiddleware {
 
     store.dispatch(syncRpcStateFromLocalStorage({
       prevCalls: prevCalls,
+      callNo: prevCalls.length ? prevCalls[0].callNo + 1 : 1,
       selectedMethod: rpcMetods.methods.find(m => m.name === prevCalls[0].name)
     }));
     return next(action);
   }
 
   onAddRpcResponse (store, next, action) {
+    action.payload.callNo = store.getState().rpc.callNo;
     this.unshift('rpcPrevCalls', action.payload);
     return next(action);
   }

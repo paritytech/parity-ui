@@ -8,21 +8,26 @@ import rpcData from '../data/rpc.json';
 import LocalStorageMiddleware from './localstorage';
 
 describe('MIDDLEWARE: LOCAL STORAGE', () => {
-  let cut;
+  let cut, state;
 
   beforeEach('mock cut', () => {
     cut = new LocalStorageMiddleware();
     sinon.spy(cut, 'onAddRpcResponse');
     sinon.spy(cut, 'onInitApp');
     sinon.spy(cut, 'unshift');
+    state = {
+      rpc: {
+        callNo: 1
+      }
+    };
   });
 
   it('should call onAddRpcResponse when respected action is dispatched', () => {
     // given
-    const store = null;
+    const store = { getState: () => state };
     const next = sinon.spy();
     const middleware = cut.toMiddleware()(store)(next);
-    const action = { type: 'add rpcResponse' };
+    const action = { type: 'add rpcResponse', payload: {} };
     expect(middleware).to.be.a('function');
     expect(action).to.be.an('object');
 
@@ -52,7 +57,7 @@ describe('MIDDLEWARE: LOCAL STORAGE', () => {
 
   it('should not call onAddRpcResponse or onInitApp when a non-respected action is dispatched', () => {
     // given
-    const store = null;
+    const store = { getState: () => state };
     const next = sinon.spy();
     const middleware = cut.toMiddleware()(store)(next);
     const action = { type: 'testAction' };
@@ -76,6 +81,7 @@ describe('MIDDLEWARE: LOCAL STORAGE', () => {
       const action = {};
       const key = 'rpcPrevCalls';
       const prevCalls = [rpcData.methods[0]];
+      prevCalls[0].callNo = 1;
       localStore.remove(key);
       localStore.set(key, prevCalls);
 
@@ -85,6 +91,7 @@ describe('MIDDLEWARE: LOCAL STORAGE', () => {
       // then
       expect(store.dispatch.calledWith(syncRpcStateFromLocalStorage({
         prevCalls: prevCalls,
+        callNo: 2,
         selectedMethod: prevCalls[0]
       }))).to.be.true;
       expect(next.calledWith(action)).to.be.true;
@@ -108,15 +115,16 @@ describe('MIDDLEWARE: LOCAL STORAGE', () => {
 
   it('should call unshift and next', () => {
     // given
-    const store = null;
+    const store = { getState: () => state };
     const next = sinon.spy();
-    const action = { payload: 'testPayload' };
+    const action = { payload: {} };
 
     // when
     cut.onAddRpcResponse(store, next, action);
 
     // then
     expect(cut.unshift.calledWith('rpcPrevCalls', action.payload)).to.be.true;
+    expect(action.payload.callNo).to.equal(1);
     expect(next.calledWith(action)).to.be.true;
   });
 
