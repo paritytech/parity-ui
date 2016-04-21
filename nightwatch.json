@@ -13,7 +13,7 @@
     "host" : "127.0.0.1",
     "port" : 4444,
     "cli_args" : {
-      "webdriver.chrome.driver" : "",
+      "webdriver.chrome.driver" : "selenium/chromedriver",
       "webdriver.ie.driver" : ""
     }
   },
@@ -40,6 +40,41 @@
         "browserName": "chrome",
         "javascriptEnabled": true,
         "acceptSslCerts": true
+      }
+    },
+
+    "saucelabs" : {
+      "selenium_host" : "ondemand.saucelabs.com",
+      "selenium_port" : 80,
+      "username" : "ethcoreHQ",
+      "access_key" : "d8781b6a-0899-4a6e-9138-b808d4d1ded3",
+      "use_ssl" : false,
+      "silent" : true,
+      "output" : true,
+      "globals": {
+        "waitForConditionTimeout": 10000
+      },
+      "screenshots" : {
+        "enabled" : false,
+        "path" : ""
+      },
+      "desiredCapabilities": {
+        "tunnel-identifier": "${TRAVIS_JOB_NUMBER}",
+        "build": "build-${TRAVIS_JOB_NUMBER}",
+        "name" : "parity-status-pge-integartion",
+        "browserName": "firefox",
+        "javascriptEnabled": true,
+        "databaseEnabled": true,
+        "locationContextEnabled": true,
+        "applicationCacheEnabled": true,
+        "browserConnectionEnabled": true,
+        "webStorageEnabled": true,
+        "acceptSslCerts": true,
+        "rotatable": true,
+        "nativeEvents": true
+      },
+      "selenium" : {
+        "start_process" : true
       }
     }
   }
