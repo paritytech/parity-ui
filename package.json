@@ -88,6 +88,8 @@
         "./scripts/check-master.sh"
       ],
       "pre-push": [
+        "npm run lint",
+        "npm run testOnce"
       ],
       "post-commit": [],
       "post-checkout": [],

@@ -3,13 +3,17 @@ language: node_js
 node_js:
 - '5'
 
-env:
-  matrix:
-    - SCRIPT=lint
-    - SCRIPT=testOnce
-    - SCRIPT=nightwatchCI
+matrix:
+  include:
+    - env: SCRIPT=lint
+    - env: SCRIPT=testOnce
+    - env: SCRIPT=nightwatchCI
+      addons:
+        username: "ethcoreHQ"
+        access_key: 
+          secure: "VQwggQ4DppIIx3w5PC7BgpBRue7979q7cEyC+rcknFkbhfrIwlxyip4U7VWheRSOcfSKxvK8hCz2KoCYWfmZujQjBVFHuu5FKh6LR+hJVKppOumscjI4qLVEBCrYGwHc0QLmv84QbUy0MoFuQbmEAuf0tqCSzA7ibNpGc6P8EkH/E6H3IPIiOQQeaVXUjNs791est/ocnWdnZ4Hdpalkshpd3lthZfuijeLVoLXlIXiyH/ELo0EnaFKtZk6w19yTgSZNzCk1ojkNNBkORkuMJfOUpbEm5T9OFd2rP39nn6KxrMBTMhcI45aGsidYwLE6y0nTiCU03XCrPhh5Z5Ns/aEuTn8d6sOJe93aQCv4lhUqBmsjIDsrwdVG8cbcGyGQb51nyW+QLL1JvHeT98K+DYkrpGM5pYEffe3NdlbG2ymoPHhBjrSVMt/IQZo5+3mpW5K9yfCFANJnC+7IKbO1UWZCwnkbRx3WLVLwIDs9/czDlbs4+9C9gMVY9r6DTh/fmg01OEIjpk2zphyZ4EiCXyzdV+DOxnWnlJXp6uv2IMXM49aCmE7xJRRUY/SQjqTzLkGIbyHW7MLi8eKnrG02VNNrjID6uGgyO0ryIJjWHXUuNRAhWmdMTLL17+ypfYk4NnEeEY9uOo/r/2C6iAvDvvYnGguhaVsldh2L6t3fJXM="
   global:
-    - CXX=g++-4.8
+    - env: CXX=g++-4.8
 
 cache:
   directories:
@@ -21,7 +25,3 @@ before_script:
 
 script: "npm run $SCRIPT"
 
-addons:
-  sauce_connect:
-    username: "ethcoreHQ"
-    access_key: "d8781b6a-0899-4a6e-9138-b808d4d1ded3"
