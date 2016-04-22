@@ -3,6 +3,7 @@ import React, { Component, PropTypes } from 'react';
 import _ from 'lodash';
 import marked from 'marked';
 import AutoComplete from 'material-ui/AutoComplete';
+import TextField from 'material-ui/TextField';
 
 import style from './style.css';
 import rpcData from '../../data/rpc.json';
@@ -106,7 +107,7 @@ export default class Rpc extends Component {
     return (
       <div>
         <AutoComplete
-          style={{'marginTop': 0}}
+          style={{marginTop: 0}}
           searchText={selectedMethod.name}
           floatingLabelText='Method name'
           dataSource={methods}
@@ -169,16 +170,17 @@ export default class Rpc extends Component {
     return _.find(rpcMethods, {name: selectedMethod.name})
             .params.map(
               p => (
-                <label key={p}>
-                  <input
-                    className={style.input}
-                    placeholder={p}
-                    value={this.state[`params_${p}`]}
-                    onChange={(evt) => this.setState({
-                      [`params_${p}`]: evt.target.value
-                    })}
-                    />
-                </label>
+                <TextField
+                  key={p}
+                  inputStyle={{marginTop: 0}}
+                  fullWidth
+                  hintText={p}
+                  hintStyle={{maxWidth: '100%', overflow: 'hidden', whiteSpace: 'nowrap'}}
+                  value={this.state[`params_${p}`]}
+                  onChange={(evt) => this.setState({
+                    [`params_${p}`]: evt.target.value
+                  })}
+                />
               )
             );
   }
