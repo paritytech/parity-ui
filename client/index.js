@@ -1,3 +1,9 @@
+
+import injectTapEventPlugin from 'react-tap-event-plugin';
+// Needed for onTouchTap
+// http://stackoverflow.com/a/34015469/988941
+injectTapEventPlugin();
+
 import './index.html';
 import 'dapp-styles/dapp-styles.less';
 
@@ -9,6 +15,9 @@ import { Provider } from 'react-redux';
 import ReactDOM from 'react-dom';
 import React from 'react';
 
+import {deepOrange500} from 'material-ui/styles/colors';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import localStore from 'store';
 import request from 'browser-request';
 import Web3 from 'web3';
@@ -36,15 +45,23 @@ const storeMiddlewares = [Middlewares.logger, web3Interactions.toMiddleware(), r
 const store = configure(storeMiddlewares);
 const history = syncHistoryWithStore(hashHistory, store);
 
+const muiTheme = getMuiTheme({
+  palette: {
+    accent1Color: deepOrange500
+  }
+});
+
 ReactDOM.render(
   <Provider store={store}>
-    <Router history={history}>
-      <Route path={`/`} component={StatusPage} />
-      <Route path={`/debug`} component={DebugPage} />
-      <Route path={`/accounts`} component={AccountsPage} />
-      <Route path={`/apps`} component={AppListPage} />
-      <Route path={`/rpc`} component={RpcPage} />
-    </Router>
+    <MuiThemeProvider muiTheme={muiTheme}>
+      <Router history={history}>
+        <Route path={`/`} component={StatusPage} />
+        <Route path={`/debug`} component={DebugPage} />
+        <Route path={`/accounts`} component={AccountsPage} />
+        <Route path={`/apps`} component={AppListPage} />
+        <Route path={`/rpc`} component={RpcPage} />
+      </Router>
+    </MuiThemeProvider>
   </Provider>,
   document.getElementById('root')
 );
