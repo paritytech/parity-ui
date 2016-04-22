@@ -9,6 +9,13 @@
     { "name": "eth_blockNumber", "response":  1234, "formattedResponse": "1,234" },
 
     { "name": "net_peerCount", "response":  15 },
-    { "name": "web3_clientVersion", "response": "Parity//19.0.0 "}
+    { "name": "web3_clientVersion", "response": "Parity//19.0.0 "},
+    { "name": "ethcore_netChain", "response": "homestead" },
+    { "name": "ethcore_devLogs", "response": [] },
+    { "name": "ethcore_devLogsLevels", "response": "a" },
+    { "name": "ethcore_netPort", "response": 30303 },
+    { "name": "ethcore_netMaxPeers", "response": 25 },
+    { "name": "ethcore_rpcSettings", "response": { "enabled": true, "interface": "all", "port": 3098 } },
+    { "name": "ethcore_nodeName", "response": "My awesome node"}
   ]
 }
