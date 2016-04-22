@@ -2,6 +2,7 @@
 import React, { Component, PropTypes } from 'react';
 import _ from 'lodash';
 import marked from 'marked';
+import AutoComplete from 'material-ui/AutoComplete';
 
 import style from './style.css';
 import rpcData from '../../data/rpc.json';
@@ -99,21 +100,18 @@ export default class Rpc extends Component {
   }
 
   renderMethodList () {
-    const methods = rpcMethods.map(m =>
-      <option key={m.name} value={m.name}>{m.name}</option>
-    );
+    const methods = rpcMethods.map(m => m.name);
 
     const {selectedMethod} = this.props.rpc;
     return (
       <div>
-        <select
-          className={style.input}
-          id='selectedMethod'
-          value={selectedMethod.name}
-          onChange={::this.handleMethodChange}
-          >
-          {methods}
-        </select>
+        <AutoComplete
+          style={{'marginTop': 0}}
+          searchText={selectedMethod.name}
+          floatingLabelText='Method name'
+          dataSource={methods}
+          onNewRequest={::this.handleMethodChange}
+        />
         <div>
           {this.renderMarkdown(selectedMethod.desc)}
         </div>
@@ -131,8 +129,8 @@ export default class Rpc extends Component {
     );
   }
 
-  handleMethodChange (evt) {
-    let method = _.find(rpcMethods, {name: evt.target.value});
+  handleMethodChange (name) {
+    let method = rpcMethods.find(m => m.name === name);
     this.props.actions.selectRpcMethod(method);
   }
 
