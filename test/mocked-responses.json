@@ -8,6 +8,7 @@
     { "name": "eth_hashrate", "response":  3000000 },
     { "name": "eth_blockNumber", "response":  1234, "formattedResponse": "1,234" },
 
-    { "name": "net_peerCount", "response":  15 }
+    { "name": "net_peerCount", "response":  15 },
+    { "name": "web3_clientVersion", "response": "Parity//19.0.0 "}
   ]
 }
