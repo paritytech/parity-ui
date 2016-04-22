@@ -177,6 +177,41 @@ function customFunctions () {
       desc: 'Changes author (coinbase) for mined blocks.',
       params: ['`DATA`, 20 Bytes - Address'],
       returns: false
+    }, {
+      name: 'ethcore_setTransactionsLimit',
+      desc: 'Changes limit for transactions in queue.',
+      params: ['`QUANTITY` - New Limit'],
+      returns: false
+    }, {
+      name: 'ethcore_transactionsLimit',
+      desc: 'Changes limit for transactions in queue.',
+      params: [],
+      returns: '`QUANTITY` - Current max number of transactions in queue.'
+    }, {
+      name: 'ethcore_netChain',
+      desc: 'Returns the name of the connected chain.',
+      params: [],
+      returns: '`DATA` - chain name'
+    }, {
+      name: 'ethcore_netMaxPeers',
+      desc: 'Returns maximal number of peers.',
+      params: [],
+      returns: '`QUANTITY` - Maximal number of peers'
+    }, {
+      name: 'ethcore_netPort',
+      desc: 'Returns network port the node is listening on.',
+      params: [],
+      returns: '`QUANTITY` - Port Number'
+    }, {
+      name: 'ethcore_rpcSettings',
+      desc: 'Returns basic settings of rpc (enabled, port, interface).',
+      params: [],
+      returns: '`OBJECT` - JSON object containing rpc settings'
+    }, {
+      name: 'ethcore_nodeName',
+      desc: 'Returns node name (identity)',
+      params: [],
+      returns: '`DATA` - Node name'
     }
   ];
 }
@@ -186,6 +221,7 @@ function getOutputFormatters () {
     'ethcore_minGasPrice': 'outputBigNumberFormatter',
     'ethcore_extraData': 'decodeExtraData',
     'ethcore_gasFloorTarget': 'outputBigNumberFormatter',
+    'ethcore_transactionsLimit': 'outputBigNumberFormatter',
     'eth_getBalance': 'outputBigNumberFormatter',
     'eth_getTransactionCount': 'utils.toDecimal',
     'eth_getTransactionByHash': 'outputTransactionFormatter',
@@ -209,6 +245,9 @@ function getInputFormatters () {
     ],
     'ethcore_setAuthor': [
       'inputAddressFormatter'
+    ],
+    'ethcore_setTransactionsLimit': [
+      'utils.toHex'
     ],
     'eth_getBalance': [
       'inputAddressFormatter',

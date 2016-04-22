@@ -1,5 +1,5 @@
 
-import {isArray, eq, compact} from 'lodash';
+import {isArray, isObject, eq, compact} from 'lodash';
 import {isBigNumber} from 'web3/lib/utils/utils';
 import {toPromise} from './util-provider';
 import {Web3Base} from './web3-base';
@@ -19,7 +19,13 @@ export class Web3Provider extends Web3Base {
   }
 
   onStart () {
-    toPromise(this.web3.version.getNode, StatusActions.updateVersion);
+    toPromise(this.web3.version.getNode)
+      .then(StatusActions.updateVersion)
+      .then(::this.store.dispatch)
+      .catch(err => {
+        console.error(err);
+        this.store.dispatch(StatusActions.error(err));
+      });
   }
 
   onTick () {
@@ -30,6 +36,7 @@ export class Web3Provider extends Web3Base {
       }
       return toPromise(obj.method).then(obj.actionMaker)
         .catch(err => {
+          console.error(err);
           this.store.dispatch(StatusActions.error(err));
           return false; // don't process errors in the promise chain
         });
@@ -39,6 +46,7 @@ export class Web3Provider extends Web3Base {
     .then(::this.updateState)
     .then(actions => actions.map(this.store.dispatch))
     .catch(err => {
+      console.error(err);
       this.store.dispatch(StatusActions.error(err));
     });
   }
@@ -53,7 +61,12 @@ export class Web3Provider extends Web3Base {
       {method: this.ethcoreWeb3.getGasFloorTarget, actionMaker: MiningActions.updateGasFloorTarget},
       {method: this.ethcoreWeb3.getExtraData, actionMaker: MiningActions.updateExtraData},
       {method: this.ethcoreWeb3.getDevLogsLevels, actionMaker: DebugActions.updateDevLogsLevels},
-      {method: this.ethcoreWeb3.getDevLogs, actionMaker: DebugActions.updateDevLogs}
+      {method: this.ethcoreWeb3.getDevLogs, actionMaker: DebugActions.updateDevLogs},
+      {method: this.ethcoreWeb3.getNetChain, actionMaker: StatusActions.updateNetChain},
+      {method: this.ethcoreWeb3.getNetPort, actionMaker: StatusActions.updateNetPort},
+      {method: this.ethcoreWeb3.getNetMaxPeers, actionMaker: StatusActions.updateNetMaxPeers},
+      {method: this.ethcoreWeb3.getRpcSettings, actionMaker: StatusActions.updateRpcSettings},
+      {method: this.ethcoreWeb3.getNodeName, actionMaker: StatusActions.updateNodeName}
     ];
   }
 
@@ -86,7 +99,7 @@ export class Web3Provider extends Web3Base {
       const val = this.state[this.actionProp(action)];
       if (isBigNumber(val)) {
         return !val.equals(action.payload);
-      } if (isArray(val)) {
+      } if (isArray(val) || isObject(val)) {
         return eq(val, action.payload);
       } else {
         return val !== action.payload;
