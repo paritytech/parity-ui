@@ -18,12 +18,19 @@ div:hover > .removeIcon {
   width: 100%;
 }
 
+.callWrapper {
+  position: relative;
+}
+
 .call {
   cursor: pointer;
   border-bottom: 2px solid #CCC6C6;
   margin-bottom: 18.4px;  
   background: #f5f4f2;
 }
+
+.callWrapper:hover .call { opacity: .3 }
+.callWrapper:hover .prevCallsToolbar { opacity: 1 }
 
 .call:first-child {
   border-color: #6691C2;
@@ -56,4 +63,20 @@ h3 + label > input {
 .response {
   white-space: nowrap;
   overflow-x: auto;
+}
+
+.prevCallsToolbar {
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+
+.prevCallsToolbar a {
+  padding: 10px;
+  background: gray;
+  color: #fff;
 }

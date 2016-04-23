@@ -69,16 +69,19 @@ export default class RpcCalls extends Component {
   }
 
   renderPrevCalls () {
-    return this.props.rpc.prevCalls.map(
+    const {rpc} = this.props;
+    return rpc.prevCalls.map(
       (c, idx) => (
-        <div
-          key={idx}
-          className={style.call}
-          onClick={() => this.onHistoryClick(this.props.rpc.prevCalls[idx])}
-          >
-          <span className={style.callNo}>#{c.callNo}</span>
-          <pre>{c.name}({c.params.toString()})</pre>
-          <pre className={style.response}>{c.response}</pre>
+        <div className={style.callWrapper}>
+          <div
+            key={idx}
+            className={style.call}
+            >
+            <span className={style.callNo}>#{c.callNo}</span>
+            <pre>{c.name}({c.params.toString()})</pre>
+            <pre className={style.response}>{c.response}</pre>
+          </div>
+          {this.renderPrevCallsToolbar(rpc.prevCalls[idx])}
         </div>
       )
     );
@@ -103,7 +106,7 @@ export default class RpcCalls extends Component {
         </div>
         <button
           className={`dapp-block-button ${style.button}`}
-          onClick={::this.onRpcFire}
+          onClick={() => ::this.onRpcFire() }
           >
           Fire!
         </button>
@@ -146,18 +149,17 @@ export default class RpcCalls extends Component {
     this.props.actions.selectRpcMethod(method);
   }
 
-  onRpcFire () {
-    let {selectedMethod} = this.props.rpc;
-    const params = selectedMethod.params.map(p => this.state[`params_${p}`]);
+  onRpcFire (method = this.props.rpc.selectedMethod) {
+    const params = method.params.map(p => this.state[`params_${p}`]);
     this.props.actions.fireRpc({
-      method: selectedMethod.name,
-      outputFormatter: selectedMethod.outputFormatter,
-      inputFormatters: selectedMethod.inputFormatters,
+      method: method.name,
+      outputFormatter: method.outputFormatter,
+      inputFormatters: method.inputFormatters,
       params: params
     });
   }
 
-  onHistoryClick (call) {
+  setCall (call) {
     let method = _.find(rpcMethods, {name: call.name});
     this.props.actions.selectRpcMethod(method);
 
@@ -167,6 +169,30 @@ export default class RpcCalls extends Component {
         [`params_${param}`]: call.params[idx]
       });
     });
+  }
+
+  setAndCall (call) {
+    this.setCall(call);
+    let method = _.find(rpcMethods, {name: call.name});
+    this.onRpcFire(method);
+  }
+
+  renderPrevCallsToolbar (call) {
+    return (
+      <div className={style.prevCallsToolbarWrapper}>
+        <div className={style.prevCallsToolbar}>
+          <a onClick={() => ::this.setCall(call)}>Set</a>
+          <a onClick={() => ::this.setAndCall(call)}>Call Again</a>
+          <a onClick={() => ::this.copyCall(call)}>Copy</a>
+        </div>
+      </div>
+    );
+  }
+
+  copyCall (call) {
+    // todo :: Copy to clipboard!
+    // todo :: Notify user!
+    console.log(call);
   }
 
   renderInputs () {
