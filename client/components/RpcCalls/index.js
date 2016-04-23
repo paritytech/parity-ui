@@ -7,10 +7,11 @@ import TextField from 'material-ui/TextField';
 
 import style from './style.css';
 import rpcData from '../../data/rpc.json';
+import RpcNav from '../RpcNav';
 
 const rpcMethods = _.sortBy(rpcData.methods, 'name');
 
-export default class Rpc extends Component {
+export default class RpcCalls extends Component {
 
   constructor (...args) {
     super(...args);
@@ -38,7 +39,17 @@ export default class Rpc extends Component {
       <div className='dapp-flex-content'>
         <main className='dapp-content'>
           <div className='dapp-container'>
-            <h1><span>RPC</span> requests</h1>
+            <div className='row'>
+              <div className='col col-6'>
+                <h1><span>RPC</span> Requests</h1>
+              </div>
+              <div className='col col-6'>
+                <RpcNav/>
+              </div>
+            </div>
+          </div>
+          <div style={{clear: 'both'}}></div>
+          <div className='dapp-container'>
             <div className='row'>
               <div className='col col-6'>
                 {this.renderForm()}
@@ -187,7 +198,7 @@ export default class Rpc extends Component {
 
 }
 
-Rpc.propTypes = {
+RpcCalls.propTypes = {
   rpc: PropTypes.shape({
     prevCalls: PropTypes.array.isRequired,
     selectedMethod: PropTypes.object.isRequired

@@ -45,7 +45,7 @@ export default class Header extends Component {
             <li>
               <Link to={'/rpc'} activeClassName='active' {...this._test('rpc-link')}>
                 <i className='icon-call-out'></i>
-                <span>Rpc Requests</span>
+                <span>Rpc Methods</span>
               </Link>
             </li>
             <li>

@@ -3,10 +3,9 @@ import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
+import './style.css';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
-import Rpc from '../../components/Rpc';
-import './style.css';
 import * as RpcActions from '../../actions/rpc';
 
 class RpcPage extends Component {
@@ -18,7 +17,9 @@ class RpcPage extends Component {
           nodeName={this.props.status.name}
           error={this.props.status.error}
         />
-        <Rpc {...this.props} />
+        {this.props.children && React.cloneElement(this.props.children, {
+          ...this.props
+        })}
         <Footer version={this.props.status.version} />
       </div>
     );
@@ -37,7 +38,8 @@ function mapDispatchToProps (dispatch) {
 }
 
 RpcPage.propTypes = {
-  status: PropTypes.object.isRequired
+  status: PropTypes.object.isRequired,
+  children: PropTypes.object.isRequired
 };
 
 export default connect(
