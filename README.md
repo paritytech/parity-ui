@@ -46,5 +46,13 @@
 
 # How to include your webapp in `parity`?
 1. Edit `webapp/Cargo.toml` and add dependency to your application (it can be optional)
+
+   ```toml
+   # Use git repo and version
+   parity-myapp = { git = "https://github.com/johnwhitton/parity-myapp.git", version = "0.1.0" }
+   # Or just specify path (speeds-up local development)
+   parity-myapp = { path = "../../parity-myapp" }
+   ```
+
 1. Edit `webapp/src/apps.rs` and add your application to `all_pages` (if it's optional you need to specify two functions - see `parity-wallet` example)
 1. Compile parity.
