@@ -22,6 +22,7 @@ import localStore from 'store';
 import request from 'browser-request';
 import Web3 from 'web3';
 
+import AppContainer from './containers/App';
 import StatusPage from './containers/StatusPage';
 import DebugPage from './containers/DebugPage';
 import AccountsPage from './containers/AccountsPage';
@@ -41,8 +42,9 @@ const ethcoreWeb3 = new EthcoreWeb3(web3);
 const web3Interactions = new Middlewares.WebInteractions(web3, ethcoreWeb3);
 const rpcMiddleware = new Middlewares.Rpc(request);
 const localStorageMiddleware = new Middlewares.LocalStorage();
+const toastrMiddleware = new Middlewares.Toastr();
 
-const storeMiddlewares = [Middlewares.logger, web3Interactions.toMiddleware(), rpcMiddleware.toMiddleware(), localStorageMiddleware.toMiddleware()];
+const storeMiddlewares = [Middlewares.logger, web3Interactions.toMiddleware(), rpcMiddleware.toMiddleware(), localStorageMiddleware.toMiddleware(), toastrMiddleware.toMiddleware()];
 
 const store = configure(storeMiddlewares);
 const history = syncHistoryWithStore(hashHistory, store);
@@ -57,14 +59,17 @@ ReactDOM.render(
   <Provider store={store}>
     <MuiThemeProvider muiTheme={muiTheme}>
       <Router history={history}>
-        <Route path={'/'} component={StatusPage} />
-        <Route path={'/debug'} component={DebugPage} />
-        <Route path={'/accounts'} component={AccountsPage} />
-        <Route path={'/apps'} component={AppListPage} />
-        <Route path={'/rpc'} component={RpcPage}>
-          <IndexRedirect to='calls' />
-          <Route path={'calls'} component={RpcCalls} />
-          <Route path={'docs'} component={RpcDocs} />
+        <Route path={'/'} component={AppContainer}>
+          <IndexRedirect to='status' />
+          <Route path={'status'} component={StatusPage} />
+          <Route path={'debug'} component={DebugPage} />
+          <Route path={'accounts'} component={AccountsPage} />
+          <Route path={'apps'} component={AppListPage} />
+          <Route path={'rpc'} component={RpcPage}>
+            <IndexRedirect to='calls' />
+            <Route path={'calls'} component={RpcCalls} />
+            <Route path={'docs'} component={RpcDocs} />
+          </Route>
         </Route>
       </Router>
     </MuiThemeProvider>

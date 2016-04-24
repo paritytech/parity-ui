@@ -189,16 +189,12 @@ export default class RpcCalls extends Component {
         <div className={style.callActions}>
           <IconButton className={style.callAction} onClick={() => ::this.setCall(call)}><InputIcon /></IconButton>
           <IconButton className={style.callAction} onClick={() => ::this.setAndCall(call)}><CallIcon /></IconButton>
-          <CopyToClipboard text={JSON.stringify(call)} onCopy={::this.onCopy}>
+          <CopyToClipboard text={JSON.stringify(call)} onCopy={() => this.props.actions.addToast('Method copied to clipboard!')}>
             <IconButton className={style.callAction}><AssignmentIcon /></IconButton>
           </CopyToClipboard>
         </div>
       </div>
     );
-  }
-
-  onCopy () {
-    console.log('copied!', arguments)
   }
 
   renderInputs () {
@@ -237,6 +233,7 @@ RpcCalls.propTypes = {
   }).isRequired,
   actions: PropTypes.shape({
     fireRpc: PropTypes.func.isRequired,
+    addToast: PropTypes.func.isRequired,
     selectRpcMethod: PropTypes.func.isRequired,
     resetRpcPrevCalls: PropTypes.func.isRequired
   }).isRequired

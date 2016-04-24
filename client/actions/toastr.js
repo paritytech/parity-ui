@@ -1,4 +1,5 @@
 
-import { CreateAction } from 'redux-actions';
+import { createAction } from 'redux-actions';
 
-export const addToast = CreateAction('add toast');
+export const addToast = createAction('add toast');
+export const removeToast = createAction('remove toast');
