@@ -1,9 +1,16 @@
 
 import React, { Component, PropTypes } from 'react';
+import CopyToClipboard from 'react-copy-to-clipboard';
 import _ from 'lodash';
 import marked from 'marked';
+
 import AutoComplete from 'material-ui/AutoComplete';
 import TextField from 'material-ui/TextField';
+import IconButton from 'material-ui/IconButton';
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+import CallIcon from 'material-ui/svg-icons/communication/call';
+import AssignmentIcon from 'material-ui/svg-icons/action/assignment';
+import InputIcon from 'material-ui/svg-icons/action/input';
 
 import style from './style.css';
 import rpcData from '../../data/rpc.json';
@@ -72,15 +79,13 @@ export default class RpcCalls extends Component {
     const {rpc} = this.props;
     return rpc.prevCalls.map(
       (c, idx) => (
-        <div className={style.callWrapper}>
-          <div
-            key={idx}
-            className={style.call}
-            >
-            <span className={style.callNo}>#{c.callNo}</span>
-            <pre>{c.name}({c.params.toString()})</pre>
-            <pre className={style.response}>{c.response}</pre>
-          </div>
+        <div
+          key={idx}
+          className={style.call}
+          >
+          <span className={style.callNo}>#{c.callNo}</span>
+          <pre>{c.name}({c.params.toString()})</pre>
+          <pre className={style.response}>{c.response}</pre>
           {this.renderPrevCallsToolbar(rpc.prevCalls[idx])}
         </div>
       )
@@ -179,20 +184,21 @@ export default class RpcCalls extends Component {
 
   renderPrevCallsToolbar (call) {
     return (
-      <div className={style.prevCallsToolbarWrapper}>
-        <div className={style.prevCallsToolbar}>
-          <a onClick={() => ::this.setCall(call)}>Set</a>
-          <a onClick={() => ::this.setAndCall(call)}>Call Again</a>
-          <a onClick={() => ::this.copyCall(call)}>Copy</a>
+      <div className={style.callActionsWrap}>
+        <IconButton className={style.callActionsButton}><MoreVertIcon /></IconButton>
+        <div className={style.callActions}>
+          <IconButton className={style.callAction} onClick={() => ::this.setCall(call)}><InputIcon /></IconButton>
+          <IconButton className={style.callAction} onClick={() => ::this.setAndCall(call)}><CallIcon /></IconButton>
+          <CopyToClipboard text={JSON.stringify(call)} onCopy={::this.onCopy}>
+            <IconButton className={style.callAction}><AssignmentIcon /></IconButton>
+          </CopyToClipboard>
         </div>
       </div>
     );
   }
 
-  copyCall (call) {
-    // todo :: Copy to clipboard!
-    // todo :: Notify user!
-    console.log(call);
+  onCopy () {
+    console.log('copied!', arguments)
   }
 
   renderInputs () {
