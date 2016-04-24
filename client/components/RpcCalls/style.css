@@ -1,3 +1,8 @@
+.historyInfo {
+  margin-top: 0;
+  text-transform: initial;
+}
+
 .removeIcon {
   float: right;
   color: #bbb;

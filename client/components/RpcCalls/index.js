@@ -76,8 +76,18 @@ export default class RpcCalls extends Component {
   }
 
   renderPrevCalls () {
-    const {rpc} = this.props;
-    return rpc.prevCalls.map(
+    const {prevCalls} = this.props.rpc;
+
+    if (!prevCalls.length) {
+      return (
+        <div>
+          <h3 className={styles.historyInfo} >
+            Fire up some RPC calls and the results will be here.
+          </h3>
+        </div>
+      );
+    }
+    return prevCalls.map(
       (c, idx) => (
         <div
           key={idx}
@@ -86,7 +96,7 @@ export default class RpcCalls extends Component {
           <span className={styles.callNo}>#{c.callNo}</span>
           <pre>{c.name}({c.params.toString()})</pre>
           <pre className={styles.response}>{c.response}</pre>
-          {this.renderPrevCallsToolbar(rpc.prevCalls[idx])}
+          {this.renderPrevCallsToolbar(prevCalls[idx])}
         </div>
       )
     );

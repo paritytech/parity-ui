@@ -5,6 +5,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
 
 import './index.html';
+import './index.css';
 import 'dapp-styles/dapp-styles.less';
 
 import './test.utils';
