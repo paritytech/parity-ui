@@ -56,3 +56,7 @@
 
 1. Edit `webapp/src/apps.rs` and add your application to `all_pages` (if it's optional you need to specify two functions - see `parity-wallet` example)
 1. Compile parity.
+   
+   ```bash
+   $ cargo build --release # While inside `parity`
+   ```
