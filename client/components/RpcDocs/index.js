@@ -98,7 +98,7 @@ export default class RpcDocs extends Component {
 
 }
 
-RpcDocs.PropTypes = {
+RpcDocs.propTypes = {
   rpc: PropTypes.shape({
     selectedDoc: PropTypes.string.isRequired
   }).isRequired,
