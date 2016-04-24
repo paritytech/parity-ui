@@ -17,7 +17,7 @@
    ```
 
 1. To create web3 in your app make sure to use: `new Web3(new Web3.providers.HttpProvider('/rpc/'))`
-1. Create `./parity-myapp/Cargo.toml` with you apps details. See example here: [https://github.com/tomusdrw/parity-status/blob/master/Cargo.toml](parity-status Cargo.toml).
+1. Create `./parity-myapp/Cargo.toml` with you apps details. See example here: [parity-status Cargo.toml](https://github.com/tomusdrw/parity-status/blob/master/Cargo.toml).
 
    ```bash
    $ wget https://raw.githubusercontent.com/tomusdrw/parity-status/master/Cargo.toml -O ./parity-myapp/Cargo.toml
@@ -25,6 +25,11 @@
    ```
 
 1. Use included generator to create a rust source code of your web app.
+
+   ```bash
+   # Install dependencies
+   $ cd ./parity-webapp/generate && npm install && cd -
+   ```
 
    ```bash
    $ cd ./parity-myapp/src/web # You need to be in web folder
