@@ -12,7 +12,7 @@ import CallIcon from 'material-ui/svg-icons/communication/call';
 import AssignmentIcon from 'material-ui/svg-icons/action/assignment';
 import InputIcon from 'material-ui/svg-icons/action/input';
 
-import style from './style.css';
+import styles from './style.css';
 import rpcData from '../../data/rpc.json';
 import RpcNav from '../RpcNav';
 
@@ -34,7 +34,7 @@ export default class RpcCalls extends Component {
       <a
         title='Clear RPC calls history'
         onClick={::this.props.actions.resetRpcPrevCalls}
-        className={style.removeIcon}
+        className={styles.removeIcon}
         >
         <i className='icon-trash'></i>
       </a>
@@ -63,8 +63,8 @@ export default class RpcCalls extends Component {
               </div>
               <div className='col col-6'>
                 {this.renderClear()}
-                <h2 className={style.header}>History</h2>
-                <div className={`${style.history} row`}>
+                <h2 className={styles.header}>History</h2>
+                <div className={`${styles.history} row`}>
                   {this.renderPrevCalls()}
                 </div>
               </div>
@@ -81,11 +81,11 @@ export default class RpcCalls extends Component {
       (c, idx) => (
         <div
           key={idx}
-          className={style.call}
+          className={styles.call}
           >
-          <span className={style.callNo}>#{c.callNo}</span>
+          <span className={styles.callNo}>#{c.callNo}</span>
           <pre>{c.name}({c.params.toString()})</pre>
-          <pre className={style.response}>{c.response}</pre>
+          <pre className={styles.response}>{c.response}</pre>
           {this.renderPrevCallsToolbar(rpc.prevCalls[idx])}
         </div>
       )
@@ -97,7 +97,7 @@ export default class RpcCalls extends Component {
 
     return (
       <div>
-        <h2 className={style.header}>
+        <h2 className={styles.header}>
           <label htmlFor='selectedMethod'>
             Call Method
           </label>
@@ -110,7 +110,7 @@ export default class RpcCalls extends Component {
           {this.renderMarkdown(selectedMethod.returns)}
         </div>
         <button
-          className={`dapp-block-button ${style.button}`}
+          className={`dapp-block-button ${styles.button}`}
           onClick={() => ::this.onRpcFire() }
           >
           Fire!
@@ -184,13 +184,22 @@ export default class RpcCalls extends Component {
 
   renderPrevCallsToolbar (call) {
     return (
-      <div className={style.callActionsWrap}>
-        <IconButton className={style.callActionsButton}><MoreVertIcon /></IconButton>
-        <div className={style.callActions}>
-          <IconButton className={style.callAction} onClick={() => ::this.setCall(call)}><InputIcon /></IconButton>
-          <IconButton className={style.callAction} onClick={() => ::this.setAndCall(call)}><CallIcon /></IconButton>
-          <CopyToClipboard text={JSON.stringify(call)} onCopy={() => this.props.actions.addToast('Method copied to clipboard!')}>
-            <IconButton className={style.callAction}><AssignmentIcon /></IconButton>
+      <div className={styles.callActionsWrap}>
+        <IconButton className={styles.callActionsButton}><MoreVertIcon /></IconButton>
+        <div className={styles.callActions}>
+          <IconButton className={styles.callAction} onClick={() => ::this.setCall(call)} tooltip='Set' tooltipPosition='top-left'>
+            <InputIcon className={styles.callActionIcon} />
+          </IconButton>
+          <IconButton className={styles.callAction} onClick={() => ::this.setAndCall(call)} tooltip='Fire again' tooltipPosition='top-left'>
+            <CallIcon className={styles.callActionIcon} />
+          </IconButton>
+          <CopyToClipboard
+            text={JSON.stringify(call)}
+            onCopy={() => this.props.actions.addToast('Method copied to clipboard!')}
+            >
+            <IconButton className={styles.callAction} tooltip='Copy to clipboard' tooltipPosition='top-left'>
+              <AssignmentIcon className={styles.callActionIcon}/>
+            </IconButton>
           </CopyToClipboard>
         </div>
       </div>

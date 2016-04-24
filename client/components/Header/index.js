@@ -37,7 +37,7 @@ export default class Header extends Component {
         <nav>
           <ul>
             <li>
-              <Link to={'/'} activeClassName='active' {...this._test('home-link')}>
+              <Link to={'/status'} activeClassName='active' {...this._test('home-link')}>
                 <i className='icon-globe'></i>
                 <span>Status</span>
               </Link>

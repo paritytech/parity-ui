@@ -60,9 +60,10 @@ h3 + label > input {
 
 .callActionsWrap {
   position: absolute;
-  top: 5px;
+  top: 0;
   right: 0;
   opacity: 0;
+  height: 100%;
   transition: opacity ease-in-out 0.2s;
   transition-delay: 0.2s;
 }
@@ -81,6 +82,9 @@ h3 + label > input {
 
 .callActions {
   display: none;
+  height: 100%;
+  margin-top: 5px;
+  margin-right: 5px;
 }
 
 .callActionsWrap:hover .callActions {
@@ -92,8 +96,16 @@ h3 + label > input {
   transition: opacity ease-in-out .2s;
   transition-delay: .2s;
   opacity: 0;
+  padding: 3px !important;
+  height: 22px !important;
+  width: 22px !important;
 }
 
 .callActions:hover .callAction {
   opacity: 1;
+}
+
+.callActionIcon {
+  height: 100% !important;
+  width: 100% !important;
 }
