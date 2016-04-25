@@ -63,3 +63,13 @@ h3 + label > input {
   white-space: nowrap;
   overflow-x: auto;
 }
+
+.jsonEitor {
+  width: 100%;
+  height: 200px;
+}
+
+.jsonToggle {
+  width: auto !important;
+  float: right;
+}

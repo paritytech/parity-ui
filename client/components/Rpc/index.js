@@ -2,6 +2,18 @@
 import React, { Component, PropTypes } from 'react';
 import _ from 'lodash';
 import marked from 'marked';
+import Toggle from 'material-ui/Toggle/Toggle';
+import formatJson from 'format-json';
+
+// todo [adgo] 24.04.2016 - remove after merging https://github.com/tomusdrw/eth-node-status-page/pull/46
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+const muiTheme = getMuiTheme({
+  palette: {
+    textColor: 'e0f7fa'
+  }
+});
+//
 
 import style from './style.css';
 import rpcData from '../../data/rpc.json';
@@ -55,6 +67,29 @@ export default class Rpc extends Component {
     );
   }
 
+  renderJsonEditor () {
+    if (!this.state.jsonMode) {
+      return;
+    }
+
+    let method = _.cloneDeep(this.props.rpc.selectedMethod);
+    delete method.desc;
+    delete method.returns;
+    method.params = method.params.map(
+      p => this.state[`params_${p}`]
+    );
+
+    return (
+      <div className='row'>
+        <textarea
+          className={style.jsonEitor}
+          ref={el => this._jsonEditor = el}
+          defaultValue={formatJson.plain(method)}
+          />
+      </div>
+    );
+  }
+
   renderPrevCalls () {
     const {prevCalls} = this.props.rpc;
 
@@ -86,28 +121,45 @@ export default class Rpc extends Component {
   }
 
   renderForm () {
-    const {selectedMethod} = this.props.rpc;
-
     return (
       <div>
+        <MuiThemeProvider muiTheme={muiTheme}>
+          <Toggle
+            className={style.jsonToggle}
+            onToggle={() => this.setState({jsonMode: !this.state.jsonMode})}
+            label='JSON'
+          />
+        </MuiThemeProvider>
         <h2 className={style.header}>
           <label htmlFor='selectedMethod'>
             Call Method
           </label>
         </h2>
-        <div className='row'>
-          {this.renderMethodList()}
-          <h3>Parameters</h3>
-          {this.renderInputs()}
-          <h3>Returns</h3>
-          {this.renderMarkdown(selectedMethod.returns)}
-        </div>
+        {this.renderJsonEditor()}
+        {this.renderFormEditor()}
         <button
           className={`dapp-block-button ${style.button}`}
           onClick={::this.onRpcFire}
           >
           Fire!
         </button>
+      </div>
+    );
+  }
+
+  renderFormEditor () {
+    if (this.state.jsonMode) {
+      return;
+    }
+
+    const {selectedMethod} = this.props.rpc;
+    return (
+      <div className='row'>
+        {this.renderMethodList()}
+        <h3>Parameters</h3>
+        {this.renderInputs()}
+        <h3>Returns</h3>
+        {this.renderMarkdown(selectedMethod.returns)}
       </div>
     );
   }
@@ -152,7 +204,15 @@ export default class Rpc extends Component {
 
   onRpcFire () {
     let {selectedMethod} = this.props.rpc;
-    const params = selectedMethod.params.map(p => this.state[`params_${p}`]);
+    let params;
+
+    if (this.state.jsonMode) {
+      selectedMethod = JSON.parse(this._jsonEditor.value);
+      params = selectedMethod.params;
+    } else {
+      params = selectedMethod.params.map(p => this.state[`params_${p}`]);
+    }
+
     this.props.actions.fireRpc({
       method: selectedMethod.name,
       outputFormatter: selectedMethod.outputFormatter,
@@ -164,7 +224,6 @@ export default class Rpc extends Component {
   onHistoryClick (call) {
     let method = _.find(rpcMethods, {name: call.name});
     this.props.actions.selectRpcMethod(method);
-
     // and set parameter values
     method.params.map((param, idx) => {
       this.setState({

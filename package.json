@@ -6,7 +6,6 @@
   "scripts": {
     "start": "webpack-dev-server -d --history-api-fallback --hot --inline --progress --colors --port 3000",
     "webpack": "webpack",
-    
     "commit": "commit-wizard",
     "lint": "semistandard",
     "ci": "npm run lint & npm run testOnce & npm run nightwatchCI",
@@ -15,7 +14,6 @@
     "nightwatch": "NODE_ENV=tests nightwatch",
     "nightwatchCI": "npm run nightwatch  -- -e saucelabs",
     "startTest": "NODE_ENV=tests npm start",
-    
     "prebuild": "npm run clean",
     "build": "NODE_ENV=production webpack --progress --colors && cp Cargo.toml static",
     "clean": "rm static -rf || true",
@@ -72,6 +70,7 @@
     "browser-request": "0.3.3",
     "bytes": "2.3.0",
     "dapp-styles": "^0.2.2",
+    "format-json": "1.0.3",
     "format-number": "2.0.1",
     "lodash": "4.11.1",
     "marked": "^0.3.5",
