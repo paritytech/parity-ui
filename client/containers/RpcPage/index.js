@@ -35,7 +35,7 @@ function mapStateToProps (state) {
 
 function mapDispatchToProps (dispatch) {
   return {
-    actions: bindActionCreators(_.extend(RpcActions, {addToast: addToast}), dispatch)
+    actions: bindActionCreators(_.extend(RpcActions, {addToast}), dispatch)
   };
 }
 
