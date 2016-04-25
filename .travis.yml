@@ -25,6 +25,6 @@ cache:
 
 before_script:
   - if [ "$SCRIPT" == "nightwatchCI" ]; then npm run startTest & fi
-  - if [ "$SCRIPT" == "nightwatchCI" ]; then sleep 15; fi
+  - if [ "$SCRIPT" == "nightwatchCI" ]; then sleep 25; fi
 
 script: npm run $SCRIPT
