@@ -5,19 +5,26 @@ import style from './styles.css';
 
 export default class Header extends Component {
 
-  renderError () {
+  renderErrors () {
     const {disconnected} = this.props;
-    if (!disconnected) {
+    const isErrors = this.props.noOfErrors > 0;
+    if (!disconnected && !isErrors) {
       return;
     }
 
     return (
       <nav>
         <ul>
-        <li>
+        <li className={disconnected ? {} : style.hidden}>
           <a className={style.error} disabled title={`${disconnected}`}>
             <i className='icon-power'></i>
             <span>Offline</span>
+          </a>
+        </li>
+        <li className={isErrors ? {} : style.hidden}>
+          <a className={style.warning} disabled title={'You have errors :('}>
+            <i className='icon-flag'></i>
+            <span>Errors</span>
           </a>
         </li>
         </ul>
@@ -32,12 +39,12 @@ export default class Header extends Component {
           <h1>Status Page</h1>
           <h3>{this.props.nodeName}</h3>
         </hgroup>
-        {this.renderError()}
+        {this.renderErrors()}
         <div className='dapp-flex-item'></div>
         <nav>
           <ul>
             <li>
-              <Link to={'/'} activeClassName='active' {...this._test('home-link')}>
+              <Link to={'/status'} activeClassName='active' {...this._test('home-link')}>
                 <i className='icon-globe'></i>
                 <span>Status</span>
               </Link>
@@ -45,7 +52,7 @@ export default class Header extends Component {
             <li>
               <Link to={'/rpc'} activeClassName='active' {...this._test('rpc-link')}>
                 <i className='icon-call-out'></i>
-                <span>Rpc Requests</span>
+                <span>Rpc Methods</span>
               </Link>
             </li>
             <li>
@@ -75,5 +82,6 @@ export default class Header extends Component {
 
 Header.propTypes = {
   nodeName: PropTypes.string.isRequired,
+  noOfErrors: PropTypes.number.isRequired,
   disconnected: PropTypes.bool
 };

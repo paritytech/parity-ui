@@ -20,7 +20,7 @@
     "prezip": "npm run build",
     "zip": "cd static && zip ../status.zip * -r"
   },
-  "license": "MIT",
+  "license": "GPL-3.0",
   "devDependencies": {
     "babel-core": "^6.5.2",
     "babel-eslint": "6.0.2",
@@ -74,6 +74,8 @@
     "format-number": "2.0.1",
     "lodash": "4.11.1",
     "marked": "^0.3.5",
+    "material-ui": "0.15.0-beta.2",
+    "react-copy-to-clipboard": "4.1.0",
     "rlp": "2.0.0",
     "store": "1.3.20",
     "web3": "^0.15.3"

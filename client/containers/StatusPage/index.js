@@ -18,6 +18,7 @@ class StatusPage extends Component {
         <Header
           nodeName={status.name}
           disconnected={status.disconnected}
+          noOfErrors={status.noOfErrors}
           {...this._test('header')}
         />
         <Status {...this.props} />

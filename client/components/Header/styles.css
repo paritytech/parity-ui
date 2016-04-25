@@ -13,3 +13,11 @@
 .error {
   color: #C20E25 !important;
 }
+
+.warning {
+  color: #E88305 !important;
+}
+
+.hidden {
+  display: none !important;
+}

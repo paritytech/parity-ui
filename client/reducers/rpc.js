@@ -5,6 +5,7 @@ import rpcMetods from '../data/rpc.json';
 const initialState = {
   prevCalls: [],
   callNo: 1,
+  selectedDoc: rpcMetods.methods[0].name,
   selectedMethod: rpcMetods.methods[0]
 };
 
@@ -41,6 +42,13 @@ export const actionHandlers = {
     return {
       ...state,
       selectedMethod: action.payload
+    };
+  },
+
+  'select rpcDoc' (state, action) {
+    return {
+      ...state,
+      selectedDoc: action.payload
     };
   }
 
