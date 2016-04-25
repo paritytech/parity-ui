@@ -20,7 +20,7 @@
     "prezip": "npm run build",
     "zip": "cd static && zip ../status.zip * -r"
   },
-  "license": "MIT",
+  "license": "GPL-3.0",
   "devDependencies": {
     "babel-core": "^6.5.2",
     "babel-eslint": "6.0.2",
