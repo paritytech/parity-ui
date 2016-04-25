@@ -1,0 +1,23 @@
+.toastrContainer {
+  position: absolute;
+  top: 81px;
+  right: 10px;
+  width: 200px;
+}
+
+.toast {
+  padding: 10px;
+  font-size: 16px;
+  margin-bottom: 10px;
+  animation: fadein .5s;
+}
+
+.remove {
+  float: right;
+}
+
+@keyframes fadein {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+

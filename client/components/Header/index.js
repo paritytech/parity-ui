@@ -44,7 +44,7 @@ export default class Header extends Component {
         <nav>
           <ul>
             <li>
-              <Link to={'/'} activeClassName='active' {...this._test('home-link')}>
+              <Link to={'/status'} activeClassName='active' {...this._test('home-link')}>
                 <i className='icon-globe'></i>
                 <span>Status</span>
               </Link>
@@ -52,7 +52,7 @@ export default class Header extends Component {
             <li>
               <Link to={'/rpc'} activeClassName='active' {...this._test('rpc-link')}>
                 <i className='icon-call-out'></i>
-                <span>Rpc Requests</span>
+                <span>Rpc Methods</span>
               </Link>
             </li>
             <li>
