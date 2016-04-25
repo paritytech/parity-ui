@@ -12,11 +12,13 @@ import * as RpcActions from '../../actions/rpc';
 class RpcPage extends Component {
 
   render () {
+    const {status} = this.props;
     return (
       <div>
         <Header
-          nodeName={this.props.status.name}
-          error={this.props.status.error}
+          nodeName={status.name}
+          disconnected={status.disconnected}
+          noOfErrors={status.noOfErrors}
         />
         <Rpc {...this.props} />
         <Footer version={this.props.status.version} />

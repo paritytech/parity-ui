@@ -7,12 +7,14 @@ import style from './style.css';
 
 class AccountsPage extends Component {
   render () {
+    const {status} = this.props;
     return (
       <div className={style.normal}>
         <Header
-          nodeName={this.props.status.name}
-          error={this.props.status.error}
-          />
+          nodeName={status.name}
+          disconnected={status.disconnected}
+          noOfErrors={status.noOfErrors}
+        />
         <div className='dapp-flex-content'>
           <main className='dapp-content'>
             <h1>Accounts</h1>
