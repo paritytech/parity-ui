@@ -4,6 +4,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 // http://stackoverflow.com/a/34015469/988941
 injectTapEventPlugin();
 
+import './fonts/fonts.css';
 import './index.html';
 import './index.css';
 import 'dapp-styles/dapp-styles.less';
