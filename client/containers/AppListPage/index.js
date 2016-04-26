@@ -18,21 +18,27 @@ class AppListPage extends Component {
     fetch('/api/apps', {
       credentials: 'same-origin'
     })
-      .then((res) => res.json())
-      .then((data) => this.setState({
+      .then(res => res.json())
+      .then(data => this.setState({
         apps: data
       }));
   }
 
   renderApps () {
-    if (!this.state.apps) {
-      return;
+    if (!this.state.apps.length) {
+      // TODO [adgo] 26.04.2016 - change to real link
+      return <h3>No apps do diplay. Go ahead and <a href='#'>add one</a>!</h3>;
     }
-    return this.state.apps.map((app) => (
-      <li key={app}>
-        <a href={`/${app}/`}>{app}</a>
-      </li>
-    ));
+
+    return this.state.apps.map((app) => {
+      const href = `//${window.location.hostname}:8080/${app}/`;
+      // TODO [adgo] 26.04.2016 - remove if statement and (beta)
+      if (app === 'wallet') {
+        return (<li key={app}>
+                  <a target='blank' href={href}>{app} (beta)</a>
+                </li>);
+      }
+    });
   }
 
   render () {
