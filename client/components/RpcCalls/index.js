@@ -27,12 +27,6 @@ export default class RpcCalls extends Component {
     this.state = {};
   }
 
-  componentWillUpdate (newProps, newState) {
-    if (this.jsonModeSwitchedToOn(newState)) {
-      this.setJsonEditorValue();
-    }
-  }
-
   renderClear () {
     if (!this.props.rpc.prevCalls.length) {
       return;
@@ -40,6 +34,7 @@ export default class RpcCalls extends Component {
 
     return (
       <a
+        {...this._test('prev-calls-remove')}
         title='Clear RPC calls history'
         onClick={::this.props.actions.resetRpcPrevCalls}
         className={styles.removeIcon}
@@ -69,7 +64,7 @@ export default class RpcCalls extends Component {
               <div className='col col-6'>
                 {this.renderForm()}
               </div>
-              <div className='col col-6'>
+              <div className='col col-6' {...this._test('prev-calls-container')}>
                 {this.renderClear()}
                 <h2 className={styles.header}>History</h2>
                 <div className={`${styles.history} row`}>
@@ -89,7 +84,7 @@ export default class RpcCalls extends Component {
     if (!prevCalls.length) {
       return (
         <div>
-          <h3 className={styles.historyInfo} >
+          <h3 className={styles.historyInfo} {...this._test('no-prev-calls')}>
             Fire up some RPC calls and the results will be here.
           </h3>
         </div>
@@ -100,6 +95,7 @@ export default class RpcCalls extends Component {
         <div
           key={idx}
           className={styles.call}
+          {...this._test(`prev-call-${c.callNo}`)}
           >
           <span className={styles.callNo}>#{c.callNo}</span>
           <pre>{c.name}({c.params.toString()})</pre>
@@ -115,7 +111,7 @@ export default class RpcCalls extends Component {
       <div>
         <Toggle
           className={styles.jsonToggle}
-          onToggle={() => this.setState({jsonMode: !this.state.jsonMode})}
+          onToggle={::this.onJsonToggle}
           label='JSON'
         />
         <h2 className={styles.header}>
@@ -324,10 +320,6 @@ export default class RpcCalls extends Component {
     });
   }
 
-  jsonModeSwitchedToOn (newState) {
-    return newState.jsonMode && !this.state.jsonMode;
-  }
-
   setJsonEditorValue () {
     const {selectedMethod} = this.props.rpc;
     const method = {
@@ -339,6 +331,13 @@ export default class RpcCalls extends Component {
     this.setState({
       jsonEditorValue: formatJson.plain(method)
     });
+  }
+
+  onJsonToggle () {
+    if (!this.state.jsonMode) {
+      this.setJsonEditorValue();
+    }
+    this.setState({jsonMode: !this.state.jsonMode});
   }
 
 }
