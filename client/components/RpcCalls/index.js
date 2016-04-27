@@ -95,11 +95,34 @@ export default class RpcCalls extends Component {
           >
           <span className={styles.callNo}>#{c.callNo}</span>
           <pre>{c.name}({c.params.toString()})</pre>
-          <pre className={styles.response}>{c.response}</pre>
+          <pre className={styles.response}>{this.formatRenderedResponse(c.response)}</pre>
           {this.renderPrevCallsToolbar(prevCalls[idx])}
         </div>
       )
     );
+  }
+
+  formatRenderedResponse (res) {
+    if (_.isArray(res)) {
+      return res.map((r, idx) => (
+        <span>
+          {idx === 0 ? '[' : ','}
+          {idx === 0 ? '' : <br />}
+          {r}
+          {idx === res.length - 1 ? ']' : ''}
+        </span>
+      ));
+    }
+    if (_.isPlainObject(res)) {
+      const arr = JSON.stringify(res, null, 1);
+      return arr.split('\n').map((any, idx) => (
+        <span>
+          {any}
+          {idx !== 0 && idx !== arr.length - 1 ? <br /> : ''}
+        </span>
+      ));
+    }
+    return res;
   }
 
   renderForm () {
