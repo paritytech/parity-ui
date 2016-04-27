@@ -2,6 +2,9 @@
 
 const mockedResponses = require('../mocked-responses.json');
 const url = 'http://localhost:3000';
+const utils = require('../utils');
+const el = utils.el;
+const assertNav = utils.assertNav;
 
 module.exports = {
   tags: ['statuspage'],
@@ -65,7 +68,8 @@ module.exports = {
     client.expect.element(reset).to.be.present;
     client.expect.element(reset).to.not.be.visible;
     // display edit and reset button (sleep for transition delay)
-    client.moveToElement(input, 0, 0).pause(220);
+    client.moveToElement(input, 0, 0);
+    client.waitForElementVisible(edit, 220, false);
     client.expect.element(edit).to.be.visible;
     client.expect.element(reset).to.be.visible;
     // switch to edit mode
@@ -85,7 +89,8 @@ module.exports = {
     client.expect.element(edit).to.be.present;
     client.expect.element(reset).to.be.present;
     // modify the value and click outside, expect new value, action buttons present
-    client.moveToElement(input, 0, 0).pause(220);
+    client.moveToElement(input, 0, 0);
+    client.waitForElementVisible(edit, 220, false);
     client.click(edit);
     client.clearValue(input);
     client.setValue(input, newVal);
@@ -111,14 +116,6 @@ module.exports = {
   }
 };
 
-function el (base, innerSelector) {
-  let selector = `[data-test="${base}"]`;
-  if (innerSelector) {
-    selector += ` ${innerSelector}`;
-  }
-  return selector;
-}
-
 function assertMiningSettings (method) {
   const mockedMethod = mockedResponses.rpc.find(m => m.name === method.name);
   let expected = mockedMethod.formattedResponse || mockedMethod.response;
@@ -135,11 +132,6 @@ function assertNetwork (method) {
   const mockedMethod = mockedResponses.rpc.find(m => m.name === method.name);
   let expected = mockedMethod.formattedResponse || mockedMethod.response;
   this.expect.element(el(`Status-${method.selector}`, 'input')).to.have.value.that.contain(expected);
-}
-
-function assertNav (link) {
-  const selector = `Header-${link}-link`;
-  this.expect.element(el(selector)).to.be.present;
 }
 
 function assertRpc (method) {
