@@ -122,6 +122,7 @@ export default class RpcCalls extends Component {
         {this.renderJsonEditor()}
         {this.renderFormEditor()}
         <button
+          {...this._test('fireRpc')}
           className={`dapp-block-button ${styles.button}`}
           onClick={() => ::this.onRpcFire() }
           >
@@ -187,6 +188,7 @@ export default class RpcCalls extends Component {
           style={{marginTop: 0}}
           searchText={selectedMethod.name}
           floatingLabelText='Method name'
+          {...this._test('autocomplete')}
           dataSource={methods}
           onNewRequest={::this.handleMethodChange}
         />
@@ -300,6 +302,7 @@ export default class RpcCalls extends Component {
                   onChange={(evt) => this.setState({
                     [`params_${p}`]: evt.target.value
                   })}
+                  {...this._test(`params_${p}`)}
                 />
               )
             );
