@@ -75,6 +75,7 @@
     "marked": "^0.3.5",
     "material-ui": "0.15.0-beta.2",
     "react-copy-to-clipboard": "4.1.0",
+    "react-tap-event-plugin": "1.0.0",
     "rlp": "2.0.0",
     "store": "1.3.20",
     "web3": "^0.15.3"
