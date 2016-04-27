@@ -27,15 +27,14 @@ class AppListPage extends Component {
   renderApps () {
     if (!this.state.apps.length) {
       // TODO [adgo] 26.04.2016 - change to real link
-      return <h3>No apps do diplay. Go ahead and <a href='#'>add one</a>!</h3>;
+      return <h3>No apps do display. Go ahead and <a href='#'>add one</a>!</h3>;
     }
 
     return this.state.apps.map((app) => {
-      const href = `//${window.location.hostname}:8080/${app}/`;
       // TODO [adgo] 26.04.2016 - remove if statement and (beta)
       if (app === 'wallet') {
         return (<li key={app}>
-                  <a target='blank' href={href}>{app} (beta)</a>
+                  <a target='blank' href={`/${app}/`}>{app} (beta)</a>
                 </li>);
       }
     });
