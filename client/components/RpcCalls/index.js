@@ -151,12 +151,14 @@ export default class RpcCalls extends Component {
       return;
     }
 
-    let method = _.cloneDeep(this.props.rpc.selectedMethod);
-    delete method.desc;
-    delete method.returns;
-    method.params = method.params.map(
-      p => this.state[`params_${p}`]
-    );
+    const {selectedMethod} = this.props.rpc;
+
+    const method = {
+      name: selectedMethod.name,
+      params: selectedMethod.params.map(p => this.state[`params_${p}`]),
+      inputFormatters: selectedMethod.inputFormatters,
+      outputFormatter: selectedMethod.outputFormatter
+    };
 
     return (
       <div className='row'>
@@ -208,7 +210,13 @@ export default class RpcCalls extends Component {
     let params;
 
     if (this.state.jsonMode) {
-      method = JSON.parse(this._jsonEditor.value);
+      try {
+        method = JSON.parse(this._jsonEditor.value);
+      } catch (err) {
+        // todo [adgo] 26.04.2016 - setup error handling and error toast
+        this.props.actions.addToast('error parsing json, check console');
+        return console.error('error parsing JSON: ', this._jsonEditor.value, err);
+      }
       params = method.params;
     } else {
       params = method.params.map(p => this.state[`params_${p}`]);
