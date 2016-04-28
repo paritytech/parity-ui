@@ -62,11 +62,11 @@ export default class RpcCalls extends Component {
           <div style={{clear: 'both'}}></div>
           <div className='dapp-container'>
             <div className='row'>
-              <div className='col col-6'>
+              <div className='col col-6 mobile-full'>
                 {this.renderForm()}
               </div>
               <div
-                className='col col-6'
+                className='col col-6 mobile-full'
                 onMouseLeave={() => this.setState({hoveredCallIdx: null})}
                 {...this._test('prev-calls-container')}
                 >
