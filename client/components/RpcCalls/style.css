@@ -65,20 +65,14 @@ h3 + label > input {
 
 .callActionsWrap {
   position: absolute;
-  top: 0;
+  animation: fadein .5s;
   right: 0;
-  opacity: 0;
-  height: 100%;
-  transition: opacity ease-in-out 0.2s;
-  transition-delay: 0.2s;
-}
-
-.call:hover .callActionsWrap {
-  opacity: 1
+  height: 28px;
 }
 
 .callActionsButton {
-  display: block;
+  padding: 0 !important;
+  height: 24px !important;
 }
 
 .callActionsWrap:hover .callActionsButton {
@@ -88,8 +82,8 @@ h3 + label > input {
 .callActions {
   display: none;
   height: 100%;
-  margin-top: 5px;
-  margin-right: 5px;
+  margin-top: 1px;
+  margin-right: 10px;
 }
 
 .callActionsWrap:hover .callActions {
@@ -131,4 +125,9 @@ h3 + label > input {
 
 .jsonEditorErrorMsg {
   color: red;
+}
+
+@keyframes fadein {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }

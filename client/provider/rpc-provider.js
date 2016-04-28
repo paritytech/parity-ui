@@ -13,7 +13,7 @@ export default class RpcProvider {
 
   formatResult (result, formatter) {
     if (!formatter) {
-      return JSON.stringify(result);
+      return typeof result === 'object' ? result : String(result);
     }
 
     // mostly we use web3Formatters (the last "else" case)
