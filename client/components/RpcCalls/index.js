@@ -2,7 +2,6 @@
 import React, { Component, PropTypes } from 'react';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import _ from 'lodash';
-import marked from 'marked';
 import formatJson from 'format-json';
 
 import Toggle from 'material-ui/Toggle/Toggle';
@@ -14,6 +13,7 @@ import CallIcon from 'material-ui/svg-icons/communication/call';
 import AssignmentIcon from 'material-ui/svg-icons/action/assignment';
 import InputIcon from 'material-ui/svg-icons/action/input';
 
+import Markdown from '../Markdown';
 import styles from './style.css';
 import rpcData from '../../data/rpc.json';
 import RpcNav from '../RpcNav';
@@ -141,7 +141,7 @@ export default class RpcCalls extends Component {
         <h3>Parameters</h3>
         {this.renderInputs()}
         <h3>Returns</h3>
-        {this.renderMarkdown(selectedMethod.returns)}
+        <Markdown val={selectedMethod.returns} />
       </div>
     );
   }
@@ -185,19 +185,9 @@ export default class RpcCalls extends Component {
           onNewRequest={::this.handleMethodChange}
         />
         <div>
-          {this.renderMarkdown(selectedMethod.desc)}
+          <Markdown val={selectedMethod.desc} />
         </div>
       </div>
-    );
-  }
-
-  renderMarkdown (val) {
-    if (!val) {
-      return;
-    }
-
-    return (
-      <div dangerouslySetInnerHTML={{__html: marked(val)}} />
     );
   }
 

@@ -1,29 +1,16 @@
 
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import {sortBy} from 'lodash';
 import List from 'material-ui/List/List';
 import ListItem from 'material-ui/List/ListItem';
-import {MakeSelectable} from 'material-ui/List/MakeSelectable';
-let SelectableList = MakeSelectable(List);
 
+import Markdown from '../Markdown';
 import rpcData from '../../data/rpc.json';
 import RpcNav from '../RpcNav';
 
 const rpcMethods = sortBy(rpcData.methods, 'name');
 
 export default class RpcDocs extends Component {
-
-  constructor (...args) {
-    super(...args);
-    this.state = {
-      selected: this.props.rpc.selectedDoc
-    };
-  }
-
-  componentDidMount () {
-    const id = `doc-${this.props.rpc.selectedDoc}`;
-    document.getElementById(id).scrollIntoViewIfNeeded();
-  }
 
   render () {
     return (
@@ -54,55 +41,28 @@ export default class RpcDocs extends Component {
   }
 
   renderData () {
-    const methods = rpcMethods.map((m, idx) => {
+    const methods = rpcMethods.map(m => {
       return (
           <ListItem
             key={m.name}
-            id={`doc-${m.name}`}
-            value={m.name}
-            primaryTogglesNestedList
-            autoGenerateNestedIndicator={false}
-            primaryText={m.name}
-            initiallyOpen={m.name === this.props.rpc.selectedDoc}
-            onNestedListToggle={() => ::this.handleToggle(idx)}
-            nestedItems={[
-              <p key={`${m.name} 1`}>{m.desc}</p>,
-              <p key={`${m.name} 2`}><strong>Params - </strong>{m.params.length ? m.params : 'none'}</p>,
-              <p key={`${m.name} 3`}><strong>Returns - </strong>{m.returns}</p>,
-              <hr />
-            ]}
-          />
+            disabled
+          >
+            <h3 style={{textTransform: 'none'}}>{m.name}</h3>
+            <Markdown val={m.desc} />
+            <p><strong>Params</strong>{!m.params.length ? ' - none' : ''}</p>
+            {m.params.map((p, idx) => <Markdown key={`${m.name}-${idx}`} val={p} />)}
+            <p style={{display: 'inline'}}><strong>Returns</strong> - </p>
+            <Markdown style={{display: 'inline-block'}} val={m.returns} />
+            <hr />
+          </ListItem>
       );
     });
 
     return (
-      <SelectableList
-      onChange={() => {}}
-      value={this.state.selected}
-        >
+      <List>
         {methods}
-      </SelectableList>
+      </List>
     );
   }
 
-  handleToggle (idx) {
-    const {name} = rpcMethods[idx];
-    if (name === this.props.rpc.selectedDoc) {
-      return;
-    }
-
-    this.setState({selected: name});
-
-    this.props.actions.selectRpcDoc(name);
-  }
-
 }
-
-RpcDocs.propTypes = {
-  rpc: PropTypes.shape({
-    selectedDoc: PropTypes.string.isRequired
-  }).isRequired,
-  actions: PropTypes.shape({
-    selectRpcDoc: PropTypes.func.isRequired
-  }).isRequired
-};
