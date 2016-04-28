@@ -3,7 +3,9 @@ import React, { Component, PropTypes } from 'react';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import _ from 'lodash';
 import marked from 'marked';
+import formatJson from 'format-json';
 
+import Toggle from 'material-ui/Toggle/Toggle';
 import AutoComplete from 'material-ui/AutoComplete';
 import TextField from 'material-ui/TextField';
 import IconButton from 'material-ui/IconButton';
@@ -129,28 +131,68 @@ export default class RpcCalls extends Component {
   }
 
   renderForm () {
-    const {selectedMethod} = this.props.rpc;
-
     return (
       <div>
+        <Toggle
+          className={styles.jsonToggle}
+          onToggle={() => this.setState({jsonMode: !this.state.jsonMode})}
+          label='JSON'
+        />
         <h2 className={styles.header}>
           <label htmlFor='selectedMethod'>
             Call Method
           </label>
         </h2>
-        <div className='row'>
-          {this.renderMethodList()}
-          <h3>Parameters</h3>
-          {this.renderInputs()}
-          <h3>Returns</h3>
-          {this.renderMarkdown(selectedMethod.returns)}
-        </div>
+        {this.renderJsonEditor()}
+        {this.renderFormEditor()}
         <button
           className={`dapp-block-button ${styles.button}`}
           onClick={() => ::this.onRpcFire() }
           >
           Fire!
         </button>
+      </div>
+    );
+  }
+
+  renderFormEditor () {
+    if (this.state.jsonMode) {
+      return;
+    }
+
+    const {selectedMethod} = this.props.rpc;
+    return (
+      <div className='row'>
+        {this.renderMethodList()}
+        <h3>Parameters</h3>
+        {this.renderInputs()}
+        <h3>Returns</h3>
+        {this.renderMarkdown(selectedMethod.returns)}
+      </div>
+    );
+  }
+
+  renderJsonEditor () {
+    if (!this.state.jsonMode) {
+      return;
+    }
+
+    const {selectedMethod} = this.props.rpc;
+
+    const method = {
+      name: selectedMethod.name,
+      params: selectedMethod.params.map(p => this.state[`params_${p}`]),
+      inputFormatters: selectedMethod.inputFormatters,
+      outputFormatter: selectedMethod.outputFormatter
+    };
+
+    return (
+      <div className='row'>
+        <textarea
+          className={styles.jsonEitor}
+          ref={el => this._jsonEditor = el}
+          defaultValue={formatJson.plain(method)}
+          />
       </div>
     );
   }
@@ -191,7 +233,21 @@ export default class RpcCalls extends Component {
   }
 
   onRpcFire (method = this.props.rpc.selectedMethod) {
-    const params = method.params.map(p => this.state[`params_${p}`]);
+    let params;
+
+    if (this.state.jsonMode) {
+      try {
+        method = JSON.parse(this._jsonEditor.value);
+      } catch (err) {
+        // todo [adgo] 26.04.2016 - setup error handling and error toast
+        this.props.actions.addToast('error parsing json, check console');
+        return console.error('error parsing JSON: ', this._jsonEditor.value, err);
+      }
+      params = method.params;
+    } else {
+      params = method.params.map(p => this.state[`params_${p}`]);
+    }
+
     this.props.actions.fireRpc({
       method: method.name,
       outputFormatter: method.outputFormatter,

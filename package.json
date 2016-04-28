@@ -70,6 +70,7 @@
     "browser-request": "0.3.3",
     "bytes": "2.3.0",
     "dapp-styles": "^0.2.2",
+    "format-json": "1.0.3",
     "format-number": "2.0.1",
     "lodash": "4.11.1",
     "marked": "^0.3.5",
