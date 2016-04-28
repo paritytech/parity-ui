@@ -1,6 +1,9 @@
 
 import {Link} from 'react-router';
 import React, { Component, PropTypes } from 'react';
+import IconButton from 'material-ui/IconButton';
+import IconEventNote from 'material-ui/svg-icons/notification/event-note';
+
 import style from './styles.css';
 
 export default class Header extends Component {
@@ -15,18 +18,18 @@ export default class Header extends Component {
     return (
       <nav>
         <ul>
-        <li className={disconnected ? {} : style.hidden}>
-          <a className={style.error} disabled title={`${disconnected}`}>
-            <i className='icon-power'></i>
-            <span>Offline</span>
-          </a>
-        </li>
-        <li className={isErrors ? {} : style.hidden}>
-          <a className={style.warning} disabled title={'You have errors :('}>
-            <i className='icon-flag'></i>
-            <span>Errors</span>
-          </a>
-        </li>
+          <li className={disconnected ? {} : style.hidden}>
+            <a className={style.error} disabled title={`${disconnected}`}>
+              <i className='icon-power'></i>
+              <span>Offline</span>
+            </a>
+          </li>
+          <li className={isErrors ? {} : style.hidden}>
+            <a className={style.warning} disabled title={'You have errors :('}>
+              <i className='icon-flag'></i>
+              <span>Errors</span>
+            </a>
+          </li>
         </ul>
       </nav>
     );
@@ -39,6 +42,7 @@ export default class Header extends Component {
           <h1>Status Page</h1>
           <h3>{this.props.nodeName}</h3>
         </hgroup>
+        {this.renderLogIcon()}
         {this.renderErrors()}
         <div className='dapp-flex-item'></div>
         <nav>
@@ -78,10 +82,24 @@ export default class Header extends Component {
       </header>
     );
   }
+
+  renderLogIcon () {
+    let {logging} = this.props;
+    return (
+      <IconButton
+        onClick={() => this.props.updateLogging(!logging)}
+        tooltip='Toggle logging' tooltipPosition='top-right'
+        >
+        <IconEventNote className={!logging ? style.off : ''} />
+      </IconButton>
+    );
+  }
 }
 
 Header.propTypes = {
   nodeName: PropTypes.string.isRequired,
   noOfErrors: PropTypes.number.isRequired,
-  disconnected: PropTypes.bool
+  disconnected: PropTypes.bool,
+  logging: PropTypes.bool.isRequired,
+  updateLogging: PropTypes.func.isRequired
 };
