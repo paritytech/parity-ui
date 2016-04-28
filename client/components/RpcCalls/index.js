@@ -9,11 +9,12 @@ import Toggle from 'material-ui/Toggle/Toggle';
 import AutoComplete from 'material-ui/AutoComplete';
 import TextField from 'material-ui/TextField';
 import IconButton from 'material-ui/IconButton';
-import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+import MoreHorizIcon from 'material-ui/svg-icons/navigation/more-horiz';
 import CallIcon from 'material-ui/svg-icons/communication/call';
 import AssignmentIcon from 'material-ui/svg-icons/action/assignment';
 import InputIcon from 'material-ui/svg-icons/action/input';
 
+import {hasScrollbar} from '../../provider/dom-provider';
 import styles from './style.css';
 import rpcData from '../../data/rpc.json';
 import RpcNav from '../RpcNav';
@@ -63,12 +64,13 @@ export default class RpcCalls extends Component {
               <div className='col col-6'>
                 {this.renderForm()}
               </div>
-              <div className='col col-6'>
+              <div className='col col-6' onMouseLeave={() => this.setState({hoveredCallIdx: null})}>
                 {this.renderClear()}
                 <h2 className={styles.header}>History</h2>
-                <div className={`${styles.history} row`}>
+                <div className={`${styles.history} row`} id='styles-history'>
                   {this.renderPrevCalls()}
                 </div>
+                {this.renderPrevCallsToolbar()}
               </div>
             </div>
           </div>
@@ -93,15 +95,39 @@ export default class RpcCalls extends Component {
       (c, idx) => (
         <div
           key={idx}
+          onMouseEnter={() => this.setState({hoveredCallIdx: idx})}
+          id={`call-${idx}`}
           className={styles.call}
           >
           <span className={styles.callNo}>#{c.callNo}</span>
           <pre>{c.name}({c.params.toString()})</pre>
-          <pre className={styles.response}>{c.response}</pre>
-          {this.renderPrevCallsToolbar(prevCalls[idx])}
+          <pre className={styles.response}>{this.formatRenderedResponse(c.response)}</pre>
         </div>
       )
     );
+  }
+
+  formatRenderedResponse (res) {
+    if (_.isArray(res)) {
+      return res.map((r, idx) => (
+        <span>
+          {idx === 0 ? '[' : ','}
+          {idx === 0 ? '' : <br />}
+          {r}
+          {idx === res.length - 1 ? ']' : ''}
+        </span>
+      ));
+    }
+    if (_.isPlainObject(res)) {
+      const arr = JSON.stringify(res, null, 1);
+      return arr.split('\n').map((any, idx) => (
+        <span>
+          {any}
+          {idx !== 0 && idx !== arr.length - 1 ? <br /> : ''}
+        </span>
+      ));
+    }
+    return res;
   }
 
   renderForm () {
@@ -248,10 +274,24 @@ export default class RpcCalls extends Component {
     this.onRpcFire(method);
   }
 
-  renderPrevCallsToolbar (call) {
+  renderPrevCallsToolbar () {
+    const idx = this.state.hoveredCallIdx;
+    if (typeof idx !== 'number') {
+      return;
+    }
+    const call = this.props.rpc.prevCalls[idx];
+    const callId = `call-${idx}`;
+    const wrapStyle = {top: document.getElementById(callId).offsetTop - 22};
+    if (hasScrollbar('styles-history')) {
+      wrapStyle.right = 13;
+    }
+
     return (
-      <div className={styles.callActionsWrap}>
-        <IconButton className={styles.callActionsButton}><MoreVertIcon /></IconButton>
+      <div
+        className={styles.callActionsWrap}
+        style={wrapStyle}
+        >
+        <IconButton className={styles.callActionsButton}><MoreHorizIcon /></IconButton>
         <div className={styles.callActions}>
           <IconButton className={styles.callAction} onClick={() => ::this.setCall(call)} tooltip='Set' tooltipPosition='top-left'>
             <InputIcon className={styles.callActionIcon} />
