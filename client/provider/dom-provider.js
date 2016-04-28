@@ -1,5 +1,9 @@
 
-export function hasScrollbar (id) {
-  const el = document.getElementById(id);
-  return el.clientHeight < el.scrollHeight;
+export function hasScrollbar (rel) {
+  const elem = el(rel);
+  return elem.clientHeight < elem.scrollHeight;
+}
+
+export function el (rel) {
+  return document.querySelector(`[rel=${rel}]`);
 }
