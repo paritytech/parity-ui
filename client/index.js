@@ -4,7 +4,6 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 // http://stackoverflow.com/a/34015469/988941
 injectTapEventPlugin();
 
-import './fonts/fonts.css';
 import './index.html';
 import './index.css';
 import 'dapp-styles/dapp-styles.less';
@@ -52,7 +51,9 @@ const store = configure(storeMiddlewares);
 const history = syncHistoryWithStore(hashHistory, store);
 
 const muiTheme = getMuiTheme({
+  fontFamily: `'Source Sans Pro', 'Helvetica Neue', arial, sans-serif`,
   palette: {
+    primary1Color: '#6691C2',
     accent1Color: deepOrange500
   }
 });
