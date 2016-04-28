@@ -3,7 +3,11 @@ import React, { Component } from 'react';
 import {sortBy} from 'lodash';
 import List from 'material-ui/List/List';
 import ListItem from 'material-ui/List/ListItem';
+import AutoComplete from 'material-ui/AutoComplete';
 
+import {displayAll} from '../../provider/vendor-provider';
+import {el} from '../../provider/dom-provider';
+import './style.css';
 import Markdown from '../Markdown';
 import rpcData from '../../data/rpc.json';
 import RpcNav from '../RpcNav';
@@ -30,7 +34,14 @@ export default class RpcDocs extends Component {
           <div className='dapp-container'>
             <div className='row'>
               <div className='col col-12'>
-
+                <AutoComplete
+                  floatingLabelText='Method name'
+                  style={{marginTop: 0}}
+                  dataSource={rpcMethods.map(m => m.name)}
+                  onNewRequest={::this.handleMethodChange}
+                  {...displayAll()}
+                  {...this._test('autocomplete')}
+                />
                 {this.renderData()}
               </div>
             </div>
@@ -41,11 +52,12 @@ export default class RpcDocs extends Component {
   }
 
   renderData () {
-    const methods = rpcMethods.map(m => {
+    const methods = rpcMethods.map((m, idx) => {
       return (
           <ListItem
             key={m.name}
             disabled
+            rel={m.name}
           >
             <h3 style={{textTransform: 'none'}}>{m.name}</h3>
             <Markdown val={m.desc} />
@@ -53,7 +65,7 @@ export default class RpcDocs extends Component {
             {m.params.map((p, idx) => <Markdown key={`${m.name}-${idx}`} val={p} />)}
             <p style={{display: 'inline'}}><strong>Returns</strong> - </p>
             <Markdown style={{display: 'inline-block'}} val={m.returns} />
-            <hr />
+            {idx !== rpcMethods.length - 1 ? <hr /> : ''}
           </ListItem>
       );
     });
@@ -63,6 +75,10 @@ export default class RpcDocs extends Component {
         {methods}
       </List>
     );
+  }
+
+  handleMethodChange (name) {
+    el(name).scrollIntoViewIfNeeded();
   }
 
 }

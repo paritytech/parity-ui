@@ -13,6 +13,7 @@ import CallIcon from 'material-ui/svg-icons/communication/call';
 import AssignmentIcon from 'material-ui/svg-icons/action/assignment';
 import InputIcon from 'material-ui/svg-icons/action/input';
 
+import {displayAll} from '../../provider/vendor-provider';
 import Markdown from '../Markdown';
 import {hasScrollbar} from '../../provider/dom-provider';
 import styles from './style.css';
@@ -218,9 +219,10 @@ export default class RpcCalls extends Component {
           style={{marginTop: 0}}
           searchText={selectedMethod.name}
           floatingLabelText='Method name'
-          {...this._test('autocomplete')}
           dataSource={methods}
           onNewRequest={::this.handleMethodChange}
+          {...displayAll()}
+          {...this._test('autocomplete')}
         />
         <div>
           <Markdown val={selectedMethod.desc} />
