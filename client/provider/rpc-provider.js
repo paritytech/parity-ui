@@ -55,10 +55,20 @@ export default class RpcProvider {
   }
 
   encode (str) {
-    return `0x${rlp.encode([version].concat(str.split(separator))).toString('hex')}`;
+    try {
+      return `0x${rlp.encode([version].concat(str.split(separator))).toString('hex')}`;
+    } catch (err) {
+      console.error('error in encoding string: ', str, err);
+      return '0xc5830100002d'; // encoding of '-'
+    }
   }
 
   decode (str) {
-    return rlp.decode(str).slice(1).join(separator);
+    try {
+      return rlp.decode(str).slice(1).join(separator);
+    } catch (err) {
+      console.error('error in decoding string: ', str, err);
+      return '-';
+    }
   }
 }
