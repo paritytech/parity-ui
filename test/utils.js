@@ -2,7 +2,8 @@
 
 module.exports = {
   el: el,
-  assertNav: assertNav
+  assertNav: assertNav,
+  mckResponses: require('./mocked-responses.json')
 };
 
 function el (base, innerSelector) {

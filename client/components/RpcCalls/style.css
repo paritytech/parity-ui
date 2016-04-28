@@ -109,14 +109,22 @@ h3 + label > input {
   width: 100% !important;
 }
 
-.jsonEitor {
+.jsonEditor {
   width: 100%;
   height: 200px;
+}
+
+.jsonEditorError {
+  border: 1px solid red !important;
 }
 
 .jsonToggle {
   width: auto !important;
   float: right;
+}
+
+.jsonEditorErrorMsg {
+  color: red;
 }
 
 @keyframes fadein {

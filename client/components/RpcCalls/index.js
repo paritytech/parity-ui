@@ -35,6 +35,7 @@ export default class RpcCalls extends Component {
 
     return (
       <a
+        {...this._test('prev-calls-remove')}
         title='Clear RPC calls history'
         onClick={::this.props.actions.resetRpcPrevCalls}
         className={styles.removeIcon}
@@ -64,7 +65,11 @@ export default class RpcCalls extends Component {
               <div className='col col-6'>
                 {this.renderForm()}
               </div>
-              <div className='col col-6' onMouseLeave={() => this.setState({hoveredCallIdx: null})}>
+              <div
+                className='col col-6'
+                onMouseLeave={() => this.setState({hoveredCallIdx: null})}
+                {...this._test('prev-calls-container')}
+                >
                 {this.renderClear()}
                 <h2 className={styles.header}>History</h2>
                 <div className={`${styles.history} row`} id='styles-history'>
@@ -85,7 +90,7 @@ export default class RpcCalls extends Component {
     if (!prevCalls.length) {
       return (
         <div>
-          <h3 className={styles.historyInfo} >
+          <h3 className={styles.historyInfo} {...this._test('no-prev-calls')}>
             Fire up some RPC calls and the results will be here.
           </h3>
         </div>
@@ -98,6 +103,7 @@ export default class RpcCalls extends Component {
           onMouseEnter={() => this.setState({hoveredCallIdx: idx})}
           id={`call-${idx}`}
           className={styles.call}
+          {...this._test(`prev-call-${c.callNo}`)}
           >
           <span className={styles.callNo}>#{c.callNo}</span>
           <pre>{c.name}({c.params.toString()})</pre>
@@ -135,7 +141,7 @@ export default class RpcCalls extends Component {
       <div>
         <Toggle
           className={styles.jsonToggle}
-          onToggle={() => this.setState({jsonMode: !this.state.jsonMode})}
+          onToggle={::this.onJsonToggle}
           label='JSON'
         />
         <h2 className={styles.header}>
@@ -146,6 +152,7 @@ export default class RpcCalls extends Component {
         {this.renderJsonEditor()}
         {this.renderFormEditor()}
         <button
+          {...this._test('fireRpc')}
           className={`dapp-block-button ${styles.button}`}
           onClick={() => ::this.onRpcFire() }
           >
@@ -177,23 +184,27 @@ export default class RpcCalls extends Component {
       return;
     }
 
-    const {selectedMethod} = this.props.rpc;
-
-    const method = {
-      name: selectedMethod.name,
-      params: selectedMethod.params.map(p => this.state[`params_${p}`]),
-      inputFormatters: selectedMethod.inputFormatters,
-      outputFormatter: selectedMethod.outputFormatter
-    };
+    let errorClass = this.state.jsonEditorError ? styles.jsonEditorError : '';
 
     return (
       <div className='row'>
         <textarea
-          className={styles.jsonEitor}
-          ref={el => this._jsonEditor = el}
-          defaultValue={formatJson.plain(method)}
+          onChange={::this.onJsonEditorChange}
+          className={`${styles.jsonEditor} ${errorClass}`}
+          value={this.state.jsonEditorValue}
           />
+          {this.renderJsonEditorError()}
       </div>
+    );
+  }
+
+  renderJsonEditorError () {
+    if (!this.state.jsonEditorError) {
+      return;
+    }
+
+    return (
+      <div className={styles.jsonEditorErrorMsg}>{this.state.jsonEditorError}</div>
     );
   }
 
@@ -207,6 +218,7 @@ export default class RpcCalls extends Component {
           style={{marginTop: 0}}
           searchText={selectedMethod.name}
           floatingLabelText='Method name'
+          {...this._test('autocomplete')}
           dataSource={methods}
           onNewRequest={::this.handleMethodChange}
         />
@@ -237,11 +249,11 @@ export default class RpcCalls extends Component {
 
     if (this.state.jsonMode) {
       try {
-        method = JSON.parse(this._jsonEditor.value);
+        method = JSON.parse(this.state.jsonEditorValue);
       } catch (err) {
         // todo [adgo] 26.04.2016 - setup error handling and error toast
         this.props.actions.addToast('error parsing json, check console');
-        return console.error('error parsing JSON: ', this._jsonEditor.value, err);
+        return console.error('error parsing JSON: ', this.state.jsonEditorValue, err);
       }
       params = method.params;
     } else {
@@ -334,9 +346,45 @@ export default class RpcCalls extends Component {
                   onChange={(evt) => this.setState({
                     [`params_${p}`]: evt.target.value
                   })}
+                  {...this._test(`params_${p}`)}
                 />
               )
             );
+  }
+
+  onJsonEditorChange (evt) {
+    const {value} = evt.target;
+
+    try {
+      JSON.parse(value);
+      this.setState({jsonEditorError: null});
+    } catch (err) {
+      this.setState({jsonEditorError: 'invalid json'});
+    }
+
+    this.setState({
+      jsonEditorValue: value
+    });
+  }
+
+  setJsonEditorValue () {
+    const {selectedMethod} = this.props.rpc;
+    const method = {
+      name: selectedMethod.name,
+      params: selectedMethod.params.map(p => this.state[`params_${p}`]),
+      inputFormatters: selectedMethod.inputFormatters,
+      outputFormatter: selectedMethod.outputFormatter
+    };
+    this.setState({
+      jsonEditorValue: formatJson.plain(method)
+    });
+  }
+
+  onJsonToggle () {
+    if (!this.state.jsonMode) {
+      this.setJsonEditorValue();
+    }
+    this.setState({jsonMode: !this.state.jsonMode});
   }
 
 }
