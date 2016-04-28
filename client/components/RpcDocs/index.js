@@ -5,6 +5,7 @@ import List from 'material-ui/List/List';
 import ListItem from 'material-ui/List/ListItem';
 import AutoComplete from 'material-ui/AutoComplete';
 
+import ScrollTopButton from '../ScrollTopButton';
 import {displayAll} from '../../provider/vendor-provider';
 import {el} from '../../provider/dom-provider';
 import './style.css';
@@ -46,6 +47,7 @@ export default class RpcDocs extends Component {
               </div>
             </div>
           </div>
+          <ScrollTopButton />
         </main>
       </div>
     );
