@@ -2,7 +2,6 @@
 import React, { Component, PropTypes } from 'react';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import _ from 'lodash';
-import marked from 'marked';
 import formatJson from 'format-json';
 
 import Toggle from 'material-ui/Toggle/Toggle';
@@ -14,6 +13,8 @@ import CallIcon from 'material-ui/svg-icons/communication/call';
 import AssignmentIcon from 'material-ui/svg-icons/action/assignment';
 import InputIcon from 'material-ui/svg-icons/action/input';
 
+import {displayAll} from '../../provider/vendor-provider';
+import Markdown from '../Markdown';
 import {hasScrollbar} from '../../provider/dom-provider';
 import styles from './style.css';
 import rpcData from '../../data/rpc.json';
@@ -62,17 +63,17 @@ export default class RpcCalls extends Component {
           <div style={{clear: 'both'}}></div>
           <div className='dapp-container'>
             <div className='row'>
-              <div className='col col-6'>
+              <div className='col col-6 mobile-full'>
                 {this.renderForm()}
               </div>
               <div
-                className='col col-6'
+                className='col col-6 mobile-full'
                 onMouseLeave={() => this.setState({hoveredCallIdx: null})}
                 {...this._test('prev-calls-container')}
                 >
                 {this.renderClear()}
                 <h2 className={styles.header}>History</h2>
-                <div className={`${styles.history} row`} id='styles-history'>
+                <div className={`${styles.history} row`} ref={el => this._callsHistory = el}>
                   {this.renderPrevCalls()}
                 </div>
                 {this.renderPrevCallsToolbar()}
@@ -174,7 +175,7 @@ export default class RpcCalls extends Component {
         <h3>Parameters</h3>
         {this.renderInputs()}
         <h3>Returns</h3>
-        {this.renderMarkdown(selectedMethod.returns)}
+        <Markdown val={selectedMethod.returns} />
       </div>
     );
   }
@@ -218,24 +219,15 @@ export default class RpcCalls extends Component {
           style={{marginTop: 0}}
           searchText={selectedMethod.name}
           floatingLabelText='Method name'
-          {...this._test('autocomplete')}
           dataSource={methods}
           onNewRequest={::this.handleMethodChange}
+          {...displayAll()}
+          {...this._test('autocomplete')}
         />
         <div>
-          {this.renderMarkdown(selectedMethod.desc)}
+          <Markdown val={selectedMethod.desc} />
         </div>
       </div>
-    );
-  }
-
-  renderMarkdown (val) {
-    if (!val) {
-      return;
-    }
-
-    return (
-      <div dangerouslySetInnerHTML={{__html: marked(val)}} />
     );
   }
 
@@ -294,7 +286,7 @@ export default class RpcCalls extends Component {
     const call = this.props.rpc.prevCalls[idx];
     const callId = `call-${idx}`;
     const wrapStyle = {top: document.getElementById(callId).offsetTop - 22};
-    if (hasScrollbar('styles-history')) {
+    if (hasScrollbar(this._callsHistory)) {
       wrapStyle.right = 13;
     }
 
