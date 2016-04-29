@@ -1,5 +1,4 @@
 
-export function hasScrollbar (id) {
-  const el = document.getElementById(id);
+export function hasScrollbar (el) {
   return el.clientHeight < el.scrollHeight;
 }
