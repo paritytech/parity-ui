@@ -1,7 +1,7 @@
 
 export default store => next => action => {
   if (store.getState().logger.logging) {
-    const msg = [`[${now()}] action: `, action.type, 'payload: ', formatPayload(action.payload)];
+    const msg = [`[${now()}] action: `, action.type, 'payload: ', action.payload];
     const logMethod = action.type.indexOf('error') > -1 ? 'error' : 'log';
     console[logMethod](...msg);
   }
@@ -16,9 +16,3 @@ function now () {
   return `${hour}::${minutes}::${seconds}`;
 }
 
-export function formatPayload (payload) {
-  if (typeof payload === 'string' || typeof payload === 'number' || typeof payload === 'boolean') {
-    return payload;
-  }
-  return JSON.stringify(payload);
-}
