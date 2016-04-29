@@ -8,7 +8,7 @@ import AutoComplete from 'material-ui/AutoComplete';
 import ScrollTopButton from '../ScrollTopButton';
 import {displayAll} from '../../provider/vendor-provider';
 import {el} from '../../provider/dom-provider';
-import './style.css';
+import style from './style.css';
 import Markdown from '../Markdown';
 import rpcData from '../../data/rpc.json';
 import RpcNav from '../RpcNav';
@@ -37,7 +37,7 @@ export default class RpcDocs extends Component {
               <div className='col col-12'>
                 <AutoComplete
                   floatingLabelText='Method name'
-                  style={{marginTop: 0}}
+                  className={style.autocomplete}
                   dataSource={rpcMethods.map(m => m.name)}
                   onNewRequest={::this.handleMethodChange}
                   {...displayAll()}
@@ -61,12 +61,12 @@ export default class RpcDocs extends Component {
             disabled
             rel={m.name}
           >
-            <h3 style={{textTransform: 'none'}}>{m.name}</h3>
+            <h3 className={style.headline}>{m.name}</h3>
             <Markdown val={m.desc} />
             <p><strong>Params</strong>{!m.params.length ? ' - none' : ''}</p>
             {m.params.map((p, idx) => <Markdown key={`${m.name}-${idx}`} val={p} />)}
-            <p style={{display: 'inline'}}><strong>Returns</strong> - </p>
-            <Markdown style={{display: 'inline-block'}} val={m.returns} />
+            <p className={style.returnsTitle}><strong>Returns</strong> - </p>
+            <Markdown className={style.returnsDesc} val={m.returns} />
             {idx !== rpcMethods.length - 1 ? <hr /> : ''}
           </ListItem>
       );

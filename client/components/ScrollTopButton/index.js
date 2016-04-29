@@ -27,7 +27,7 @@ export default class ScrollTopButton extends Component {
     return (
       <IconButton
         className={`${styles.scrollButton} ${hiddenClass}`}
-        onClick={() => scrollTo(document.body, 0, 300)}>
+        onClick={() => scrollTo(document.body, 0, 500)}>
         <ArrowUpwardIcon />
       </IconButton>
     );

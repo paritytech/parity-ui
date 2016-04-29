@@ -2,7 +2,7 @@
 export function scrollTo (element, to, duration) {
   let start = element.scrollTop;
   let change = to - start;
-  let increment = 20;
+  let increment = 50;
 
   let animateScroll = elapsedTime => {
     elapsedTime += increment;
@@ -10,6 +10,10 @@ export function scrollTo (element, to, duration) {
     element.scrollTop = position;
     if (elapsedTime < duration) {
       setTimeout(() => {
+        // stop if user scrolled
+        if (element.scrollTop !== parseInt(position, 10)) {
+          return;
+        }
         animateScroll(elapsedTime);
       }, increment);
     }
