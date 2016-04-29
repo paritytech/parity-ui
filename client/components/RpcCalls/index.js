@@ -103,6 +103,7 @@ export default class RpcCalls extends Component {
           key={idx}
           onMouseEnter={() => this.setState({hoveredCallIdx: idx})}
           id={`call-${idx}`}
+          ref={el => this[`call-${idx}`] = el}
           className={styles.call}
           {...this._test(`prev-call-${c.callNo}`)}
           >
@@ -284,8 +285,8 @@ export default class RpcCalls extends Component {
       return;
     }
     const call = this.props.rpc.prevCalls[idx];
-    const callId = `call-${idx}`;
-    const wrapStyle = {top: document.getElementById(callId).offsetTop - 22};
+    const callEl = this[`call-${idx}`];
+    const wrapStyle = {top: callEl.offsetTop - 22 - this._callsHistory.scrollTop};
     if (hasScrollbar(this._callsHistory)) {
       wrapStyle.right = 13;
     }
