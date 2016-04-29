@@ -18,7 +18,8 @@
     "build": "NODE_ENV=production webpack --progress --colors && cp Cargo.toml static",
     "clean": "rm static -rf || true",
     "prezip": "npm run build",
-    "zip": "cd static && zip ../status.zip * -r"
+    "zip": "cd static && zip ../status.zip * -r",
+    "genRpc": "./rpc-docs/index.js"
   },
   "license": "GPL-3.0",
   "devDependencies": {
