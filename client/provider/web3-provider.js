@@ -28,7 +28,23 @@ export class Web3Provider extends Web3Base {
       });
   }
 
+  onTickWhenDisconnected () {
+    // When disconnected we are only checking single call.
+    // After we connect again - onTick should refresh all other results.
+    const call = this.tickArr[0];
+    return toPromise(call.method)
+      .then(call.actionMaker)
+      .then(this.store.dispatch)
+      .catch(err => {
+        this.store.dispatch(StatusActions.error(err));
+      });
+  }
+
   onTick () {
+    if (this.store.getState().status.disconnected) {
+      return this.onTickWhenDisconnected();
+    }
+
     return Promise.all(this.tickArr.map((obj, idx) => {
       if (!obj.actionMaker) {
         console.error(obj);
@@ -53,8 +69,8 @@ export class Web3Provider extends Web3Base {
 
   getTickArr () {
     return [
-      {method: this.web3.eth.getHashrate, actionMaker: StatusActions.updateHashrate},
       {method: this.web3.eth.getBlockNumber, actionMaker: StatusActions.updateBlockNumber},
+      {method: this.web3.eth.getHashrate, actionMaker: StatusActions.updateHashrate},
       {method: this.web3.net.getPeerCount, actionMaker: StatusActions.updatePeerCount},
       {method: this.web3.eth.getCoinbase, actionMaker: MiningActions.updateAuthor},
       {method: this.ethcoreWeb3.getMinGasPrice, actionMaker: MiningActions.updateMinGasPrice},

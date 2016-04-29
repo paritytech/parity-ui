@@ -7,6 +7,7 @@ import * as StatusActions from '../actions/status';
 describe('WEB3 PROVIDER', () => {
   let cut;
   let state;
+  let web3;
 
   beforeEach('mock Web3Provider', () => {
     state = {
@@ -14,7 +15,7 @@ describe('WEB3 PROVIDER', () => {
         noOfErrors: 0
       }
     };
-    const web3 = {
+    web3 = {
       eth: {
         getHashrate: sinon.spy(),
         getBlockNumber: sinon.spy(),
@@ -64,5 +65,21 @@ describe('WEB3 PROVIDER', () => {
 
     // then
     expect(cut.nextDelay()).to.be.above(cut.delay);
+  });
+
+  it('should call only single method when you are disconnected', () => {
+    // given
+    state.status.disconnected = true;
+
+    // when
+    cut.onTick();
+
+    // then
+    expect(web3.eth.getBlockNumber.called).to.be.true;
+
+    [web3.eth.getHashrate, web3.eth.getCoinbase, web3.net.getPeerCount]
+      .map((method) => {
+        expect(method.called).to.be.false;
+      });
   });
 });

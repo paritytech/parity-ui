@@ -110,6 +110,9 @@ module.exports = {
         screwIe8: true,
         compress: {
           warnings: false
+        },
+        output: {
+          comments: false
         }
       }));
     }

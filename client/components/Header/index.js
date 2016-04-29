@@ -7,8 +7,8 @@ export default class Header extends Component {
 
   renderErrors () {
     const {disconnected} = this.props;
-    const isErrors = this.props.noOfErrors > 0;
-    if (!disconnected && !isErrors) {
+    const hasErrors = this.props.noOfErrors > 0;
+    if (!disconnected && !hasErrors) {
       return;
     }
 
@@ -16,13 +16,13 @@ export default class Header extends Component {
       <nav>
         <ul>
         <li className={disconnected ? {} : style.hidden}>
-          <a className={style.error} disabled title={`${disconnected}`}>
+          <a className={style.error} disabled title='It seems that we cannot connect to your node. Make sure the node is online and RPC is enabled.'>
             <i className='icon-power'></i>
-            <span>Offline</span>
+            <span>Node is Down</span>
           </a>
         </li>
-        <li className={isErrors ? {} : style.hidden}>
-          <a className={style.warning} disabled title={'You have errors :('}>
+        <li className={hasErrors && !disconnected ? {} : style.hidden}>
+          <a className={style.warning} disabled title='Some RPC calls returned errors. Check console for more details.'>
             <i className='icon-flag'></i>
             <span>Errors</span>
           </a>
@@ -67,7 +67,7 @@ export default class Header extends Component {
                 <span>Accounts</span>
               </Link>
             </li>
-            <li>
+            <li style={{display: 'none'}}>
               <Link to={'/apps'} activeClassName='active' {...this._test('apps-link')}>
                 <i className='icon-grid'></i>
                 <span>Apps</span>
