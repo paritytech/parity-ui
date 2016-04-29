@@ -21,12 +21,15 @@ class StatusPage extends Component {
           nodeName={status.name}
           disconnected={status.disconnected}
           noOfErrors={status.noOfErrors}
-          logging={this.props.logger.logging}
-          updateLogging={this.props.actions.updateLogging}
           {...this._test('header')}
         />
         <Status {...this.props} />
-        <Footer version={status.version} {...this._test('footer')} />
+        <Footer
+          version={status.version}
+          logging={this.props.logger.logging}
+          updateLogging={this.props.actions.updateLogging}
+          {...this._test('footer')}
+        />
       </div>
     );
   }

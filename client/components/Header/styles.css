@@ -21,7 +21,3 @@
 .hidden {
   display: none !important;
 }
-
-.off {
-  opacity: .3;
-}

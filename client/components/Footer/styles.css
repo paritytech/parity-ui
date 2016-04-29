@@ -12,3 +12,21 @@
 .right {
   float: right;
 }
+
+.logButton {
+  float: right;
+  height: 15px !important;
+  width: 15px !important;
+  padding: 0 !important;
+  margin-top: 3px !important;
+  margin-left: 3px;
+}
+
+.logIcon {
+  height: 100% !important;
+  width: 100% !important;
+}
+
+.off {
+  opacity: .3;
+}
