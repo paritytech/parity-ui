@@ -16,7 +16,7 @@ function now () {
   return `${hour}::${minutes}::${seconds}`;
 }
 
-function formatPayload (payload) {
+export function formatPayload (payload) {
   if (typeof payload === 'string' || typeof payload === 'number' || typeof payload === 'boolean') {
     return payload;
   }
