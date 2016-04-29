@@ -72,7 +72,7 @@ export default class RpcCalls extends Component {
                 >
                 {this.renderClear()}
                 <h2 className={styles.header}>History</h2>
-                <div className={`${styles.history} row`} rel='styles-history'>
+                <div className={`${styles.history} row`} ref={el => this._callsHistory = el}>
                   {this.renderPrevCalls()}
                 </div>
                 {this.renderPrevCallsToolbar()}
@@ -294,7 +294,7 @@ export default class RpcCalls extends Component {
     const call = this.props.rpc.prevCalls[idx];
     const callId = `call-${idx}`;
     const wrapStyle = {top: document.getElementById(callId).offsetTop - 22};
-    if (hasScrollbar('styles-history')) {
+    if (hasScrollbar(this._callsHistory)) {
       wrapStyle.right = 13;
     }
 
