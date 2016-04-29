@@ -65,4 +65,16 @@ describe('WEB3 PROVIDER', () => {
     // then
     expect(cut.nextDelay()).to.be.above(cut.delay);
   });
+
+  it('should call onTickWhenDisconnected when you are disconnected', () => {
+    // given
+    cut.onTickWhenDisconnected = sinon.spy();
+    state.status.disconnected = true;
+
+    // when
+    cut.onTick();
+
+    // then
+    expect(cut.onTickWhenDisconnected.called).to.equal(true);
+  });
 });
