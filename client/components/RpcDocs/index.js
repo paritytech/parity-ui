@@ -1,5 +1,6 @@
 
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import {sortBy} from 'lodash';
 import List from 'material-ui/List/List';
 import ListItem from 'material-ui/List/ListItem';
@@ -7,7 +8,6 @@ import AutoComplete from 'material-ui/AutoComplete';
 
 import ScrollTopButton from '../ScrollTopButton';
 import {displayAll} from '../../provider/vendor-provider';
-import {el} from '../../provider/dom-provider';
 import style from './style.css';
 import Markdown from '../Markdown';
 import rpcData from '../../data/rpc.json';
@@ -35,19 +35,19 @@ export default class RpcDocs extends Component {
           <div className='dapp-container'>
             <div className='row'>
               <div className='col col-12'>
-                <AutoComplete
+                {/*<AutoComplete
                   floatingLabelText='Method name'
                   className={style.autocomplete}
                   dataSource={rpcMethods.map(m => m.name)}
                   onNewRequest={::this.handleMethodChange}
                   {...displayAll()}
                   {...this._test('autocomplete')}
-                />
+                />*/}
                 {this.renderData()}
               </div>
             </div>
           </div>
-          <ScrollTopButton />
+          {/*<ScrollTopButton />*/}
         </main>
       </div>
     );
@@ -59,7 +59,7 @@ export default class RpcDocs extends Component {
           <ListItem
             key={m.name}
             disabled
-            rel={m.name}
+            ref={el => this[`_method-${m.name}`] = el}
           >
             <h3 className={style.headline}>{m.name}</h3>
             <Markdown val={m.desc} />
@@ -80,7 +80,7 @@ export default class RpcDocs extends Component {
   }
 
   handleMethodChange (name) {
-    el(name).scrollIntoViewIfNeeded();
+    ReactDOM.findDOMNode(this[`_method-${name}`]).scrollIntoViewIfNeeded();
   }
 
 }
