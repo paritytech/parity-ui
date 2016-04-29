@@ -76,7 +76,7 @@ export default class RpcCalls extends Component {
                 <div className={`${styles.history} row`} ref={el => this._callsHistory = el}>
                   {this.renderPrevCalls()}
                 </div>
-                {this.renderPrevCallsToolbar()}
+                {/*this.renderPrevCallsToolbar()*/}
               </div>
             </div>
           </div>
