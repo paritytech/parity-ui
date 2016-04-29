@@ -11,21 +11,29 @@ export default class RpcProvider {
     this._web3Formatters = web3Formatters;
   }
 
-  formatResult (result, formatter) {
-    if (!formatter) {
+  formatResult (result, formatterName) {
+    if (!formatterName) {
       return typeof result === 'object' ? result : String(result);
     }
 
+    let formatter;
+
     // mostly we use web3Formatters (the last "else" case)
     // otherwise we use our own, or web3Utils
-    if (formatter === 'decodeExtraData') {
+    if (formatterName === 'decodeExtraData') {
       formatter = ::this.decode;
-    } else if (formatter.indexOf('utils.') > -1) {
-      formatter = this._web3Utils[formatter.split('.')[1]];
+    } else if (formatterName.indexOf('utils.') > -1) {
+      formatter = this._web3Utils[formatterName.split('.')[1]];
     } else {
-      formatter = this._web3Formatters[formatter];
+      formatter = this._web3Formatters[formatterName];
     }
-    return `${formatter(result)}`;
+    try {
+      return `${formatter(result)}`;
+    } catch (err) {
+      const msg = `error using ${formatterName} on ${result}: ${err}`;
+      console.error(msg);
+      return new Error(msg);
+    }
   }
 
   formatParams (params, inputFormatters) {
@@ -34,23 +42,30 @@ export default class RpcProvider {
     }
 
     return params.map((param, i) => {
-      let formatter = inputFormatters[i];
-
-      if (!formatter) {
+      let formatterName = inputFormatters[i];
+      if (!formatterName) {
         return param;
       }
 
+      let formatter;
+
       // mostly we use web3Formatters (the last "else" case)
       // otherwise we use our own, or web3Utils
-      if (formatter === 'encodeExtraData') {
+      if (formatterName === 'encodeExtraData') {
         formatter = ::this.encode;
-      } else if (formatter.indexOf('utils.') > -1) {
-        formatter = this._web3Utils[formatter.split('.')[1]];
+      } else if (formatterName.indexOf('utils.') > -1) {
+        formatter = this._web3Utils[formatterName.split('.')[1]];
       } else {
-        formatter = this._web3Formatters[formatter];
+        formatter = this._web3Formatters[formatterName];
       }
 
-      return formatter(param);
+      try {
+        return `${formatter(param)}`;
+      } catch (err) {
+        const msg = `error using ${formatterName} on ${param}: ${err}`;
+        console.error(msg);
+        return new Error(msg);
+      }
     });
   }
 

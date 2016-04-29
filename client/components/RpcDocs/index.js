@@ -1,29 +1,21 @@
 
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import {sortBy} from 'lodash';
 import List from 'material-ui/List/List';
 import ListItem from 'material-ui/List/ListItem';
-import {MakeSelectable} from 'material-ui/List/MakeSelectable';
-let SelectableList = MakeSelectable(List);
+import AutoComplete from 'material-ui/AutoComplete';
 
+import ScrollTopButton from '../ScrollTopButton';
+import {displayAll} from '../../provider/vendor-provider';
+import style from './style.css';
+import Markdown from '../Markdown';
 import rpcData from '../../data/rpc.json';
 import RpcNav from '../RpcNav';
 
 const rpcMethods = sortBy(rpcData.methods, 'name');
 
 export default class RpcDocs extends Component {
-
-  constructor (...args) {
-    super(...args);
-    this.state = {
-      selected: this.props.rpc.selectedDoc
-    };
-  }
-
-  componentDidMount () {
-    const id = `doc-${this.props.rpc.selectedDoc}`;
-    document.getElementById(id).scrollIntoViewIfNeeded();
-  }
 
   render () {
     return (
@@ -43,11 +35,19 @@ export default class RpcDocs extends Component {
           <div className='dapp-container'>
             <div className='row'>
               <div className='col col-12'>
-
+                {/*<AutoComplete
+                  floatingLabelText='Method name'
+                  className={style.autocomplete}
+                  dataSource={rpcMethods.map(m => m.name)}
+                  onNewRequest={::this.handleMethodChange}
+                  {...displayAll()}
+                  {...this._test('autocomplete')}
+                />*/}
                 {this.renderData()}
               </div>
             </div>
           </div>
+          {/*<ScrollTopButton />*/}
         </main>
       </div>
     );
@@ -58,51 +58,29 @@ export default class RpcDocs extends Component {
       return (
           <ListItem
             key={m.name}
-            id={`doc-${m.name}`}
-            value={m.name}
-            primaryTogglesNestedList
-            autoGenerateNestedIndicator={false}
-            primaryText={m.name}
-            initiallyOpen={m.name === this.props.rpc.selectedDoc}
-            onNestedListToggle={() => ::this.handleToggle(idx)}
-            nestedItems={[
-              <p key={`${m.name} 1`}>{m.desc}</p>,
-              <p key={`${m.name} 2`}><strong>Params - </strong>{m.params.length ? m.params : 'none'}</p>,
-              <p key={`${m.name} 3`}><strong>Returns - </strong>{m.returns}</p>,
-              <hr />
-            ]}
-          />
+            disabled
+            ref={el => this[`_method-${m.name}`] = el}
+          >
+            <h3 className={style.headline}>{m.name}</h3>
+            <Markdown val={m.desc} />
+            <p><strong>Params</strong>{!m.params.length ? ' - none' : ''}</p>
+            {m.params.map((p, idx) => <Markdown key={`${m.name}-${idx}`} val={p} />)}
+            <p className={style.returnsTitle}><strong>Returns</strong> - </p>
+            <Markdown className={style.returnsDesc} val={m.returns} />
+            {idx !== rpcMethods.length - 1 ? <hr /> : ''}
+          </ListItem>
       );
     });
 
     return (
-      <SelectableList
-      onChange={() => {}}
-      value={this.state.selected}
-        >
+      <List>
         {methods}
-      </SelectableList>
+      </List>
     );
   }
 
-  handleToggle (idx) {
-    const {name} = rpcMethods[idx];
-    if (name === this.props.rpc.selectedDoc) {
-      return;
-    }
-
-    this.setState({selected: name});
-
-    this.props.actions.selectRpcDoc(name);
+  handleMethodChange (name) {
+    ReactDOM.findDOMNode(this[`_method-${name}`]).scrollIntoViewIfNeeded();
   }
 
 }
-
-RpcDocs.propTypes = {
-  rpc: PropTypes.shape({
-    selectedDoc: PropTypes.string.isRequired
-  }).isRequired,
-  actions: PropTypes.shape({
-    selectRpcDoc: PropTypes.func.isRequired
-  }).isRequired
-};
