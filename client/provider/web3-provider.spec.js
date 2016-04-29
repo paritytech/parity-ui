@@ -75,9 +75,11 @@ describe('WEB3 PROVIDER', () => {
     cut.onTick();
 
     // then
-    expect(web3.eth.getBlockNumber.called).to.equal(true);
-    expect(web3.eth.getHashrate.called).to.equal(false);
-    expect(web3.eth.getCoinbase.called).to.equal(false);
-    expect(web3.net.getPeerCount.called).to.equal(false);
+    expect(web3.eth.getBlockNumber.called).to.be.true;
+
+    [web3.eth.getHashrate, web3.eth.getCoinbase, web3.net.getPeerCount]
+      .map((method) => {
+        expect(method.called).to.be.false;
+      });
   });
 });
