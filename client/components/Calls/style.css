@@ -1,0 +1,109 @@
+.historyInfo {
+  margin-top: 0;
+  text-transform: initial;
+}
+
+.header {
+  margin: 0;
+}
+
+.removeIcon {
+  float: right;
+  color: #bbb;
+  cursor: pointer;
+  transition: opacity ease-in-out 0.2s;
+  transition-delay: 0.2s;
+  opacity: 0;
+}
+div:hover > .removeIcon {
+  opacity: 1.0;
+}
+
+
+.call {
+  position: relative;
+  border-bottom: 2px solid #CCC6C6;
+  margin-bottom: 18.4px;  
+  background: #f5f4f2;
+}
+
+.call:first-child {
+  border-color: #6691C2;
+}
+
+.call pre {
+  margin: 0;
+}
+.call pre:nth-child(3) {
+  padding-top: 0;
+  color: #bbb;
+}
+
+.callNo {
+  float: right;
+  color: #ccc;
+}
+
+.history {
+  margin-top: calc(1em + 18.4px);
+  padding-top: 0;
+  overflow: auto;
+  max-height: 60vh;
+}
+
+
+.response {
+  white-space: nowrap;
+  overflow-x: auto;
+}
+
+.callActionsWrap {
+  position: absolute;
+  animation: fadein .5s;
+  right: 0;
+  height: 28px;
+}
+
+.callActionsButton {
+  padding: 0 !important;
+  height: 24px !important;
+}
+
+.callActionsWrap:hover .callActionsButton {
+  display: none !important;
+}
+
+.callActions {
+  display: none;
+  height: 100%;
+  margin-top: 1px;
+  margin-right: 10px;
+}
+
+.callActionsWrap:hover .callActions {
+  display: block;
+}
+
+.callAction {
+  float: right;
+  transition: opacity ease-in-out .2s;
+  transition-delay: .2s;
+  opacity: 0;
+  padding: 3px !important;
+  height: 22px !important;
+  width: 22px !important;
+}
+
+.callActions:hover .callAction {
+  opacity: 1;
+}
+
+.callActionIcon {
+  height: 100% !important;
+  width: 100% !important;
+}
+
+@keyframes fadein {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}

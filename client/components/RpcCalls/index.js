@@ -1,21 +1,15 @@
 
 import React, { Component, PropTypes } from 'react';
-import CopyToClipboard from 'react-copy-to-clipboard';
 import _ from 'lodash';
 import formatJson from 'format-json';
 
 import Toggle from 'material-ui/Toggle/Toggle';
 import AutoComplete from 'material-ui/AutoComplete';
 import TextField from 'material-ui/TextField';
-import IconButton from 'material-ui/IconButton';
-import MoreHorizIcon from 'material-ui/svg-icons/navigation/more-horiz';
-import CallIcon from 'material-ui/svg-icons/communication/call';
-import AssignmentIcon from 'material-ui/svg-icons/action/assignment';
-import InputIcon from 'material-ui/svg-icons/action/input';
 
+import Calls from '../Calls';
 import {displayAll} from '../../provider/vendor-provider';
 import Markdown from '../Markdown';
-import {hasScrollbar} from '../../provider/dom-provider';
 import styles from './style.css';
 import rpcData from '../../data/rpc.json';
 import RpcNav from '../RpcNav';
@@ -29,21 +23,20 @@ export default class RpcCalls extends Component {
     this.state = {};
   }
 
-  renderClear () {
-    if (!this.props.rpc.prevCalls.length) {
-      return;
-    }
+  componentWillReceiveProps (nextProps) {
+    if (nextProps.rpc.selectedMethod.paramsValues) {
+      nextProps.rpc.selectedMethod.params.map((p, idx) => {
+        // todo [adgo] 01.05.2016 - make sure this works
+        // not sure idx is the same for paramsValues and params
+        this.setState({
+          [`params_${p}`]: nextProps.rpc.selectedMethod.paramsValues[idx]
+        });
+      });
 
-    return (
-      <a
-        {...this._test('prev-calls-remove')}
-        title='Clear RPC calls history'
-        onClick={::this.props.actions.resetRpcPrevCalls}
-        className={styles.removeIcon}
-        >
-        <i className='icon-trash'></i>
-      </a>
-    );
+      if (this.state.jsonMode) {
+        ::this.setJsonEditorValue();
+      }
+    }
   }
 
   render () {
@@ -66,76 +59,14 @@ export default class RpcCalls extends Component {
               <div className='col col-6 mobile-full'>
                 {this.renderForm()}
               </div>
-              <div
-                className='col col-6 mobile-full'
-                onMouseLeave={() => this.setState({hoveredCallIdx: null})}
-                {...this._test('prev-calls-container')}
-                >
-                {this.renderClear()}
-                <h2 className={styles.header}>History</h2>
-                <div className={`${styles.history} row`} ref={el => this._callsHistory = el}>
-                  {this.renderPrevCalls()}
-                </div>
-                {this.renderPrevCallsToolbar()}
+              <div className='col col-6 mobile-full'>
+                <Calls {...this.props}  />
               </div>
             </div>
           </div>
         </main>
       </div>
     );
-  }
-
-  renderPrevCalls () {
-    const {prevCalls} = this.props.rpc;
-
-    if (!prevCalls.length) {
-      return (
-        <div>
-          <h3 className={styles.historyInfo} {...this._test('no-prev-calls')}>
-            Fire up some RPC calls and the results will be here.
-          </h3>
-        </div>
-      );
-    }
-    return prevCalls.map(
-      (c, idx) => (
-        <div
-          key={idx}
-          onMouseEnter={() => this.setState({hoveredCallIdx: idx})}
-          id={`call-${idx}`}
-          ref={el => this[`call-${idx}`] = el}
-          className={styles.call}
-          {...this._test(`prev-call-${c.callNo}`)}
-          >
-          <span className={styles.callNo}>#{c.callNo}</span>
-          <pre>{c.name}({c.params.toString()})</pre>
-          <pre className={styles.response}>{this.formatRenderedResponse(c.response)}</pre>
-        </div>
-      )
-    );
-  }
-
-  formatRenderedResponse (res) {
-    if (_.isArray(res)) {
-      return res.map((r, idx) => (
-        <span>
-          {idx === 0 ? '[' : ','}
-          {idx === 0 ? '' : <br />}
-          {r}
-          {idx === res.length - 1 ? ']' : ''}
-        </span>
-      ));
-    }
-    if (_.isPlainObject(res)) {
-      const arr = JSON.stringify(res, null, 1);
-      return arr.split('\n').map((any, idx) => (
-        <span>
-          {any}
-          {idx !== 0 && idx !== arr.length - 1 ? <br /> : ''}
-        </span>
-      ));
-    }
-    return res;
   }
 
   renderForm () {
@@ -244,7 +175,6 @@ export default class RpcCalls extends Component {
       try {
         method = JSON.parse(this.state.jsonEditorValue);
       } catch (err) {
-        // todo [adgo] 26.04.2016 - setup error handling and error toast
         this.props.actions.addToast('error parsing json, check console');
         return console.error('error parsing JSON: ', this.state.jsonEditorValue, err);
       }
@@ -259,62 +189,6 @@ export default class RpcCalls extends Component {
       inputFormatters: method.inputFormatters,
       params: params
     });
-  }
-
-  setCall (call) {
-    let method = _.find(rpcMethods, {name: call.name});
-    this.props.actions.selectRpcMethod(method);
-
-    // and set parameter values
-    method.params.map((param, idx) => {
-      this.setState({
-        [`params_${param}`]: call.params[idx]
-      });
-    });
-  }
-
-  setAndCall (call) {
-    this.setCall(call);
-    let method = _.find(rpcMethods, {name: call.name});
-    this.onRpcFire(method);
-  }
-
-  renderPrevCallsToolbar () {
-    const idx = this.state.hoveredCallIdx;
-    if (typeof idx !== 'number') {
-      return;
-    }
-    const call = this.props.rpc.prevCalls[idx];
-    const callEl = this[`call-${idx}`];
-    const wrapStyle = {top: callEl.offsetTop - 22 - this._callsHistory.scrollTop};
-    if (hasScrollbar(this._callsHistory)) {
-      wrapStyle.right = 13;
-    }
-
-    return (
-      <div
-        className={styles.callActionsWrap}
-        style={wrapStyle}
-        >
-        <IconButton className={styles.callActionsButton}><MoreHorizIcon /></IconButton>
-        <div className={styles.callActions}>
-          <IconButton className={styles.callAction} onClick={() => ::this.setCall(call)} tooltip='Set' tooltipPosition='top-left'>
-            <InputIcon className={styles.callActionIcon} />
-          </IconButton>
-          <IconButton className={styles.callAction} onClick={() => ::this.setAndCall(call)} tooltip='Fire again' tooltipPosition='top-left'>
-            <CallIcon className={styles.callActionIcon} />
-          </IconButton>
-          <CopyToClipboard
-            text={JSON.stringify(call)}
-            onCopy={() => this.props.actions.addToast('Method copied to clipboard!')}
-            >
-            <IconButton className={styles.callAction} tooltip='Copy to clipboard' tooltipPosition='top-left'>
-              <AssignmentIcon className={styles.callActionIcon}/>
-            </IconButton>
-          </CopyToClipboard>
-        </div>
-      </div>
-    );
   }
 
   renderInputs () {
