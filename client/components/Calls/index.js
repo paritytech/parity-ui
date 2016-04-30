@@ -1,18 +1,9 @@
 
 import React, { Component, PropTypes } from 'react';
-import CopyToClipboard from 'react-copy-to-clipboard';
-import { sortBy, find, extend } from 'lodash';
 
-import IconButton from 'material-ui/IconButton';
-import MoreHorizIcon from 'material-ui/svg-icons/navigation/more-horiz';
-import CallIcon from 'material-ui/svg-icons/communication/call';
-import AssignmentIcon from 'material-ui/svg-icons/action/assignment';
-import InputIcon from 'material-ui/svg-icons/action/input';
-
-import { hasScrollbar, formatRenderedResponse } from '../../provider/dom-provider';
+import CallsToolbar from '../CallsToolbar';
+import { formatRenderedResponse } from '../../provider/dom-provider';
 import styles from './style.css';
-import rpcData from '../../data/rpc.json';
-const rpcMethods = sortBy(rpcData.methods, 'name');
 
 export default class Calls extends Component {
 
@@ -22,6 +13,7 @@ export default class Calls extends Component {
   }
 
   render () {
+    let {hoveredCallIdx} = this.state;
     return (
       <div
         className='calls-container'
@@ -33,7 +25,12 @@ export default class Calls extends Component {
         <div className={`${styles.history} row`} ref={el => this._callsHistory = el}>
           {this.renderCalls()}
         </div>
-        {this.renderCallsToolbar()}
+        <CallsToolbar
+          call={this.props.rpc.prevCalls[hoveredCallIdx]}
+          callEl={this[`call-${hoveredCallIdx}`]}
+          containerEl={this._callsHistory}
+          {...this.props}
+        />
       </div>
     );
   }
@@ -81,60 +78,6 @@ export default class Calls extends Component {
           <pre className={styles.response}>{formatRenderedResponse(c.response)}</pre>
         </div>
       )
-    );
-  }
-
-  setCall (call) {
-    let method = find(rpcMethods, {name: call.name});
-    this.props.actions.selectRpcMethod(extend({}, method, {paramsValues: call.params}));
-  }
-
-  makeCall (call) {
-    this.setCall(call);
-    let method = find(rpcMethods, {name: call.name});
-    this.props.actions.fireRpc({
-      method: method.name,
-      outputFormatter: method.outputFormatter,
-      inputFormatters: method.inputFormatters,
-      params: call.params
-    });
-  }
-
-  renderCallsToolbar () {
-    const idx = this.state.hoveredCallIdx;
-    if (typeof idx !== 'number') {
-      return;
-    }
-    const call = this.props.rpc.prevCalls[idx];
-    const callEl = this[`call-${idx}`];
-    const wrapStyle = {top: callEl.offsetTop - 22 - this._callsHistory.scrollTop};
-    if (hasScrollbar(this._callsHistory)) {
-      wrapStyle.right = 13;
-    }
-
-    return (
-      <div
-        className={styles.callActionsWrap}
-        style={wrapStyle}
-        >
-        <IconButton className={styles.callActionsButton}><MoreHorizIcon /></IconButton>
-        <div className={styles.callActions}>
-          <IconButton className={styles.callAction} onClick={() => ::this.setCall(call)} tooltip='Set' tooltipPosition='top-left'>
-            <InputIcon className={styles.callActionIcon} />
-          </IconButton>
-          <IconButton className={styles.callAction} onClick={() => ::this.makeCall(call)} tooltip='Fire again' tooltipPosition='top-left'>
-            <CallIcon className={styles.callActionIcon} />
-          </IconButton>
-          <CopyToClipboard
-            text={JSON.stringify(call)}
-            onCopy={() => this.props.actions.addToast('Method copied to clipboard!')}
-            >
-            <IconButton className={styles.callAction} tooltip='Copy to clipboard' tooltipPosition='top-left'>
-              <AssignmentIcon className={styles.callActionIcon}/>
-            </IconButton>
-          </CopyToClipboard>
-        </div>
-      </div>
     );
   }
 
