@@ -35,19 +35,19 @@ export default class RpcDocs extends Component {
           <div className='dapp-container'>
             <div className='row'>
               <div className='col col-12'>
-                {/*<AutoComplete
+                <AutoComplete
                   floatingLabelText='Method name'
                   className={style.autocomplete}
                   dataSource={rpcMethods.map(m => m.name)}
                   onNewRequest={::this.handleMethodChange}
                   {...displayAll()}
                   {...this._test('autocomplete')}
-                />*/}
+                />
                 {this.renderData()}
               </div>
             </div>
           </div>
-          {/*<ScrollTopButton />*/}
+          {<ScrollTopButton />}
         </main>
       </div>
     );
