@@ -1,14 +1,14 @@
 
 import React, { Component, PropTypes } from 'react';
 import _ from 'lodash';
-import formatJson from 'format-json';
 
 import Toggle from 'material-ui/Toggle/Toggle';
 import AutoComplete from 'material-ui/AutoComplete';
 import TextField from 'material-ui/TextField';
 
+import JsonEditor from '../JsonEditor';
 import Calls from '../Calls';
-import {displayAll} from '../../provider/vendor-provider';
+import { displayAll } from '../../provider/vendor-provider';
 import Markdown from '../Markdown';
 import styles from './style.css';
 import rpcData from '../../data/rpc.json';
@@ -60,7 +60,7 @@ export default class RpcCalls extends Component {
                 {this.renderForm()}
               </div>
               <div className='col col-6 mobile-full'>
-                <Calls {...this.props}  />
+                <Calls {...this.props} />
               </div>
             </div>
           </div>
@@ -86,7 +86,8 @@ export default class RpcCalls extends Component {
         {this.renderFormEditor()}
         <button
           {...this._test('fireRpc')}
-          className={`dapp-block-button ${styles.button}`}
+          className={`dapp-block-button`}
+          disabled={this.state.jsonEditorError}
           onClick={() => ::this.onRpcFire() }
           >
           Fire!
@@ -109,35 +110,6 @@ export default class RpcCalls extends Component {
         <h3>Returns</h3>
         <Markdown val={selectedMethod.returns} />
       </div>
-    );
-  }
-
-  renderJsonEditor () {
-    if (!this.state.jsonMode) {
-      return;
-    }
-
-    let errorClass = this.state.jsonEditorError ? styles.jsonEditorError : '';
-
-    return (
-      <div className='row'>
-        <textarea
-          onChange={::this.onJsonEditorChange}
-          className={`${styles.jsonEditor} ${errorClass}`}
-          value={this.state.jsonEditorValue}
-          />
-          {this.renderJsonEditorError()}
-      </div>
-    );
-  }
-
-  renderJsonEditorError () {
-    if (!this.state.jsonEditorError) {
-      return;
-    }
-
-    return (
-      <div className={styles.jsonEditorErrorMsg}>{this.state.jsonEditorError}</div>
     );
   }
 
@@ -168,25 +140,22 @@ export default class RpcCalls extends Component {
     this.props.actions.selectRpcMethod(method);
   }
 
-  onRpcFire (method = this.props.rpc.selectedMethod) {
+  onRpcFire () {
+    let { selectedMethod } = this.props.rpc;
+    const { jsonMode, jsonEditorParsedValue } = this.state;
     let params;
 
-    if (this.state.jsonMode) {
-      try {
-        method = JSON.parse(this.state.jsonEditorValue);
-      } catch (err) {
-        this.props.actions.addToast('error parsing json, check console');
-        return console.error('error parsing JSON: ', this.state.jsonEditorValue, err);
-      }
-      params = method.params;
+    if (jsonMode) {
+      selectedMethod = jsonEditorParsedValue;
+      params = selectedMethod.params;
     } else {
-      params = method.params.map(p => this.state[`params_${p}`]);
+      params = selectedMethod.params.map(p => this.state[`params_${p}`]);
     }
 
     this.props.actions.fireRpc({
-      method: method.name,
-      outputFormatter: method.outputFormatter,
-      inputFormatters: method.inputFormatters,
+      method: selectedMethod.name,
+      outputFormatter: selectedMethod.outputFormatter,
+      inputFormatters: selectedMethod.inputFormatters,
       params: params
     });
   }
@@ -219,21 +188,6 @@ export default class RpcCalls extends Component {
             );
   }
 
-  onJsonEditorChange (evt) {
-    const {value} = evt.target;
-
-    try {
-      JSON.parse(value);
-      this.setState({jsonEditorError: null});
-    } catch (err) {
-      this.setState({jsonEditorError: 'invalid json'});
-    }
-
-    this.setState({
-      jsonEditorValue: value
-    });
-  }
-
   setJsonEditorValue () {
     const {selectedMethod} = this.props.rpc;
     const method = {
@@ -243,7 +197,7 @@ export default class RpcCalls extends Component {
       outputFormatter: selectedMethod.outputFormatter
     };
     this.setState({
-      jsonEditorValue: formatJson.plain(method)
+      jsonEditorValue: method
     });
   }
 
@@ -252,6 +206,26 @@ export default class RpcCalls extends Component {
       this.setJsonEditorValue();
     }
     this.setState({jsonMode: !this.state.jsonMode});
+  }
+
+  renderJsonEditor () {
+    if (!this.state.jsonMode) {
+      return;
+    }
+
+    return (
+      <JsonEditor
+        onChange={::this.onJsonEditorChange}
+        value={this.state.jsonEditorValue}
+      />
+    );
+  }
+
+  onJsonEditorChange (jsonEditorParsedValue, jsonEditorError) {
+    this.setState({
+      jsonEditorParsedValue,
+      jsonEditorError
+    });
   }
 
 }
