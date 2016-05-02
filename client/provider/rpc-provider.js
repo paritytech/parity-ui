@@ -1,9 +1,6 @@
 
 import rlp from 'rlp';
 
-const version = 0x010000;
-const separator = '/';
-
 export default class RpcProvider {
 
   constructor (web3Utils, web3Formatters) {
@@ -70,20 +67,21 @@ export default class RpcProvider {
   }
 
   encode (str) {
-    try {
-      return `0x${rlp.encode([version].concat(str.split(separator))).toString('hex')}`;
-    } catch (err) {
-      console.error('error in encoding string: ', str, err);
-      return '0xc5830100002d'; // encoding of '-'
-    }
+    throw new Error('Unsupported');
   }
 
   decode (str) {
     try {
-      return rlp.decode(str).slice(1).join(separator);
+      const decoded = rlp.decode(str);
+      const v = decoded[0];
+      decoded[0] = decoded[1];
+      decoded[1] = `${v[0]}.${v[1]}.${v[2]}`;
+      return decoded.join('/');
     } catch (err) {
       console.error('error in decoding string: ', str, err);
-      return '-';
+      return str.match(/.{1,2}/g).map((v) => {
+        return String.fromCharCode(parseInt(v, 16));
+      }).join('');
     }
   }
 }

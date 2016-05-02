@@ -12,8 +12,23 @@
   animation: fadein .5s;
 }
 
+.error {
+  background: red !important;
+  color: #fff !important;
+}
+
+.succes {
+  background: green !important;
+  color: #fff !important;
+}
+
 .remove {
   float: right;
+}
+
+.error .remove,
+.success .remove {
+  color: #fff !important;
 }
 
 @keyframes fadein {

@@ -3,11 +3,11 @@ import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import _ from 'lodash';
-
 import './style.css';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import * as RpcActions from '../../actions/rpc';
+import { updateLogging } from '../../actions/logger';
 import {addToast} from '../../actions/toastr';
 
 class RpcPage extends Component {
@@ -24,7 +24,12 @@ class RpcPage extends Component {
         {this.props.children && React.cloneElement(this.props.children, {
           ...this.props
         })}
-        <Footer version={this.props.status.version} />
+        <Footer
+          version={status.version}
+          logging={this.props.logger.logging}
+          updateLogging={this.props.actions.updateLogging}
+          {...this._test('footer')}
+        />
       </div>
     );
   }
@@ -37,12 +42,14 @@ function mapStateToProps (state) {
 
 function mapDispatchToProps (dispatch) {
   return {
-    actions: bindActionCreators(_.extend(RpcActions, {addToast}), dispatch)
+    actions: bindActionCreators(_.extend({}, RpcActions, {addToast}, {updateLogging}), dispatch)
   };
 }
 
 RpcPage.propTypes = {
   status: PropTypes.object.isRequired,
+  logger: PropTypes.object.isRequired,
+  actions: PropTypes.object.isRequired,
   children: PropTypes.object.isRequired
 };
 

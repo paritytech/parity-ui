@@ -12,6 +12,8 @@ export default class ToastrMiddleware {
       let delegate;
       switch (action.type) {
         case 'add toast': delegate = ::this.onAddToast; break;
+        case 'add errorToast': delegate = ::this.onAddErrorToast; break;
+        case 'add successToast': delegate = ::this.onAddSuccessToast; break;
         default:
           next(action);
           return;
@@ -27,11 +29,23 @@ export default class ToastrMiddleware {
 
   onAddToast (store, next, action) {
     action.payload = this.ensureObject(action.payload);
-
     action.payload.toastNo = store.getState().toastr.toastNo;
-
     setTimeout(() => store.dispatch(removeToast(action.payload.toastNo)), this._time);
     next(action);
+  }
+
+  onAddErrorToast (store, next, action) {
+    action.payload = this.ensureObject(action.payload);
+    action.payload.type = 'error';
+    action.type = 'add toast';
+    this.onAddToast(store, next, action);
+  }
+
+  onAddSuccessToast (store, next, action) {
+    action.payload = this.ensureObject(action.payload);
+    action.payload.type = 'success';
+    action.type = 'add toast';
+    this.onAddToast(store, next, action);
   }
 
   // allow shorthand by passing just string to "add toast" action

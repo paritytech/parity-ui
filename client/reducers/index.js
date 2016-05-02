@@ -7,6 +7,7 @@ import mining from './mining';
 import debug from './debug';
 import rpc from './rpc';
 import toastr from './toastr';
+import logger from './logger';
 
 export default combineReducers({
   routing,
@@ -15,5 +16,6 @@ export default combineReducers({
   mining,
   rpc,
   toastr,
+  logger,
   debug
 });

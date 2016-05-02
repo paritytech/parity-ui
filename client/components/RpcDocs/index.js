@@ -47,7 +47,7 @@ export default class RpcDocs extends Component {
               </div>
             </div>
           </div>
-          {<ScrollTopButton />}
+          <ScrollTopButton />
         </main>
       </div>
     );

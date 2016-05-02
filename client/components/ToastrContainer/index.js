@@ -17,7 +17,7 @@ export default class ToastrContainer extends Component {
   renderToasts () {
     return this.props.toastr.toasts.map(t => {
       return (
-        <Paper className={styles.toast} zDepth={2} key={t.toastNo}>
+        <Paper className={`${styles.toast} ${styles[t.type]}`} zDepth={2} key={t.toastNo}>
           <a className={styles.remove} onClick={() => this.props.actions.removeToast(t.toastNo)}>
             <i className='icon-trash'></i>
           </a>
