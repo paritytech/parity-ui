@@ -20,12 +20,19 @@ class AccountsPage extends Component {
             <h1>Accounts</h1>
           </main>
         </div>
-        <Footer version={this.props.status.version} />
+                <Footer
+          version={status.version}
+          logging={this.props.logger.logging}
+          updateLogging={this.props.actions.updateLogging}
+          {...this._test('footer')}
+        />
       </div>
     );
   }
 }
 AccountsPage.propTypes = {
+  logger: PropTypes.object.isRequired,
+  actions: PropTypes.object.isRequired,
   status: PropTypes.object.isRequired
 };
 
