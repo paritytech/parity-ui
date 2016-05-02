@@ -50,9 +50,3 @@ div:hover > .removeIcon {
   overflow: auto;
   max-height: 60vh;
 }
-
-
-.response {
-  white-space: nowrap;
-  overflow-x: auto;
-}

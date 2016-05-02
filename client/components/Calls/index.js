@@ -2,7 +2,7 @@
 import React, { Component, PropTypes } from 'react';
 
 import CallsToolbar from '../CallsToolbar';
-import { formatRenderedResponse } from '../../provider/dom-provider';
+import Response from '../Response';
 import styles from './style.css';
 
 export default class Calls extends Component {
@@ -13,11 +13,11 @@ export default class Calls extends Component {
   }
 
   render () {
-    let {hoveredCallIdx} = this.state;
+    let {hoveredIdx} = this.state;
     return (
       <div
         className='calls-container'
-        onMouseLeave={() => this.setState({hoveredCallIdx: null})}
+        onMouseLeave={() => this.setState({hoveredIdx: null})}
         {...this._test('calls-container')}
       >
         {this.renderClear()}
@@ -26,8 +26,8 @@ export default class Calls extends Component {
           {this.renderCalls()}
         </div>
         <CallsToolbar
-          call={this.props.rpc.prevCalls[hoveredCallIdx]}
-          callEl={this[`call-${hoveredCallIdx}`]}
+          call={this.props.calls[hoveredIdx]}
+          callEl={this[`call-${hoveredIdx}`]}
           containerEl={this._callsHistory}
           {...this.props}
         />
@@ -36,15 +36,15 @@ export default class Calls extends Component {
   }
 
   renderClear () {
-    if (!this.props.rpc.prevCalls.length) {
+    if (!this.props.calls.length) {
       return;
     }
 
     return (
       <a
-        {...this._test('prev-calls-remove')}
+        {...this._test('calls-remove')}
         title='Clear RPC calls history'
-        onClick={() => this.props.actions.resetRpcPrevCalls()}
+        onClick={() => this.props.reset()}
         className={styles.removeIcon}
         >
         <i className='icon-trash'></i>
@@ -53,32 +53,37 @@ export default class Calls extends Component {
   }
 
   renderCalls () {
-    const {prevCalls} = this.props.rpc;
+    const {calls} = this.props;
 
-    if (!prevCalls.length) {
+    if (!calls.length) {
       return (
         <div>
-          <h3 className={styles.historyInfo} {...this._test('no-prev-calls')}>
-            Fire up some RPC calls and the results will be here.
+          <h3 className={styles.historyInfo} {...this._test('no-calls')}>
+            Fire up some calls and the results will be here.
           </h3>
         </div>
       );
     }
-    return prevCalls.map(
+    return calls.map(
       (c, idx) => (
         <div
           key={idx}
-          onMouseEnter={() => this.setState({hoveredCallIdx: idx})}
+          onMouseEnter={() => this.setState({hoveredIdx: idx})}
           ref={el => this[`call-${idx}`] = el}
           className={styles.call}
-          {...this._test(`prev-call-${c.callNo}`)}
+          {...this._test(`call-${c.callNo}`)}
           >
           <span className={styles.callNo}>#{c.callNo}</span>
           <pre>{c.name}({c.params.toString()})</pre>
-          <pre className={styles.response}>{formatRenderedResponse(c.response)}</pre>
+          <Response response={c.response} />
         </div>
       )
     );
   }
 
 }
+
+Calls.propTypes = {
+  calls: PropTypes.array.isRequired,
+  reset: PropTypes.func
+};

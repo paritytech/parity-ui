@@ -60,7 +60,10 @@ export default class RpcCalls extends Component {
                 {this.renderForm()}
               </div>
               <div className='col col-6 mobile-full'>
-                <Calls {...this.props} />
+                <Calls
+                  calls={this.props.rpc.prevCalls}
+                  reset={this.props.actions.resetRpcPrevCalls}
+                />
               </div>
             </div>
           </div>
