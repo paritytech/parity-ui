@@ -11,3 +11,4 @@ export const updateNetChain = createAction('update netChain');
 export const updateNetPort = createAction('update netPort');
 export const updateRpcSettings = createAction('update rpcSettings');
 export const updateNodeName = createAction('update nodeName');
+export const updateAccounts = createAction('update accounts');

@@ -94,6 +94,7 @@ export default class Status extends Component {
                 <MiningSettings
                   {...this._test('mining')}
                   mining={this.props.mining}
+                  accounts={this.props.status.accounts}
                   actions={this.props.actions}
                   version={this.props.status.version}
                   />
@@ -125,6 +126,7 @@ Status.propTypes = {
     version: PropTypes.string.isRequired,
     bestBlock: PropTypes.string.isRequired,
     hashrate: PropTypes.string.isRequired,
+    accounts: PropTypes.arrayOf(PropTypes.string).isRequired,
     peers: PropTypes.number.isRequired
   }).isRequired,
   actions: PropTypes.object.isRequired

@@ -1,5 +1,6 @@
 
 import React, { Component, PropTypes } from 'react';
+import AutoComplete from 'material-ui/AutoComplete';
 
 import style from './styles.css';
 import valueStyles from '../Value/styles.css';
@@ -23,9 +24,9 @@ export default class EditableValue extends Component {
     });
   }
 
-  onChange (evt) {
+  onChange (value) {
     this.setState({
-      value: evt.target.value
+      value: value
     });
   }
 
@@ -70,16 +71,40 @@ export default class EditableValue extends Component {
           {this.props.children}
           {this.renderButtons()}
         </div>
+        {this.renderInput()}
+      </form>
+    );
+  }
+
+  renderInput () {
+    const { inEditMode, value } = this.state;
+
+    if (!this.props.autocomplete || (this.props.autocomplete && !inEditMode)) {
+      return (
         <input
-          className={this.state.inEditMode ? style.input : valueStyles.value}
+          className={inEditMode ? style.input : valueStyles.value}
           type='text'
-          value={this.state.value}
+          value={value}
           onClick={::this.onOpenEdit}
           ref={el => this._input = el}
-          onChange={::this.onChange}
-          readOnly={!this.state.inEditMode}
+          onChange={(evt) => this.onChange(evt.target.value)}
+          readOnly={!inEditMode}
           />
-      </form>
+      );
+    }
+
+    return (
+      <AutoComplete
+        name='EditableValueAutoComplete' // avoid Material Ui warning
+        className={style.autocomplete}
+        fullWidth
+        searchText={value}
+        dataSource={this.props.dataSource}
+        onUpdateInput={::this.onChange}
+        onNewRequest={::this.onChange}
+        openOnFocus
+        filter={AutoComplete.noFilter}
+      />
     );
   }
 
@@ -146,5 +171,7 @@ EditableValue.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   value: PropTypes.string,
   defaultValue: PropTypes.string,
-  children: PropTypes.element
+  children: PropTypes.element,
+  autocomplete: PropTypes.bool,
+  dataSource: PropTypes.arrayOf(PropTypes.string)
 };

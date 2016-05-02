@@ -72,6 +72,7 @@ export class Web3Provider extends Web3Base {
       {method: this.web3.eth.getBlockNumber, actionMaker: StatusActions.updateBlockNumber},
       {method: this.web3.eth.getHashrate, actionMaker: StatusActions.updateHashrate},
       {method: this.web3.net.getPeerCount, actionMaker: StatusActions.updatePeerCount},
+      {method: this.web3.eth.getAccounts, actionMaker: StatusActions.updateAccounts},
       {method: this.web3.eth.getCoinbase, actionMaker: MiningActions.updateAuthor},
       {method: this.ethcoreWeb3.getMinGasPrice, actionMaker: MiningActions.updateMinGasPrice},
       {method: this.ethcoreWeb3.getGasFloorTarget, actionMaker: MiningActions.updateGasFloorTarget},
