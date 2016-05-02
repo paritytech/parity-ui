@@ -59,12 +59,19 @@ class AppListPage extends Component {
             </div>
           </main>
         </div>
-        <Footer version={this.props.status.version} />
+                <Footer
+          version={status.version}
+          logging={this.props.logger.logging}
+          updateLogging={this.props.actions.updateLogging}
+          {...this._test('footer')}
+        />
       </div>
     );
   }
 }
 AppListPage.propTypes = {
+  logger: PropTypes.object.isRequired,
+  actions: PropTypes.object.isRequired,
   status: PropTypes.object.isRequired
 };
 

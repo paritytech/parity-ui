@@ -49,7 +49,7 @@ function mapStateToProps (state) {
 
 function mapDispatchToProps (dispatch) {
   return {
-    actions: bindActionCreators(extend(ModifyMiningActions, {updateLogging}), dispatch)
+    actions: bindActionCreators(extend({}, ModifyMiningActions, {updateLogging}), dispatch)
   };
 }
 
