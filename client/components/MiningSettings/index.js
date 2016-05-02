@@ -3,6 +3,7 @@ import React, { Component, PropTypes } from 'react';
 
 import formatNumber from 'format-number';
 import EditableValue from '../EditableValue';
+import Value from '../Value';
 import {numberFromString} from './numberFromString';
 
 const toNiceNumber = formatNumber();
@@ -38,11 +39,10 @@ export default class MiningSettings extends Component {
           {...this._test('author')}
           />
         <h3>Extradata</h3>
-        <EditableValue
+        <Value
           value={mining.extraData}
           onSubmit={onExtraDataChange}
           {...this._test('extra-data')}
-          defaultValue={this.getDefaultExtraData()}
           />
         <h3>Minimal Gas Price</h3>
         <EditableValue
