@@ -34,17 +34,31 @@ export default class CallsToolbar extends Component {
         >
         <IconButton className={styles.callActionsButton}><MoreHorizIcon /></IconButton>
         <div className={styles.callActions}>
-          <IconButton className={styles.callAction} onClick={() => ::this.setCall(call)} tooltip='Set' tooltipPosition='top-left'>
+          <IconButton
+            className={styles.callAction}
+            onClick={() => ::this.setCall(call)}
+            tooltip='Set'
+            tooltipPosition='top-left'
+            >
             <InputIcon className={styles.callActionIcon} />
           </IconButton>
-          <IconButton className={styles.callAction} onClick={() => ::this.makeCall(call)} tooltip='Fire again' tooltipPosition='top-left'>
+          <IconButton
+            className={styles.callAction}
+            onClick={() => ::this.makeCall(call)}
+            tooltip='Fire again'
+            tooltipPosition='top-left'
+            >
             <CallIcon className={styles.callActionIcon} />
           </IconButton>
           <CopyToClipboard
             text={JSON.stringify(call)}
             onCopy={() => this.props.actions.addToast('Method copied to clipboard!')}
             >
-            <IconButton className={styles.callAction} tooltip='Copy to clipboard' tooltipPosition='top-left'>
+            <IconButton
+              className={styles.callAction}
+              tooltip='Copy to clipboard'
+              tooltipPosition='top-left'
+              >
               <AssignmentIcon className={styles.callActionIcon}/>
             </IconButton>
           </CopyToClipboard>
@@ -69,3 +83,14 @@ export default class CallsToolbar extends Component {
     });
   }
 }
+
+CallsToolbar.propTypes = {
+  call: PropTypes.object.isRequired,
+  callEl: PropTypes.node.isRequired,
+  containerEl: PropTypes.node.isRequired,
+  actions: PropTypes.shape({
+    fireRpc: PropTypes.func.isRequired,
+    selectRpcMethod: PropTypes.func.isRequired,
+    addToast: PropTypes.func.isRequired
+  }).isRequired
+};
