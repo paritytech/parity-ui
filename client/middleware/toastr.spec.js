@@ -2,7 +2,6 @@
 
 import sinon from 'sinon';
 import ToastrMiddleware from './toastr';
-import { addToast, removeToast, addSuccessToast, addErrorToast } from '../actions/toastr';
 
 describe('MIDDLEWARE: TOASTR', () => {
   let cut, state;
@@ -23,14 +22,18 @@ describe('MIDDLEWARE: TOASTR', () => {
       cut.onAddToast = sinon.spy();
       cut.onAddErrorToast = sinon.spy();
       cut.onAddSuccessToast = sinon.spy();
+      cut._toastActions = ['default'];
+      cut._errorToastActions = ['error'];
+      cut._successToastActions = ['success'];
     });
 
     it('should call only onAddToast when respected action is dispatched', () => {
       // given
+      const msg = 'test';
       const store = null;
       const next = sinon.spy();
       const middleware = cut.toMiddleware()(store)(next);
-      const action = { type: 'add toast', payload: '' };
+      const action = { type: 'default', payload: msg };
       expect(middleware).to.be.a('function');
       expect(action).to.be.an('object');
 
@@ -38,17 +41,18 @@ describe('MIDDLEWARE: TOASTR', () => {
       middleware(action);
 
       // then
-      expect(cut.onAddToast.calledWith(store, next, action)).to.be.true;
+      expect(cut.onAddToast.calledWith(store, next, { payload: msg })).to.be.true;
       expect(cut.onAddErrorToast.called).to.be.false;
       expect(cut.onAddSuccessToast.called).to.be.false;
     });
 
     it('should call only onAddErrorToast when respected action is dispatched', () => {
       // given
+      const msg = 'test';
       const store = null;
       const next = sinon.spy();
       const middleware = cut.toMiddleware()(store)(next);
-      const action = addErrorToast('success!');
+      const action = { type: 'error', payload: msg };
       expect(middleware).to.be.a('function');
       expect(action).to.be.an('object');
 
@@ -56,17 +60,18 @@ describe('MIDDLEWARE: TOASTR', () => {
       middleware(action);
 
       // then
-      expect(cut.onAddErrorToast.calledWith(store, next, action)).to.be.true;
+      expect(cut.onAddErrorToast.calledWith(store, next, { payload: msg })).to.be.true;
       expect(cut.onAddToast.called).to.be.false;
       expect(cut.onAddSuccessToast.called).to.be.false;
     });
 
     it('should call only onAddSuccessToast when respected action is dispatched', () => {
       // given
+      const msg = 'test';
       const store = null;
       const next = sinon.spy();
       const middleware = cut.toMiddleware()(store)(next);
-      const action = addSuccessToast('success!');
+      const action = { type: 'success', payload: msg };
       expect(middleware).to.be.a('function');
       expect(action).to.be.an('object');
 
@@ -74,7 +79,7 @@ describe('MIDDLEWARE: TOASTR', () => {
       middleware(action);
 
       // then
-      expect(cut.onAddSuccessToast.calledWith(store, next, action)).to.be.true;
+      expect(cut.onAddSuccessToast.calledWith(store, next, { payload: msg })).to.be.true;
       expect(cut.onAddToast.called).to.be.false;
       expect(cut.onAddErrorToast.called).to.be.false;
     });
@@ -99,27 +104,32 @@ describe('MIDDLEWARE: TOASTR', () => {
   });
 
   describe('onAddToast', () => {
-    it('should add toast and remove it after timeout', (done) => {
+    // using 'before' doesn't work
+    // it might b overwriten by the global beforeEach
+    beforeEach('spy on removeToast', () => {
+      cut.removeToast = sinon.spy();
+    });
+
+    it('should add toast and call remove after timeout', (done) => {
       // given
-      const toast = { message: 'test text' };
-      const store = {
-        getState: () => state,
-        dispatch: sinon.spy()
-      };
+      const msg = 'text';
+      const store = { getState: () => state };
       const next = sinon.spy();
-      const action = addToast(toast);
 
       // when
-      cut.onAddToast(store, next, action);
+      cut.onAddToast(store, next, { payload: msg });
 
       // then
-      expect(next.calledWith(addToast({
-        ...toast,
-        toastNo: toastNo
-      }))).to.be.true;
+      expect(next.calledWith({
+        payload: {
+          message: msg,
+          toastNo: toastNo
+        },
+        type: 'add toast'
+      })).to.be.true;
 
       setTimeout(() => {
-        expect(store.dispatch.calledWith(removeToast(toastNo))).to.be.true;
+        expect(cut.removeToast.calledWith(next, toastNo)).to.be.true;
         done();
       }, time);
     });
@@ -139,7 +149,7 @@ describe('MIDDLEWARE: TOASTR', () => {
       const msg = 'error';
       const store = null;
       const next = null;
-      const action = addErrorToast(msg);
+      const action = { payload: msg };
 
       // when
       cut.onAddErrorToast(store, next, action);
@@ -147,7 +157,6 @@ describe('MIDDLEWARE: TOASTR', () => {
       // then
       expect(cut.ensureObject.calledWith(msg)).to.be.true;
       expect(action).to.eql({
-        type: 'add toast',
         payload: {
           message: msg,
           type: 'error'
@@ -161,7 +170,7 @@ describe('MIDDLEWARE: TOASTR', () => {
       const msg = 'success';
       const store = null;
       const next = null;
-      const action = addSuccessToast(msg);
+      const action = { payload: msg };
 
       // when
       cut.onAddSuccessToast(store, next, action);
@@ -169,7 +178,6 @@ describe('MIDDLEWARE: TOASTR', () => {
       // then
       expect(cut.ensureObject.calledWith(msg)).to.be.true;
       expect(action).to.eql({
-        type: 'add toast',
         payload: {
           message: msg,
           type: 'success'

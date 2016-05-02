@@ -18,7 +18,7 @@ export default class Calls extends Component {
       <div
         className='calls-container'
         onMouseLeave={() => this.setState({hoveredIdx: null})}
-        {...this._test('calls-container')}
+        {...this._test('container')}
       >
         {this.renderClear()}
         <h2 className={styles.header}>History</h2>
@@ -29,7 +29,7 @@ export default class Calls extends Component {
           call={this.props.calls[hoveredIdx]}
           callEl={this[`call-${hoveredIdx}`]}
           containerEl={this._callsHistory}
-          {...this.props}
+          actions={this.props.actions}
         />
       </div>
     );
@@ -42,7 +42,7 @@ export default class Calls extends Component {
 
     return (
       <a
-        {...this._test('calls-remove')}
+        {...this._test('remove')}
         title='Clear RPC calls history'
         onClick={() => this.props.reset()}
         className={styles.removeIcon}
@@ -58,7 +58,7 @@ export default class Calls extends Component {
     if (!calls.length) {
       return (
         <div>
-          <h3 className={styles.historyInfo} {...this._test('no-calls')}>
+          <h3 className={styles.historyInfo} {...this._test('empty')}>
             Fire up some calls and the results will be here.
           </h3>
         </div>
@@ -84,6 +84,11 @@ export default class Calls extends Component {
 }
 
 Calls.propTypes = {
-  calls: PropTypes.array.isRequired,
+  calls: PropTypes.arrayOf(PropTypes.object).isRequired,
+  actions: PropTypes.shape({
+    fireRpc: PropTypes.func.isRequired,
+    copyToClipboard: PropTypes.func.isRequired,
+    selectRpcMethod: PropTypes.func.isRequired
+  }).isRequired,
   reset: PropTypes.func
 };

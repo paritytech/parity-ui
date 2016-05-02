@@ -1,9 +1,8 @@
 
-// import {toPromise} from '../provider/util-provider';
 import web3Formatters from 'web3/lib/web3/formatters.js';
 import web3Utils from 'web3/lib/utils/utils.js';
 import * as RpcActions from '../actions/rpc';
-import { hasErrors, toastErrors, isError, toastError } from '../provider/error-provider';
+import { hasErrors, filterErrors, isError } from '../util/error';
 import RpcProvider from '../provider/rpc-provider';
 const rpcProvider = new RpcProvider(web3Utils, web3Formatters);
 
@@ -23,11 +22,10 @@ export default class RpcMiddleware {
       const formattedParams = rpcProvider.formatParams(params, inputFormatters);
 
       if (hasErrors(formattedParams)) {
-        toastErrors(formattedParams, store.dispatch);
-        return;
+        let errors = filterErrors(formattedParams);
+        return store.dispatch(RpcActions.error(errors));
       }
 
-      // @TODO: convert to promise
       this._request(
         this.getOptions(method, formattedParams),
         this.responseHandler(store, method, params, outputFormatter)
@@ -43,9 +41,9 @@ export default class RpcMiddleware {
       }
 
       const formattedResult = rpcProvider.formatResult(body.result, outputFormatter);
+
       if (isError(formattedResult)) {
-        toastError(formattedResult, store.dispatch);
-        return;
+        return store.dispatch(RpcActions.error(formattedResult));
       }
 
       const addRpcResponseAction = RpcActions.addRpcReponse({

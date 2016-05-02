@@ -46,10 +46,10 @@ module.exports = {
     // clear local storage
     client.injectScript('localStorage.removeItem("rpcPrevCalls");');
     // display message
-    client.expect.element(el('RpcCalls-no-prev-calls')).to.be.visible;
+    client.expect.element(el('Calls-empty')).to.be.visible;
     // remove icon shouldn't be rendered, and neither do any calls
-    client.expect.element(el('prev-calls-remove')).to.not.be.present;
-    client.expect.element('[data-test*="prev-calls-remove"]').to.not.be.present;
+    client.expect.element(el('Calls-remove')).to.not.be.present;
+    client.expect.element('[data-test*="Calls-call*"]').to.not.be.present;
   },
 
   // todo [adgo] - fix interactions with material-ui fields

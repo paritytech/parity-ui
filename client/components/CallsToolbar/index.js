@@ -9,7 +9,6 @@ import CallIcon from 'material-ui/svg-icons/communication/call';
 import AssignmentIcon from 'material-ui/svg-icons/action/assignment';
 import InputIcon from 'material-ui/svg-icons/action/input';
 
-import { hasScrollbar } from '../../provider/dom-provider';
 import styles from './style.css';
 import rpcData from '../../data/rpc.json';
 const rpcMethods = sortBy(rpcData.methods, 'name');
@@ -23,7 +22,7 @@ export default class CallsToolbar extends Component {
     }
 
     const wrapStyle = {top: callEl.offsetTop - 22 - containerEl.scrollTop};
-    if (hasScrollbar(containerEl)) {
+    if (this.hasScrollbar(containerEl)) {
       wrapStyle.right = 13;
     }
 
@@ -52,7 +51,7 @@ export default class CallsToolbar extends Component {
           </IconButton>
           <CopyToClipboard
             text={JSON.stringify(call)}
-            onCopy={() => this.props.actions.addToast('Method copied to clipboard!')}
+            onCopy={() => this.props.actions.copyToClipboard('Method copied to clipboard!')}
             >
             <IconButton
               className={styles.callAction}
@@ -82,6 +81,10 @@ export default class CallsToolbar extends Component {
       params: call.params
     });
   }
+
+  hasScrollbar (el) {
+    return el.clientHeight < el.scrollHeight;
+  }
 }
 
 CallsToolbar.propTypes = {
@@ -90,7 +93,7 @@ CallsToolbar.propTypes = {
   containerEl: PropTypes.node.isRequired,
   actions: PropTypes.shape({
     fireRpc: PropTypes.func.isRequired,
-    selectRpcMethod: PropTypes.func.isRequired,
-    addToast: PropTypes.func.isRequired
+    copyToClipboard: PropTypes.func.isRequired,
+    selectRpcMethod: PropTypes.func.isRequired
   }).isRequired
 };

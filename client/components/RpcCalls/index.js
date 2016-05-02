@@ -63,6 +63,7 @@ export default class RpcCalls extends Component {
                 <Calls
                   calls={this.props.rpc.prevCalls}
                   reset={this.props.actions.resetRpcPrevCalls}
+                  actions={this.props.actions}
                 />
               </div>
             </div>
@@ -240,7 +241,6 @@ RpcCalls.propTypes = {
   }).isRequired,
   actions: PropTypes.shape({
     fireRpc: PropTypes.func.isRequired,
-    addToast: PropTypes.func.isRequired,
     selectRpcMethod: PropTypes.func.isRequired,
     resetRpcPrevCalls: PropTypes.func.isRequired
   }).isRequired
