@@ -145,22 +145,26 @@ export default class RpcCalls extends Component {
   }
 
   onRpcFire () {
-    let { selectedMethod } = this.props.rpc;
-    const { jsonMode, jsonEditorParsedValue } = this.state;
-    let params;
-
-    if (jsonMode) {
-      selectedMethod = jsonEditorParsedValue;
-      params = selectedMethod.params;
-    } else {
-      params = selectedMethod.params.map(p => this.state[`params_${p}`]);
+    if (this.state.jsonMode) {
+      return this.onCustomRpcFire();
     }
+
+    let { selectedMethod } = this.props.rpc;
+    let params = selectedMethod.params.map(p => this.state[`params_${p}`]);
 
     this.props.actions.fireRpc({
       method: selectedMethod.name,
       outputFormatter: selectedMethod.outputFormatter,
       inputFormatters: selectedMethod.inputFormatters,
       params: params
+    });
+  }
+
+  onCustomRpcFire () {
+    const {jsonEditorParsedValue} = this.state;
+    this.props.actions.fireRpc({
+      method: jsonEditorParsedValue.method,
+      params: jsonEditorParsedValue.params
     });
   }
 
@@ -194,14 +198,12 @@ export default class RpcCalls extends Component {
 
   setJsonEditorValue () {
     const {selectedMethod} = this.props.rpc;
-    const method = {
-      name: selectedMethod.name,
-      params: selectedMethod.params.map(p => this.state[`params_${p}`]),
-      inputFormatters: selectedMethod.inputFormatters,
-      outputFormatter: selectedMethod.outputFormatter
+    const json = {
+      method: selectedMethod.name,
+      params: selectedMethod.params.map(p => this.state[`params_${p}`])
     };
     this.setState({
-      jsonEditorValue: method
+      jsonEditorValue: json
     });
   }
 
