@@ -11,7 +11,7 @@ import './index.css';
 import 'dapp-styles/dapp-styles.less';
 import './test.utils';
 
-import middlewares from './middlewares';
+import middlewares from './middleware';
 import Routes from './routes';
 import MuiThemeProvider from './components/MuiThemeProvider';
 
