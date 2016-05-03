@@ -13,12 +13,12 @@ import './test.utils';
 
 import middlewares from './middlewares';
 import Routes from './routes';
-import MuiThemeProvider from './material-ui-wrapped-provider';
+import MuiThemeProvider from './components/MuiThemeProvider';
 
 import configure from './store';
 import { Web3Provider } from './provider/web3-provider';
 import EthcoreWeb3 from './provider/web3-ethcore-provider';
-import {initAppAction} from './actions/app';
+import { initAppAction } from './actions/app';
 
 const store = configure(middlewares);
 
