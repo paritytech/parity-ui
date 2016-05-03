@@ -79,7 +79,7 @@ export default class EditableValue extends Component {
   renderInput () {
     const { inEditMode, value } = this.state;
 
-    if (!this.props.autocomplete || (this.props.autocomplete && !inEditMode)) {
+    if (!inEditMode || !this.props.autocomplete) {
       return (
         <input
           className={inEditMode ? style.input : valueStyles.value}
