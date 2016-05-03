@@ -4,10 +4,9 @@ import ReactDOM from 'react-dom';
 import {sortBy} from 'lodash';
 import List from 'material-ui/List/List';
 import ListItem from 'material-ui/List/ListItem';
-import AutoComplete from 'material-ui/AutoComplete';
+import AutoComplete from '../AutoComplete';
 
 import ScrollTopButton from '../ScrollTopButton';
-import {displayAll} from '../../provider/vendor-provider';
 import style from './style.css';
 import Markdown from '../Markdown';
 import rpcData from '../../data/rpc.json';
@@ -40,7 +39,6 @@ export default class RpcDocs extends Component {
                   className={style.autocomplete}
                   dataSource={rpcMethods.map(m => m.name)}
                   onNewRequest={::this.handleMethodChange}
-                  {...displayAll()}
                   {...this._test('autocomplete')}
                 />
                 {this.renderData()}

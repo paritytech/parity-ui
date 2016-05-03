@@ -3,12 +3,11 @@ import React, { Component, PropTypes } from 'react';
 import _ from 'lodash';
 
 import Toggle from 'material-ui/Toggle/Toggle';
-import AutoComplete from 'material-ui/AutoComplete';
+import AutoComplete from '../AutoComplete';
 import TextField from 'material-ui/TextField';
 
 import JsonEditor from '../JsonEditor';
 import Calls from '../Calls';
-import { displayAll } from '../../provider/vendor-provider';
 import Markdown from '../Markdown';
 import styles from './style.css';
 import rpcData from '../../data/rpc.json';
@@ -129,7 +128,6 @@ export default class RpcCalls extends Component {
           floatingLabelText='Method name'
           dataSource={methods}
           onNewRequest={::this.handleMethodChange}
-          {...displayAll()}
           {...this._test('autocomplete')}
         />
         <div>
