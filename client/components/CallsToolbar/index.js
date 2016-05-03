@@ -9,6 +9,7 @@ import CallIcon from 'material-ui/svg-icons/communication/call';
 import AssignmentIcon from 'material-ui/svg-icons/action/assignment';
 import InputIcon from 'material-ui/svg-icons/action/input';
 
+import { SCROLLBAR_WIDTH } from '../../constants';
 import styles from './style.css';
 import rpcData from '../../data/rpc.json';
 const rpcMethods = sortBy(rpcData.methods, 'name');
@@ -21,7 +22,7 @@ export default class CallsToolbar extends Component {
       return null;
     }
 
-    const wrapStyle = {top: callEl.offsetTop - 22 - containerEl.scrollTop};
+    const wrapStyle = {top: callEl.offsetTop - SCROLLBAR_WIDTH - containerEl.scrollTop};
     if (this.hasScrollbar(containerEl)) {
       wrapStyle.right = 13;
     }

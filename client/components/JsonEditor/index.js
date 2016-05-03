@@ -75,5 +75,5 @@ export default class JsonEditor extends Component {
 
 JsonEditor.propTypes = {
   onChange: PropTypes.func.isRequired,
-  value: PropTypes.string
+  value: PropTypes.object
 };

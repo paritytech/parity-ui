@@ -11,5 +11,5 @@ export function hasErrors (xs) {
 }
 
 export function isError (x) {
-  return Object.prototype.toString.call(x) === '[object Error]';
+  return x instanceof Error;
 }

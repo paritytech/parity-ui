@@ -23,17 +23,18 @@ export default class RpcCalls extends Component {
   }
 
   componentWillReceiveProps (nextProps) {
-    if (nextProps.rpc.selectedMethod.paramsValues) {
-      nextProps.rpc.selectedMethod.params.map((p, idx) => {
+    const { selectedMethod } = nextProps.rpc;
+    if (selectedMethod.paramsValues) {
+      selectedMethod.params.map((p, idx) => {
         // todo [adgo] 01.05.2016 - make sure this works
         // not sure idx is the same for paramsValues and params
         this.setState({
-          [`params_${p}`]: nextProps.rpc.selectedMethod.paramsValues[idx]
+          [this.paramKey(p)]: selectedMethod.paramsValues[idx]
         });
       });
 
       if (this.state.jsonMode) {
-        ::this.setJsonEditorValue();
+        this.setJsonEditorValue();
       }
     }
   }
@@ -91,7 +92,7 @@ export default class RpcCalls extends Component {
           {...this._test('fireRpc')}
           className={`dapp-block-button`}
           disabled={this.state.jsonEditorError}
-          onClick={() => ::this.onRpcFire() }
+          onClick={::this.onRpcFire}
           >
           Fire!
         </button>
@@ -138,7 +139,7 @@ export default class RpcCalls extends Component {
   }
 
   handleMethodChange (name) {
-    let method = rpcMethods.find(m => m.name === name);
+    const method = rpcMethods.find(m => m.name === name);
     this.props.actions.selectRpcMethod(method);
   }
 
@@ -147,23 +148,20 @@ export default class RpcCalls extends Component {
       return this.onCustomRpcFire();
     }
 
-    let { selectedMethod } = this.props.rpc;
-    let params = selectedMethod.params.map(p => this.state[`params_${p}`]);
+    const { selectedMethod } = this.props.rpc;
+    let params = selectedMethod.params.map(::this.paramValue);
 
     this.props.actions.fireRpc({
       method: selectedMethod.name,
       outputFormatter: selectedMethod.outputFormatter,
       inputFormatters: selectedMethod.inputFormatters,
-      params: params
+      params
     });
   }
 
   onCustomRpcFire () {
-    const {jsonEditorParsedValue} = this.state;
-    this.props.actions.fireRpc({
-      method: jsonEditorParsedValue.method,
-      params: jsonEditorParsedValue.params
-    });
+    const { method, params } = this.state.jsonEditorParsedValue;
+    this.props.actions.fireRpc({ method, params });
   }
 
   renderInputs () {
@@ -184,11 +182,11 @@ export default class RpcCalls extends Component {
                   fullWidth
                   hintText={p}
                   hintStyle={{maxWidth: '100%', overflow: 'hidden', whiteSpace: 'nowrap'}}
-                  value={this.state[`params_${p}`]}
+                  value={this.paramValue(p)}
                   onChange={(evt) => this.setState({
-                    [`params_${p}`]: evt.target.value
+                    [this.paramKey(p)]: evt.target.value
                   })}
-                  {...this._test(`params_${p}`)}
+                  {...this._test(this.paramKey(p))}
                 />
               )
             );
@@ -198,7 +196,7 @@ export default class RpcCalls extends Component {
     const {selectedMethod} = this.props.rpc;
     const json = {
       method: selectedMethod.name,
-      params: selectedMethod.params.map(p => this.state[`params_${p}`])
+      params: selectedMethod.params.map(::this.paramValue)
     };
     this.setState({
       jsonEditorValue: json
@@ -230,6 +228,14 @@ export default class RpcCalls extends Component {
       jsonEditorParsedValue,
       jsonEditorError
     });
+  }
+
+  paramValue (p) {
+    return this.state[this.paramKey(p)];
+  }
+
+  paramKey (p) {
+    return `params_${p}`;
   }
 
 }
