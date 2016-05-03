@@ -22,6 +22,7 @@
 }
 
 .icons, .iconsVisible, .firstIcon {
+  z-index: 10;
   position: absolute;
   right: 0;
   top: 0;
@@ -48,4 +49,10 @@
   bottom: 0;
   margin: 3px 0;
   display: block;
+}
+
+.autocomplete input {
+  margin-top: 0;
+  padding-left: 10px !important;
+  padding-right: 50px !important;
 }

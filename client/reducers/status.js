@@ -8,6 +8,7 @@ const initialState = {
   bestBlock: 'loading...',
   hashrate: 'loading...',
   peers: 0,
+  accounts: [],
   version: '-'
 };
 
@@ -45,6 +46,13 @@ export default handleActions({
     return {
       ...resetError(state),
       version: action.payload
+    };
+  },
+
+  'update accounts' (state, action) {
+    return {
+      ...resetError(state),
+      accounts: action.payload
     };
   },
 
