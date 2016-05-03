@@ -23,7 +23,7 @@ module.exports = {
   'Assert mining settings' (client) {
     [
       { selector: 'author', name: 'eth_coinbase' },
-      { selector: 'extra-data', name: 'ethcore_extraData' },
+      // { selector: 'extra-data', name: 'ethcore_extraData' },
       { selector: 'min-gas-price', name: 'ethcore_minGasPrice' },
       { selector: 'gas-floor-target', name: 'ethcore_gasFloorTarget' }
     ].map(assertMiningSettings.bind(client));
