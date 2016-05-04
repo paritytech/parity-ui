@@ -8,7 +8,7 @@ import './index.html';
 import './index.css';
 import 'dapp-styles/dapp-styles.less';
 
-import './test.utils';
+import './test';
 
 import { Router, Route, hashHistory, IndexRedirect } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';

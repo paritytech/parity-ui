@@ -104,6 +104,11 @@ module.exports = {
     ];
 
     if (isProd) {
+      plugins.push(
+        new webpack.NormalModuleReplacementPlugin(/fake-backend/, function (result) {
+          result.request = result.request.replace(/(fake-backend)/, '$1-mock');
+        })
+      );
       plugins.push(new webpack.optimize.OccurrenceOrderPlugin(false));
       plugins.push(new webpack.optimize.DedupePlugin());
       plugins.push(new webpack.optimize.UglifyJsPlugin({
