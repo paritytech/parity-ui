@@ -1,4 +1,3 @@
-
 import { Provider } from 'react-redux';
 import ReactDOM from 'react-dom';
 import React from 'react';
@@ -9,7 +8,7 @@ import Web3 from 'web3';
 import './index.html';
 import './index.css';
 import 'dapp-styles/dapp-styles.less';
-import './test.utils';
+import './test';
 
 import middlewares from './middleware';
 import Routes from './routes';

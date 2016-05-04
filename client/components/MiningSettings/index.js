@@ -35,6 +35,8 @@ export default class MiningSettings extends Component {
         <h3>Author</h3>
         <EditableValue
           value={mining.author}
+          autocomplete
+          dataSource={this.props.accounts}
           onSubmit={onAuthorChange}
           {...this._test('author')}
           />
@@ -67,6 +69,7 @@ export default class MiningSettings extends Component {
 }
 
 MiningSettings.propTypes = {
+  accounts: PropTypes.arrayOf(PropTypes.string).isRequired,
   version: PropTypes.string.isRequired,
   mining: PropTypes.shape({
     author: PropTypes.string.isRequired,
