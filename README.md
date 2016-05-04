@@ -23,7 +23,7 @@ $ git clone git@github.com:ethcore/eth-node-status-page.git
 $ cd eth-node-status-page
 $ npm i                      # Install dependencies
 $ npm start                  # Runs webpack-dev-server, proxies RPC calls to http://localhost:8080
-# Open http://localhost:3000 in your browser
+                             # Open http://localhost:3000 in your browser
 ```
 
 ### Development workflow
