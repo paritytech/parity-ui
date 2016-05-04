@@ -7,7 +7,7 @@ export class Web3Component extends React.Component {
     this.setState({
       tickActive: true
     });
-  
+
     setTimeout(::this.next);
   }
 

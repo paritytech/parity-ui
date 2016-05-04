@@ -11,12 +11,12 @@ export class DappContent extends Web3Component {
     window.addEventListener('message', (ev) => {
       const {origin, data, source} = ev;
       const {type, payload} = data;
-      function reply(res) {
+      function reply (res) {
         source.postMessage(res, origin);
       }
 
       if (type === 'web3_sendAsync') {
-        if (payload.method == 'eth_accounts') {
+        if (payload.method === 'eth_accounts') {
           delete payload.method;
           payload.result = this.props.accounts;
           reply({

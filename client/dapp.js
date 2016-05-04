@@ -10,6 +10,9 @@ const $el = document.getElementById('accounts');
 
 setInterval(() => {
   web3.eth.getAccounts((err, accounts) => {
+    if (err) {
+      throw new Error(err);
+    }
     $el.innerHTML = accounts;
   });
 }, 2000);

@@ -10,7 +10,7 @@ export class FrameProvider {
     this.fallback = fallback;
     this.callbacks = {};
 
-    window.addEventListener('message', (ev) => { 
+    window.addEventListener('message', (ev) => {
       const {data} = ev;
       const {id, err, response} = data;
 

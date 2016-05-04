@@ -6,7 +6,7 @@ import {DappContent} from '../DappContent/DappContent';
 export class App extends React.Component {
 
   state = {
-    accounts: [],
+    accounts: []
   };
 
   changeAccount (account) {
