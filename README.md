@@ -41,8 +41,8 @@ It runs `webpack-dev-server` on port `:3000` and proxies all RPC calls to `http:
 It means that you also need to run Ethereum client with JSON-RPC support.
 
 #### Parity
-To setup parity follow the intructions to run parity [here](https://github.com/ethcore/parity).
-When you have parity installed, run:
+To setup `parity` follow the intructions [here](https://github.com/ethcore/parity).
+When you have `parity` installed, run:
 
 ```bash
 $ parity -w                  # start parity with webapps support and JSON-RPC server on :8080
@@ -59,6 +59,6 @@ $ npm t                      # run unit tests in watchmode
 
 #### Integration Tests
 ```bash
-$ npm startTest              # run with mocked backend
+$ npm startTest              # run with mocked backend (no client in background required)
 $ npm run nightwatch         # run integration tests (by default requires Firefox browser)
 ```
