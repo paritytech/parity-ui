@@ -33,4 +33,4 @@ before_script:
 script: npm run $SCRIPT
 
 after_success:
-  - ./scripts/deploy-to-gh-pages
+  - ./scripts/deploy-to-gh-pages.sh
