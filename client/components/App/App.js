@@ -1,17 +1,14 @@
 import React from 'react';
 
+import {AccountChooser} from '../AccountsChooser/AccountsChooser';
+import {DappContent} from '../DappContent/DappContent';
+
 export class App extends React.Component {
-
-  static contextTypes = {
-    web3: React.PropTypes.object.isRequired
-  };
-
   render () {
-    console.log(this.context.web3);
-
     return (
       <div>
-        <h1>Hello World</h1>
+        <AccountChooser />
+        <DappContent />
       </div>
     );
   }
