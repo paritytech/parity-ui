@@ -1,21 +1,14 @@
 
 import React, { Component, PropTypes } from 'react';
-import CopyToClipboard from 'react-copy-to-clipboard';
 import _ from 'lodash';
-import formatJson from 'format-json';
 
 import Toggle from 'material-ui/Toggle/Toggle';
-import AutoComplete from 'material-ui/AutoComplete';
+import AutoComplete from '../AutoComplete';
 import TextField from 'material-ui/TextField';
-import IconButton from 'material-ui/IconButton';
-import MoreHorizIcon from 'material-ui/svg-icons/navigation/more-horiz';
-import CallIcon from 'material-ui/svg-icons/communication/call';
-import AssignmentIcon from 'material-ui/svg-icons/action/assignment';
-import InputIcon from 'material-ui/svg-icons/action/input';
 
-import {displayAll} from '../../provider/vendor-provider';
+import JsonEditor from '../JsonEditor';
+import Calls from '../Calls';
 import Markdown from '../Markdown';
-import {hasScrollbar} from '../../provider/dom-provider';
 import styles from './style.css';
 import rpcData from '../../data/rpc.json';
 import RpcNav from '../RpcNav';
@@ -29,21 +22,21 @@ export default class RpcCalls extends Component {
     this.state = {};
   }
 
-  renderClear () {
-    if (!this.props.rpc.prevCalls.length) {
-      return;
-    }
+  componentWillReceiveProps (nextProps) {
+    const { selectedMethod } = nextProps.rpc;
+    if (selectedMethod.paramsValues) {
+      selectedMethod.params.map((p, idx) => {
+        // todo [adgo] 01.05.2016 - make sure this works
+        // not sure idx is the same for paramsValues and params
+        this.setState({
+          [this.paramKey(p)]: selectedMethod.paramsValues[idx]
+        });
+      });
 
-    return (
-      <a
-        {...this._test('prev-calls-remove')}
-        title='Clear RPC calls history'
-        onClick={::this.props.actions.resetRpcPrevCalls}
-        className={styles.removeIcon}
-        >
-        <i className='icon-trash'></i>
-      </a>
-    );
+      if (this.state.jsonMode) {
+        this.setJsonEditorValue();
+      }
+    }
   }
 
   render () {
@@ -66,76 +59,18 @@ export default class RpcCalls extends Component {
               <div className='col col-6 mobile-full'>
                 {this.renderForm()}
               </div>
-              <div
-                className='col col-6 mobile-full'
-                onMouseLeave={() => this.setState({hoveredCallIdx: null})}
-                {...this._test('prev-calls-container')}
-                >
-                {this.renderClear()}
-                <h2 className={styles.header}>History</h2>
-                <div className={`${styles.history} row`} ref={el => this._callsHistory = el}>
-                  {this.renderPrevCalls()}
-                </div>
-                {this.renderPrevCallsToolbar()}
+              <div className='col col-6 mobile-full'>
+                <Calls
+                  calls={this.props.rpc.prevCalls}
+                  reset={this.props.actions.resetRpcPrevCalls}
+                  actions={this.props.actions}
+                />
               </div>
             </div>
           </div>
         </main>
       </div>
     );
-  }
-
-  renderPrevCalls () {
-    const {prevCalls} = this.props.rpc;
-
-    if (!prevCalls.length) {
-      return (
-        <div>
-          <h3 className={styles.historyInfo} {...this._test('no-prev-calls')}>
-            Fire up some RPC calls and the results will be here.
-          </h3>
-        </div>
-      );
-    }
-    return prevCalls.map(
-      (c, idx) => (
-        <div
-          key={idx}
-          onMouseEnter={() => this.setState({hoveredCallIdx: idx})}
-          id={`call-${idx}`}
-          ref={el => this[`call-${idx}`] = el}
-          className={styles.call}
-          {...this._test(`prev-call-${c.callNo}`)}
-          >
-          <span className={styles.callNo}>#{c.callNo}</span>
-          <pre>{c.name}({c.params.toString()})</pre>
-          <pre className={styles.response}>{this.formatRenderedResponse(c.response)}</pre>
-        </div>
-      )
-    );
-  }
-
-  formatRenderedResponse (res) {
-    if (_.isArray(res)) {
-      return res.map((r, idx) => (
-        <span>
-          {idx === 0 ? '[' : ','}
-          {idx === 0 ? '' : <br />}
-          {r}
-          {idx === res.length - 1 ? ']' : ''}
-        </span>
-      ));
-    }
-    if (_.isPlainObject(res)) {
-      const arr = JSON.stringify(res, null, 1);
-      return arr.split('\n').map((any, idx) => (
-        <span>
-          {any}
-          {idx !== 0 && idx !== arr.length - 1 ? <br /> : ''}
-        </span>
-      ));
-    }
-    return res;
   }
 
   renderForm () {
@@ -155,8 +90,9 @@ export default class RpcCalls extends Component {
         {this.renderFormEditor()}
         <button
           {...this._test('fireRpc')}
-          className={`dapp-block-button ${styles.button}`}
-          onClick={() => ::this.onRpcFire() }
+          className={`dapp-block-button`}
+          disabled={this.state.jsonEditorError}
+          onClick={::this.onRpcFire}
           >
           Fire!
         </button>
@@ -181,35 +117,6 @@ export default class RpcCalls extends Component {
     );
   }
 
-  renderJsonEditor () {
-    if (!this.state.jsonMode) {
-      return;
-    }
-
-    let errorClass = this.state.jsonEditorError ? styles.jsonEditorError : '';
-
-    return (
-      <div className='row'>
-        <textarea
-          onChange={::this.onJsonEditorChange}
-          className={`${styles.jsonEditor} ${errorClass}`}
-          value={this.state.jsonEditorValue}
-          />
-          {this.renderJsonEditorError()}
-      </div>
-    );
-  }
-
-  renderJsonEditorError () {
-    if (!this.state.jsonEditorError) {
-      return;
-    }
-
-    return (
-      <div className={styles.jsonEditorErrorMsg}>{this.state.jsonEditorError}</div>
-    );
-  }
-
   renderMethodList () {
     const methods = rpcMethods.map(m => m.name);
 
@@ -222,7 +129,6 @@ export default class RpcCalls extends Component {
           floatingLabelText='Method name'
           dataSource={methods}
           onNewRequest={::this.handleMethodChange}
-          {...displayAll()}
           {...this._test('autocomplete')}
         />
         <div>
@@ -233,88 +139,29 @@ export default class RpcCalls extends Component {
   }
 
   handleMethodChange (name) {
-    let method = rpcMethods.find(m => m.name === name);
+    const method = rpcMethods.find(m => m.name === name);
     this.props.actions.selectRpcMethod(method);
   }
 
-  onRpcFire (method = this.props.rpc.selectedMethod) {
-    let params;
-
+  onRpcFire () {
     if (this.state.jsonMode) {
-      try {
-        method = JSON.parse(this.state.jsonEditorValue);
-      } catch (err) {
-        // todo [adgo] 26.04.2016 - setup error handling and error toast
-        this.props.actions.addToast('error parsing json, check console');
-        return console.error('error parsing JSON: ', this.state.jsonEditorValue, err);
-      }
-      params = method.params;
-    } else {
-      params = method.params.map(p => this.state[`params_${p}`]);
+      return this.onCustomRpcFire();
     }
+
+    const { selectedMethod } = this.props.rpc;
+    let params = selectedMethod.params.map(::this.paramValue);
 
     this.props.actions.fireRpc({
-      method: method.name,
-      outputFormatter: method.outputFormatter,
-      inputFormatters: method.inputFormatters,
-      params: params
+      method: selectedMethod.name,
+      outputFormatter: selectedMethod.outputFormatter,
+      inputFormatters: selectedMethod.inputFormatters,
+      params
     });
   }
 
-  setCall (call) {
-    let method = _.find(rpcMethods, {name: call.name});
-    this.props.actions.selectRpcMethod(method);
-
-    // and set parameter values
-    method.params.map((param, idx) => {
-      this.setState({
-        [`params_${param}`]: call.params[idx]
-      });
-    });
-  }
-
-  setAndCall (call) {
-    this.setCall(call);
-    let method = _.find(rpcMethods, {name: call.name});
-    this.onRpcFire(method);
-  }
-
-  renderPrevCallsToolbar () {
-    const idx = this.state.hoveredCallIdx;
-    if (typeof idx !== 'number') {
-      return;
-    }
-    const call = this.props.rpc.prevCalls[idx];
-    const callEl = this[`call-${idx}`];
-    const wrapStyle = {top: callEl.offsetTop - 22 - this._callsHistory.scrollTop};
-    if (hasScrollbar(this._callsHistory)) {
-      wrapStyle.right = 13;
-    }
-
-    return (
-      <div
-        className={styles.callActionsWrap}
-        style={wrapStyle}
-        >
-        <IconButton className={styles.callActionsButton}><MoreHorizIcon /></IconButton>
-        <div className={styles.callActions}>
-          <IconButton className={styles.callAction} onClick={() => ::this.setCall(call)} tooltip='Set' tooltipPosition='top-left'>
-            <InputIcon className={styles.callActionIcon} />
-          </IconButton>
-          <IconButton className={styles.callAction} onClick={() => ::this.setAndCall(call)} tooltip='Fire again' tooltipPosition='top-left'>
-            <CallIcon className={styles.callActionIcon} />
-          </IconButton>
-          <CopyToClipboard
-            text={JSON.stringify(call)}
-            onCopy={() => this.props.actions.addToast('Method copied to clipboard!')}
-            >
-            <IconButton className={styles.callAction} tooltip='Copy to clipboard' tooltipPosition='top-left'>
-              <AssignmentIcon className={styles.callActionIcon}/>
-            </IconButton>
-          </CopyToClipboard>
-        </div>
-      </div>
-    );
+  onCustomRpcFire () {
+    const { method, params } = this.state.jsonEditorParsedValue;
+    this.props.actions.fireRpc({ method, params });
   }
 
   renderInputs () {
@@ -335,41 +182,24 @@ export default class RpcCalls extends Component {
                   fullWidth
                   hintText={p}
                   hintStyle={{maxWidth: '100%', overflow: 'hidden', whiteSpace: 'nowrap'}}
-                  value={this.state[`params_${p}`]}
+                  value={this.paramValue(p)}
                   onChange={(evt) => this.setState({
-                    [`params_${p}`]: evt.target.value
+                    [this.paramKey(p)]: evt.target.value
                   })}
-                  {...this._test(`params_${p}`)}
+                  {...this._test(this.paramKey(p))}
                 />
               )
             );
   }
 
-  onJsonEditorChange (evt) {
-    const {value} = evt.target;
-
-    try {
-      JSON.parse(value);
-      this.setState({jsonEditorError: null});
-    } catch (err) {
-      this.setState({jsonEditorError: 'invalid json'});
-    }
-
-    this.setState({
-      jsonEditorValue: value
-    });
-  }
-
   setJsonEditorValue () {
     const {selectedMethod} = this.props.rpc;
-    const method = {
-      name: selectedMethod.name,
-      params: selectedMethod.params.map(p => this.state[`params_${p}`]),
-      inputFormatters: selectedMethod.inputFormatters,
-      outputFormatter: selectedMethod.outputFormatter
+    const json = {
+      method: selectedMethod.name,
+      params: selectedMethod.params.map(::this.paramValue)
     };
     this.setState({
-      jsonEditorValue: formatJson.plain(method)
+      jsonEditorValue: json
     });
   }
 
@@ -378,6 +208,34 @@ export default class RpcCalls extends Component {
       this.setJsonEditorValue();
     }
     this.setState({jsonMode: !this.state.jsonMode});
+  }
+
+  renderJsonEditor () {
+    if (!this.state.jsonMode) {
+      return;
+    }
+
+    return (
+      <JsonEditor
+        onChange={::this.onJsonEditorChange}
+        value={this.state.jsonEditorValue}
+      />
+    );
+  }
+
+  onJsonEditorChange (jsonEditorParsedValue, jsonEditorError) {
+    this.setState({
+      jsonEditorParsedValue,
+      jsonEditorError
+    });
+  }
+
+  paramValue (p) {
+    return this.state[this.paramKey(p)];
+  }
+
+  paramKey (p) {
+    return `params_${p}`;
   }
 
 }
@@ -389,7 +247,6 @@ RpcCalls.propTypes = {
   }).isRequired,
   actions: PropTypes.shape({
     fireRpc: PropTypes.func.isRequired,
-    addToast: PropTypes.func.isRequired,
     selectRpcMethod: PropTypes.func.isRequired,
     resetRpcPrevCalls: PropTypes.func.isRequired
   }).isRequired

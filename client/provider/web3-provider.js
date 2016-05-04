@@ -1,7 +1,7 @@
 
 import {isArray, isObject, eq, compact} from 'lodash';
 import {isBigNumber} from 'web3/lib/utils/utils';
-import {toPromise} from './util-provider';
+import {toPromise} from '../util';
 import {Web3Base} from './web3-base';
 import * as StatusActions from '../actions/status';
 import * as MiningActions from '../actions/mining';

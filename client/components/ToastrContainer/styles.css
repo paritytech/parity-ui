@@ -24,6 +24,7 @@
 
 .remove {
   float: right;
+  cursor: pointer;
 }
 
 .error .remove,

@@ -8,7 +8,7 @@ import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import * as RpcActions from '../../actions/rpc';
 import { updateLogging } from '../../actions/logger';
-import {addToast} from '../../actions/toastr';
+import { copyToClipboard } from '../../actions/clipboard';
 
 class RpcPage extends Component {
 
@@ -42,7 +42,7 @@ function mapStateToProps (state) {
 
 function mapDispatchToProps (dispatch) {
   return {
-    actions: bindActionCreators(_.extend({}, RpcActions, {addToast}, {updateLogging}), dispatch)
+    actions: bindActionCreators(_.extend({}, RpcActions, {copyToClipboard}, {updateLogging}), dispatch)
   };
 }
 
