@@ -3,8 +3,11 @@ import { handleActions } from 'redux-actions';
 
 const initialState = {
   levels: '',
+  logging: true,
   logs: []
 };
+
+const maxLogs = 1024;
 
 export const actionHandlers = {
 
@@ -15,10 +18,28 @@ export const actionHandlers = {
     };
   },
 
-  'update devLogs' (state, action) {
+  'remove devLogs' (state, action) {
     return {
       ...state,
-      logs: action.payload
+      logs: []
+    };
+  },
+
+  'update devLogging' (state, action) {
+    return {
+      ...state,
+      logging: action.payload
+    };
+  },
+
+  'update devLogs' (state, action) {
+    if (!state.logging) {
+      return { ...state };
+    }
+
+    return {
+      ...state,
+      logs: action.payload.concat(state.logs).slice(0, maxLogs)
     };
   }
 
