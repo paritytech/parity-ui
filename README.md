@@ -1,4 +1,4 @@
-# Parity status page
+# Parity Status Page
 
 [![Build Status][travis-image]][travis-url]
 [![js-semistandard-style][semistandard-image]][semistandard-url]
@@ -17,27 +17,48 @@
 [license-url]: http://www.gnu.org/licenses/gpl-3.0.en.html
 
 
-
-### develop
+### How to start?
 ```bash
-git clone git@github.com:ethcore/eth-node-status-page.git
-cd eth-node-status-page
-npm i
-npm start
+$ git clone git@github.com:ethcore/eth-node-status-page.git
+$ cd eth-node-status-page
+$ npm i                      # install dependencies
+$ npm start                  # run webpack-dev-server and proxy RPC calls to http://localhost:8080
+                             # open http://localhost:3000 in your browser
 ```
 
-### test
+### Development workflow
+
+#### Status Page
+To run development version of `Status Page` just run:
+
+```bash
+$ cd eth-node-status-page
+$ npm start                  # and open browser at http://localhost:3000
+```
+
+It runs `webpack-dev-server` on port `:3000` and proxies all RPC calls to `http://localhost:8080`.
+
+It means that you also need to run Ethereum client with JSON-RPC support.
+
+#### Parity
+To setup `parity` follow the intructions [here](https://github.com/ethcore/parity).
+When you have `parity` installed, run:
+
+```bash
+$ parity -w                  # start parity with webapps support and JSON-RPC server on :8080
+```
+
+NOTE: running `$ parity -w --pruning fast` can save you some disk space.
+
+### How to run tests?
 #### Unit Tests
 ```bash
-npm start
-npm t # run unit tests in watchmode
+$ npm start                  # run development webserver
+$ npm t                      # run unit tests in watchmode
 ```
 
 #### Integration Tests
 ```bash
-npm startTest # run with mocked backend
-npm run nightwatch
+$ npm startTest              # run with mocked backend (no client in background required)
+$ npm run nightwatch         # run integration tests (by default requires Firefox browser)
 ```
-
-### Parity
-follow the intructions to run parity [here](https://github.com/ethcore/parity)
