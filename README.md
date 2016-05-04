@@ -4,6 +4,8 @@
 [![js-semistandard-style][semistandard-image]][semistandard-url]
 [![Join the chat at}[gitter-url]][gitter-image]][gitter-url]
 [![GPLv3][license-image]][license-url]
+[![Build Size][build-size-image]]
+
 
 [travis-image]: https://travis-ci.org/ethcore/eth-node-status-page.svg?branch=master "Build Status"
 [travis-url]: https://travis-ci.org/ethcore/eth-node-status-page
@@ -15,6 +17,9 @@
 [gitter-url]: https://gitter.im/ethcore/parity?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge "https://gitter.im/ethcore/parity"
 [license-image]: https://img.shields.io/badge/license-GPL%20v3-green.svg
 [license-url]: http://www.gnu.org/licenses/gpl-3.0.en.html
+[build-size-image]: http://ethcore.github.io/eth-node-status-page/build-size.svg "Build Size"
+<!-- todo [adgo] - add build analysis page and link badge to it -->
+<!-- [build-size-url]: https://travis-ci.org/ethcore/eth-node-status-page -->
 
 
 

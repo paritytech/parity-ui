@@ -6,6 +6,7 @@ node_js:
 env:
   global:
     - CXX=g++-4.8
+    - REPO_SLUG=ethcore/eth-node-status-page
     # SAUCE_USERNAME
     - secure: "ekgApR8RUUyQVlG4U6HA85AuFZFcM697MdVeNFeceIY9hozSB0pI/GMRysThN58sNP2m8j0HPz9tEUiOJrW2gyj8t56ZZ9jJrru0dPbNIyQsQLafRslV372+tQxk0B/hC1LvvGcYNoveAgCaRzKYJSDs41a5YXrknH0i0s5Z7M1yU7KHT1JV6JfymeY8QjITQqmjXVjbUDZLc+BTww08sg+EM1EpJJCRNAk7TBouI6odLRyg0mZf6O/Zd7M/a95trzlk32ULgegdDXlohQrqXEBIHcw71OauI7ZvCaIRE+DDVQ2tvnISit9fxmqyLelOB0viLDW6JIPeglFntepivpLWzBI42TNTdpKm8t0wGHJ54pMyzSziKH4JSwKcUpLLlQp0bxfo+JZBfEgzxfjfp1wpJCMZBKMj5YrBmlVxrizGwe4WuT7ZqQ6IeOV1t/F2twNGLdUgTCYHyeBejgQOMsEFtVCHIC71zZ4EzSmGeolPIhf6csegy4gphaMh1Ymwh+x9QYoq3grNAf7t3575frFO3t2y3CRbwh0+3JQkvQuJ9FuJoRAX5zlplvot3Xx8P1Y5LPZsejL2bxvPCvk76aVINQV5HeL1qZdZV06mgJtI+pYthWFSKse2Ho+NtZcrI082OdOIDtNYBbCEG4Gw+WwU8R53tEufNaEO2rMoPls="
     # SAUCE_ACCESS_KEY
@@ -28,3 +29,6 @@ before_script:
   - if [ "$SCRIPT" == "nightwatchCI" ]; then sleep 25; fi
 
 script: npm run $SCRIPT
+
+after_success:
+  - ./scripts/deploy-to-gh-pages
