@@ -1,4 +1,4 @@
-# Parity status page
+# Parity Status Page
 
 [![Build Status][travis-image]][travis-url]
 [![js-semistandard-style][semistandard-image]][semistandard-url]
