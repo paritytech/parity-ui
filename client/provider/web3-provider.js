@@ -117,7 +117,7 @@ export class Web3Provider extends Web3Base {
       if (isBigNumber(val)) {
         return !val.equals(action.payload);
       } if (isArray(val) || isObject(val)) {
-        return eq(val, action.payload);
+        return !eq(val, action.payload);
       } else {
         return val !== action.payload;
       }

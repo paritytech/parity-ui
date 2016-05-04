@@ -2,7 +2,9 @@
 import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { extend } from 'lodash';
 
+import * as debugActions from '../../actions/debug';
 import { updateLogging } from '../../actions/logger';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
@@ -45,7 +47,7 @@ function mapStateToProps (state) {
 
 function mapDispatchToProps (dispatch) {
   return {
-    actions: bindActionCreators({updateLogging}, dispatch)
+    actions: bindActionCreators(extend({}, debugActions, {updateLogging}), dispatch)
   };
 }
 
