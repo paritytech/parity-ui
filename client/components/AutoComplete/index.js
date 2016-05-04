@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import AutoComplete from 'material-ui/AutoComplete';
 
 export default class WrappedAutoComplete extends Component {
@@ -10,10 +10,6 @@ export default class WrappedAutoComplete extends Component {
   }
 
 }
-
-WrappedAutoComplete.propTypes = {
-  filter: PropTypes.func
-};
 
 WrappedAutoComplete.defaultProps = {
   openOnFocus: true,
