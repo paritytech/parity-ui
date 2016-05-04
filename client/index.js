@@ -3,13 +3,13 @@ import ReactDOM from 'react-dom';
 import React from 'react';
 
 import localStore from 'store';
-import Web3 from 'web3';
 
 import './index.html';
 import './index.css';
 import 'dapp-styles/dapp-styles.less';
 import './test';
 
+import Web3 from 'web3'; // must b after ./test otherwise it breaks
 import middlewares from './middleware';
 import Routes from './routes';
 import MuiThemeProvider from './components/MuiThemeProvider';
