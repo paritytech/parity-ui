@@ -1,5 +1,6 @@
 
 import { handleActions } from 'redux-actions';
+import { union } from 'lodash';
 
 const initialState = {
   levels: '',
@@ -36,10 +37,11 @@ export const actionHandlers = {
     if (!state.logging) {
       return { ...state };
     }
+    let newLogs = union(state.logs, action.payload);
 
     return {
       ...state,
-      logs: action.payload.concat(state.logs).slice(0, maxLogs)
+      logs: newLogs.slice(newLogs.length - maxLogs)
     };
   }
 
