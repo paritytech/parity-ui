@@ -27,7 +27,10 @@ export class AccountChooser extends Web3Component {
     return (
       <DropDownMenu value={this.state.defaultAccountIdx} onChange={::this.handleChange}>
         {this.state.accounts.map((acc, idx) => (
-          <MenuItem value={idx} primaryText={acc} />
+          <MenuItem
+            key={acc}
+            value={idx}
+            primaryText={acc} />
         ))}
       </DropDownMenu>
     );
