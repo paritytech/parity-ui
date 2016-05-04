@@ -21,15 +21,15 @@
 ```bash
 $ git clone git@github.com:ethcore/eth-node-status-page.git
 $ cd eth-node-status-page
-$ npm i                      # Install dependencies
-$ npm start                  # Runs webpack-dev-server, proxies RPC calls to http://localhost:8080
-                             # Open http://localhost:3000 in your browser
+$ npm i                      # install dependencies
+$ npm start                  # run webpack-dev-server and proxy RPC calls to http://localhost:8080
+                             # open http://localhost:3000 in your browser
 ```
 
 ### Development workflow
 
 #### Status Page
-To run development version of Status page just run:
+To run development version of `Status Page` just run:
 
 ```bash
 $ cd eth-node-status-page
@@ -37,6 +37,7 @@ $ npm start                  # and open browser at http://localhost:3000
 ```
 
 It runs `webpack-dev-server` on port `:3000` and proxies all RPC calls to `http://localhost:8080`.
+
 It means that you also need to run Ethereum client with JSON-RPC support.
 
 #### Parity
@@ -44,7 +45,7 @@ To setup parity follow the intructions to run parity [here](https://github.com/e
 When you have parity installed, run:
 
 ```bash
-$ parity -w                  # Starts parity with webapps support and JSON-RPC server on :8080
+$ parity -w                  # start parity with webapps support and JSON-RPC server on :8080
 ```
 
 NOTE: running `$ parity -w --pruning fast` can save you some disk space.
@@ -59,5 +60,5 @@ $ npm t                      # run unit tests in watchmode
 #### Integration Tests
 ```bash
 $ npm startTest              # run with mocked backend
-$ npm run nightwatch         # Run Integration tests (by default requires Firefox browser)
+$ npm run nightwatch         # run integration tests (by default requires Firefox browser)
 ```
