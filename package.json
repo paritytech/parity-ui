@@ -4,7 +4,7 @@
   "description": "System UI for Parity dapp browser",
   "main": "client/index.js",
   "scripts": {
-    "start": "webpack-dev-server -d --history-api-fallback --hot --inline --progress --colors --port 3001",
+    "start": "webpack-dev-server -d --history-api-fallback --hot --inline --progress --colors --port 3010",
     "webpack": "webpack",
     "commit": "commit-wizard",
     "lint": "semistandard",

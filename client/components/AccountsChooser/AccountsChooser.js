@@ -14,6 +14,7 @@ export class AccountChooser extends Web3Component {
   onTick (next) {
     this.context.web3.eth.getAccounts((err, accounts) => {
       this.setState({accounts});
+      this.props.onChange(this.state.accounts[this.state.defaultAccountIdx]);
     });
   }
 
@@ -21,6 +22,8 @@ export class AccountChooser extends Web3Component {
     this.setState({
       defaultAccountIdx: value 
     });
+
+    this.props.onChange(this.state.accounts[value]);
   }
 
   render () {
@@ -35,5 +38,10 @@ export class AccountChooser extends Web3Component {
       </DropDownMenu>
     );
   }
+
+
+  static propTypes = {
+    onChange: React.PropTypes.func.isRequired
+  };
 
 }

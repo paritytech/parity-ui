@@ -29,7 +29,6 @@ export class Web3Component extends React.Component {
 
   onTick (next) {
     // can be overridden in subclases
-    next();
   }
 
   static contextTypes = {
