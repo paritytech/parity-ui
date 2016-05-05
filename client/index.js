@@ -17,7 +17,7 @@ import Web3 from 'web3';
 import {Web3Provider} from './components/Web3Provider/Web3Provider';
 import {App} from './components/App/App';
 
-const web3 = new Web3(new Web3.providers.HttpProvider('/rpc/'));
+const web3 = new Web3(new Web3.providers.HttpProvider(process.env.RPC_ADDRESS || '/rpc/'));
 
 ReactDOM.render(
   <MuiThemeProvider muiTheme={muiTheme}>

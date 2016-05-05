@@ -25,7 +25,7 @@ fi
 git config --global user.email "$GIT_USER_EMAIL"
 git config --global user.name "$GIT_USER_NAME"
 
-npm run build
+RPC_ADDRESS="http://pi.parity.io:8545" npm run build
 # get badge for build size, displayed on README.md
 BUILD_SIZE="$(du -hs ${BUILD_PATH} | head -n1 | awk '{print $1;}')"
 curl -o $BUILD_PATH/build-size.svg "https://img.shields.io/badge/build%20size-${BUILD_SIZE}-green.svg"
