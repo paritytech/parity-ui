@@ -30,7 +30,7 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
-const web3 = new Web3(new Web3.providers.HttpProvider('/rpc/'));
+const web3 = new Web3(new Web3.providers.HttpProvider(process.env.RPC_ADDRESS || '/rpc/'));
 const ethcoreWeb3 = new EthcoreWeb3(web3);
 new Web3Provider(web3, ethcoreWeb3, store).start();
 
