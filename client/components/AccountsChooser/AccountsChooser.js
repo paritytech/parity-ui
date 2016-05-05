@@ -2,6 +2,8 @@ import React from 'react';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 
+import {isEqual} from 'lodash';
+
 import styles from './styles.css';
 
 import {Web3Component} from '../Web3Component/Web3Component';
@@ -11,7 +13,8 @@ export class AccountChooser extends Web3Component {
 
   state = {
     defaultAccountIdx: 0,
-    accounts: []
+    accounts: [],
+    balances: {}
   };
 
   onTick (next) {
@@ -19,8 +22,34 @@ export class AccountChooser extends Web3Component {
       if (err) {
         return;
       }
+
+      if (isEqual(accounts, this.state.accounts)) {
+        return;
+      }
+
       this.setState({accounts});
+      this.fetchBalances(accounts);
       this.props.onChange(this.state.accounts[this.state.defaultAccountIdx]);
+    });
+  }
+
+  fetchBalances (accounts) {
+    Promise.all(accounts.map((acc) => new Promise((resolve, reject) => {
+      this.context.web3.eth.getBalance(acc, (err, balance) => {
+        if (err) {
+          return reject(err);
+        }
+        resolve({
+          acc, balance
+        });
+      });
+    }))).then((balances) => {
+      this.setState({
+        balances: balances.reduce((memo, acc) => {
+          memo[acc.acc] = acc.balance;
+          return memo;
+        }, {})
+      });
     });
   }
 
@@ -37,8 +66,24 @@ export class AccountChooser extends Web3Component {
     return (
       <div className={styles.account}>
         <Identicon seed={acc} />
-        {this.shortenAddress(address)}
+        <span className={styles.address}>
+          {this.shortenAddress(address)}
+        </span>
+        {this.renderBalance(acc)}
       </div>
+    );
+  }
+
+  renderBalance (acc) {
+    const balance = this.state.balances[acc];
+    if (!balance) {
+      return (
+        <span> (...)</span>
+      );
+    }
+    const val = this.context.web3.fromWei(balance);
+    return (
+      <span> ({val.toFixed(2)} Eth)</span>
     );
   }
 
