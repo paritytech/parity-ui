@@ -3,11 +3,15 @@
 export class FrameProvider {
 
   static withFallback (fallback) {
-    return new FrameProvider(fallback);
+    let frame = new FrameProvider();
+    if (frame.win()) {
+      return frame;
+    }
+
+    return fallback;
   }
 
-  constructor (fallback) {
-    this.fallback = fallback;
+  constructor () {
     this.callbacks = {};
 
     window.addEventListener('message', (ev) => {
@@ -31,25 +35,21 @@ export class FrameProvider {
   }
 
   prepareRequest (async) {
-    console.log('prepareRequest', async);
-    return this.fallback.prepareRequest(async);
+    // nothing to do
   }
 
   send (payload) {
-    console.log('send', payload);
-    return this.fallback.send(payload);
+    throw new Error('Synchronous requests are not supported.');
   }
 
   sendAsync (payload, callback) {
-    // console.log('sendAsync', payload, callback);
     this.callbacks[payload.id] = callback;
     this.post('web3_sendAsync', payload);
-    // return this.fallback.sendAsync(payload, callback);
   }
 
   isConnected () {
-    console.log('isConnected');
-    return this.fallback.isConnected();
+    // TODO isConnected tracking?
+    return true;
   }
 
 }
