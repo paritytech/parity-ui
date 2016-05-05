@@ -1,0 +1,24 @@
+sudo: false
+language: node_js
+node_js:
+  - '5'
+
+env:
+  global:
+    - REPO_SLUG=ethcore/parity-web-ui
+    # GITHUB_TOKEN with public repo access
+    - secure: dZW1Auq9n4L4pw/BJO1/IU1MO9CCMk3xzm/UIqatVX+R6W51lHBysxGW7vfHntyBbaOJxcX/RA/SE6+JeSujqkXad137bJBhwsWv4GrjeCrSwF/1hd0/uk0KtFJ5uEmOWckBRE9qw5VeRm7RrwH4tw/q+juJjZTjWLXQIYm3QXDtDFDQQ0/Pe1YaCya/CeTOOfJ+Sk/cSdFmNPqTP+RXt3oi8bUlrkXk5/oIbl+rrMZWHVv75zEQZQbdRg3YniCunGQk0gpshpkvcf0N6A9s7f7wz12wCQoErOSap6kvoUyVNO+27OrSOsLAZAe9z8IXNvthnef8/6kEdyzMUQAMg32tkw0Dtuo3ZLcYouLKQsiwO7zRgOGIaZreEfcA90XV3Sv7PKxURJRR/pfqDHNwpi3OmlcJVASWc+FrH1rauo2E31OVvP2XSeRhT2yxUXpfhBB983W9JF6WsAFUKhwVYg+be7yaokfBUEb7uJd1BafLsIOa+qm/NpxhgkzHM/cB+z8CbUEDdSz6+ZxEv0QT2jt7QnLgD6L1aRRfV8B74DA5D2SP6dE2YMWkxCDMTUZkhDcaijNdN5HoilW3sdW4Zk9MSGzlU7j5amvQ+B3YFcFwFiNHq0ZlwJ/Yi6/ijSZCXN0u0N/GFpBiht1ixL3mhQmVRgOrrQlKXs0QK2nkdoI=
+
+matrix:
+  include:
+  - env: SCRIPT=lint
+  - env: SCRIPT=testOnce
+
+cache:
+  directories:
+    - node_modules
+
+script: npm run $SCRIPT
+
+after_success:
+  - ./scripts/deploy-to-gh-pages.sh
