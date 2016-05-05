@@ -21,6 +21,7 @@
 <!-- todo [adgo] - add build analysis page and link badge to it -->
 <!-- [build-size-url]: https://travis-ci.org/ethcore/eth-node-status-page -->
 
+### [Demo](http://ethcore.github.io/eth-node-status-page)
 
 ### How to start?
 ```bash
