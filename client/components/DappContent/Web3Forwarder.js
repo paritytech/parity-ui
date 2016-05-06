@@ -5,7 +5,7 @@ export class Web3Forwarder {
   }
 
   provider () {
-    this.component.context.web3.currentProvider;
+    return this.component.context.web3.currentProvider;
   }
 
   handleMethod (method, payload, cb) {
