@@ -1,4 +1,4 @@
-export function parseAddress(url) {
+export function parseAddress (url) {
   const parts = url.split('://');
   const protocol = parts[0];
 
@@ -8,7 +8,7 @@ export function parseAddress(url) {
       url: parts
     };
   }
-  
+
   if (protocol === 'local') {
     return {
       protocol,
