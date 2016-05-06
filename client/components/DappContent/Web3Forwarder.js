@@ -8,6 +8,10 @@ export class Web3Forwarder {
     return this.component.context.web3.currentProvider;
   }
 
+  sendTransaction (payload, cb) {
+    this.handleMethod('.', payload, cb);
+  }
+
   handleMethod (method, payload, cb) {
     if (method === 'eth_accounts') {
       const response = {
@@ -16,6 +20,27 @@ export class Web3Forwarder {
         result: this.component.props.accounts
       };
       return cb(null, response);
+    }
+
+    if (method === 'eth_sendTransaction') {
+      // TODO sorry for that - need redux so badly ;)
+      this.component.setState({
+        sendingTransaction: true,
+        transaction: payload,
+        cb: (err, pass) => {
+          this.component.setState({
+            sendingTransaction: false,
+            transaction: null,
+            cb: null
+          });
+          if (err) {
+            return cb(err);
+          }
+          console.log('Password: ' + pass);
+          this.provider().sendAsync(payload, cb);
+        }
+      });
+      return;
     }
 
     this.provider().sendAsync(payload, cb);

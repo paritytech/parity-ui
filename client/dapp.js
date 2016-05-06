@@ -83,7 +83,9 @@ function redrawAccounts (accounts) {
   el('#accounts').innerHTML = accounts;
 }
 function redrawBalance (balance) {
-  el('#balance').innerHTML = web3.fromWei(balance).toFixed(2);
+  const val = web3.fromWei(balance).toFixed(2);
+  el('#balance').innerHTML = val;
+  $amount.max = val;
 }
 
 function el (sel) {
