@@ -2,6 +2,8 @@ import React from 'react';
 
 import AutoComplete from 'material-ui/AutoComplete';
 
+import styles from './styles.css';
+
 import {AccountChooser} from '../AccountsChooser/AccountsChooser';
 import {DappContent} from '../DappContent/DappContent';
 
@@ -36,7 +38,7 @@ export class App extends React.Component {
   render () {
     return (
       <div>
-        <div style={{display: 'flex'}}>
+        <div className={styles.nav}>
           <div style={{flex: 1}}>
             <AutoComplete
               fullWidth
