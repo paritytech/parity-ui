@@ -24,6 +24,11 @@ export class FrameProvider {
         return;
       }
 
+      if (!this.callbacks[id]) {
+        console.warn('Missing callback: ', id);
+        return;
+      }
+
       this.callbacks[id](err, response);
       delete this.callbacks[id];
     });
