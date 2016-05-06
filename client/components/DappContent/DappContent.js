@@ -6,6 +6,7 @@ import FlatButton from 'material-ui/FlatButton';
 
 import {Web3Component} from '../Web3Component/Web3Component';
 import {Web3Forwarder} from './Web3Forwarder';
+import {parseAddress} from './address';
 
 export class DappContent extends Web3Component {
 
@@ -19,15 +20,14 @@ export class DappContent extends Web3Component {
   }
 
   render () {
-    const parts = this.props.url.split('://');
-    const src = parts[0] === 'parity' ? parts[1] : this.props.url;
+    const address = parseAddress(this.props.url);
 
     return (
       <div>
         <iframe
           seamless
           className={styles.content}
-          src={src}
+          src={address.url}
           onLoad={(ev) => this.forwarder.onLoad(ev.target, this.props.url)}
           />
         <Dialog

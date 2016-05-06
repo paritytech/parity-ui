@@ -11,10 +11,13 @@ export class App extends React.Component {
 
   state = {
     accounts: [],
-    url: 'parity://dapp.html',
+    url: 'local://dapp.html',
     hints: [
-      'parity://dapp.html',
-      'parity://index.html',
+      'local://dapp.html',
+      'local://index.html',
+      'parity://dapp',
+      'ipfs://dapp',
+      'parity://test',
       'http://ethcore.github.io/parity-web-ui/dapp.html'
     ]
   };

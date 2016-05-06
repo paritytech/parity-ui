@@ -1,3 +1,6 @@
+
+import {parseAddress} from './address';
+
 export class Web3Forwarder {
   constructor (component) {
     this.component = component;
@@ -67,8 +70,8 @@ export class Web3Forwarder {
 
   onLoad (frame, url) {
     const selfOrigin = window.location.origin;
-    const parts = url.split('://');
-    const origin = (parts.length !== 1 && parts[0] !== 'parity') ? url : selfOrigin;
+    const address = parseAddress(url);
+    const origin = (address.protocol === 'local') ? selfOrigin : address.url;
 
     frame.contentWindow.postMessage({
       type: 'parity_initial',
