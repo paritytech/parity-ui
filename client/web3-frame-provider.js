@@ -13,10 +13,16 @@ export class FrameProvider {
 
   constructor () {
     this.callbacks = {};
+    this.origin = window.location.origin;
 
     window.addEventListener('message', (ev) => {
       const {data} = ev;
       const {id, err, response} = data;
+
+      if (data.type === 'parity_initial') {
+        this.origin = data.payload;
+        return;
+      }
 
       this.callbacks[id](err, response);
       delete this.callbacks[id];
@@ -31,7 +37,7 @@ export class FrameProvider {
     const win = this.win();
     win.postMessage({
       type, payload
-    }, win.location.origin);
+    }, this.origin);
   }
 
   prepareRequest (async) {

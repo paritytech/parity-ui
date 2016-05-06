@@ -40,6 +40,16 @@ export class Web3Forwarder {
     console.warn('Did not understood:', data);
   }
 
+  onLoad (frame, url) {
+    const selfOrigin = window.location.origin;
+    const origin = (url.indexOf('://') !== -1) ? url : selfOrigin;
+
+    frame.contentWindow.postMessage({
+      type: 'parity_initial',
+      payload: selfOrigin
+    }, origin);
+  }
+
   addListener () {
     window.addEventListener('message', ::this.messageListener);
   }

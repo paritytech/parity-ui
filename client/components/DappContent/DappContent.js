@@ -16,12 +16,14 @@ export class DappContent extends Web3Component {
       <iframe
         seamless
         className={styles.content}
-        src={'dapp.html'}
+        src={this.props.url}
+        onLoad={(ev) => this.forwarder.onLoad(ev.target, this.props.url)}
         />
     );
   }
 
   static propTypes = {
+    url: React.PropTypes.string.isRequired,
     accounts: React.PropTypes.arrayOf(React.PropTypes.string).isRequired
   };
 }
