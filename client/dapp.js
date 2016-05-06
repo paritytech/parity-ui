@@ -14,5 +14,6 @@ setInterval(() => {
       throw new Error(err);
     }
     $el.innerHTML = accounts;
+    web3.defaultAccount = accounts[0];
   });
 }, 2000);
