@@ -12,11 +12,13 @@ export class DappContent extends Web3Component {
   }
 
   render () {
+    const parts = this.props.url.split('://');
+    const src = parts[0] === 'parity' ? parts[1] : this.props.url;
     return (
       <iframe
         seamless
         className={styles.content}
-        src={this.props.url}
+        src={src}
         onLoad={(ev) => this.forwarder.onLoad(ev.target, this.props.url)}
         />
     );

@@ -9,8 +9,12 @@ export class App extends React.Component {
 
   state = {
     accounts: [],
-    url: 'dapp.html',
-    hints: ['dapp.html', 'http://ethcore.github.io/parity-web-ui/dapp.html']
+    url: 'parity://dapp.html',
+    hints: [
+      'parity://dapp.html',
+      'parity://index.html',
+      'http://ethcore.github.io/parity-web-ui/dapp.html'
+    ]
   };
 
   changeAccount (account) {
@@ -26,7 +30,7 @@ export class App extends React.Component {
   }
 
   onUpdateInput (d) {
-  
+
   }
 
   render () {
@@ -35,8 +39,8 @@ export class App extends React.Component {
         <div style={{display: 'flex'}}>
           <div style={{flex: 1}}>
             <AutoComplete
-              fullWidth={true}
-              hintText="http://..."
+              fullWidth
+              hintText='http://...'
               searchText={this.state.url}
               dataSource={this.state.hints}
               onUpdateInput={::this.onUpdateInput}
