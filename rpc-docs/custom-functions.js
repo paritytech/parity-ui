@@ -1,90 +1,92 @@
 #!/usr/bin/env node
 'use strict';
 
+const BOOLEAN_RESPONSE = '`Boolean` - whether the call was successful';
+
 module.exports = [
   {
     name: 'eth_pendingTransactions',
     desc: '?',
     params: [],
-    returns: false
+    returns: BOOLEAN_RESPONSE
   },
   {
     name: 'eth_flush',
     desc: '?',
     params: [],
-    returns: false
+    returns: BOOLEAN_RESPONSE
   },
   {
     name: 'eth_newFilterEx',
     desc: '?',
     params: [''],
-    returns: false
+    returns: BOOLEAN_RESPONSE
   },
   {
     name: 'eth_getFilterChangesEx',
     desc: '?',
     params: [''],
-    returns: false
+    returns: BOOLEAN_RESPONSE
   },
   {
     name: 'eth_getFilterLogsEx',
     desc: '?',
     params: [''],
-    returns: false
+    returns: BOOLEAN_RESPONSE
   },
   {
     name: 'eth_getLogsEx',
     desc: '?',
     params: ['?'],
-    returns: false
+    returns: BOOLEAN_RESPONSE
   },
   {
     name: 'eth_register',
     desc: '?',
     params: ['?'],
-    returns: false
+    returns: BOOLEAN_RESPONSE
   },
   {
     name: 'eth_unregister',
     desc: '?',
     params: ['?'],
-    returns: false
+    returns: BOOLEAN_RESPONSE
   },
   {
     name: 'eth_fetchQueuedTransactions',
     desc: '?',
     params: ['?'],
-    returns: false
+    returns: BOOLEAN_RESPONSE
   },
   {
     name: 'eth_signTransaction',
     desc: '?',
     params: ['?'],
-    returns: false
+    returns: BOOLEAN_RESPONSE
   },
   {
     name: 'eth_inspectTransaction',
     desc: '?',
     params: ['?'],
-    returns: false
+    returns: BOOLEAN_RESPONSE
   },
   {
     name: 'eth_notePassword',
     desc: '?',
     params: ['?'],
-    returns: false
+    returns: BOOLEAN_RESPONSE
   },
   {
     name: 'personal_newAccount',
     desc: 'Creates new account',
     params: ['`DATA` - Password'],
-    returns: false
+    returns: BOOLEAN_RESPONSE
   },
   {
     name: 'personal_unlockAccount',
     desc: '?',
     params: ['?', '?', '?'],
-    returns: false
+    returns: BOOLEAN_RESPONSE
   },
   {
     name: 'ethcore_minGasPrice',
@@ -100,32 +102,32 @@ module.exports = [
     name: 'ethcore_setExtraData',
     desc: 'Changes extra data for newly mined blocks',
     params: ['`DATA`- Extra Data'],
-    returns: false
+    returns: BOOLEAN_RESPONSE
   }, {
     name: 'ethcore_setMinGasPrice',
     desc: 'Changes minimal gas price for transaction to be accepted to the queue.',
     params: ['`QUANTITY` - Minimal gas price'],
-    returns: false
+    returns: BOOLEAN_RESPONSE
   }, {
     name: 'ethcore_gasFloorTarget',
     desc: 'Returns current target for gas floor',
     params: [],
-    returns: ['`QUANTITY` - Gas Floor Target']
+    returns: '`QUANTITY` - Gas Floor Target'
   }, {
     name: 'ethcore_setGasFloorTarget',
     desc: 'Changes current gas floor target.',
     params: ['`QUANTITY` - Gas Floor Target'],
-    returns: false
+    returns: BOOLEAN_RESPONSE
   }, {
     name: 'ethcore_setAuthor',
     desc: 'Changes author (coinbase) for mined blocks.',
     params: ['`DATA`, 20 Bytes - Address'],
-    returns: false
+    returns: BOOLEAN_RESPONSE
   }, {
     name: 'ethcore_setTransactionsLimit',
     desc: 'Changes limit for transactions in queue.',
     params: ['`QUANTITY` - New Limit'],
-    returns: false
+    returns: BOOLEAN_RESPONSE
   }, {
     name: 'ethcore_transactionsLimit',
     desc: 'Changes limit for transactions in queue.',

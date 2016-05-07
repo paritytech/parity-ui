@@ -19,7 +19,9 @@ import { Web3Provider } from './provider/web3-provider';
 import EthcoreWeb3 from './provider/web3-ethcore-provider';
 import { initAppAction } from './actions/app';
 
-const store = configure(middlewares);
+const web3 = new Web3(new Web3.providers.HttpProvider(process.env.RPC_ADDRESS || '/rpc/'));
+
+const store = configure(middlewares(web3));
 
 ReactDOM.render(
   <Provider store={store}>
@@ -30,7 +32,6 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
-const web3 = new Web3(new Web3.providers.HttpProvider(process.env.RPC_ADDRESS || '/rpc/'));
 const ethcoreWeb3 = new EthcoreWeb3(web3);
 new Web3Provider(web3, ethcoreWeb3, store).start();
 

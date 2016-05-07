@@ -6,8 +6,7 @@ export function formatRpcMd (val) {
     return val;
   }
 
-  return Object.keys(val.details).reduce((acc, key) => {
-    acc += `\n- \`${key}\`: ${val.details[key]}`;
-    return acc;
-  }, val.description);
+  return val.description + Object.keys(val.details)
+                            .map(key => `- \`${key}\`: ${val.details[key]}`)
+                            .join('\n');
 }

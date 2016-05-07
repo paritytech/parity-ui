@@ -7,6 +7,7 @@ const format = require('./format');
 
 const fs = require('fs');
 const nl = /\n+/;
+
 const val = fs.readFileSync(`${__dirname}/docs.md`, 'utf8');
 const funcs = val.split(/\s#### /)
   // Skip first element (intro docs)

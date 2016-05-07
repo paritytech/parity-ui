@@ -736,7 +736,7 @@
       "name": "eth_pendingTransactions",
       "desc": "?",
       "params": [],
-      "returns": false,
+      "returns": "`Boolean` - whether the call was successful",
       "inputFormatters": [],
       "outputFormatter": null
     },
@@ -744,7 +744,7 @@
       "name": "eth_flush",
       "desc": "?",
       "params": [],
-      "returns": false,
+      "returns": "`Boolean` - whether the call was successful",
       "inputFormatters": [],
       "outputFormatter": null
     },
@@ -754,7 +754,7 @@
       "params": [
         ""
       ],
-      "returns": false,
+      "returns": "`Boolean` - whether the call was successful",
       "inputFormatters": [],
       "outputFormatter": null
     },
@@ -764,7 +764,7 @@
       "params": [
         ""
       ],
-      "returns": false,
+      "returns": "`Boolean` - whether the call was successful",
       "inputFormatters": [],
       "outputFormatter": null
     },
@@ -774,7 +774,7 @@
       "params": [
         ""
       ],
-      "returns": false,
+      "returns": "`Boolean` - whether the call was successful",
       "inputFormatters": [],
       "outputFormatter": null
     },
@@ -784,7 +784,7 @@
       "params": [
         "?"
       ],
-      "returns": false,
+      "returns": "`Boolean` - whether the call was successful",
       "inputFormatters": [],
       "outputFormatter": null
     },
@@ -794,7 +794,7 @@
       "params": [
         "?"
       ],
-      "returns": false,
+      "returns": "`Boolean` - whether the call was successful",
       "inputFormatters": [],
       "outputFormatter": null
     },
@@ -804,7 +804,7 @@
       "params": [
         "?"
       ],
-      "returns": false,
+      "returns": "`Boolean` - whether the call was successful",
       "inputFormatters": [],
       "outputFormatter": null
     },
@@ -814,7 +814,7 @@
       "params": [
         "?"
       ],
-      "returns": false,
+      "returns": "`Boolean` - whether the call was successful",
       "inputFormatters": [],
       "outputFormatter": null
     },
@@ -824,7 +824,7 @@
       "params": [
         "?"
       ],
-      "returns": false,
+      "returns": "`Boolean` - whether the call was successful",
       "inputFormatters": [],
       "outputFormatter": null
     },
@@ -834,7 +834,7 @@
       "params": [
         "?"
       ],
-      "returns": false,
+      "returns": "`Boolean` - whether the call was successful",
       "inputFormatters": [],
       "outputFormatter": null
     },
@@ -844,7 +844,7 @@
       "params": [
         "?"
       ],
-      "returns": false,
+      "returns": "`Boolean` - whether the call was successful",
       "inputFormatters": [],
       "outputFormatter": null
     },
@@ -854,7 +854,7 @@
       "params": [
         "`DATA` - Password"
       ],
-      "returns": false,
+      "returns": "`Boolean` - whether the call was successful",
       "inputFormatters": [
         null
       ],
@@ -868,7 +868,7 @@
         "?",
         "?"
       ],
-      "returns": false,
+      "returns": "`Boolean` - whether the call was successful",
       "inputFormatters": [
         null,
         null,
@@ -898,7 +898,7 @@
       "params": [
         "`DATA`- Extra Data"
       ],
-      "returns": false,
+      "returns": "`Boolean` - whether the call was successful",
       "inputFormatters": [
         "encodeExtraData"
       ],
@@ -910,7 +910,7 @@
       "params": [
         "`QUANTITY` - Minimal gas price"
       ],
-      "returns": false,
+      "returns": "`Boolean` - whether the call was successful",
       "inputFormatters": [
         "utils.toHex"
       ],
@@ -920,9 +920,7 @@
       "name": "ethcore_gasFloorTarget",
       "desc": "Returns current target for gas floor",
       "params": [],
-      "returns": [
-        "`QUANTITY` - Gas Floor Target"
-      ],
+      "returns": "`QUANTITY` - Gas Floor Target",
       "inputFormatters": [],
       "outputFormatter": "outputBigNumberFormatter"
     },
@@ -932,7 +930,7 @@
       "params": [
         "`QUANTITY` - Gas Floor Target"
       ],
-      "returns": false,
+      "returns": "`Boolean` - whether the call was successful",
       "inputFormatters": [
         "utils.toHex"
       ],
@@ -944,7 +942,7 @@
       "params": [
         "`DATA`, 20 Bytes - Address"
       ],
-      "returns": false,
+      "returns": "`Boolean` - whether the call was successful",
       "inputFormatters": [
         "inputAddressFormatter"
       ],
@@ -956,7 +954,7 @@
       "params": [
         "`QUANTITY` - New Limit"
       ],
-      "returns": false,
+      "returns": "`Boolean` - whether the call was successful",
       "inputFormatters": [
         "utils.toHex"
       ],
