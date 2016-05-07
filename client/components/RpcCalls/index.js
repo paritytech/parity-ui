@@ -6,6 +6,7 @@ import Toggle from 'material-ui/Toggle/Toggle';
 import AutoComplete from '../AutoComplete';
 import TextField from 'material-ui/TextField';
 
+import { formatRpcMd } from '../../util/rpc-md';
 import JsonEditor from '../JsonEditor';
 import Calls from '../Calls';
 import Markdown from '../Markdown';
@@ -23,13 +24,13 @@ export default class RpcCalls extends Component {
   }
 
   componentWillReceiveProps (nextProps) {
-    const { selectedMethod } = nextProps.rpc;
-    if (selectedMethod.paramsValues) {
-      selectedMethod.params.map((p, idx) => {
+    const { paramsValues, params } = nextProps.rpc.selectedMethod;
+    if (paramsValues) {
+      params.map((p, idx) => {
         // todo [adgo] 01.05.2016 - make sure this works
         // not sure idx is the same for paramsValues and params
         this.setState({
-          [this.paramKey(p)]: selectedMethod.paramsValues[idx]
+          [this.paramKey(p)]: paramsValues[idx]
         });
       });
 
@@ -105,14 +106,14 @@ export default class RpcCalls extends Component {
       return;
     }
 
-    const {selectedMethod} = this.props.rpc;
+    const { returns } = this.props.rpc.selectedMethod;
     return (
       <div className='row'>
         {this.renderMethodList()}
         <h3>Parameters</h3>
         {this.renderInputs()}
         <h3>Returns</h3>
-        <Markdown val={selectedMethod.returns} />
+        <Markdown val={formatRpcMd(returns)} />
       </div>
     );
   }
@@ -120,19 +121,19 @@ export default class RpcCalls extends Component {
   renderMethodList () {
     const methods = rpcMethods.map(m => m.name);
 
-    const {selectedMethod} = this.props.rpc;
+    const { name, desc } = this.props.rpc.selectedMethod;
     return (
       <div>
         <AutoComplete
           style={{marginTop: 0}}
-          searchText={selectedMethod.name}
+          searchText={name}
           floatingLabelText='Method name'
           dataSource={methods}
           onNewRequest={::this.handleMethodChange}
           {...this._test('autocomplete')}
         />
         <div>
-          <Markdown val={selectedMethod.desc} />
+          <Markdown val={desc} />
         </div>
       </div>
     );
@@ -148,13 +149,13 @@ export default class RpcCalls extends Component {
       return this.onCustomRpcFire();
     }
 
-    const { selectedMethod } = this.props.rpc;
-    let params = selectedMethod.params.map(::this.paramValue);
+    let { name, params, outputFormatter, inputFormatters } = this.props.rpc.selectedMethod;
+    params = params.map(::this.jsonParamValue);
 
     this.props.actions.fireRpc({
-      method: selectedMethod.name,
-      outputFormatter: selectedMethod.outputFormatter,
-      inputFormatters: selectedMethod.inputFormatters,
+      method: name,
+      outputFormatter: outputFormatter,
+      inputFormatters: inputFormatters,
       params
     });
   }
@@ -165,38 +166,74 @@ export default class RpcCalls extends Component {
   }
 
   renderInputs () {
-    let {selectedMethod} = this.props.rpc;
+    let { params, name } = this.props.rpc.selectedMethod;
 
-    if (!selectedMethod.params || !selectedMethod.params.length) {
+    if (!params || !params.length) {
       return (
         <span>none</span>
       );
     }
 
-    return _.find(rpcMethods, {name: selectedMethod.name})
+    return _.find(rpcMethods, { name })
             .params.map(
-              p => (
-                <TextField
-                  key={p}
-                  inputStyle={{marginTop: 0}}
-                  fullWidth
-                  hintText={p}
-                  hintStyle={{maxWidth: '100%', overflow: 'hidden', whiteSpace: 'nowrap'}}
-                  value={this.paramValue(p)}
-                  onChange={(evt) => this.setState({
-                    [this.paramKey(p)]: evt.target.value
-                  })}
-                  {...this._test(this.paramKey(p))}
-                />
-              )
+              p => {
+                if (_.isPlainObject(p)) {
+                  return this.renderObjInputs(p);
+                }
+
+                return (
+                  <TextField
+                    key={p}
+                    inputStyle={{marginTop: 0}}
+                    fullWidth
+                    hintText={p}
+                    title={p}
+                    hintStyle={{maxWidth: '100%', overflow: 'hidden', whiteSpace: 'nowrap'}}
+                    value={this.paramValue(p)}
+                    onChange={(evt) => this.setState({
+                      [this.paramKey(p)]: evt.target.value
+                    })}
+                    {...this._test(this.paramKey(p))}
+                  />
+                );
+              }
             );
   }
 
+  renderObjInputs (param) {
+    const { description, details } = param;
+    return (
+      <div>
+        <Markdown val={description} />
+        <ul>
+          {Object.keys(details).map(k => {
+            return (
+              <li key={k}>
+                <TextField
+                  inputStyle={{marginTop: 0}}
+                  fullWidth
+                  title={`${k}: ${details[k]}`}
+                  hintText={`${k}: ${details[k]}`}
+                  hintStyle={{maxWidth: '100%', overflow: 'hidden', whiteSpace: 'nowrap'}}
+                  value={this.paramValue(`${description}.${k}`)}
+                  onChange={(evt) => this.setState({
+                    [this.paramKey(`${description}.${k}`)]: evt.target.value
+                  })}
+                  {...this._test(this.paramKey(k))}
+                />
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    );
+  }
+
   setJsonEditorValue () {
-    const {selectedMethod} = this.props.rpc;
+    const { name, params } = this.props.rpc.selectedMethod;
     const json = {
-      method: selectedMethod.name,
-      params: selectedMethod.params.map(::this.paramValue)
+      method: name,
+      params: params.map(::this.jsonParamValue)
     };
     this.setState({
       jsonEditorValue: json
@@ -228,6 +265,18 @@ export default class RpcCalls extends Component {
       jsonEditorParsedValue,
       jsonEditorError
     });
+  }
+
+  jsonParamValue (p) {
+    if (_.isPlainObject(p)) {
+      const { description, details } = p;
+      return Object.keys(details).reduce((obj, key) => {
+        obj[key] = this.paramValue(`${description}.${key}`);
+        return obj;
+      }, {});
+    }
+
+    return this.paramValue(p);
   }
 
   paramValue (p) {
