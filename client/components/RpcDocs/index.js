@@ -1,7 +1,7 @@
 
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import {sortBy} from 'lodash';
+import { sortBy, isPlainObject } from 'lodash';
 import List from 'material-ui/List/List';
 import ListItem from 'material-ui/List/ListItem';
 import AutoComplete from '../AutoComplete';
@@ -62,9 +62,9 @@ export default class RpcDocs extends Component {
             <h3 className={style.headline}>{m.name}</h3>
             <Markdown val={m.desc} />
             <p><strong>Params</strong>{!m.params.length ? ' - none' : ''}</p>
-            {m.params.map((p, idx) => <Markdown key={`${m.name}-${idx}`} val={p} />)}
+            {m.params.map((p, idx) => <Markdown key={`${m.name}-${idx}`} val={this.format(p)} />)}
             <p className={style.returnsTitle}><strong>Returns</strong> - </p>
-            <Markdown className={style.returnsDesc} val={m.returns} />
+            <Markdown className={style.returnsDesc} val={this.format(m.returns)} />
             {idx !== rpcMethods.length - 1 ? <hr /> : ''}
           </ListItem>
       );
@@ -79,6 +79,17 @@ export default class RpcDocs extends Component {
 
   handleMethodChange (name) {
     ReactDOM.findDOMNode(this[`_method-${name}`]).scrollIntoViewIfNeeded();
+  }
+
+  format (p) {
+    if (!isPlainObject(p)) {
+      return p;
+    }
+
+    return Object.keys(p.details).reduce((acc, key) => {
+      acc += `\n- \`${key}\`: ${p.details[key]}`;
+      return acc;
+    }, p.description);
   }
 
 }

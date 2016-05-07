@@ -1,6 +1,7 @@
 
 import marked from 'marked';
 import React, {Component, PropTypes} from 'react';
+import styles from './style.css';
 
 export default class Marked extends Component {
 
@@ -14,7 +15,7 @@ export default class Marked extends Component {
     if (!parsed) {
       return null;
     }
-    return <div style={this.props.style} dangerouslySetInnerHTML={{__html: parsed}} />;
+    return <div className={styles.container} style={this.props.style} dangerouslySetInnerHTML={{__html: parsed}} />;
   }
 
   componentWillMount () {
