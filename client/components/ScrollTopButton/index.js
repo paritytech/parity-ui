@@ -6,19 +6,22 @@ import ArrowUpwardIcon from 'material-ui/svg-icons/navigation/arrow-upward';
 import {scrollTo} from './util';
 import styles from './style.css';
 
+const scrollTopThreshold = 600;
+
 export default class ScrollTopButton extends Component {
 
   constructor (...args) {
     super(...args);
     this.state = {};
+    this.handleScroll = ::this.handleScroll;
   }
 
   componentDidMount () {
-    window.addEventListener('scroll', ::this.handleScroll);
+    window.addEventListener('scroll', this.handleScroll);
   }
 
   componentWillUnmount () {
-    window.removeEventListener('scroll', ::this.handleScroll);
+    window.removeEventListener('scroll', this.handleScroll);
   }
 
   render () {
@@ -34,15 +37,16 @@ export default class ScrollTopButton extends Component {
   }
 
   handleScroll (event) {
-    let {scrollTop} = event.srcElement.body;
+    let { scrollTop } = event.srcElement.body;
+    let { showScrollButton } = this.state;
 
-    if (!this.state.showScrollButton && scrollTop > 600) {
+    if (!showScrollButton && scrollTop > scrollTopThreshold) {
       this.setState({
         showScrollButton: true
       });
     }
 
-    if (this.state.showScrollButton && scrollTop < 600) {
+    if (showScrollButton && scrollTop < scrollTopThreshold) {
       this.setState({
         showScrollButton: false
       });
