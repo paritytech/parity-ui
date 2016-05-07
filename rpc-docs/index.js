@@ -7,6 +7,7 @@ const format = require('./format');
 
 const fs = require('fs');
 const nl = /\n+/;
+const OUTPUT_PATH = `${__dirname}/../client/data/rpc.json`;
 
 const val = fs.readFileSync(`${__dirname}/docs.md`, 'utf8');
 const funcs = val.split(/\s#### /)
@@ -19,10 +20,12 @@ const funcs = val.split(/\s#### /)
   // Add formatters
   .map(addFormatters);
 
-console.log(funcs);
-fs.writeFileSync(`${__dirname}/../client/data/rpc.json`, JSON.stringify({
+// console.log(funcs);
+fs.writeFileSync(OUTPUT_PATH, JSON.stringify({
   methods: funcs
 }, null, 2), 'utf8');
+
+console.log(`success generated json at ${OUTPUT_PATH.split('../')[1]}`);
 
 function parseSingleMethod (data) {
   const parts = data.split('##### ');
