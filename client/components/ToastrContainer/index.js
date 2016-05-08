@@ -17,11 +17,16 @@ export default class ToastrContainer extends Component {
   renderToasts () {
     return this.props.toastr.toasts.map(t => {
       return (
-        <Paper className={`${styles.toast} ${styles[t.type]}`} zDepth={2} key={t.toastNo}>
+        <Paper
+          className={`${styles.toast} ${styles[t.type]}`}
+          zDepth={2}
+          key={t.toastNo}
+          {...this._test(`toast-${t.toastNo}`)}
+          >
           <a className={styles.remove} onClick={() => this.props.actions.removeToast(t.toastNo)}>
             <i className='icon-trash'></i>
           </a>
-          {t.message}
+          <span className={styles.msg}>{t.msg}</span>
         </Paper>
       );
     });

@@ -52,6 +52,14 @@ module.exports = {
     ].map(assertRpc.bind(client));
   },
 
+  'Assert logging toggle' (client) {
+    const logBtn = el('StatusPage-footer-log-button');
+    client.click(logBtn);
+    client.expect.element(el('ToastrContainer-toast-1')).text.to.contain('logging updated to false');
+    client.click(logBtn);
+    client.expect.element(el('ToastrContainer-toast-2')).text.to.contain('logging updated to true');
+  },
+
   // 'change extradata' (client) {
   //   const submit = el('MiningSettings-extra-data-submit');
   //   const cancel = el('MiningSettings-extra-data-cancel');

@@ -7,6 +7,7 @@
 
 .toast {
   padding: 10px;
+  position: relative;
   font-size: 16px;
   margin-bottom: 10px;
   animation: fadein .5s;
@@ -32,8 +33,12 @@
   color: #fff !important;
 }
 
+.msg {
+  color: #5A3030;
+  font-size: 18px;
+}
+
 @keyframes fadein {
   from {opacity: 0;}
   to {opacity: 1;}
 }
-
