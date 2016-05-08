@@ -1,10 +1,9 @@
-import rlp from 'rlp';
-
 import React, { Component, PropTypes } from 'react';
 
 import formatNumber from 'format-number';
 import EditableValue from '../EditableValue';
 import {numberFromString} from './numberFromString';
+import {decodeExtraData} from './decodeExtraData';
 
 const toNiceNumber = formatNumber();
 
@@ -49,9 +48,9 @@ export default class MiningSettings extends Component {
           />
         <h3>Extradata</h3>
         <EditableValue
-          value={this.decodeExtraData(mining.extraData)}
+          value={decodeExtraData(mining.extraData)}
           onSubmit={onExtraDataChange}
-          defaultValue={this.decodeExtraData(mining.defaultExtraData)}
+          defaultValue={decodeExtraData(mining.defaultExtraData)}
           {...this._test('extra-data')}
           />
         <h3>Minimal Gas Price</h3>
@@ -69,23 +68,6 @@ export default class MiningSettings extends Component {
       </div>
     );
   }
-
-  decodeExtraData (str) {
-    try {
-      // Try decoding as RLP
-      const decoded = rlp.decode(str);
-      const v = decoded[0];
-      decoded[0] = decoded[1];
-      decoded[1] = `${v[0]}.${v[1]}.${v[2]}`;
-      return decoded.join('/');
-    } catch (err) {
-      // hex -> str
-      return str.match(/.{1,2}/g).map((v) => {
-        return String.fromCharCode(parseInt(v, 16));
-      }).join('');
-    }
-  }
-
 }
 
 MiningSettings.propTypes = {
