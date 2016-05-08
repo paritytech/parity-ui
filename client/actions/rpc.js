@@ -1,10 +1,10 @@
 
 import { createAction } from 'redux-actions';
 import { identity } from '../util';
-import { metaToastr } from '../util/toastr';
+import { withToastr } from '../util/toastr';
 
 export const error = createAction('error rpc', identity,
-  () => metaToastr('error processing rpc call. check console for details', 'error')
+  withToastr(() => 'error processing rpc call. check console for details', 'error')
 );
 export const fireRpc = createAction('fire rpc');
 export const addRpcReponse = createAction('add rpcResponse');

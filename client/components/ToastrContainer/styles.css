@@ -34,8 +34,9 @@
 }
 
 .msg {
-  color: #5A3030;
+  color: #000;
   font-size: 18px;
+  text-shadow: 0px 0px 2px rgb(103, 103, 103);
 }
 
 @keyframes fadein {

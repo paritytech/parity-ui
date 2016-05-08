@@ -1,8 +1,8 @@
 
 import { createAction } from 'redux-actions';
 import { identity } from '../util';
-import { metaToastr } from '../util/toastr';
+import { withToastr } from '../util/toastr';
 
-export const updateLogging = createAction('update logging', identity,
-  flag => metaToastr(`logging updated to ${flag}`)
+export const updateLogging = createAction(
+  'update logging', identity, withToastr(flag => `logging updated to ${flag}`)
 );

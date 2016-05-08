@@ -106,7 +106,7 @@ describe('MIDDLEWARE: TOASTR', () => {
         msg, type, toastNo
       }))).to.be.true;
 
-      // expect(cut.setTimeoutFor.calledWith(toastNo, next));
+      expect(cut.setTimeoutFor.calledWith(toastNo, next));
     });
   });
 
