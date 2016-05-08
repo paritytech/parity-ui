@@ -785,7 +785,7 @@
       "params": [],
       "returns": "`DATA` - Extra data",
       "inputFormatters": [],
-      "outputFormatter": "decodeExtraData"
+      "outputFormatter": null
     },
     {
       "name": "ethcore_setExtraData",
@@ -795,7 +795,7 @@
       ],
       "returns": "`Boolean` - whether the call was successful",
       "inputFormatters": [
-        "encodeExtraData"
+        "utils.toHex"
       ],
       "outputFormatter": null
     },

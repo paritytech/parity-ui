@@ -52,11 +52,11 @@ export default class EditableValue extends Component {
     this.setState({
       inEditMode: false
     });
-    this.props.onSubmit(this.state.value);
+    this.props.onSubmit(this.state.value, false);
   }
 
   onResetToDefault () {
-    this.props.onSubmit(this.props.defaultValue);
+    this.props.onSubmit(this.props.defaultValue, true);
   }
 
   render () {

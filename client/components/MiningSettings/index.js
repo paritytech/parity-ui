@@ -1,9 +1,9 @@
+import rlp from 'rlp';
 
 import React, { Component, PropTypes } from 'react';
 
 import formatNumber from 'format-number';
 import EditableValue from '../EditableValue';
-import Value from '../Value';
 import {numberFromString} from './numberFromString';
 
 const toNiceNumber = formatNumber();
@@ -17,7 +17,14 @@ export default class MiningSettings extends Component {
       actions.modifyMinGasPrice(numberFromString(newVal));
     };
 
-    let onExtraDataChange = (newVal) => {
+    let onExtraDataChange = (newVal, isResetToDefault) => {
+      if (isResetToDefault) {
+        // Ignore input value - just set raw bytes
+        actions.modifyExtraData(mining.defaultExtraData);
+        return;
+      }
+
+      // Set string, it will be converted to hex
       actions.modifyExtraData(newVal);
     };
 
@@ -41,9 +48,10 @@ export default class MiningSettings extends Component {
           {...this._test('author')}
           />
         <h3>Extradata</h3>
-        <Value
-          value={mining.extraData}
+        <EditableValue
+          value={this.decodeExtraData(mining.extraData)}
           onSubmit={onExtraDataChange}
+          defaultValue={this.decodeExtraData(mining.defaultExtraData)}
           {...this._test('extra-data')}
           />
         <h3>Minimal Gas Price</h3>
@@ -62,8 +70,20 @@ export default class MiningSettings extends Component {
     );
   }
 
-  getDefaultExtraData () {
-    return this.props.version.split('/').slice(0, 3).join('/');
+  decodeExtraData (str) {
+    try {
+      // Try decoding as RLP
+      const decoded = rlp.decode(str);
+      const v = decoded[0];
+      decoded[0] = decoded[1];
+      decoded[1] = `${v[0]}.${v[1]}.${v[2]}`;
+      return decoded.join('/');
+    } catch (err) {
+      // hex -> str
+      return str.match(/.{1,2}/g).map((v) => {
+        return String.fromCharCode(parseInt(v, 16));
+      }).join('');
+    }
   }
 
 }
@@ -74,6 +94,7 @@ MiningSettings.propTypes = {
   mining: PropTypes.shape({
     author: PropTypes.string.isRequired,
     extraData: PropTypes.string.isRequired,
+    defaultExtraData: PropTypes.string.isRequired,
     minGasPrice: PropTypes.string.isRequired,
     gasFloorTarget: PropTypes.string.isRequired
   }).isRequired,
