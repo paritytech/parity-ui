@@ -17,14 +17,10 @@ export default class MiningSettings extends Component {
     };
 
     let onExtraDataChange = (newVal, isResetToDefault) => {
-      if (isResetToDefault) {
-        // Ignore input value - just set raw bytes
-        actions.modifyExtraData(mining.defaultExtraData);
-        return;
-      }
-
-      // Set string, it will be converted to hex
-      actions.modifyExtraData(newVal);
+      // In case of resetting to default we are just using raw bytes from defaultExtraData
+      // When user sets new value we can safely send a string that will be converted to hex by formatter.
+      const val = isResetToDefault ? mining.defaultExtraData : newVal;
+      actions.modifyExtraData(val);
     };
 
     let onAuthorChange = (newVal) => {
