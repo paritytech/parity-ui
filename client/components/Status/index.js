@@ -3,11 +3,12 @@ import React, { Component, PropTypes } from 'react';
 import formatNumber from 'format-number';
 import bytes from 'bytes';
 
+import Animated from '../../components-compositors/Animated';
 import style from './style.css';
 import Value from '../Value';
 import MiningSettings from '../MiningSettings';
 
-export default class Status extends Component {
+class Status extends Component {
 
   renderNodeName () {
     const { status } = this.props;
@@ -131,3 +132,5 @@ Status.propTypes = {
   }).isRequired,
   actions: PropTypes.object.isRequired
 };
+
+export default Animated(Status);

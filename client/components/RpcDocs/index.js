@@ -1,11 +1,12 @@
 
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import {sortBy} from 'lodash';
+import { sortBy } from 'lodash';
 import List from 'material-ui/List/List';
 import ListItem from 'material-ui/List/ListItem';
 import AutoComplete from '../AutoComplete';
 
+import Animated from '../../components-compositors/Animated';
 import ScrollTopButton from '../ScrollTopButton';
 import style from './style.css';
 import Markdown from '../Markdown';
@@ -14,7 +15,7 @@ import RpcNav from '../RpcNav';
 
 const rpcMethods = sortBy(rpcData.methods, 'name');
 
-export default class RpcDocs extends Component {
+class RpcDocs extends Component {
 
   render () {
     return (
@@ -82,3 +83,5 @@ export default class RpcDocs extends Component {
   }
 
 }
+
+export default Animated(RpcDocs);

@@ -76,6 +76,7 @@
     "lodash": "4.11.1",
     "marked": "^0.3.5",
     "material-ui": "0.15.0-beta.2",
+    "react-addons-css-transition-group": "15.0.2",
     "react-copy-to-clipboard": "4.1.0",
     "react-tap-event-plugin": "1.0.0",
     "rlp": "2.0.0",

@@ -1,6 +1,6 @@
 
 import React, { Component, PropTypes } from 'react';
-
+import AnimateChildren from '../../components-compositors/Animated/children';
 import CallsToolbar from '../CallsToolbar';
 import Response from '../Response';
 import styles from './style.css';
@@ -23,6 +23,7 @@ export default class Calls extends Component {
         {this.renderClear()}
         <h2 className={styles.header}>History</h2>
         <div className={`${styles.history} row`} ref={el => this._callsHistory = el}>
+          {this.renderNoCallsMsg()}
           {this.renderCalls()}
         </div>
         <CallsToolbar
@@ -52,33 +53,47 @@ export default class Calls extends Component {
     );
   }
 
-  renderCalls () {
-    const {calls} = this.props;
+  renderNoCallsMsg () {
+    if (this.props.calls.length) {
+      return;
+    }
 
-    if (!calls.length) {
-      return (
+    return (
+      <AnimateChildren>
         <div>
           <h3 className={styles.historyInfo} {...this._test('empty')}>
             Fire up some calls and the results will be here.
           </h3>
         </div>
-      );
-    }
-    return calls.map(
-      (c, idx) => (
-        <div
-          key={idx}
-          onMouseEnter={() => this.setState({hoveredIdx: idx})}
-          ref={el => this[`call-${idx}`] = el}
-          className={styles.call}
-          {...this._test(`call-${c.callNo}`)}
-          >
-          <span className={styles.callNo}>#{c.callNo}</span>
-          <pre>{c.name}({c.params.toString()})</pre>
-          <Response response={c.response} />
-        </div>
-      )
+      </AnimateChildren>
     );
+  }
+
+  renderCalls () {
+    const {calls} = this.props;
+    if (!calls.length) {
+      return;
+    }
+
+    const _calls = calls.map(
+      (c, idx) => {
+        return (
+          <div
+            key={calls.length - idx}
+            onMouseEnter={() => this.setState({hoveredIdx: idx})}
+            ref={el => this[`call-${idx}`] = el}
+            className={styles.call}
+            {...this._test(`call-${c.callNo}`)}
+            >
+            <span className={styles.callNo}>#{c.callNo}</span>
+            <pre>{c.name}({c.params.toString()})</pre>
+            <Response response={c.response} />
+          </div>
+        );
+      }
+    );
+
+    return <AnimateChildren>{_calls}</AnimateChildren>;
   }
 
 }
