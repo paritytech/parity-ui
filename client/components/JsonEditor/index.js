@@ -11,8 +11,12 @@ export default class JsonEditor extends Component {
     super(...args);
     let { value } = this.props;
     value = formatJson.plain(value);
-
     this.state = { value };
+  }
+
+  componentDidMount () {
+    const mockedEvt = { target: { value: this.state.value } };
+    this.onChange(mockedEvt);
   }
 
   componentWillReceiveProps (nextProps) {
