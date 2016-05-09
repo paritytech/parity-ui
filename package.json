@@ -15,6 +15,7 @@
     "startTest": "NODE_ENV=tests npm start",
     "prebuild": "npm run clean",
     "build": "NODE_ENV=production webpack --progress --colors",
+    "buildStatic": "RPC_ADDRESS=http://localhost:8545 NODE_ENV=production webpack --progress --colors",
     "clean": "rm static -rf"
   },
   "license": "GPL-3.0",

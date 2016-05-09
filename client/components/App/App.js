@@ -7,11 +7,20 @@ import styles from './styles.css';
 import {AccountChooser} from '../AccountsChooser/AccountsChooser';
 import {DappContent} from '../DappContent/DappContent';
 
+function getInitialUrl () {
+  const host = window.location.host.toString();
+  if (host.indexOf('my.parity') > 0) {
+    return `parity://${host.split('.')[0]}`;
+  }
+
+  return 'local://dapp.html';
+}
+
 export class App extends React.Component {
 
   state = {
     accounts: [],
-    url: 'local://dapp.html',
+    url: getInitialUrl(),
     hints: [
       'local://dapp.html',
       'local://index.html',
