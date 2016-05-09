@@ -243,7 +243,7 @@ function customFunctions () {
 function getOutputFormatters () {
   return {
     'ethcore_minGasPrice': 'outputBigNumberFormatter',
-    'ethcore_extraData': 'decodeExtraData',
+    'ethcore_extraData': null,
     'ethcore_gasFloorTarget': 'outputBigNumberFormatter',
     'ethcore_transactionsLimit': 'outputBigNumberFormatter',
     'eth_getBalance': 'outputBigNumberFormatter',
@@ -259,7 +259,7 @@ function getOutputFormatters () {
 function getInputFormatters () {
   return {
     'ethcore_setExtraData': [
-      'encodeExtraData'
+      'utils.toHex'
     ],
     'ethcore_setMinGasPrice': [
       'utils.toHex'
