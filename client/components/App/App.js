@@ -7,9 +7,14 @@ import styles from './styles.css';
 import {AccountChooser} from '../AccountsChooser/AccountsChooser';
 import {DappContent} from '../DappContent/DappContent';
 
+function isMainPage () {
+  const host = window.location.host.toString();
+  return host.indexOf('my.parity') > 0;
+}
+
 function getInitialUrl () {
   const host = window.location.host.toString();
-  if (host.indexOf('my.parity') > 0) {
+  if (!isMainPage()) {
     return `parity://${host.split('.')[0]}`;
   }
 
@@ -43,10 +48,6 @@ export class App extends React.Component {
     });
   }
 
-  onUpdateInput (d) {
-
-  }
-
   render () {
     return (
       <div>
@@ -57,7 +58,6 @@ export class App extends React.Component {
               hintText='http://...'
               searchText={this.state.url}
               dataSource={this.state.hints}
-              onUpdateInput={::this.onUpdateInput}
               onNewRequest={::this.onAddressChange}
               />
           </div>
