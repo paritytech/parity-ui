@@ -6,6 +6,8 @@ import Toggle from 'material-ui/Toggle/Toggle';
 import AutoComplete from '../AutoComplete';
 import TextField from 'material-ui/TextField';
 
+import Animated from '../../components-compositors/Animated';
+import AnimateChildren from '../../components-compositors/Animated/children';
 import JsonEditor from '../JsonEditor';
 import Calls from '../Calls';
 import Markdown from '../Markdown';
@@ -15,7 +17,7 @@ import RpcNav from '../RpcNav';
 
 const rpcMethods = _.sortBy(rpcData.methods, 'name');
 
-export default class RpcCalls extends Component {
+class RpcCalls extends Component {
 
   constructor (...args) {
     super(...args);
@@ -86,21 +88,15 @@ export default class RpcCalls extends Component {
             Call Method
           </label>
         </h2>
-        {this.renderJsonEditor()}
-        {this.renderFormEditor()}
-        <button
-          {...this._test('fireRpc')}
-          className={`dapp-block-button`}
-          disabled={this.state.jsonEditorError}
-          onClick={::this.onRpcFire}
-          >
-          Fire!
-        </button>
+        <AnimateChildren absolute>
+          {this.renderJsonForm()}
+          {this.renderInputForm()}
+        </AnimateChildren>
       </div>
     );
   }
 
-  renderFormEditor () {
+  renderInputForm () {
     if (this.state.jsonMode) {
       return;
     }
@@ -113,6 +109,7 @@ export default class RpcCalls extends Component {
         {this.renderInputs()}
         <h3>Returns</h3>
         <Markdown val={selectedMethod.returns} />
+        {this.renderFormButton()}
       </div>
     );
   }
@@ -210,16 +207,32 @@ export default class RpcCalls extends Component {
     this.setState({jsonMode: !this.state.jsonMode});
   }
 
-  renderJsonEditor () {
+  renderJsonForm () {
     if (!this.state.jsonMode) {
       return;
     }
 
     return (
-      <JsonEditor
-        onChange={::this.onJsonEditorChange}
-        value={this.state.jsonEditorValue}
-      />
+      <div>
+        <JsonEditor
+          onChange={::this.onJsonEditorChange}
+          value={this.state.jsonEditorValue}
+        />
+        {this.renderFormButton()}
+      </div>
+    );
+  }
+
+  renderFormButton () {
+    return (
+      <button
+        {...this._test('fireRpc')}
+        className={`dapp-block-button`}
+        disabled={this.state.jsonEditorError}
+        onClick={::this.onRpcFire}
+        >
+        Fire!
+      </button>
     );
   }
 
@@ -251,3 +264,5 @@ RpcCalls.propTypes = {
     resetRpcPrevCalls: PropTypes.func.isRequired
   }).isRequired
 };
+
+export default Animated(RpcCalls);
