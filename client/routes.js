@@ -1,7 +1,8 @@
 
 import React, { Component, PropTypes } from 'react';
 
-import { Router, Route, hashHistory, IndexRedirect } from 'react-router';
+import { Router, Route, useRouterHistory, IndexRedirect } from 'react-router';
+import { createHashHistory } from 'history';
 import { syncHistoryWithStore } from 'react-router-redux';
 
 import AppContainer from './containers/App';
@@ -13,10 +14,14 @@ import RpcPage from './containers/RpcPage';
 import RpcCalls from './components/RpcCalls';
 import RpcDocs from './components/RpcDocs';
 
+const routerHistory = useRouterHistory(createHashHistory)({
+  queryKey: false
+});
+
 export default class Routes extends Component {
 
   render () {
-    const history = syncHistoryWithStore(hashHistory, this.props.store);
+    const history = syncHistoryWithStore(routerHistory, this.props.store);
     return (
       <Router history={history}>
         <Route path={'/'} component={AppContainer}>
