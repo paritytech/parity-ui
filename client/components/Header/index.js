@@ -68,7 +68,7 @@ export default class Header extends Component {
                 <span>Accounts</span>
               </Link>
             </li>
-            <li style={{display: 'none'}}>
+            <li>
               <Link to={'/apps'} activeClassName='active' {...this._test('apps-link')}>
                 <i className='icon-grid'></i>
                 <span>Apps</span>
