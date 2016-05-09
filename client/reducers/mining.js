@@ -4,6 +4,7 @@ import { handleActions } from 'redux-actions';
 const initialState = {
   author: 'loading...',
   extraData: 'loading...',
+  defaultExtraData: '0x01',
   minGasPrice: 'loading...',
   gasFloorTarget: 'loading...'
 };
@@ -35,6 +36,13 @@ export const actionHandlers = {
     return {
       ...state,
       extraData: `${action.payload}`
+    };
+  },
+
+  'update defaultExtraData' (state, action) {
+    return {
+      ...state,
+      defaultExtraData: `${action.payload}`
     };
   }
 

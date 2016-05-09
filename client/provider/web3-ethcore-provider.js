@@ -1,22 +1,23 @@
 import Method from 'web3/lib/web3/method';
 import formatters from 'web3/lib/web3/formatters';
 import utils from 'web3/lib/utils/utils';
-import RpcProvider from './rpc-provider';
-
-const rpcProvider = new RpcProvider();
 
 const methods = [
   new Method({
     name: 'getExtraData',
     call: 'ethcore_extraData',
-    params: 0,
-    outputFormatter: rpcProvider.decode
+    params: 0
   }),
   new Method({
     name: 'setExtraData',
     call: 'ethcore_setExtraData',
     params: 1,
-    inputFormatter: [rpcProvider.encode]
+    inputFormatter: [utils.toHex]
+  }),
+  new Method({
+    name: 'getDefaultExtraData',
+    call: 'ethcore_defaultExtraData',
+    params: 0
   }),
   new Method({
     name: 'getMinGasPrice',

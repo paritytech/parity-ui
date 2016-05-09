@@ -1,5 +1,4 @@
 
-import rlp from 'rlp';
 import { stringifyIfObject } from '../util';
 
 export default class RpcProvider {
@@ -16,15 +15,12 @@ export default class RpcProvider {
 
     let formatter;
 
-    // mostly we use web3Formatters (the last "else" case)
-    // otherwise we use our own, or web3Utils
-    if (formatterName === 'decodeExtraData') {
-      formatter = ::this.decode;
-    } else if (formatterName.indexOf('utils.') > -1) {
+    if (formatterName.indexOf('utils.') > -1) {
       formatter = this._web3Utils[formatterName.split('.')[1]];
     } else {
       formatter = this._web3Formatters[formatterName];
     }
+
     try {
       return `${formatter(result)}`;
     } catch (err) {
@@ -48,11 +44,7 @@ export default class RpcProvider {
 
       let formatter;
 
-      // mostly we use web3Formatters (the last "else" case)
-      // otherwise we use our own, or web3Utils
-      if (formatterName === 'encodeExtraData') {
-        formatter = ::this.encode;
-      } else if (formatterName.indexOf('utils.') > -1) {
+      if (formatterName.indexOf('utils.') > -1) {
         formatter = this._web3Utils[formatterName.split('.')[1]];
       } else {
         formatter = this._web3Formatters[formatterName];
@@ -67,24 +59,5 @@ export default class RpcProvider {
         return new Error(msg);
       }
     });
-  }
-
-  encode (str) {
-    throw new Error('Unsupported');
-  }
-
-  decode (str) {
-    try {
-      const decoded = rlp.decode(str);
-      const v = decoded[0];
-      decoded[0] = decoded[1];
-      decoded[1] = `${v[0]}.${v[1]}.${v[2]}`;
-      return decoded.join('/');
-    } catch (err) {
-      console.error('error in decoding string: ', str, err);
-      return str.match(/.{1,2}/g).map((v) => {
-        return String.fromCharCode(parseInt(v, 16));
-      }).join('');
-    }
   }
 }

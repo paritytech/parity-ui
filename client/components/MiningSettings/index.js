@@ -1,10 +1,9 @@
-
 import React, { Component, PropTypes } from 'react';
 
 import formatNumber from 'format-number';
 import EditableValue from '../EditableValue';
-import Value from '../Value';
 import {numberFromString} from './numberFromString';
+import {decodeExtraData} from './decodeExtraData';
 
 const toNiceNumber = formatNumber();
 
@@ -17,8 +16,11 @@ export default class MiningSettings extends Component {
       actions.modifyMinGasPrice(numberFromString(newVal));
     };
 
-    let onExtraDataChange = (newVal) => {
-      actions.modifyExtraData(newVal);
+    let onExtraDataChange = (newVal, isResetToDefault) => {
+      // In case of resetting to default we are just using raw bytes from defaultExtraData
+      // When user sets new value we can safely send a string that will be converted to hex by formatter.
+      const val = isResetToDefault ? mining.defaultExtraData : newVal;
+      actions.modifyExtraData(val);
     };
 
     let onAuthorChange = (newVal) => {
@@ -41,9 +43,10 @@ export default class MiningSettings extends Component {
           {...this._test('author')}
           />
         <h3>Extradata</h3>
-        <Value
-          value={mining.extraData}
+        <EditableValue
+          value={decodeExtraData(mining.extraData)}
           onSubmit={onExtraDataChange}
+          defaultValue={decodeExtraData(mining.defaultExtraData)}
           {...this._test('extra-data')}
           />
         <h3>Minimal Gas Price</h3>
@@ -61,11 +64,6 @@ export default class MiningSettings extends Component {
       </div>
     );
   }
-
-  getDefaultExtraData () {
-    return this.props.version.split('/').slice(0, 3).join('/');
-  }
-
 }
 
 MiningSettings.propTypes = {
@@ -74,6 +72,7 @@ MiningSettings.propTypes = {
   mining: PropTypes.shape({
     author: PropTypes.string.isRequired,
     extraData: PropTypes.string.isRequired,
+    defaultExtraData: PropTypes.string.isRequired,
     minGasPrice: PropTypes.string.isRequired,
     gasFloorTarget: PropTypes.string.isRequired
   }).isRequired,
