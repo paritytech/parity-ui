@@ -1,6 +1,9 @@
 /* global fetch */
 import React, { Component, PropTypes } from 'react';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+
+import { updateLogging } from '../../actions/logger';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import style from './style.css';
@@ -25,18 +28,18 @@ class AppListPage extends Component {
   }
 
   renderApps () {
-    if (!this.state.apps.length) {
-      // TODO [adgo] 26.04.2016 - change to real link
-      return <h3>No apps do display. Go ahead and <a href='#'>add one</a>!</h3>;
+    const filteredApps = this.state.apps.filter(app => ['status', 'rpc'].indexOf(app) === -1);
+
+    if (!filteredApps.length) {
+      return <h3>This parity instance has been compiled without additional apps.</h3>;
     }
 
-    return this.state.apps.map((app) => {
-      // TODO [adgo] 26.04.2016 - remove if statement and (beta)
-      if (app === 'wallet') {
-        return (<li key={app}>
-                  <a target='blank' href={`/${app}/`}>{app} (beta)</a>
-                </li>);
-      }
+    return filteredApps.map((app) => {
+      return (
+        <li key={app}>
+          <a target='blank' href={`/${app}/`}>{app} (beta)</a>
+        </li>
+      );
     });
   }
 
@@ -59,7 +62,7 @@ class AppListPage extends Component {
             </div>
           </main>
         </div>
-                <Footer
+        <Footer
           version={status.version}
           logging={this.props.logger.logging}
           updateLogging={this.props.actions.updateLogging}
@@ -80,7 +83,9 @@ function mapStateToProps (state) {
 }
 
 function mapDispatchToProps (dispatch) {
-  return {};
+  return {
+    actions: bindActionCreators({updateLogging}, dispatch)
+  };
 }
 
 export default connect(

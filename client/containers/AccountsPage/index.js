@@ -20,7 +20,7 @@ class AccountsPage extends Component {
             <h1>Accounts</h1>
           </main>
         </div>
-                <Footer
+        <Footer
           version={status.version}
           logging={this.props.logger.logging}
           updateLogging={this.props.actions.updateLogging}
