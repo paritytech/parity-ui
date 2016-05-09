@@ -52,12 +52,13 @@ export default class CallsToolbar extends Component {
           </IconButton>
           <CopyToClipboard
             text={JSON.stringify(call)}
-            onCopy={() => this.props.actions.copyToClipboard('Method copied to clipboard!')}
+            onCopy={() => this.props.actions.copyToClipboard('method copied to clipboard')}
             >
             <IconButton
               className={styles.callAction}
               tooltip='Copy to clipboard'
               tooltipPosition='top-left'
+              {...this._test(`copyCallToClipboard`)}
               >
               <AssignmentIcon className={styles.callActionIcon}/>
             </IconButton>

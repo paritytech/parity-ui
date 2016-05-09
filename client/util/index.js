@@ -10,3 +10,7 @@ export function toPromise (fn) {
     });
   });
 }
+
+export function identity (x) {
+  return x;
+}
