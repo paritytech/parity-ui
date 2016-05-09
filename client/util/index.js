@@ -17,3 +17,7 @@ export function stringifyIfObject (any) {
   }
   return any;
 }
+
+export function identity (x) {
+  return x;
+}

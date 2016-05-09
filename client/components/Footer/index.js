@@ -26,6 +26,7 @@ export default class Footer extends Component {
     const isOffClass = !logging ? styles.off : '';
     return (
       <IconButton
+        {...this._testInherit('log-button')}
         onClick={() => updateLogging(!logging)}
         tooltip='Toggle logging' tooltipPosition='top-left'
         className={styles.logButton}
