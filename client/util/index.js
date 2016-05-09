@@ -11,6 +11,13 @@ export function toPromise (fn) {
   });
 }
 
+export function stringifyIfObject (any) {
+  if (typeof any === 'object') {
+    any = JSON.stringify(any);
+  }
+  return any;
+}
+
 export function identity (x) {
   return x;
 }

@@ -1,4 +1,6 @@
 
+import { stringifyIfObject } from '../util';
+
 export default class RpcProvider {
 
   constructor (web3Utils, web3Formatters) {
@@ -22,6 +24,7 @@ export default class RpcProvider {
     try {
       return `${formatter(result)}`;
     } catch (err) {
+      result = stringifyIfObject(result);
       const msg = `error using ${formatterName} on ${result}: ${err}`;
       console.error(msg);
       return new Error(msg);
@@ -50,6 +53,7 @@ export default class RpcProvider {
       try {
         return `${formatter(param)}`;
       } catch (err) {
+        param = stringifyIfObject(param);
         const msg = `error using ${formatterName} on ${param}: ${err}`;
         console.error(msg);
         return new Error(msg);

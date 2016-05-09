@@ -6,6 +6,7 @@ import List from 'material-ui/List/List';
 import ListItem from 'material-ui/List/ListItem';
 import AutoComplete from '../AutoComplete';
 
+import { formatRpcMd } from '../../util/rpc-md';
 import Animated from '../../components-compositors/Animated';
 import ScrollTopButton from '../ScrollTopButton';
 import style from './style.css';
@@ -63,9 +64,9 @@ class RpcDocs extends Component {
             <h3 className={style.headline}>{m.name}</h3>
             <Markdown val={m.desc} />
             <p><strong>Params</strong>{!m.params.length ? ' - none' : ''}</p>
-            {m.params.map((p, idx) => <Markdown key={`${m.name}-${idx}`} val={p} />)}
+            {m.params.map((p, idx) => <Markdown key={`${m.name}-${idx}`} val={formatRpcMd(p)} />)}
             <p className={style.returnsTitle}><strong>Returns</strong> - </p>
-            <Markdown className={style.returnsDesc} val={m.returns} />
+            <Markdown className={style.returnsDesc} val={formatRpcMd(m.returns)} />
             {idx !== rpcMethods.length - 1 ? <hr /> : ''}
           </ListItem>
       );
