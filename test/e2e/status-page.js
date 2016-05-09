@@ -60,64 +60,64 @@ module.exports = {
     client.expect.element(el('ToastrContainer-toast-2')).text.to.contain('logging updated to true');
   },
 
-  // 'change extradata' (client) {
-  //   const submit = el('MiningSettings-extra-data-submit');
-  //   const cancel = el('MiningSettings-extra-data-cancel');
-  //   const edit = el('MiningSettings-extra-data-edit');
-  //   const reset = el('MiningSettings-extra-data-reset');
-  //   const input = el('MiningSettings-extra-data', 'input');
-  //   const val = mockedResponses.rpc.find(method => method.name === 'ethcore_extraData').formattedResponse;
-  //   const newVal = 'Parity//213.beta/awesometesty/ubuntu-29';
-  //   // submit/cancel are hidden on load, edit and reset button displayed but not visible
-  //   client.expect.element(submit).to.not.be.present;
-  //   client.expect.element(cancel).to.not.be.present;
-  //   client.expect.element(edit).to.be.present;
-  //   client.expect.element(edit).to.not.be.visible;
-  //   client.expect.element(reset).to.be.present;
-  //   client.expect.element(reset).to.not.be.visible;
-  //   // display edit and reset button (sleep for transition delay)
-  //   client.moveToElement(input, 0, 0);
-  //   client.waitForElementVisible(edit, 220, false);
-  //   client.expect.element(edit).to.be.visible;
-  //   client.expect.element(reset).to.be.visible;
-  //   // switch to edit mode
-  //   client.click(edit);
-  //   // submit/cancel displayed, edit button hidden
-  //   client.expect.element(submit).to.be.present;
-  //   client.expect.element(cancel).to.be.present;
-  //   client.expect.element(edit).to.not.be.present;
-  //   client.expect.element(reset).to.not.be.present;
-  //   // modify the value and cancel, expect initial value
-  //   client.clearValue(input);
-  //   client.setValue(input, newVal);
-  //   client.click(cancel);
-  //   client.expect.element(input).to.have.value.that.equals(val);
-  //   client.expect.element(submit).to.not.be.present;
-  //   client.expect.element(cancel).to.not.be.present;
-  //   client.expect.element(edit).to.be.present;
-  //   client.expect.element(reset).to.be.present;
-  //   // modify the value and click outside, expect new value, action buttons present
-  //   client.moveToElement(input, 0, 0);
-  //   client.waitForElementVisible(edit, 220, false);
-  //   client.click(edit);
-  //   client.clearValue(input);
-  //   client.setValue(input, newVal);
-  //   client.click(el('Status-mining')); // outside click
-  //   client.expect.element(input).to.have.value.that.equals(newVal);
-  //   client.expect.element(submit).to.be.present;
-  //   client.expect.element(cancel).to.be.present;
-  //   client.expect.element(edit).to.not.be.present;
-  //   client.expect.element(reset).to.not.be.present;
-  //   // submit, expect new value, edit button hidden
-  //   client.clearValue(input);
-  //   client.setValue(input, newVal);
-  //   client.click(submit);
-  //   client.expect.element(input).to.have.value.that.equals(newVal);
-  //   client.expect.element(submit).to.not.be.present;
-  //   client.expect.element(cancel).to.not.be.present;
-  //   client.expect.element(edit).to.be.present;
-  //   client.expect.element(reset).to.be.present;
-  // },
+  'change extradata' (client) {
+    const submit = el('MiningSettings-extra-data-submit');
+    const cancel = el('MiningSettings-extra-data-cancel');
+    const edit = el('MiningSettings-extra-data-edit');
+    const reset = el('MiningSettings-extra-data-reset');
+    const input = el('MiningSettings-extra-data', 'input');
+    const val = mockedResponses.rpc.find(method => method.name === 'ethcore_extraData').formattedResponse;
+    const newVal = 'Parity//213.beta/awesometesty/ubuntu-29';
+    // submit/cancel are hidden on load, edit and reset button displayed but not visible
+    client.expect.element(submit).to.not.be.present;
+    client.expect.element(cancel).to.not.be.present;
+    client.expect.element(edit).to.be.present;
+    client.expect.element(edit).to.not.be.visible;
+    client.expect.element(reset).to.be.present;
+    client.expect.element(reset).to.not.be.visible;
+    // display edit and reset button (sleep for transition delay)
+    client.moveToElement(input, 0, 0);
+    client.waitForElementVisible(edit, 220, false);
+    client.expect.element(edit).to.be.visible;
+    client.expect.element(reset).to.be.visible;
+    // switch to edit mode
+    client.click(edit);
+    // submit/cancel displayed, edit button hidden
+    client.expect.element(submit).to.be.present;
+    client.expect.element(cancel).to.be.present;
+    client.expect.element(edit).to.not.be.present;
+    client.expect.element(reset).to.not.be.present;
+    // modify the value and cancel, expect initial value
+    client.clearValue(input);
+    client.setValue(input, newVal);
+    client.click(cancel);
+    client.expect.element(input).to.have.value.that.equals(val);
+    client.expect.element(submit).to.not.be.present;
+    client.expect.element(cancel).to.not.be.present;
+    client.expect.element(edit).to.be.present;
+    client.expect.element(reset).to.be.present;
+    // modify the value and click outside, expect new value, action buttons present
+    client.moveToElement(input, 0, 0);
+    client.waitForElementVisible(edit, 220, false);
+    client.click(edit);
+    client.clearValue(input);
+    client.setValue(input, newVal);
+    client.click(el('Status-mining')); // outside click
+    client.expect.element(input).to.have.value.that.equals(newVal);
+    client.expect.element(submit).to.be.present;
+    client.expect.element(cancel).to.be.present;
+    client.expect.element(edit).to.not.be.present;
+    client.expect.element(reset).to.not.be.present;
+    // submit, expect new value, edit button hidden
+    client.clearValue(input);
+    client.setValue(input, newVal);
+    client.click(submit);
+    client.expect.element(input).to.have.value.that.equals(newVal);
+    client.expect.element(submit).to.not.be.present;
+    client.expect.element(cancel).to.not.be.present;
+    client.expect.element(edit).to.be.present;
+    client.expect.element(reset).to.be.present;
+  },
 
   after (client) {
     client.end();

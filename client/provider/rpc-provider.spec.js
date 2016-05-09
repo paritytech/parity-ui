@@ -1,4 +1,4 @@
-/* global describe, it, xit, beforeEach, expect */
+/* global describe, it, beforeEach, expect */
 
 import sinon from 'sinon';
 import RpcProvider from './rpc-provider';
@@ -10,21 +10,6 @@ describe('PROVIDER - RPC', () => {
     const mockedWeb3Utils = { testUtil: sinon.spy() };
     const mockedWeb3Formatters = { testFormatter: sinon.spy() };
     cut = new RpcProvider(mockedWeb3Utils, mockedWeb3Formatters);
-    sinon.spy(cut, 'encode');
-    sinon.spy(cut, 'decode');
-  });
-
-  describe('EXTRA DATA', () => {
-    const str = 'parity/1.0.0/1.0.0-beta2';
-    const encoded = '0xd783010000867061726974798b312e302e302d6265746132';
-
-    xit('should encode str to encoded', () => {
-      expect(cut.encode(str)).to.equal(encoded);
-    });
-
-    it('should decode encoded to str', () => {
-      expect(cut.decode(encoded)).to.equal(str);
-    });
   });
 
   describe('FORMAT RESULT', () => {
@@ -38,20 +23,6 @@ describe('PROVIDER - RPC', () => {
 
       // then
       expect(returned).to.equal('5');
-      expect(cut.decode.notCalled).to.be.true;
-    });
-
-    it('should call decode and coherse to string when respected formatter is passed', () => {
-      // given
-      const result = 5;
-      const formatter = 'decodeExtraData';
-
-      // when
-      const returned = cut.formatResult(result, formatter);
-
-      // then
-      expect(cut.decode.calledWith(result)).to.be.true;
-      expect(returned).to.not.equal('5');
     });
 
     it('should format with web3Utils and coherse to string when respected formatter is passed', () => {
@@ -90,20 +61,6 @@ describe('PROVIDER - RPC', () => {
 
       // then
       expect(returned).to.eql(params);
-      expect(cut.encode.notCalled).to.be.true;
-    });
-
-    xit('should call encode when respected formatters are passed', () => {
-      // given
-      const params = ['Parity / 2.0'];
-      const formatters = ['encodeExtraData'];
-
-      // when
-      const returned = cut.formatParams(params, formatters);
-
-      // then
-      expect(cut.encode.calledWith(params[0])).to.be.true;
-      expect(returned).to.not.eql(params);
     });
 
     it('should format with web3Utils when respected formatter is passed', () => {

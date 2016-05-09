@@ -1,5 +1,5 @@
 
-import {isArray, isObject, eq, compact} from 'lodash';
+import {isArray, isObject, isEqual, compact} from 'lodash';
 import {isBigNumber} from 'web3/lib/utils/utils';
 import {toPromise} from '../util';
 import {Web3Base} from './web3-base';
@@ -77,6 +77,7 @@ export class Web3Provider extends Web3Base {
       {method: this.ethcoreWeb3.getMinGasPrice, actionMaker: MiningActions.updateMinGasPrice},
       {method: this.ethcoreWeb3.getGasFloorTarget, actionMaker: MiningActions.updateGasFloorTarget},
       {method: this.ethcoreWeb3.getExtraData, actionMaker: MiningActions.updateExtraData},
+      {method: this.ethcoreWeb3.getDefaultExtraData, actionMaker: MiningActions.updateDefaultExtraData},
       {method: this.ethcoreWeb3.getDevLogsLevels, actionMaker: DebugActions.updateDevLogsLevels},
       {method: this.ethcoreWeb3.getDevLogs, actionMaker: DebugActions.updateDevLogs},
       {method: this.ethcoreWeb3.getNetChain, actionMaker: StatusActions.updateNetChain},
@@ -114,13 +115,16 @@ export class Web3Provider extends Web3Base {
   filterChanged (actions) {
     return actions.filter(action => {
       const val = this.state[this.actionProp(action)];
+
       if (isBigNumber(val)) {
         return !val.equals(action.payload);
-      } if (isArray(val) || isObject(val)) {
-        return !eq(val, action.payload);
-      } else {
-        return val !== action.payload;
       }
+
+      if (isArray(val) || isObject(val)) {
+        return !isEqual(val, action.payload);
+      }
+
+      return val !== action.payload;
     });
   }
 
