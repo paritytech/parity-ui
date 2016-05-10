@@ -33,7 +33,7 @@ function returns (lines) {
 }
 
 function isBeginningOfObj (line) {
-  return line.indexOf(`Object`) > -1;
+  return line.indexOf('Object') > -1;
 }
 
 function isField (line) {
