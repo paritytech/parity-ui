@@ -16,7 +16,7 @@ export function parseAddress (url) {
     };
   }
 
-  if (protocol === 'parity' || protocol === 'ipfs') {
+  if (protocol === 'dapp' || protocol === 'ipfs') {
     const p = parts[1].split('/');
     return {
       protocol,

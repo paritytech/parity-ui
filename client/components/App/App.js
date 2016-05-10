@@ -15,7 +15,7 @@ function getCurrentPage () {
 
 function isMainPage () {
   const host = window.location.host.toString();
-  return host.indexOf('my.parity') > 0;
+  return host.indexOf('parity.dapp') > 0;
 }
 
 function getInitialUrl () {
@@ -23,7 +23,7 @@ function getInitialUrl () {
     return 'local://dapp.html';
   }
 
-  return `parity://${getCurrentPage()}`;
+  return `dapp://${getCurrentPage()}`;
 }
 
 export class App extends React.Component {
@@ -35,9 +35,9 @@ export class App extends React.Component {
     hints: [
       'local://dapp.html',
       'local://index.html',
-      'parity://dapp',
+      'dapp://dapp',
       'ipfs://dapp',
-      'parity://test',
+      'dapp://test',
       'http://ethcore.github.io/parity-web-ui/dapp.html'
     ]
   };
@@ -63,9 +63,9 @@ export class App extends React.Component {
   renderTopBar () {
     if (isMainPage()) {
       return (
-        <ul>
-          <li><a href='http://wallet.my.parity'>Home</a></li>
-          <li><a href='http://dapp.my.parity'>Dapp</a></li>
+        <ul className={styles.list}>
+          <li><a href='http://wallet.parity.dapp'>Home</a></li>
+          <li><a href='http://dapp.parity.dapp'>Dapp</a></li>
         </ul>
       );
     }
