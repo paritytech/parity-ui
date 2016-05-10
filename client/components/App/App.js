@@ -19,7 +19,7 @@ function isMainPage () {
 }
 
 function getInitialUrl () {
-  if (isMainPage()) {
+  if (!isMainPage()) {
     return 'local://dapp.html';
   }
 
@@ -61,7 +61,7 @@ export class App extends React.Component {
   }
 
   renderTopBar () {
-    if (!isMainPage()) {
+    if (isMainPage()) {
       return (
         <ul>
           <li><a href='http://wallet.my.parity'>Home</a></li>
@@ -69,6 +69,7 @@ export class App extends React.Component {
         </ul>
       );
     }
+
     return (
       <AutoComplete
         fullWidth
@@ -81,7 +82,7 @@ export class App extends React.Component {
   }
 
   renderContent () {
-    if (!isMainPage()) {
+    if (isMainPage() && getCurrentPage() === 'wallet') {
       return (
         <Wallet accounts={this.state.allAccounts} />
       );
