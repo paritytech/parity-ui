@@ -36,10 +36,10 @@ export class Account extends Web3Component {
     const acc = this.props.address;
     const address = this.context.web3.toChecksumAddress(acc);
     return (
-      <div className={styles.account}>
+      <div className={styles.account} title={address}>
         <Identicon seed={acc} />
         <span className={styles.address}>
-          {this.shortAddress()}
+          {this.shortAddress(address)}
         </span>
         {this.renderBalance()}
       </div>
@@ -59,8 +59,7 @@ export class Account extends Web3Component {
     );
   }
 
-  shortAddress () {
-    const acc = this.props.address;
+  shortAddress (acc) {
     const len = acc.length;
     return acc.slice(0, 8) + '...' + acc.slice(len - 8);
   }

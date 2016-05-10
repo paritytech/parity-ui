@@ -25,6 +25,7 @@ export class AccountChooser extends Web3Component {
       }
 
       this.setState({accounts});
+      this.props.onAllAccounts(accounts);
       this.props.onChange(this.state.accounts[this.state.defaultAccountIdx]);
     });
   }
@@ -53,7 +54,8 @@ export class AccountChooser extends Web3Component {
   }
 
   static propTypes = {
-    onChange: React.PropTypes.func.isRequired
+    onChange: React.PropTypes.func.isRequired,
+    onAllAccounts: React.PropTypes.func.isRequired
   };
 
 }

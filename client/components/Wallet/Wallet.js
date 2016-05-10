@@ -14,7 +14,7 @@ export class Wallet extends Web3Component {
     }
 
     return (
-      <div>
+      <div style={{textAlign: 'center'}}>
         <h1>Your accounts</h1>
         {
           accounts.map(acc => (
