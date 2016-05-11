@@ -1,9 +1,7 @@
 import React from 'react';
 import styles from './styles.css';
 
-import Dialog from 'material-ui/Dialog';
-import FlatButton from 'material-ui/FlatButton';
-
+import {TransactionConfirmation} from '../TransactionConfirmation/TransactionConfirmation';
 import {Web3Component} from '../Web3Component/Web3Component';
 import {Web3Forwarder} from './Web3Forwarder';
 import {parseAddress} from './address';
@@ -30,42 +28,22 @@ export class DappContent extends Web3Component {
           src={address.url}
           onLoad={(ev) => this.forwarder.onLoad(ev.target, this.props.url)}
           />
-        <Dialog
-          title='Confirm Transaction'
-          actions={this.renderDialogActions()}
-          modal
+        <TransactionConfirmation
           open={this.state.sendingTransaction}
-          >
-          <pre>{JSON.stringify(this.state.transaction, null, 2)}</pre>
-        </Dialog>
+          transaction={this.state.transaction}
+          onAbort={::this.abortTransaction}
+          onConfirm={::this.confirmTransaction}
+          />
       </div>
     );
   }
 
-  renderDialogActions () {
-    return [
-      <FlatButton
-        label='Abort'
-        secondary
-        onTouchTap={::this.abortTransaction}
-      />,
-      <FlatButton
-        label='Confirm'
-        primary
-        keyboardFocused
-        onTouchTap={::this.confirmTransaction}
-      />
-    ];
-  }
-
   abortTransaction () {
     this.state.cb('aborted');
-    window.alert('Aborted!');
   }
 
   confirmTransaction () {
-    this.state.cb(null, 'Pass');
-    window.alert('Confirmed');
+    this.state.cb(null);
   }
 
   static propTypes = {

@@ -30,7 +30,7 @@ export class Web3Forwarder {
       this.component.setState({
         sendingTransaction: true,
         transaction: payload,
-        cb: (err, pass) => {
+        cb: (err) => {
           this.component.setState({
             sendingTransaction: false,
             transaction: null,
@@ -39,7 +39,6 @@ export class Web3Forwarder {
           if (err) {
             return cb(err);
           }
-          console.log('Password: ' + pass);
           this.provider().sendAsync(payload, cb);
         }
       });
