@@ -1,0 +1,3 @@
+[submodule "meteor-dapp-wallet"]
+	path = meteor-dapp-wallet
+	url = https://github.com/ethereum/meteor-dapp-wallet.git
