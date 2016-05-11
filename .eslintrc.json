@@ -1,4 +1,8 @@
 {
   "extends": ["semistandard", "standard-react"],
-  "parser": "babel-eslint"
+  "parser": "babel-eslint",
+  "rules": {
+    "no-return-assign": 1,
+    "react/jsx-no-bind": 1
+  }
 }
