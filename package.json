@@ -79,6 +79,7 @@
     "dapp-styles": "^0.2.2",
     "format-json": "1.0.3",
     "format-number": "2.0.1",
+    "history": "2.1.1",
     "lodash": "4.11.1",
     "marked": "^0.3.5",
     "material-ui": "0.15.0-beta.2",
