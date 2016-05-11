@@ -20,13 +20,13 @@ module.exports = {
   },
 
   'Assert header nav' (client) {
-    client.click(el(`Header-rpc-link`));
+    client.click(el('Header-rpc-link'));
     client.assert.urlContains('/rpc');
-    client.click(el(`Header-debug-link`));
+    client.click(el('Header-debug-link'));
     client.assert.urlContains('/debug');
-    client.click(el(`Header-apps-link`));
+    client.click(el('Header-apps-link'));
     client.assert.urlContains('/apps');
-    client.click(el(`Header-home-link`));
+    client.click(el('Header-home-link'));
     client.assert.urlContains('/status');
   },
 
