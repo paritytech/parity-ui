@@ -27,8 +27,8 @@ export default class CallsToolbar extends Component {
       wrapStyle.right = 13;
     }
 
-    const setCall = () => ::this.setCall(call);
-    const makeCall = () => ::this.makeCall(call);
+    const setCall = () => this.setCall(call);
+    const makeCall = () => this.makeCall(call);
     const copyToClipboard = () => this.props.actions.copyToClipboard('method copied to clipboard');
 
     return (

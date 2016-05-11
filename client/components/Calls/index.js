@@ -12,10 +12,6 @@ export default class Calls extends Component {
     this.state = {};
   }
 
-  _onMouseLeaveContainer () {
-    this.setState({hoveredIdx: null});
-  }
-
   _setCallsHistory (el) {
     this._callsHistory = el;
   }
@@ -26,10 +22,13 @@ export default class Calls extends Component {
 
   render () {
     let {hoveredIdx} = this.state;
+
+    const onMouseLeaveContainer = () => this.setState({hoveredIdx: null});
+
     return (
       <div
         className='calls-container'
-        onMouseLeave={this._onMouseLeaveContainer}
+        onMouseLeave={onMouseLeaveContainer}
         {...this._test('container')}
       >
         {this.renderClear()}
