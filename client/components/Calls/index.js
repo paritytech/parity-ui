@@ -12,18 +12,11 @@ export default class Calls extends Component {
     this.state = {};
   }
 
-  _setCallsHistory (el) {
-    this._callsHistory = el;
-  }
-
-  _clearHistory () {
-    this.props.reset();
-  }
-
   render () {
     let {hoveredIdx} = this.state;
 
     const onMouseLeaveContainer = () => this.setState({hoveredIdx: null});
+    const setCallsHistory = (el) => { this._callsHistory = el; };
 
     return (
       <div
@@ -33,7 +26,7 @@ export default class Calls extends Component {
       >
         {this.renderClear()}
         <h2 className={styles.header}>History</h2>
-        <div className={`${styles.history} row`} ref={this._setCallsHistory}>
+        <div className={`${styles.history} row`} ref={setCallsHistory}>
           {this.renderNoCallsMsg()}
           {this.renderCalls()}
         </div>
@@ -52,11 +45,13 @@ export default class Calls extends Component {
       return;
     }
 
+    const clearHistory = () => this.props.reset();
+
     return (
       <a
         {...this._test('remove')}
         title='Clear RPC calls history'
-        onClick={this._clearHistory}
+        onClick={clearHistory}
         className={styles.removeIcon}
         >
         <i className='icon-trash'></i>
