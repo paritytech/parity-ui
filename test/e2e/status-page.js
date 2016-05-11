@@ -1,10 +1,9 @@
 'use strict';
 
 const mockedResponses = require('../mocked-responses.json');
-const url = 'http://localhost:3000';
+const url = 'http://localhost:3000/#/status';
 const utils = require('../utils');
 const el = utils.el;
-const assertNav = utils.assertNav;
 
 module.exports = {
   tags: ['statuspage'],
@@ -13,17 +12,14 @@ module.exports = {
   },
 
   'Assert ui' (client) {
-    client.expect.element('hgroup').to.be.present;
-    ['home', 'rpc', 'debug', 'apps', 'accounts'].map(assertNav.bind(client));
     client.expect.element(el('Status-mining')).to.be.present;
     client.expect.element(el('Status-settings')).to.be.present;
-    client.expect.element(el('StatusPage-footer')).to.be.present;
   },
 
   'Assert mining settings' (client) {
     [
       { selector: 'author', name: 'eth_coinbase' },
-      // { selector: 'extra-data', name: 'ethcore_extraData' },
+      { selector: 'extra-data', name: 'ethcore_extraData' },
       { selector: 'min-gas-price', name: 'ethcore_minGasPrice' },
       { selector: 'gas-floor-target', name: 'ethcore_gasFloorTarget' }
     ].map(assertMiningSettings.bind(client));
@@ -50,14 +46,6 @@ module.exports = {
       { selector: 'rpc-interface', name: 'interface' },
       { selector: 'rpc-port', name: 'port' }
     ].map(assertRpc.bind(client));
-  },
-
-  'Assert logging toggle' (client) {
-    const logBtn = el('StatusPage-footer-log-button');
-    client.click(logBtn);
-    client.expect.element(el('ToastrContainer-toast-1')).text.to.contain('logging updated to false');
-    client.click(logBtn);
-    client.expect.element(el('ToastrContainer-toast-2')).text.to.contain('logging updated to true');
   },
 
   'change extradata' (client) {

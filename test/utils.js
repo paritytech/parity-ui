@@ -2,7 +2,6 @@
 
 module.exports = {
   el: el,
-  assertNav: assertNav,
   mckResponses: require('./mocked-responses.json')
 };
 
@@ -12,9 +11,4 @@ function el (base, innerSelector) {
     selector += ` ${innerSelector}`;
   }
   return selector;
-}
-
-function assertNav (link) {
-  const selector = `Header-${link}-link`;
-  this.expect.element(el(selector)).to.be.present;
 }

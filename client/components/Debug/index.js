@@ -2,7 +2,6 @@
 import React, { Component, PropTypes } from 'react';
 
 import style from './style.css';
-import Animated from '../../components-compositors/Animated';
 
 class Debug extends Component {
 
@@ -69,4 +68,4 @@ Debug.propTypes = {
   }).isRequired
 };
 
-export default Animated(Debug);
+export default Debug;

@@ -23,14 +23,25 @@ export default class AnimateChildren extends Component {
   }
 
   renderChildren () {
-    const { children } = this.props;
-    // cloning element and passing props to non components will throw invariant error
-    return !isReactComponent(children) ? children
-      : React.cloneElement(this.props.children, { ...this.props });
+    const { children, isView } = this.props;
+
+    if (isView) {
+      return React.cloneElement(this.props.children, {
+        key: this.props.pathname
+      });
+    }
+
+    if (isReactComponent(children)) {
+      return React.cloneElement(this.props.children, { ...this.props });
+    }
+
+    return children;
   }
 }
 
 AnimateChildren.propTypes = {
   children: PropTypes.any.isRequired,
+  pathname: PropTypes.string,
+  isView: PropTypes.bool,
   absolute: PropTypes.bool
 };
