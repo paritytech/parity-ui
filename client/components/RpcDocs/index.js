@@ -56,19 +56,19 @@ class RpcDocs extends Component {
   renderData () {
     const methods = rpcMethods.map((m, idx) => {
       return (
-          <ListItem
-            key={m.name}
-            disabled
-            ref={el => this[`_method-${m.name}`] = el}
-          >
-            <h3 className={style.headline}>{m.name}</h3>
-            <Markdown val={m.desc} />
-            <p><strong>Params</strong>{!m.params.length ? ' - none' : ''}</p>
-            {m.params.map((p, idx) => <Markdown key={`${m.name}-${idx}`} val={formatRpcMd(p)} />)}
-            <p className={style.returnsTitle}><strong>Returns</strong> - </p>
-            <Markdown className={style.returnsDesc} val={formatRpcMd(m.returns)} />
-            {idx !== rpcMethods.length - 1 ? <hr /> : ''}
-          </ListItem>
+        <ListItem
+          key={m.name}
+          disabled
+          ref={el => this[`_method-${m.name}`] = el}
+        >
+          <h3 className={style.headline}>{m.name}</h3>
+          <Markdown val={m.desc} />
+          <p><strong>Params</strong>{!m.params.length ? ' - none' : ''}</p>
+          {m.params.map((p, idx) => <Markdown key={`${m.name}-${idx}`} val={formatRpcMd(p)} />)}
+          <p className={style.returnsTitle}><strong>Returns</strong> - </p>
+          <Markdown className={style.returnsDesc} val={formatRpcMd(m.returns)} />
+          {idx !== rpcMethods.length - 1 ? <hr /> : ''}
+        </ListItem>
       );
     });
 
