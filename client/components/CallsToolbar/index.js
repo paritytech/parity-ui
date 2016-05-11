@@ -60,7 +60,7 @@ export default class CallsToolbar extends Component {
               tooltipPosition='top-left'
               {...this._test('copyCallToClipboard')}
               >
-              <AssignmentIcon className={styles.callActionIcon}/>
+              <AssignmentIcon className={styles.callActionIcon} />
             </IconButton>
           </CopyToClipboard>
         </div>

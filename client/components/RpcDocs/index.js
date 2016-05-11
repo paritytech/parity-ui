@@ -28,7 +28,7 @@ class RpcDocs extends Component {
                 <h1><span>RPC</span> Docs</h1>
               </div>
               <div className='col col-6'>
-                <RpcNav/>
+                <RpcNav />
               </div>
             </div>
           </div>
