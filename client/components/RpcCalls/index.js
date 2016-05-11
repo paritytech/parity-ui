@@ -264,7 +264,7 @@ class RpcCalls extends Component {
     return (
       <button
         {...this._test('fireRpc')}
-        className={`dapp-block-button`}
+        className={'dapp-block-button'}
         disabled={this.state.jsonEditorError}
         onClick={::this.onRpcFire}
         >

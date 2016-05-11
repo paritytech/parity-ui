@@ -58,7 +58,7 @@ export default class CallsToolbar extends Component {
               className={styles.callAction}
               tooltip='Copy to clipboard'
               tooltipPosition='top-left'
-              {...this._test(`copyCallToClipboard`)}
+              {...this._test('copyCallToClipboard')}
               >
               <AssignmentIcon className={styles.callActionIcon}/>
             </IconButton>
