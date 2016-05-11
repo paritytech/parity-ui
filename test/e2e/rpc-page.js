@@ -3,7 +3,6 @@
 const url = 'http://localhost:3000/#/rpc/';
 const utils = require('../utils');
 const el = utils.el;
-const assertNav = utils.assertNav;
 const mckResponses = utils.mckResponses;
 const rpcMethods = require('../../client/data/rpc.json').methods;
 
@@ -16,11 +15,6 @@ module.exports = {
 
   'Assert redirect to calls' (client) {
     client.assert.urlContains('rpc/calls');
-  },
-
-  'Assert header ui' (client) {
-    client.expect.element('hgroup').to.be.present;
-    ['home', 'rpc', 'debug', 'apps', 'accounts'].map(assertNav.bind(client));
   },
 
   'Assert inner nav' (client) {
@@ -40,7 +34,9 @@ module.exports = {
     client.assert.urlContains('rpc/calls');
     // calls link active, rest not
     client.expect.element(callsLink).to.have.attribute('class').contain('activeNav');
-    client.expect.element(docsLink).to.not.have.attribute('class').contain('activeNav');
+    // dockLink has class attribute set to undefined. nightwatch doesn't handle it
+    // todo [adgo] - submit pr/issue to nightwatch and uncomments
+    // client.expect.element(docsLink).to.not.have.attribute('class').contain('activeNav');
   },
 
   'Assert call history when there are no calls' (client) {
@@ -53,7 +49,6 @@ module.exports = {
     client.expect.element('[data-test*="Calls-call*"]').to.not.be.present;
   },
 
-  // todo [adgo] - fix interactions with material-ui fields
   'Assert form' (client) {
     const autocomplete = el('RpcCalls-autocomplete');
     const button = el('RpcCalls-fireRpc');
