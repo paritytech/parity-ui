@@ -7,7 +7,6 @@ import AutoComplete from '../AutoComplete';
 import TextField from 'material-ui/TextField';
 
 import { formatRpcMd } from '../../util/rpc-md';
-import Animated from '../../components-compositors/Animated';
 import AnimateChildren from '../../components-compositors/Animated/children';
 import JsonEditor from '../JsonEditor';
 import Calls from '../Calls';
@@ -319,4 +318,4 @@ RpcCalls.propTypes = {
   }).isRequired
 };
 
-export default Animated(RpcCalls);
+export default RpcCalls;

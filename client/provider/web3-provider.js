@@ -52,7 +52,8 @@ export class Web3Provider extends Web3Base {
       }
       return toPromise(obj.method).then(obj.actionMaker)
         .catch(err => {
-          console.error(err);
+          const action = obj.actionMaker();
+          console.error(`err for ${action.type} with payload ${action.payload}`);
           this.store.dispatch(StatusActions.error(err));
           return false; // don't process errors in the promise chain
         });

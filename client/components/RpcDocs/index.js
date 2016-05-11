@@ -7,7 +7,6 @@ import ListItem from 'material-ui/List/ListItem';
 import AutoComplete from '../AutoComplete';
 
 import { formatRpcMd } from '../../util/rpc-md';
-import Animated from '../../components-compositors/Animated';
 import ScrollTopButton from '../ScrollTopButton';
 import style from './style.css';
 import Markdown from '../Markdown';
@@ -87,4 +86,4 @@ class RpcDocs extends Component {
 
 }
 
-export default Animated(RpcDocs);
+export default RpcDocs;

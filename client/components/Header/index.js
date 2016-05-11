@@ -35,7 +35,7 @@ export default class Header extends Component {
 
   render () {
     return (
-      <header className='dapp-header'>
+      <header className='dapp-header' {...this._testInherit()}>
         <hgroup className={style.title}>
           <h1>Status Page</h1>
           <h3>{this.props.nodeName}</h3>

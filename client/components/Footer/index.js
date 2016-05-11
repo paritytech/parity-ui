@@ -9,7 +9,7 @@ export default class Footer extends Component {
 
   render () {
     return (
-      <div {...this._testInherit()}>
+      <footer {...this._testInherit()}>
         <div className={styles.footer}>
           <a href='http://ethcore.io'>ethcore.io</a>
           {this.renderLogIcon()}
@@ -17,7 +17,7 @@ export default class Footer extends Component {
             Powered by: {this.props.version}
           </span>
         </div>
-      </div>
+      </footer>
     );
   }
 
