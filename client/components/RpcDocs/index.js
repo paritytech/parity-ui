@@ -55,7 +55,7 @@ class RpcDocs extends Component {
 
   renderData () {
     const methods = rpcMethods.map((m, idx) => {
-      const setMethod = el => this[`_method-${m.name}`] = el;
+      const setMethod = (el) => { this[`_method-${m.name}`] = el; };
 
       return (
         <ListItem

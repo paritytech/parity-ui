@@ -79,7 +79,7 @@ export default class EditableValue extends Component {
   renderInput () {
     const { inEditMode, value } = this.state;
 
-    const setInput = (el) => this._input = el;
+    const setInput = (el) => { this._input = el; };
     const onChange = (evt) => this.onChange(evt.target.value);
 
     if (!inEditMode || !this.props.autocomplete) {

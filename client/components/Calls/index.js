@@ -90,7 +90,7 @@ export default class Calls extends Component {
     const _calls = calls.map(
       (c, idx) => {
         const onMouseEnter = () => this.setState({hoveredIdx: idx});
-        const setCall = (el) => this[`call-${idx}`] = el;
+        const setCall = (el) => { this[`call-${idx}`] = el; };
 
         return (
           <div
