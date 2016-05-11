@@ -174,6 +174,10 @@ class RpcCalls extends Component {
     return _.find(rpcMethods, { name })
             .params.map(
               p => {
+                const onChange = (evt) => this.setState({
+                  [this.paramKey(p)]: evt.target.value
+                });
+
                 if (_.isPlainObject(p)) {
                   return this.renderObjInputs(p);
                 }
@@ -187,9 +191,7 @@ class RpcCalls extends Component {
                     title={p}
                     hintStyle={{maxWidth: '100%', overflow: 'hidden', whiteSpace: 'nowrap'}}
                     value={this.paramValue(p)}
-                    onChange={(evt) => this.setState({
-                      [this.paramKey(p)]: evt.target.value
-                    })}
+                    onChange={onChange}
                     {...this._test(this.paramKey(p))}
                   />
                 );
@@ -199,11 +201,16 @@ class RpcCalls extends Component {
 
   renderObjInputs (param) {
     const { description, details } = param;
+
     return (
       <div>
         <Markdown val={description} />
         <ul>
           {Object.keys(details).map(k => {
+            const onChange = (evt) => this.setState({
+              [this.paramKey(`${description}.${k}`)]: evt.target.value
+            });
+
             return (
               <li key={k}>
                 <TextField
@@ -213,9 +220,7 @@ class RpcCalls extends Component {
                   hintText={`${k}: ${details[k]}`}
                   hintStyle={{maxWidth: '100%', overflow: 'hidden', whiteSpace: 'nowrap'}}
                   value={this.paramValue(`${description}.${k}`)}
-                  onChange={(evt) => this.setState({
-                    [this.paramKey(`${description}.${k}`)]: evt.target.value
-                  })}
+                  onChange={onChange}
                   {...this._test(this.paramKey(k))}
                 />
               </li>

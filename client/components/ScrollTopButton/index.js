@@ -24,13 +24,17 @@ export default class ScrollTopButton extends Component {
     window.removeEventListener('scroll', this.handleScroll);
   }
 
+  _scrollToTop () {
+    scrollTo(document.body, 0, 500);
+  }
+
   render () {
     let hiddenClass = !this.state.showScrollButton ? styles.hidden : '';
 
     return (
       <IconButton
         className={`${styles.scrollButton} ${hiddenClass}`}
-        onClick={() => scrollTo(document.body, 0, 500)}>
+        onClick={this._scrollToTop}>
         <ArrowUpwardIcon />
       </IconButton>
     );

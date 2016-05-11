@@ -55,11 +55,13 @@ class RpcDocs extends Component {
 
   renderData () {
     const methods = rpcMethods.map((m, idx) => {
+      const setMethod = el => this[`_method-${m.name}`] = el;
+
       return (
         <ListItem
           key={m.name}
           disabled
-          ref={el => this[`_method-${m.name}`] = el}
+          ref={setMethod}
         >
           <h3 className={style.headline}>{m.name}</h3>
           <Markdown val={m.desc} />

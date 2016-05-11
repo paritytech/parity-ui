@@ -79,6 +79,9 @@ export default class EditableValue extends Component {
   renderInput () {
     const { inEditMode, value } = this.state;
 
+    const setInput = (el) => this._input = el;
+    const onChange = (evt) => this.onChange(evt.target.value);
+
     if (!inEditMode || !this.props.autocomplete) {
       return (
         <input
@@ -86,8 +89,8 @@ export default class EditableValue extends Component {
           type='text'
           value={value}
           onClick={::this.onOpenEdit}
-          ref={el => this._input = el}
-          onChange={(evt) => this.onChange(evt.target.value)}
+          ref={setInput}
+          onChange={onChange}
           readOnly={!inEditMode}
           />
       );
