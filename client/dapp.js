@@ -52,10 +52,14 @@ function submitTransaction (ev) {
   try {
     web3.eth.sendTransaction({
       from, to, value
-    }, withError((tx) => {
+    }, (err, tx) => {
       revertButton();
+
+      if (err) {
+        return;
+      }
       window.alert('Transaction has been sent. Hash: ' + tx);
-    }));
+    });
   } catch (e) {
     revertButton();
     window.alert(e);
@@ -64,14 +68,17 @@ function submitTransaction (ev) {
 
 function redrawSummary () {
   const $summary = el('#summary');
+  const $btn = el('#form button');
   const from = web3.defaultAccount;
   const to = $recipient.value;
   const value = $amount.value;
   if (!value || !to || !from) {
+    $btn.disabled = true;
     $summary.innerHTML = 'Fill out all fields.';
     return;
   }
 
+  $btn.disabled = false;
   $summary.innerHTML = `
   You will transfer <strong>${$amount.value} ETH</strong>
   from <strong>${web3.defaultAccount}</strong>

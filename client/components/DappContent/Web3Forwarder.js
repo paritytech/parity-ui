@@ -36,6 +36,7 @@ export class Web3Forwarder {
             transaction: null,
             cb: null
           });
+
           if (err) {
             return cb(err);
           }
@@ -59,7 +60,7 @@ export class Web3Forwarder {
     if (type === 'web3_sendAsync') {
       this.handleMethod(payload.method, payload, (err, response) => {
         reply({
-          type, err, response, id: response.id
+          type, err, response, id: payload.id
         });
       });
       return;
