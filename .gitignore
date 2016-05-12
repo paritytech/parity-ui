@@ -5,4 +5,5 @@ static
 *.log*
 *.swp
 reports
+coverage
 /*.zip
