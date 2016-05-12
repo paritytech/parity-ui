@@ -61,7 +61,7 @@
       "desiredCapabilities": {
         "tunnel-identifier": "${TRAVIS_JOB_NUMBER}",
         "build": "build-${TRAVIS_JOB_NUMBER}",
-        "name" : "parity-status-pge-integartion",
+        "name" : "parity-status-page-integration",
         "browserName": "firefox",
         "javascriptEnabled": true,
         "databaseEnabled": true,
