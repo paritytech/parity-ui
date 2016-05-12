@@ -7,7 +7,7 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import AutoComplete from './index';
 
 describe('components/AutoComplete', () => {
-  describe('render', () => {
+  describe('rendering', () => {
     const dataSource = ['abc', 'def', 'ghi'];
     const muiTheme = getMuiTheme({});
     let component;
