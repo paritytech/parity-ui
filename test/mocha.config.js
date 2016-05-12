@@ -1,3 +1,5 @@
+import 'mock-local-storage';
+
 import chai from 'chai';
 import jsdom from 'jsdom';
 
@@ -9,7 +11,7 @@ global.document = jsdom.jsdom('<!doctype html><html><body></body></html>');
 global.window = document.defaultView;
 global.navigator = global.window.navigator;
 
-// only imported after jsdom setup
-import 'mock-local-storage';
+// attach mocked localStorage onto the window as exposed by jsdom
+global.window.localStorage = global.localStorage;
 
 module.exports = {};
