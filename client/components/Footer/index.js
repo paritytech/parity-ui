@@ -24,10 +24,13 @@ export default class Footer extends Component {
   renderLogIcon () {
     const { updateLogging, logging } = this.props;
     const isOffClass = !logging ? styles.off : '';
+
+    const onClick = () => updateLogging(!logging);
+
     return (
       <IconButton
         {...this._testInherit('log-button')}
-        onClick={() => updateLogging(!logging)}
+        onClick={onClick}
         tooltip='Toggle logging' tooltipPosition='top-left'
         className={styles.logButton}
         >
@@ -42,4 +45,3 @@ Footer.propTypes = {
   logging: PropTypes.bool.isRequired,
   updateLogging: PropTypes.func.isRequired
 };
-

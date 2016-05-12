@@ -27,6 +27,10 @@ export default class CallsToolbar extends Component {
       wrapStyle.right = 13;
     }
 
+    const setCall = () => this.setCall(call);
+    const makeCall = () => this.makeCall(call);
+    const copyToClipboard = () => this.props.actions.copyToClipboard('method copied to clipboard');
+
     return (
       <div
         className={styles.callActionsWrap}
@@ -36,7 +40,7 @@ export default class CallsToolbar extends Component {
         <div className={styles.callActions}>
           <IconButton
             className={styles.callAction}
-            onClick={() => ::this.setCall(call)}
+            onClick={setCall}
             tooltip='Set'
             tooltipPosition='top-left'
             >
@@ -44,7 +48,7 @@ export default class CallsToolbar extends Component {
           </IconButton>
           <IconButton
             className={styles.callAction}
-            onClick={() => ::this.makeCall(call)}
+            onClick={makeCall}
             tooltip='Fire again'
             tooltipPosition='top-left'
             >
@@ -52,15 +56,15 @@ export default class CallsToolbar extends Component {
           </IconButton>
           <CopyToClipboard
             text={JSON.stringify(call)}
-            onCopy={() => this.props.actions.copyToClipboard('method copied to clipboard')}
+            onCopy={copyToClipboard}
             >
             <IconButton
               className={styles.callAction}
               tooltip='Copy to clipboard'
               tooltipPosition='top-left'
-              {...this._test(`copyCallToClipboard`)}
+              {...this._test('copyCallToClipboard')}
               >
-              <AssignmentIcon className={styles.callActionIcon}/>
+              <AssignmentIcon className={styles.callActionIcon} />
             </IconButton>
           </CopyToClipboard>
         </div>

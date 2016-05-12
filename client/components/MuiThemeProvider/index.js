@@ -10,7 +10,7 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 const muiTheme = getMuiTheme({
-  fontFamily: `'Source Sans Pro', 'Helvetica Neue', arial, sans-serif`,
+  fontFamily: '"Source Sans Pro", "Helvetica Neue", arial, sans-serif',
   palette: {
     primary1Color: '#6691C2',
     accent1Color: deepOrange500

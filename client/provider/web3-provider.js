@@ -101,7 +101,7 @@ export class Web3Provider extends Web3Base {
     this.running = true;
     this.onStart();
     this.refreshTick();
-    return () => this.running = false;
+    return () => { this.running = false; };
   }
 
   refreshTick () {
