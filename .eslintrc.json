@@ -1,4 +1,13 @@
 {
   "extends": ["semistandard", "standard-react"],
-  "parser": "babel-eslint"
+  "parser": "babel-eslint",
+  "globals": {
+    "after": true,
+    "afterEach": true,
+    "before": true,
+    "beforeEach": true,
+    "describe": true,
+    "expect": true,
+    "it": true
+  }
 }
