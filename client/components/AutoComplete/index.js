@@ -19,6 +19,7 @@ WrappedAutoComplete.defaultProps = {
 WrappedAutoComplete.propTypes = {
   dataSource: PropTypes.array.isRequired,
   filter: PropTypes.func,
+  name: PropTypes.string.isRequired,
   openOnFocus: PropTypes.bool
 };
 
