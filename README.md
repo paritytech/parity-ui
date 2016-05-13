@@ -65,6 +65,6 @@ $ npm t                      # run unit tests in watchmode
 
 #### Integration Tests
 ```bash
-$ npm startTest              # run with mocked backend (no client in background required)
+$ npm run startTest          # run with mocked backend (no client in background required)
 $ npm run nightwatch         # run integration tests (by default requires Firefox browser)
 ```
