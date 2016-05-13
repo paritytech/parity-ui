@@ -7,7 +7,7 @@
     "start": "webpack-dev-server -d --history-api-fallback --hot --inline --progress --colors --port 3000",
     "webpack": "webpack",
     "commit": "commit-wizard",
-    "coveralls": "coveralls < coverage/lcov.info",
+    "coveralls": "npm run testCoverage && coveralls < coverage/lcov.info",
     "lint": "eslint --ignore-path .gitignore .",
     "ci": "npm run lint & npm run testOnce & npm run nightwatchCI",
     "test": "npm run testOnce -- -w",
