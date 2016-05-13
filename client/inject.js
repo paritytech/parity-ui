@@ -15,9 +15,12 @@ import Web3 from 'web3';
 
 import {Web3Provider} from './components/Web3Provider/Web3Provider';
 import TopBar from './components/TopBar';
+import Interceptor from './components/TopBar/Interceptor';
 
 const http = new Web3.providers.HttpProvider('/rpc/');
-const web3 = new Web3(http);
+const interceptor = new Interceptor(http);
+const web3 = new Web3(interceptor);
+const rawWeb3 = new Web3(http);
 // expose global web3
 global.web3 = web3;
 
@@ -26,8 +29,8 @@ const el = document.createElement('div');
 document.querySelector('html').appendChild(el);
 ReactDOM.render(
   <MuiThemeProvider muiTheme={muiTheme}>
-    <Web3Provider web3={web3}>
-      <TopBar />
+    <Web3Provider web3={rawWeb3}>
+      <TopBar interceptor={interceptor} />
     </Web3Provider>
   </MuiThemeProvider>,
   el
