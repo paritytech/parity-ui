@@ -26,7 +26,9 @@ describe('components/Box', () => {
     });
 
     it('renders no default value', () => {
-      expect(() => TestUtils.findRenderedDOMComponentWithTag(component, 'h1')).to.throw;
+      expect(function () {
+        TestUtils.findRenderedDOMComponentWithTag(component, 'h1');
+      }).to.throw('Did not find exactly one match (found: 0) for tag:h1');
     });
   });
 
