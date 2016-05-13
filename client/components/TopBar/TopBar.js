@@ -22,7 +22,7 @@ export default class extends React.Component {
   componentWillMount () {
     this.listeners = [
       this.props.interceptor.intercept('eth_accounts', ::this.onEthAccounts),
-      this.props.interceptor.intercept('eth_sendTransaction', ::this.onEthSendTransaction),
+      this.props.interceptor.intercept('eth_sendTransaction', ::this.onEthSendTransaction)
     ];
   }
 
@@ -58,7 +58,7 @@ export default class extends React.Component {
   }
 
   clearTx () {
-     this.setState({
+    this.setState({
       sendingTransaction: false,
       transaction: null,
       callbackFunc: null,
@@ -69,7 +69,7 @@ export default class extends React.Component {
   abortTransaction () {
     this.state.callbackFunc('aborted');
     this.clearTx();
-   }
+  }
 
   confirmTransaction () {
     this.state.sendTxFunc(() => {

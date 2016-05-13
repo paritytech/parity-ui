@@ -42,7 +42,7 @@ export default class {
       const ret = this.provider.send(payload);
       cb2 && cb2(null, ret);
       return ret;
-    }
+    };
     return this.handle(payload, false, next);
   }
 
@@ -52,7 +52,7 @@ export default class {
         cb2 && cb2(...args);
         return callback(...args);
       });
-    }
+    };
     return this.handle(payload, callback, next);
   }
 
