@@ -100,7 +100,7 @@ export class TransactionConfirmation extends Web3Component {
   }
 
   renderValue (value) {
-    const val = fromHex(value);
+    const val = this.context.web3.fromWei(value);
     return (
       <div>
         <strong style={{display: 'block'}}>{val.toFixed(2)}</strong>
@@ -167,9 +167,4 @@ export class TransactionConfirmation extends Web3Component {
     onConfirm: React.PropTypes.func.isRequired
   };
 
-}
-
-function fromHex (val) {
-  val = val.replace(/^0x/, '');
-  return parseInt(val, 16);
 }
