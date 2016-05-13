@@ -29,13 +29,13 @@ const el = document.createElement('div');
 ReactDOM.render(
   <MuiThemeProvider muiTheme={muiTheme}>
     <Web3Provider web3={rawWeb3}>
-      <TopBar interceptor={interceptor} />
+      <TopBar interceptor={interceptor} web3={web3} />
     </Web3Provider>
   </MuiThemeProvider>,
   el
 );
 
-function append() {
+function append () {
   document.querySelector('html').appendChild(el);
   window.removeEventListener('load', append);
 }

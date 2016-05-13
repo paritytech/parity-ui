@@ -81,6 +81,8 @@ export default class extends React.Component {
     this.setState({
       accounts: [account]
     });
+    // set default account
+    this.props.web3.defaultAccount = account;
   }
 
   onAllAccounts (accounts) {
@@ -110,6 +112,7 @@ export default class extends React.Component {
   }
 
   static propTypes = {
-    interceptor: React.PropTypes.object.isRequired
+    interceptor: React.PropTypes.object.isRequired,
+    web3: React.PropTypes.object.isRequired
   };
 }
