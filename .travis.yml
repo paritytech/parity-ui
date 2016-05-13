@@ -19,7 +19,7 @@ matrix:
   - env: SCRIPT=lint
   - env: SCRIPT=testCoverage
   - env: SCRIPT=coveralls
-  - env: SCRIPT=nightwatchCI
+  - env: E2E=nightwatchCI
     addons:
       sauce_connect: true
 
@@ -27,12 +27,9 @@ cache:
   directories:
     - node_modules
 
-before_script:
-  - if [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$SCRIPT" == "nightwatchCI" ]; then npm run startTest & fi
-  - if [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$SCRIPT" == "nightwatchCI" ]; then sleep 25; fi
-
 script:
-  - if [ "$TRAVIS_PULL_REQUEST" == "false" ] || ([ "$SCRIPT" != "coveralls" ] && [ "$SCRIPT" != "nightwatchCI" ]); then npm run $SCRIPT; fi
+  - npm run $SCRIPT
+  - [ "$TRAVIS_REPO_SLUG" = "$REPO_SLUG" ] && npm run startTest & sleep 25 & npm run $E2E
 
 after_success:
   - ./scripts/deploy-to-gh-pages.sh
