@@ -37,7 +37,7 @@ function submitTransaction (ev) {
 
   const from = web3.defaultAccount;
   const to = $recipient.value;
-  const value = $amount.value;
+  const value = web3.toWei($amount.value);
 
   const $btn = el('#form button');
   const val = $btn.innerHTML;

@@ -103,7 +103,7 @@ export class TransactionConfirmation extends Web3Component {
     const val = this.context.web3.fromWei(value);
     return (
       <div>
-        <strong style={{display: 'block'}}>{val.toFixed(2)}</strong>
+        <strong style={{display: 'block'}}>{val}</strong>
         <span>Eth</span>
       </div>
     );
