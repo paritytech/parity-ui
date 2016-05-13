@@ -1,7 +1,7 @@
 import React from 'react';
 import TestUtils from 'react-addons-test-utils';
 
-import Box from './index';
+import Box from './Box';
 
 describe('components/Box', () => {
   describe('rendering', () => {

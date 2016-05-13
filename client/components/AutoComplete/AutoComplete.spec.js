@@ -4,7 +4,7 @@ import TestUtils from 'react-addons-test-utils';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
-import AutoComplete from './index';
+import AutoComplete from './AutoComplete';
 
 describe('components/AutoComplete', () => {
   describe('rendering', () => {
