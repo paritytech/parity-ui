@@ -29,7 +29,7 @@ cache:
 
 script:
   - npm run $SCRIPT
-  - [ "$TRAVIS_REPO_SLUG" = "$REPO_SLUG" ] && npm run startTest & sleep 25 & npm run $E2E
+  - if [ "$TRAVIS_REPO_SLUG" = "$REPO_SLUG" ]; then npm run startTest & sleep 25 & npm run $E2E; fi
 
 after_success:
   - ./scripts/deploy-to-gh-pages.sh
