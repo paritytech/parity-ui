@@ -7,6 +7,14 @@ import {isEqual} from 'lodash';
 import {Web3Component} from '../Web3Component/Web3Component';
 import {Account} from '../Account/Account';
 
+function getLastAccount () {
+  return window.localStorage.getItem('parity-lastAccount');
+}
+
+function saveLastAccount (acc) {
+  window.localStorage.setItem('parity-lastAccount', acc);
+}
+
 export class AccountChooser extends Web3Component {
 
   state = {
@@ -24,9 +32,16 @@ export class AccountChooser extends Web3Component {
         return;
       }
 
-      this.setState({accounts});
+      const idx = accounts.indexOf(getLastAccount());
+      const defaultAccountIdx = idx !== -1 ? idx : this.state.defaultAccountIdx;
+
+      this.setState({
+        accounts,
+        defaultAccountIdx
+      });
+
       this.props.onAllAccounts(accounts);
-      this.props.onChange(this.state.accounts[this.state.defaultAccountIdx]);
+      this.props.onChange(accounts[defaultAccountIdx]);
     });
   }
 
@@ -34,8 +49,10 @@ export class AccountChooser extends Web3Component {
     this.setState({
       defaultAccountIdx: value
     });
+    const account = this.state.accounts[value];
+    saveLastAccount(account);
 
-    this.props.onChange(this.state.accounts[value]);
+    this.props.onChange(account);
   }
 
   render () {

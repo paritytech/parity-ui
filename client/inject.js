@@ -26,7 +26,6 @@ global.web3 = web3;
 
 // Render account chooser
 const el = document.createElement('div');
-document.querySelector('html').appendChild(el);
 ReactDOM.render(
   <MuiThemeProvider muiTheme={muiTheme}>
     <Web3Provider web3={rawWeb3}>
@@ -35,3 +34,9 @@ ReactDOM.render(
   </MuiThemeProvider>,
   el
 );
+
+function append() {
+  document.querySelector('html').appendChild(el);
+  window.removeEventListener('load', append);
+}
+window.addEventListener('load', append);
