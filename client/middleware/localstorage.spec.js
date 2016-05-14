@@ -41,7 +41,7 @@ describe('MIDDLEWARE: LOCAL STORAGE', () => {
 
   it('should call onResetRpcCalls when respected action is dispactched', () => {
     // given
-    const store = { getState: () => state };
+    const store = {};
     const next = sinon.spy();
     const middleware = cut.toMiddleware()(store)(next);
     const action = { type: 'reset rpcPrevCalls', payload: {} };
@@ -74,7 +74,7 @@ describe('MIDDLEWARE: LOCAL STORAGE', () => {
 
   it('should not call onAddRpcResponse or onInitApp when a non-respected action is dispatched', () => {
     // given
-    const store = { getState: () => state };
+    const store = {};
     const next = sinon.spy();
     const middleware = cut.toMiddleware()(store)(next);
     const action = { type: 'testAction' };
