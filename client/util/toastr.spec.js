@@ -1,5 +1,3 @@
-/* global describe, it, expect */
-
 import { withToastr } from './toastr';
 
 describe('UTIL TOASTR', () => {

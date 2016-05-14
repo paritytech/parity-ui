@@ -1,5 +1,3 @@
-/* global describe, it, beforeEach, expect */
-
 import sinon from 'sinon';
 import localStore from 'store';
 

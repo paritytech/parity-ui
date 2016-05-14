@@ -1,5 +1,3 @@
-/* global describe, it, expect */
-
 import {numberFromString} from './numberFromString';
 
 describe('NUMBER FROM STRING', () => {
@@ -20,4 +18,3 @@ describe('NUMBER FROM STRING', () => {
     expect(numberFromString('-5'), 5);
   });
 });
-
