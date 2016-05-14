@@ -6,17 +6,23 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import WrappedAutoComplete from './AutoComplete';
 
 describe('components/AutoComplete', () => {
-  it('renders the material AutoComplete component', () => {
-    const dataSource = ['abc', 'def', 'ghi'];
-    const component =
-      <WrappedAutoComplete
-        dataSource={dataSource}
-        name='testComponent'
-      />;
+  describe('rendering', () => {
+    let rendered;
 
-    const rendered = shallow(component, { context: { muiTheme: getMuiTheme({}) } });
+    beforeEach(() => {
+      const dataSource = ['abc', 'def', 'ghi'];
+      const component =
+        <WrappedAutoComplete
+          dataSource={dataSource}
+          name='testComponent'
+        />;
 
-    expect(rendered).to.be.ok;
-    expect(rendered).to.have.exactly(1).descendants('AutoComplete');
+      rendered = shallow(component, { context: { muiTheme: getMuiTheme({}) } });
+    });
+
+    it('renders the material AutoComplete component', () => {
+      expect(rendered).to.be.ok;
+      expect(rendered).to.have.exactly(1).descendants('AutoComplete');
+    });
   });
 });

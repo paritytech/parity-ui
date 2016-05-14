@@ -1,34 +1,28 @@
 import React from 'react';
-import TestUtils from 'react-addons-test-utils';
+import { shallow } from 'enzyme';
 
 import Box from './Box';
 
-describe('components/Box', () => {
+describe.only('components/Box', () => {
   describe('rendering', () => {
     const title = 'test title';
-    let component;
+    let rendered;
 
     beforeEach(() => {
-      component = TestUtils.renderIntoDocument(
-        <Box
-          title={title}
-        />
-      );
+      rendered = shallow(<Box title={title} />);
     });
 
     it('renders the component', () => {
-      expect(component).to.be.ok;
-      expect(TestUtils.findRenderedDOMComponentWithClass(component, 'dapp-box')).to.be.ok;
+      expect(rendered).to.be.ok;
+      expect(rendered).to.have.className('dapp-box');
     });
 
     it('renders the title', () => {
-      expect(TestUtils.findRenderedDOMComponentWithTag(component, 'h2').innerHTML).to.equal(title);
+      expect(rendered.find('h2')).to.have.text(title);
     });
 
     it('renders no default value', () => {
-      expect(function () {
-        TestUtils.findRenderedDOMComponentWithTag(component, 'h1');
-      }).to.throw('Did not find exactly one match (found: 0) for tag:h1');
+      expect(rendered).not.to.have.descendants('h1');
     });
   });
 
@@ -36,10 +30,10 @@ describe('components/Box', () => {
     const value = 'test value';
     const child = 'this is the child value';
 
-    let component;
+    let rendered;
 
     beforeEach(() => {
-      component = TestUtils.renderIntoDocument(
+      rendered = shallow(
         <Box
           title='title'
           value={value}
@@ -50,11 +44,11 @@ describe('components/Box', () => {
     });
 
     it('renders the value', () => {
-      expect(TestUtils.findRenderedDOMComponentWithTag(component, 'h1').innerHTML).to.equal(value);
+      expect(rendered.find('h1')).to.have.text(value);
     });
 
     it('wraps the children', () => {
-      expect(TestUtils.findRenderedDOMComponentWithTag(component, 'pre').innerHTML).to.equal(child);
+      expect(rendered.find('pre')).to.have.text(child);
     });
   });
 });
