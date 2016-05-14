@@ -17,8 +17,8 @@ env:
 matrix:
   include:
   - env: SCRIPT=lint
-  - env: SCRIPT=testOnce
-  - env: SCRIPT=nightwatchCI
+  - env: SCRIPT=coveralls
+  - env: E2E=nightwatchCI
     addons:
       sauce_connect: true
 
@@ -26,11 +26,9 @@ cache:
   directories:
     - node_modules
 
-before_script:
-  - if [ "$SCRIPT" == "nightwatchCI" ]; then npm run startTest & fi
-  - if [ "$SCRIPT" == "nightwatchCI" ]; then sleep 25; fi
-
-script: npm run $SCRIPT
+script:
+  - if [ "$SCRIPT" != "" ]; then npm run $SCRIPT; fi
+  - if [ "$E2E" != "" ] && [ "$TRAVIS_REPO_SLUG" = "$REPO_SLUG" ]; then npm run startTest & sleep 25 && npm run $E2E; fi
 
 after_success:
   - ./scripts/deploy-to-gh-pages.sh
