@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 
 import Box from './Box';
 
-describe.only('components/Box', () => {
+describe('components/Box', () => {
   describe('rendering', () => {
     const title = 'test title';
     let rendered;
