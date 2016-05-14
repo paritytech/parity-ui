@@ -5,7 +5,7 @@
 [![Join the chat at}[gitter-url]][gitter-image]][gitter-url]
 [![GPLv3][license-image]][license-url]
 ![Build Size][build-size-image]
-
+[![Coverage Status][coveralls-image]][coveralls-url]
 
 [travis-image]: https://travis-ci.org/ethcore/eth-node-status-page.svg?branch=master "Build Status"
 [travis-url]: https://travis-ci.org/ethcore/eth-node-status-page
@@ -65,6 +65,6 @@ $ npm t                      # run unit tests in watchmode
 
 #### Integration Tests
 ```bash
-$ npm startTest              # run with mocked backend (no client in background required)
+$ npm run startTest          # run with mocked backend (no client in background required)
 $ npm run nightwatch         # run integration tests (by default requires Firefox browser)
 ```
