@@ -1,32 +1,22 @@
 import React from 'react';
-import TestUtils from 'react-addons-test-utils';
+import { shallow } from 'enzyme';
 
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
-import AutoComplete from 'material-ui/AutoComplete';
 import WrappedAutoComplete from './AutoComplete';
 
 describe('components/AutoComplete', () => {
-  describe('rendering', () => {
+  it('renders the material AutoComplete component', () => {
     const dataSource = ['abc', 'def', 'ghi'];
-    const muiTheme = getMuiTheme({});
-    let component;
+    const component =
+      <WrappedAutoComplete
+        dataSource={dataSource}
+        name='testComponent'
+      />;
 
-    beforeEach(() => {
-      component = TestUtils.renderIntoDocument(
-        <MuiThemeProvider muiTheme={muiTheme}>
-          <WrappedAutoComplete
-            dataSource={dataSource}
-            name='testComponent'
-          />
-        </MuiThemeProvider>
-      );
-    });
+    const rendered = shallow(component, { context: { muiTheme: getMuiTheme({}) } });
 
-    it('renders the material AutoComplete component', () => {
-      expect(component).to.be.ok;
-      expect(TestUtils.findRenderedComponentWithType(component, AutoComplete)).to.be.ok;
-    });
+    expect(rendered).to.be.ok;
+    expect(rendered).to.have.exactly(1).descendants('AutoComplete');
   });
 });
