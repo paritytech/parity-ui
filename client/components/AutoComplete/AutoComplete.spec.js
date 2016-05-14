@@ -4,7 +4,8 @@ import TestUtils from 'react-addons-test-utils';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
-import AutoComplete from './AutoComplete';
+import AutoComplete from 'material-ui/AutoComplete';
+import WrappedAutoComplete from './AutoComplete';
 
 describe('components/AutoComplete', () => {
   describe('rendering', () => {
@@ -15,7 +16,7 @@ describe('components/AutoComplete', () => {
     beforeEach(() => {
       component = TestUtils.renderIntoDocument(
         <MuiThemeProvider muiTheme={muiTheme}>
-          <AutoComplete
+          <WrappedAutoComplete
             dataSource={dataSource}
             name='testComponent'
           />
@@ -25,7 +26,7 @@ describe('components/AutoComplete', () => {
 
     it('renders the material AutoComplete component', () => {
       expect(component).to.be.ok;
-      expect(TestUtils.findRenderedDOMComponentWithTag(component, 'input')).to.be.ok;
+      expect(TestUtils.findRenderedComponentWithType(component, AutoComplete)).to.be.ok;
     });
   });
 });
