@@ -24,6 +24,14 @@
     "genRpc": "./rpc-docs/index.js"
   },
   "license": "GPL-3.0",
+  "author": "Ethcore dev team",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ethcore/eth-node-status-page.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ethcore/eth-node-status-page/issues"
+  },
   "devDependencies": {
     "babel-cli": "^6.8.0",
     "babel-core": "^6.5.2",
