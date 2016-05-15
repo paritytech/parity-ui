@@ -39,7 +39,7 @@ export class Account extends Web3Component {
       <div className={styles.account} title={address}>
         <Identicon seed={acc} />
         <span className={styles.address}>
-          {this.shortAddress(address)}
+          {{ address }}
         </span>
         {this.renderBalance()}
       </div>
