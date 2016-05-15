@@ -1,40 +1,57 @@
 import React from 'react';
-import TestUtils from 'react-addons-test-utils';
+import { shallow } from 'enzyme';
+
+import '../../test';
 
 import Calls from './Calls';
 
-describe.only('components/Calls', () => {
-  describe('rendering (default)', () => {
-    let component;
+describe('components/Calls', () => {
+  describe('rendering (no calls)', () => {
+    let rendered;
 
     beforeEach(() => {
       const calls = [];
-      const actions = { fireRpc: () => true, copyToClipboard: () => true, selectRpcMethod: () => true };
 
-      component = TestUtils.renderIntoDocument(
-        <Calls calls={calls} actions={actions} />
-      );
+      rendered = shallow(<Calls calls={calls} />);
     });
 
     it('renders the component and container', () => {
-      expect(component).to.be.ok;
-      expect(TestUtils.findRenderedDOMComponentWithClass(component, 'calls-container')).to.be.ok;
+      expect(rendered).to.be.ok;
+      expect(rendered).to.have.className('calls-container');
     });
 
-    it('renders no history (no calls are passed in)', () => {
-
+    it('renders no calls', () => {
+      expect(rendered.find('div[data-test="Calls-empty-wrapper"]')).to.have.exactly(1).descendants('h3');
     });
 
-    it('renders no clear capabilities (no calls are passed in)', () => {
+    it('renders no clear button', () => {
+      expect(rendered.find('a[data-test="Calls-remove"]')).not.to.exist;
+    });
 
+    it('renders an attached CallsToolbar', () => {
+      expect(rendered).to.have.exactly(1).descendants('CallsToolbar');
     });
   });
 
-  describe('rendering (calls)', () => {
+  describe('rendering (calls supplied)', () => {
+    let rendered;
 
-  });
+    beforeEach(() => {
+      const calls = [
+        { callNo: 0, name: 'eth_call', params: '', response: '' },
+        { callNo: 1, name: 'eth_sendTransaction', params: '', response: '' }
+      ];
 
-  describe('actions', () => {
+      rendered = shallow(<Calls calls={calls} />);
+    });
 
+    it('renders calls', () => {
+      expect(rendered.find('div[data-test="Calls-empty-wrapper"]')).not.to.exist;
+      expect(rendered.find('div.row div')).to.have.exactly(2).descendants('div[data-test]');
+    });
+
+    it('renders the clear button', () => {
+      expect(rendered).to.have.exactly(1).descendants('a[data-test="Calls-remove"]');
+    });
   });
 });
