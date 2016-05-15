@@ -67,7 +67,7 @@ export default class Calls extends Component {
     return (
       <AnimateChildren>
         <div {...this._test('empty-wrapper')}>
-          <h3 {...this._test('empty')} className={styles.historyInfo}>
+          <h3 className={styles.historyInfo} {...this._test('empty')}>
             Fire up some calls and the results will be here.
           </h3>
         </div>
