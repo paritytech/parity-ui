@@ -11,7 +11,7 @@ export default class Calls extends Component {
   }
 
   render () {
-    let {hoveredIdx} = this.state;
+    const { hoveredIdx } = this.state;
 
     return (
       <div
@@ -69,7 +69,8 @@ export default class Calls extends Component {
   }
 
   renderCalls () {
-    const {calls} = this.props;
+    const { calls } = this.props;
+
     if (!calls.length) {
       return;
     }
@@ -90,11 +91,11 @@ export default class Calls extends Component {
   }
 
   clearHoveredIdx = () => {
-    this.setState({hoveredIdx: null});
+    this.setState({ hoveredIdx: null });
   }
 
   setHoveredIdx = (idx) => {
-    this.setState({hoveredIdx: idx});
+    this.setState({ hoveredIdx: idx });
   }
 
   setCallsHistory = (el) => {
