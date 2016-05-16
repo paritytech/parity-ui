@@ -5,7 +5,7 @@ import '../../test';
 
 import CallsToolbar from './CallsToolbar';
 
-describe.only('components/CallsToolbar', () => {
+describe('components/CallsToolbar', () => {
   const callEl = { offsetTop: 0 };
   const containerEl = { scrollTop: 0 };
 
