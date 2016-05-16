@@ -12,7 +12,7 @@ describe('components/Call', () => {
   describe('rendering', () => {
     let rendered;
 
-    beforeEach(() => {
+    before(() => {
       const noop = sinon.stub();
 
       rendered = shallow(
@@ -36,7 +36,7 @@ describe('components/Call', () => {
     let setHoverIdx;
     let rendered;
 
-    beforeEach(() => {
+    before(() => {
       setCallElement = sinon.stub();
       setHoverIdx = sinon.stub();
 
