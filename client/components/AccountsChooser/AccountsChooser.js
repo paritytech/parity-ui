@@ -1,12 +1,15 @@
 import React from 'react';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
+import SettingsIcon from 'material-ui/svg-icons/action/settings';
 
 import {isEqual} from 'lodash';
 
 import {Web3Component} from '../Web3Component/Web3Component';
 import {Account} from '../Account/Account';
 import Storage from '../Storage';
+
+import styles from './styles.css';
 
 export class AccountChooser extends Web3Component {
 
@@ -51,23 +54,45 @@ export class AccountChooser extends Web3Component {
   }
 
   render () {
+    const settings = this.props.onOpenDetails ? (
+      <a
+        className={styles.settings}
+        href='#'
+        onClick={this.props.onOpenDetails}
+        >
+        <SettingsIcon />
+      </a>
+    ) : '';
+
     return (
       <div>
-        <DropDownMenu value={this.state.defaultAccountIdx} onChange={::this.handleChange}>
+        <DropDownMenu
+          autoWidth={false}
+          className={styles.accounts}
+          value={this.state.defaultAccountIdx}
+          onChange={::this.handleChange}
+          maxHeight={700}
+          styles={{width: '350px'}}
+          underlineStyle={{display: 'none'}}
+          iconStyle={{ fill: '#888' }}
+          >
           {this.state.accounts.map((acc, idx) => (
             <MenuItem
               key={acc}
               value={idx}
-              primaryText={<Account address={acc} />} />
+              primaryText={<Account address={acc} name={this.props.accountsNames[acc]}/>} />
           ))}
         </DropDownMenu>
+        { settings }
       </div>
     );
   }
 
   static propTypes = {
+    accountsNames: React.PropTypes.object.isRequired,
     onChange: React.PropTypes.func.isRequired,
-    onAllAccounts: React.PropTypes.func.isRequired
+    onAllAccounts: React.PropTypes.func.isRequired,
+    onOpenDetails: React.PropTypes.func
   };
 
 }

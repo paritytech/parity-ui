@@ -1,25 +1,30 @@
 import React from 'react';
 
+import AppsIcon from 'material-ui/svg-icons/navigation/apps';
+
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import injectTapEventPlugin from 'react-tap-event-plugin';
-// Needed for onTouchTap, for material ui
-// http://stackoverflow.com/a/34015469/988941
-injectTapEventPlugin();
 const muiTheme = getMuiTheme({});
 
 import {TransactionConfirmation} from '../TransactionConfirmation/TransactionConfirmation';
 import {AccountChooser} from '../AccountsChooser/AccountsChooser';
+import AccountsDetails from '../AccountsDetails';
+
+import Storage from '../Storage';
 
 import styles from './styles.css';
 
-export default class extends React.Component {
+export default class TopBar extends React.Component {
+
+  storage = new Storage();
 
   state = {
     waiting: 0,
     accounts: [],
     allAccounts: [],
-    sendingTransaction: false
+    accountsNames: this.storage.getAccountsNames(),
+    sendingTransaction: false,
+    accountsDetails: false
   };
 
   listeners = [];
@@ -100,6 +105,20 @@ export default class extends React.Component {
     });
   }
 
+  onOpenAccountDetails () {
+    this.setState({
+      accountsDetails: true
+    });
+  }
+
+  onAccountsDetailsClose (names) {
+    this.setState({
+      accountsDetails: false,
+      accountsNames: names
+    });
+    this.storage.setAccountsNames(names);
+  }
+
   render () {
     // Because dom might not be ready yet
     // we are deferring component load.
@@ -122,12 +141,24 @@ export default class extends React.Component {
       <MuiThemeProvider muiTheme={muiTheme}>
         <div>
           <div className={styles.topbar}>
-            <h4 className={styles.header}>Identity @ Parity</h4>
+            <div className={styles.header}>
+              <a href='//home.parity' title='Home @ Parity'>
+                <AppsIcon />
+              </a>
+            </div>
             <AccountChooser
+              accountsNames={this.state.accountsNames}
               onChange={::this.changeAccount}
               onAllAccounts={::this.onAllAccounts}
+              onOpenDetails={::this.onOpenAccountDetails}
               />
           </div>
+          <AccountsDetails
+            open={this.state.accountsDetails}
+            accounts={this.state.allAccounts}
+            accountsNames={this.state.accountsNames}
+            onClose={::this.onAccountsDetailsClose}
+            />
           <TransactionConfirmation
             open={this.state.sendingTransaction}
             transaction={this.state.transaction}

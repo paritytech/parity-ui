@@ -31,6 +31,7 @@ export class App extends React.Component {
   state = {
     accounts: [],
     allAccounts: [],
+    accountsNames: {},
     url: getInitialUrl(),
     hints: [
       'local://dapp.html',
@@ -105,6 +106,7 @@ export class App extends React.Component {
           </div>
           <div>
             <AccountChooser
+              accountsNames={this.state.accountsNames}
               onChange={::this.changeAccount}
               onAllAccounts={::this.onAllAccounts}
               />

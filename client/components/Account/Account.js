@@ -4,15 +4,12 @@ import styles from './styles.css';
 
 import {Web3Component} from '../Web3Component/Web3Component';
 import {Identicon} from '../Identicon/Identicon';
-import Storage from '../Storage';
 
 export class Account extends Web3Component {
 
   state = {
     balance: null
   };
-
-  storage = new Storage();
 
   constructor (...args) {
     super(...args);
@@ -41,10 +38,8 @@ export class Account extends Web3Component {
     return (
       <div className={styles.account} title={address}>
         <Identicon seed={acc} />
-        <span className={styles.address}>
-          { this.renderName(address) }
-        </span>
-        {this.renderBalance()}
+        { this.renderName(address) }
+        { this.renderBalance() }
       </div>
     );
   }
@@ -58,32 +53,40 @@ export class Account extends Web3Component {
     }
     const val = this.context.web3.fromWei(balance);
     return (
-      <span> ({val.toFixed(2)} Eth)</span>
+      <span> {val.toFixed(2)} Eth</span>
     );
   }
 
   renderName (address) {
-    const name = this.storage.getNameForAddress(address)
-    const short = this.shortAddress(address);
+    const {name} = this.props;
     if (!name) {
-      return short;
+      return (
+        <span className={styles.address}>
+          [{ this.shortAddress(address) }]
+        </span>
+      );
     }
-    return `${name}`;
+    return (
+      <span>
+        {name}
+        <span className={styles.address}>[{ this.tinyAddress(address) }]</span>
+      </span>
+    );
   }
-
 
   tinyAddress (acc) {
     const len = acc.length;
-    return acc.slice(2, 3) + '.' + acc.slice(len - 1);
+    return acc.slice(2, 4) + '..' + acc.slice(len - 2);
   }
 
   shortAddress (acc) {
     const len = acc.length;
-    return acc.slice(2, 6) + '..' + acc.slice(len - 5);
+    return acc.slice(2, 8) + '..' + acc.slice(len - 7);
   }
 
   static propTypes = {
-    address: React.PropTypes.string.isRequired
+    address: React.PropTypes.string.isRequired,
+    name: React.PropTypes.string
   };
 
 }

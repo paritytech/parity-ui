@@ -1,6 +1,6 @@
 export default class {
-  
-  constructor(storage) {
+
+  constructor (storage) {
     this.storage = storage || window.localStorage;
   }
 
@@ -12,8 +12,17 @@ export default class {
     this.storage[id('lastAccount')] = acc;
   }
 
-  getNameForAddress (address) {
-    return;
+  getAccountsNames () {
+    const names = this.storage[id('accountsNames')];
+    try {
+      return JSON.parse(names);
+    } catch (e) {
+      return {};
+    }
+  }
+
+  setAccountsNames (names) {
+    this.storage[id('accountsNames')] = JSON.stringify(names);
   }
 
 }
