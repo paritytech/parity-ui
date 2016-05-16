@@ -4,12 +4,15 @@ import styles from './styles.css';
 
 import {Web3Component} from '../Web3Component/Web3Component';
 import {Identicon} from '../Identicon/Identicon';
+import Storage from '../Storage';
 
 export class Account extends Web3Component {
 
   state = {
     balance: null
   };
+
+  storage = new Storage();
 
   constructor (...args) {
     super(...args);
@@ -39,7 +42,7 @@ export class Account extends Web3Component {
       <div className={styles.account} title={address}>
         <Identicon seed={acc} />
         <span className={styles.address}>
-          {{ address }}
+          { this.renderName(address) }
         </span>
         {this.renderBalance()}
       </div>
@@ -59,9 +62,24 @@ export class Account extends Web3Component {
     );
   }
 
+  renderName (address) {
+    const name = this.storage.getNameForAddress(address)
+    const short = this.shortAddress(address);
+    if (!name) {
+      return short;
+    }
+    return `${name}`;
+  }
+
+
+  tinyAddress (acc) {
+    const len = acc.length;
+    return acc.slice(2, 3) + '.' + acc.slice(len - 1);
+  }
+
   shortAddress (acc) {
     const len = acc.length;
-    return acc.slice(0, 8) + '...' + acc.slice(len - 8);
+    return acc.slice(2, 6) + '..' + acc.slice(len - 5);
   }
 
   static propTypes = {
