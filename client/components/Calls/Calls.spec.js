@@ -25,7 +25,7 @@ describe('components/Calls', () => {
     });
 
     it('renders no clear button', () => {
-      expect(rendered.find('a[data-test="Calls-remove"]')).not.to.exist;
+      expect(rendered.find('a[data-test="Calls-remove"]')).to.not.exist;
     });
 
     it('renders an attached CallsToolbar', () => {
@@ -46,7 +46,7 @@ describe('components/Calls', () => {
     });
 
     it('renders calls', () => {
-      expect(rendered.find('div[data-test="Calls-empty-wrapper"]')).not.to.exist;
+      expect(rendered.find('div[data-test="Calls-empty-wrapper"]')).to.not.exist;
       expect(rendered.find('div.row div')).to.have.exactly(2).descendants('div[data-test]');
     });
 

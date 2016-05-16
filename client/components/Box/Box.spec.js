@@ -22,7 +22,7 @@ describe('components/Box', () => {
     });
 
     it('renders no default value', () => {
-      expect(rendered).not.to.have.descendants('h1');
+      expect(rendered).to.not.have.descendants('h1');
     });
   });
 
