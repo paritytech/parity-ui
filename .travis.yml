@@ -27,8 +27,8 @@ cache:
     - node_modules
 
 script:
-  - if [ "$SCRIPT" != "" ]; then npm run $SCRIPT; fi
-  - if [ "$E2E" != "" ] && [ "$TRAVIS_REPO_SLUG" = "$REPO_SLUG" ]; then npm run startTest & sleep 25 && npm run $E2E; fi
+  - if [ "$SCRIPT" ]; then npm run $SCRIPT; fi
+  - if [ "$E2E" ] && [ "$SAUCE_ACCESS_KEY" ]; then npm run startTest & sleep 25 && npm run $E2E; fi
 
 after_success:
   - ./scripts/deploy-to-gh-pages.sh
