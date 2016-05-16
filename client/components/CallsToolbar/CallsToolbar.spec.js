@@ -7,7 +7,7 @@ import CallsToolbar from './CallsToolbar';
 
 describe('components/CallsToolbar', () => {
   const callEl = { offsetTop: 0 };
-  const containerEl = { scrollTop: 0 };
+  const containerEl = { scrollTop: 0, clientHeight: 0, scrollHeight: 999 };
 
   describe('rendering (no call)', () => {
     let rendered;
@@ -29,9 +29,6 @@ describe('components/CallsToolbar', () => {
     let btncontainer;
 
     before(() => {
-      const callEl = { offsetTop: 0 };
-      const containerEl = { scrollTop: 0 };
-
       rendered = shallow(<CallsToolbar call={call} callEl={callEl} containerEl={containerEl} />);
       btncontainer = rendered.find('[data-test="CallsToolbar-button-container"]');
     });
