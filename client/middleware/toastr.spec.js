@@ -1,5 +1,3 @@
-/* global describe, it, beforeEach, expect */
-
 import sinon from 'sinon';
 import ToastrMiddleware from './toastr';
 import { removeToast, addToast } from '../actions/toastr';
