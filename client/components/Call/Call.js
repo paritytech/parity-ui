@@ -32,7 +32,7 @@ export default class Call extends Component {
 
   static propTypes = {
     call: PropTypes.object.isRequired,
-    callIdx: PropTypes.Number.isRequired,
+    callIdx: PropTypes.number.isRequired,
     setCallElement: PropTypes.func.isRequired,
     setHoverIdx: PropTypes.func.isRequired
   }

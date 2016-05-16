@@ -27,7 +27,7 @@ describe('components/Call', () => {
 
     it('renders the component', () => {
       expect(rendered).to.be.ok;
-      expect(rendered).to.have.exactly(1).decendents(`div[data-test="Call-call-${call.callNo}"]`);
+      expect(rendered).to.have.exactly(1).descendants(`div[data-test="Call-call-${call.callNo}"]`);
     });
   });
 
@@ -52,7 +52,7 @@ describe('components/Call', () => {
 
     it('renders the component', () => {
       expect(rendered).to.be.ok;
-      expect(rendered).to.have.exactly(1).decendents(`div[data-test="Call-call-${call.callNo}"]`);
+      expect(rendered).to.have.exactly(1).descendants(`div[data-test="Call-call-${call.callNo}"]`);
     });
   });
 });

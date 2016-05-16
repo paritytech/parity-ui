@@ -47,7 +47,7 @@ describe('components/Calls', () => {
 
     it('renders calls', () => {
       expect(rendered.find('div[data-test="Calls-empty-wrapper"]')).to.not.exist;
-      expect(rendered.find('div.row div')).to.have.exactly(2).descendants('div[data-test]');
+      expect(rendered.find('div.row div')).to.have.exactly(2).descendants('Call');
     });
 
     it('renders the clear button', () => {
