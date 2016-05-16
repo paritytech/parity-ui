@@ -5,20 +5,51 @@ import '../../test';
 
 import CallsToolbar from './CallsToolbar';
 
-describe('components/CallsToolbar', () => {
+describe.only('components/CallsToolbar', () => {
+  const callEl = { offsetTop: 0 };
+  const containerEl = { scrollTop: 0 };
+
+  describe('rendering (no call)', () => {
+    let rendered;
+
+    before(() => {
+      const call = null;
+
+      rendered = shallow(<CallsToolbar call={call} callEl={callEl} containerEl={containerEl} />);
+    });
+
+    it('does not render the component', () => {
+      expect(rendered).to.not.have.descendants('[data-test="CallsToolbar-button-more"]');
+    });
+  });
+
   describe('rendering', () => {
     const call = { callNo: 456, name: 'eth_call', params: '', response: '' };
     let rendered;
+    let btncontainer;
 
     before(() => {
       const callEl = { offsetTop: 0 };
       const containerEl = { scrollTop: 0 };
 
       rendered = shallow(<CallsToolbar call={call} callEl={callEl} containerEl={containerEl} />);
+      btncontainer = rendered.find('[data-test="CallsToolbar-button-container"]');
     });
 
-    it('renders the component and container', () => {
-      expect(rendered).to.be.ok;
+    it('renders the More button', () => {
+      expect(rendered).to.have.descendants('[data-test="CallsToolbar-button-more"]');
+    });
+
+    it('renders the Set button', () => {
+      expect(btncontainer).to.have.descendants('[data-test="CallsToolbar-button-setCall"]');
+    });
+
+    it('renders the Fire button', () => {
+      expect(btncontainer).to.have.descendants('[data-test="CallsToolbar-button-makeCall"]');
+    });
+
+    it('renders the Copy button', () => {
+      expect(btncontainer).to.have.descendants('[data-test="CallsToolbar-copyCallToClipboard"]');
     });
   });
 });

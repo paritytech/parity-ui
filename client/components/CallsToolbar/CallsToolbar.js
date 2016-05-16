@@ -1,4 +1,3 @@
-
 import React, { Component, PropTypes } from 'react';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import { sortBy, find, extend } from 'lodash';
@@ -33,13 +32,19 @@ export default class CallsToolbar extends Component {
         className={styles.callActionsWrap}
         style={wrapStyle}
         >
-        <IconButton className={styles.callActionsButton}><MoreHorizIcon /></IconButton>
-        <div className={styles.callActions}>
+        <IconButton
+          className={styles.callActionsButton}
+          {...this._test('button-more')}
+          >
+          <MoreHorizIcon />
+        </IconButton>
+        <div className={styles.callActions} {...this._test('button-container')}>
           <IconButton
             className={styles.callAction}
             onClick={this.setCall}
             tooltip='Set'
             tooltipPosition='top-left'
+            {...this._test('button-setCall')}
             >
             <InputIcon className={styles.callActionIcon} />
           </IconButton>
@@ -48,6 +53,7 @@ export default class CallsToolbar extends Component {
             onClick={this.makeCall}
             tooltip='Fire again'
             tooltipPosition='top-left'
+            {...this._test('button-makeCall')}
             >
             <CallIcon className={styles.callActionIcon} />
           </IconButton>
