@@ -1,5 +1,3 @@
-/* global describe, it, beforeEach, expect */
-
 import sinon from 'sinon';
 import WebInteractions from './user-web3-interactions';
 import * as MiningActions from '../actions/modify-mining';

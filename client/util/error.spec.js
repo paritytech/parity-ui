@@ -1,9 +1,7 @@
-/* global describe, it, beforeEach, afterEach, expect */
-
 import sinon from 'sinon';
 import * as ErrorUtil from './error';
 
-describe('UTIL - ERROR', () => {
+describe('util/error', () => {
   beforeEach('spy on isError', () => {
     sinon.spy(ErrorUtil, 'isError');
   });
@@ -12,7 +10,18 @@ describe('UTIL - ERROR', () => {
     ErrorUtil.isError.restore();
   });
 
-  describe('HAS ERRORS', () => {
+  describe('filterErrors', () => {
+    const ERROR1 = new Error('abc');
+    const ERROR2 = new Error('def');
+    const INPUT = [ERROR1, 'ghi', ERROR2, 'jkl'];
+    const ERRORS = [ERROR1, ERROR2];
+
+    it('should return errors in the array', () => {
+      expect(ErrorUtil.filterErrors(INPUT)).to.deep.equal(ERRORS);
+    });
+  });
+
+  describe('hasErrors', () => {
     it('should return undefined and not invoke isError when null is passed', () => {
       // given
       const xs = null;
@@ -58,7 +67,7 @@ describe('UTIL - ERROR', () => {
     });
   });
 
-  describe('IS ERROR', () => {
+  describe('isError', () => {
     it('should return false when non error object is passed', () => {
       // given
       const arg = '';

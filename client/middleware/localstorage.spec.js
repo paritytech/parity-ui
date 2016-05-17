@@ -1,5 +1,3 @@
-/* global describe, it, beforeEach, expect */
-
 import sinon from 'sinon';
 import localStore from 'store';
 
@@ -13,6 +11,7 @@ describe('MIDDLEWARE: LOCAL STORAGE', () => {
   beforeEach('mock cut', () => {
     cut = new LocalStorageMiddleware();
     sinon.spy(cut, 'onAddRpcResponse');
+    sinon.spy(cut, 'onResetRpcCalls');
     sinon.spy(cut, 'onInitApp');
     sinon.spy(cut, 'unshift');
     state = {
@@ -38,6 +37,22 @@ describe('MIDDLEWARE: LOCAL STORAGE', () => {
     expect(cut.onAddRpcResponse.calledWith(store, next, action)).to.be.true;
   });
 
+  it('should call onResetRpcCalls when respected action is dispactched', () => {
+    // given
+    const store = {};
+    const next = sinon.spy();
+    const middleware = cut.toMiddleware()(store)(next);
+    const action = { type: 'reset rpcPrevCalls', payload: {} };
+    expect(middleware).to.be.a('function');
+    expect(action).to.be.an('object');
+
+    // when
+    middleware(action);
+
+    // then
+    expect(cut.onResetRpcCalls.calledWith(store, next, action)).to.be.true;
+  });
+
   it('should call onInitApp when respected action is dispatched', () => {
     // given
     const store = { dispatch: sinon.spy() };
@@ -57,7 +72,7 @@ describe('MIDDLEWARE: LOCAL STORAGE', () => {
 
   it('should not call onAddRpcResponse or onInitApp when a non-respected action is dispatched', () => {
     // given
-    const store = { getState: () => state };
+    const store = {};
     const next = sinon.spy();
     const middleware = cut.toMiddleware()(store)(next);
     const action = { type: 'testAction' };
