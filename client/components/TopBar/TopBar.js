@@ -8,13 +8,14 @@ const muiTheme = getMuiTheme({});
 
 import {TransactionConfirmation} from '../TransactionConfirmation/TransactionConfirmation';
 import {AccountChooser} from '../AccountsChooser/AccountsChooser';
+import {Web3Component} from '../Web3Component/Web3Component';
 import AccountsDetails from '../AccountsDetails';
 
 import Storage from '../Storage';
 
 import styles from './styles.css';
 
-export default class TopBar extends React.Component {
+export default class TopBar extends Web3Component {
 
   storage = new Storage();
 
@@ -97,6 +98,7 @@ export default class TopBar extends React.Component {
     });
     // set default account
     this.props.web3.defaultAccount = account;
+    this.context.web3.defaultAccount = account;
   }
 
   onAllAccounts (accounts) {
