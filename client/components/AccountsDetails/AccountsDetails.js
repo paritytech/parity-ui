@@ -19,7 +19,7 @@ export default class AccountDetails extends Web3Component {
   }
 
   componentWillReceiveProps (newProps) {
-    this.state = newProps.accountsNames;
+    this.state = Object.assign({}, newProps.accountsNames);
   }
 
   render () {
@@ -29,9 +29,9 @@ export default class AccountDetails extends Web3Component {
       <Dialog
         title='Account Details'
         actions={this.renderDialogActions()}
-        modal
         open={open}
         autoScrollBodyContent
+        onRequestClose={::this.onCancel}
         >
         <div className={styles.accounts}>
           {this.renderAccounts(accounts)}
@@ -82,12 +82,22 @@ export default class AccountDetails extends Web3Component {
   renderDialogActions () {
     return [
       <FlatButton
+        label='Cancel'
+        secondary
+        onTouchTap={::this.onCancel}
+      />,
+      <FlatButton
         label='OK'
         primary
         keyboardFocused
         onTouchTap={::this.onClose}
       />
     ];
+  }
+
+  onCancel () {
+    this.componentWillReceiveProps(this.props);
+    this.props.onClose(this.state);
   }
 
   onClose () {
