@@ -1,9 +1,9 @@
 [package]
 description = "Injectable identity manager for Parity"
 name = "parity-idmanager"
-version = "0.1.3"
+version = "0.2.0"
 license = "GPL-3.0"
-authors = ["Ethcore <admin@ethcore.io"]
+authors = ["Ethcore <admin@ethcore.io>"]
 
 [dependencies]
-parity-webapp = { git = "https://github.com/ethcore/parity-webapp.git" }
+parity-webapp = { git = "https://github.com/ethcore/parity-webapp.git", version = "0.2" }

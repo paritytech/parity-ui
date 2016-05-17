@@ -4,8 +4,7 @@ extern crate parity_webapp;
 
 use std::default::Default;
 use std::collections::HashMap;
-use parity_webapp::WebApp;
-use parity_webapp::File;
+use parity_webapp::{WebApp, File, Info};
 
 pub struct App {
   files: HashMap<&'static str, File>,
@@ -15,14 +14,22 @@ impl WebApp for App {
   fn file(&self, path: &str) -> Option<&File> {
     self.files.get(path)
   }
+  fn info(&self) -> Info {
+    Info {
+      name: "Identity Manager".to_owned(),
+      version: "0.1.3".to_owned(),
+      author: "Ethcore <admin@ethcore.io>".to_owned(),
+      description: "Injectable identity manager for Parity".to_owned(),
+      icon_url: "icon.png".to_owned(),
+    }
+  }
 }
-
 
 impl Default for App {
   fn default() -> Self {
     let files = {
       let mut files = HashMap::new();
-      files.insert("inject.js", File { path: "inject.js", content_type: "application/javascript", content: include_str!("./web/inject.js").as_bytes() });
+      files.insert("inject.js", File { path: "inject.js", content_type: "application/javascript", content: include_bytes!("./web/inject.js") });
       files
     };
     App {
