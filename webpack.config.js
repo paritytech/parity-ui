@@ -11,9 +11,7 @@ module.exports = {
   devtool: isProd ? '#source-map' : '#cheap-module-eval-source-map',
   context: path.join(__dirname, './client'),
   entry: {
-    'index': './index.js',
-    'dapp': './dapp.js',
-    'inject.app': './inject.app.js',
+    'index.app': './index.app.js',
     'inject': './inject.js'
   },
   output: {

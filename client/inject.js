@@ -1,4 +1,4 @@
-import './inject.html';
+import './index.html';
 
 import ReactDOM from 'react-dom';
 import React from 'react';
