@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
+import { shallow } from 'enzyme';
 import sinon from 'sinon';
 
 import '../../test';
@@ -21,31 +21,6 @@ describe('components/Call', () => {
           callIdx={call.callIdx}
           setCallElement={noop}
           setHoverIdx={noop}
-        />
-      );
-    });
-
-    it('renders the component', () => {
-      expect(rendered).to.be.ok;
-      expect(rendered).to.have.exactly(1).descendants(`div[data-test="Call-call-${call.callNo}"]`);
-    });
-  });
-
-  describe('interactions', () => {
-    let setCallElement;
-    let setHoverIdx;
-    let rendered;
-
-    before(() => {
-      setCallElement = sinon.stub();
-      setHoverIdx = sinon.stub();
-
-      rendered = mount(
-        <Call
-          call={call}
-          callIdx={call.callIdx}
-          setCallElement={setCallElement}
-          setHoverIdx={setHoverIdx}
         />
       );
     });
