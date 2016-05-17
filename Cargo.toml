@@ -1,9 +1,9 @@
 [package]
 description = "Status Page for Parity"
 name = "parity-status"
-version = "0.4.1"
+version = "0.4.0"
 license = "GPL-3.0"
-authors = ["Ethcore <admin@ethcore.io"]
+authors = ["Ethcore <admin@ethcore.io>"]
 
 [dependencies]
-parity-webapp = { git = "https://github.com/ethcore/parity-webapp.git" }
+parity-webapp = { git = "https://github.com/ethcore/parity-webapp.git", version = "0.2" }
