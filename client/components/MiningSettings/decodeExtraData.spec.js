@@ -1,5 +1,3 @@
-/* global describe, it, expect */
-
 import {decodeExtraData} from './decodeExtraData';
 
 describe('MINING SETTINGS', () => {

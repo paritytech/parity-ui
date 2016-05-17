@@ -1,5 +1,3 @@
-/* global describe, it, beforeEach, afterEach, expect */
-
 import sinon from 'sinon';
 import logger from './logger';
 
