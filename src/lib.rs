@@ -7,8 +7,18 @@ pub struct File {
 	pub content_type: &'static str,
 }
 
+#[derive(Clone, Debug)]
+pub struct Info {
+  pub name: String,
+  pub version: String,
+  pub author: String,
+  pub description: String,
+  pub icon_url: String,
+}
+
 pub trait WebApp : Default + Send + Sync {
   fn file(&self, path: &str) -> Option<&File>;
+  fn info(&self) -> Info;
 }
 
 #[cfg(test)]
