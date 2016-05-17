@@ -12,7 +12,8 @@ module.exports = {
   context: path.join(__dirname, './client'),
   entry: {
     'index.app': './index.app.js',
-    'inject': './inject.js'
+    'inject': './inject.js',
+    'home': './home.js'
   },
   output: {
     path: path.join(__dirname, './static'),

@@ -9,7 +9,7 @@ injectTapEventPlugin();
 
 import Web3 from 'web3';
 
-import {Web3Provider} from './components/Web3Provider/Web3Provider';
+import Web3Provider from './components/Web3Provider';
 import TopBar from './components/TopBar';
 import Interceptor from './components/TopBar/Interceptor';
 

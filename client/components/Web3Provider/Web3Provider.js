@@ -1,6 +1,6 @@
 import React from 'react';
 
-export class Web3Provider extends React.Component {
+export default class Web3Provider extends React.Component {
 
   getChildContext () {
     return {
