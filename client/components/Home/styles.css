@@ -1,0 +1,14 @@
+.loading {
+  text-align: center;
+  margin-top: 25vh;
+}
+
+.error {
+  margin-top: 15vh;
+  text-align: center;
+  font-family: 'Roboto', sans-serif;
+}
+.error h1 {
+  color: #F44336;
+}
+
