@@ -9,7 +9,6 @@ import AppContainer from './containers/App';
 import StatusPage from './containers/StatusPage';
 import DebugPage from './containers/DebugPage';
 import AccountsPage from './containers/AccountsPage';
-import AppListPage from './containers/AppListPage';
 import RpcPage from './containers/RpcPage';
 import RpcCalls from './components/RpcCalls';
 import RpcDocs from './components/RpcDocs';
@@ -29,7 +28,6 @@ export default class Routes extends Component {
           <Route path={'status'} component={StatusPage} />
           <Route path={'debug'} component={DebugPage} />
           <Route path={'accounts'} component={AccountsPage} />
-          <Route path={'apps'} component={AppListPage} />
           <Route path={'rpc'} component={RpcPage}>
             <IndexRedirect to='calls' />
             <Route path={'calls'} component={RpcCalls} />

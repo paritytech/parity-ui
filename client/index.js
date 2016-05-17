@@ -6,6 +6,7 @@ import localStore from 'store';
 
 import './index.html';
 import './index.css';
+import '!file-loader?name=icon.png!./icon.png';
 import 'dapp-styles/dapp-styles.less';
 import './test';
 
