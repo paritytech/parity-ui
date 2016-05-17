@@ -51,18 +51,23 @@ export default class AccountDetails extends Web3Component {
       return (
         <div key={acc} className={styles.acc}>
           <Identicon seed={acc} />
-          <TextField
-            style={{width: '400px'}}
-            name={`address-${acc}`}
-            disabled
-            value={address}
-            />
-          <TextField
-            name={`name-${acc}`}
-            hintText='Friendly name'
-            value={this.state[acc] || ''}
-            onChange={modify}
-            />
+          <div className={styles.inputs}>
+            <TextField
+              fullWidth
+              name={`name-${acc}`}
+              floatingLabelText='Friendly name'
+              value={this.state[acc] || ''}
+              onChange={modify}
+              />
+            <TextField
+              fullWidth
+              style={{height: '20px'}}
+              underlineDisabledStyle={{display: 'none'}}
+              name={`address-${acc}`}
+              disabled
+              value={address}
+              />
+          </div>
         </div>
       );
     });
