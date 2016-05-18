@@ -75,14 +75,14 @@ export default class CallsToolbar extends Component {
     );
   }
 
-  setCall () {
+  setCall = () => {
     const { call } = this.props;
     let method = find(rpcMethods, { name: call.name });
 
     this.props.actions.selectRpcMethod(extend({}, method, { paramsValues: call.params }));
   }
 
-  makeCall () {
+  makeCall = () => {
     const { call } = this.props;
     let method = find(rpcMethods, { name: call.name });
 
