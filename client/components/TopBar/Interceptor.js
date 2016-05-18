@@ -27,9 +27,12 @@ export default class {
       return next();
     }
 
-    return handlers.find((handler) => {
+    return handlers.reduce((ret, handler) => {
+      if (ret) {
+        return ret;
+      }
       return handler(payload, cb, next);
-    });
+    }, false);
   }
 
   // HTTP Provider methods (probably should be returned when `intoProvider` is called or something)
