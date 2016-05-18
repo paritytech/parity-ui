@@ -17,7 +17,7 @@ impl WebApp for App {
   fn info(&self) -> Info {
     Info {
       name: "Status Page".to_owned(),
-      version: "0.4.0".to_owned(),
+      version: "0.4.3".to_owned(),
       author: "Ethcore <admin@ethcore.io>".to_owned(),
       description: "Status Page for Parity".to_owned(),
       icon_url: "icon.png".to_owned(),
