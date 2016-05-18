@@ -92,7 +92,7 @@ export default class Home extends React.Component {
         <div className={styles.error}>
           <h1>Couldn't fetch apps.</h1>
 
-          <a href='javascript:void' onClick={this.fetchApps} title='Try again'>
+          <a href='javascript:void(0)' onClick={this.fetchApps} title='Try again'>
             <RefreshIndicator
               percentage={50}
               size={70}

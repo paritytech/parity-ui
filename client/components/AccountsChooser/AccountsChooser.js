@@ -57,7 +57,7 @@ export class AccountChooser extends Web3Component {
     const settings = this.props.onOpenDetails ? (
       <a
         className={styles.settings}
-        href='javascript:void'
+        href='javascript:void(0)'
         onClick={this.props.onOpenDetails}
         >
         <SettingsIcon />

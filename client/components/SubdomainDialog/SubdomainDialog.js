@@ -34,7 +34,7 @@ export default class SubdomainDialog extends React.Component {
     return (
       <div>    
         <a
-          href='javascript:5'
+          href='javascript:void(0)'
           onClick={this.open}
           title='Learn how to configure subdomain-based routing.'
           >
