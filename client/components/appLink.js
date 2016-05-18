@@ -10,6 +10,7 @@ export function appLink (appId) {
 }
 
 export function isUsingSubdomains () {
-  const matches = window.location.toString().match(new RegExp(`${SUBDOMAIN}$`, 'i'));
-  return !!matches;
+  const host = window.location.host.toString();
+  const len = host.length;
+  return host.indexOf(SUBDOMAIN) === len - SUBDOMAIN.length;
 }

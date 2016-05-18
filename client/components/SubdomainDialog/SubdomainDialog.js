@@ -3,14 +3,14 @@ import React from 'react';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 
-import {appLink, isUsingSubdomains} from '../appLink';
+import {isUsingSubdomains} from '../appLink';
 
 import styles from './styles.css';
 
 export default class SubdomainDialog extends React.Component {
 
   state = {
-    isOpen: false,
+    isOpen: false
   };
 
   open = () => {
@@ -32,7 +32,7 @@ export default class SubdomainDialog extends React.Component {
 
     const {isOpen} = this.state;
     return (
-      <div>    
+      <div>
         <a
           href='javascript:void(0)'
           onClick={this.open}
@@ -50,7 +50,7 @@ export default class SubdomainDialog extends React.Component {
           {this.renderDialogContent()}
         </Dialog>
       </div>
-    ); 
+    );
   }
 
   renderDialogContent () {
