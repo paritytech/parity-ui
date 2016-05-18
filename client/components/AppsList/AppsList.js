@@ -11,7 +11,7 @@ export default class AppsList extends React.Component {
   render () {
     return (
       <div className={styles.container}>
-        <GridList cellHeight={200}>
+        <GridList cellHeight={200} cols={2}>
           {this.props.apps.map(app => this.renderApp(app))}
         </GridList>
       </div>
@@ -26,7 +26,10 @@ export default class AppsList extends React.Component {
           title={this.renderName(app)}
           subtitle={this.renderDescription(app)}
           >
-          <img src={`${appLink(app.id)}/${app.iconUrl}`} />
+          <div
+            className={styles.image}
+            style={{backgroundImage: `url(${appLink(app.id)}${app.iconUrl})`}}
+            />
         </GridTile>
       </a>
     );
