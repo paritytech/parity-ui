@@ -19,6 +19,30 @@ export default class Home extends React.Component {
     this.fetchApps();
   }
 
+  filterApps (apps) {
+    // We are going to filter apps with the same
+    // names, versions and descriptions.
+    // We are also getting rid of `home.parity` app.
+    
+    const known = {};
+    return apps.filter(app => {
+      const uid = app.name + app.version + app.description;
+
+      if (app.id === 'home') {
+        return false;
+      }
+
+      if (known[uid]) {
+        known[uid].ids.push(app.id);
+        return false;
+      }
+
+      known[uid] = app;
+      app.ids = [app.id];
+      return true;
+    });
+  }
+
   fetchApps = () => {
     this.setState({
       isLoading: true,
@@ -31,7 +55,7 @@ export default class Home extends React.Component {
         this.setState({
           isLoading: false,
           isError: false,
-          apps: apps
+          apps: this.filterApps(apps)
         });
       })
       .catch(err => {

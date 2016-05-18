@@ -3,10 +3,10 @@ const SUBDOMAIN = '.parity';
 
 export function appLink (appId) {
   if (isUsingSubdomains()) {
-    return `//${appId}${SUBDOMAIN}`;
+    return `//${appId}${SUBDOMAIN}/`;
   }
 
-  return `/${appId}`;
+  return `/${appId}/`;
 }
 
 export function isUsingSubdomains () {
