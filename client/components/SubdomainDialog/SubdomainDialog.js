@@ -68,7 +68,7 @@ export default class SubdomainDialog extends React.Component {
         <a target='proxy.pac' href={proxyPacLocation}><pre>{proxyPacLocation}</pre></a>
         <h3>Follow those links to learn how to configure your proxy settings:</h3>
         <ul>
-          <li><a target='_blank' href='https://support.apple.com/kb/PH18553?locale=pl_PL'>
+          <li><a target='_blank' href='https://support.apple.com/kb/PH18553'>
             Mac OS X
           </a></li>
           <li><a target='_blank' href='http://xmodulo.com/how-to-set-up-proxy-auto-config-on-ubuntu-desktop.html'>
