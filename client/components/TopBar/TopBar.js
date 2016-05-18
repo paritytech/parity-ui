@@ -147,7 +147,11 @@ export default class TopBar extends Web3Component {
         <div>
           <div className={styles.topbar}>
             <div className={styles.header}>
-              <a href={appLink('home')} title='Home @ Parity'>
+              <a
+                href={appLink('home')}
+                onClick={this.forceNavigation}
+                title='Home @ Parity'
+                >
                 <AppsIcon />
               </a>
               <div className={styles.dialog}>
@@ -179,6 +183,10 @@ export default class TopBar extends Web3Component {
       </MuiThemeProvider>
     );
   }
+
+  forceNavigation = () => {
+    window.location.reload(true);
+  };
 
   static propTypes = {
     interceptor: React.PropTypes.object.isRequired,
