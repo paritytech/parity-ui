@@ -2,6 +2,8 @@ import React from 'react';
 
 import {GridList, GridTile} from 'material-ui/GridList';
 
+import {appLink} from '../appLink';
+
 import styles from './styles.css';
 
 export default class AppsList extends React.Component {
@@ -49,11 +51,7 @@ export default class AppsList extends React.Component {
   }
 
   static propTypes = {
-    apps: React.propTypes.array.isRequired
+    apps: React.PropTypes.array.isRequired
   };
 
-}
-
-function appLink (appId) {
-  return `/${appId}`;
 }

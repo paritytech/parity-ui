@@ -12,6 +12,7 @@ import {Web3Component} from '../Web3Component/Web3Component';
 import AccountsDetails from '../AccountsDetails';
 
 import Storage from '../Storage';
+import {appLink} from '../appLink';
 
 import styles from './styles.css';
 
@@ -144,7 +145,7 @@ export default class TopBar extends Web3Component {
         <div>
           <div className={styles.topbar}>
             <div className={styles.header}>
-              <a href='//home.parity' title='Home @ Parity'>
+              <a href={appLink('home')} title='Home @ Parity'>
                 <AppsIcon />
               </a>
             </div>

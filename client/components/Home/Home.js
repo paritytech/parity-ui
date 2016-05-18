@@ -47,7 +47,7 @@ export default class Home extends React.Component {
 
   render () {
     return (
-      <div>
+      <div className={styles.home}>
         {this.renderApps()}
       </div>
     );
