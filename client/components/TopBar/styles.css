@@ -8,8 +8,14 @@ html {
   opacity: 0.5;
   margin-left: 30px;
   margin-top: 20px;
+  display: flex;
 }
-
+.dialog {
+  margin-left: 10px;
+}
+.dialog svg {
+  fill: #F57F17 !important;
+}
 .topbar {
   position: fixed;
   top: 0;

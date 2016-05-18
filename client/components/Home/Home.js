@@ -1,9 +1,11 @@
 import React from 'react';
 
+import ReportProblem from 'material-ui/svg-icons/action/report-problem';
 import RefreshIndicator from 'material-ui/RefreshIndicator';
 import CircularProgress from 'material-ui/CircularProgress';
 
 import AppsList from '../AppsList';
+import SubdomainDialog from '../SubdomainDialog';
 
 import styles from './styles.css';
 
@@ -104,7 +106,21 @@ export default class Home extends React.Component {
     }
 
     return (
-      <AppsList apps={this.state.apps} />
+      <div>
+        <AppsList apps={this.state.apps} />
+        <SubdomainDialog>
+          {this.renderSubdomainInfo()}
+        </SubdomainDialog>
+      </div>
+    );
+  }
+
+  renderSubdomainInfo () {
+    return (
+      <h3 className={styles.alert}>
+        <ReportProblem />
+        We recommend configuring <code>http://home.parity/</code> address for your parity node. Learn more.
+      </h3>
     );
   }
 

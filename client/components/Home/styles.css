@@ -12,4 +12,22 @@
 .error h1 {
   color: #F44336;
 }
+.alert {
+  border-radius: 3px;
+  padding: 10px;
+  background: #FFF59D;
+  color: #F9A825;
+  border: 1px solid #FFEB3B;
+  max-width: 80vw;
+  margin: 1em auto;
+}
 
+.alert svg {
+  fill: #F9A825 !important;
+  margin-right: 15px;
+  vertical-align: middle;
+  margin-top: -2px;
+}
+.home a {
+  text-decoration: none;
+}

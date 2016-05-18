@@ -1,6 +1,7 @@
 import React from 'react';
 
 import AppsIcon from 'material-ui/svg-icons/navigation/apps';
+import ReportProblem from 'material-ui/svg-icons/action/report-problem';
 
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -10,6 +11,7 @@ import {TransactionConfirmation} from '../TransactionConfirmation/TransactionCon
 import {AccountChooser} from '../AccountsChooser/AccountsChooser';
 import {Web3Component} from '../Web3Component/Web3Component';
 import AccountsDetails from '../AccountsDetails';
+import SubdomainDialog from '../SubdomainDialog';
 
 import Storage from '../Storage';
 import {appLink} from '../appLink';
@@ -148,6 +150,11 @@ export default class TopBar extends Web3Component {
               <a href={appLink('home')} title='Home @ Parity'>
                 <AppsIcon />
               </a>
+              <div className={styles.dialog}>
+                <SubdomainDialog>
+                  <ReportProblem />
+                </SubdomainDialog>
+              </div>
             </div>
             <AccountChooser
               accountsNames={this.state.accountsNames}
