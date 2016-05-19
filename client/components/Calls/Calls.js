@@ -82,19 +82,19 @@ export default class Calls extends Component {
             key={calls.length - idx}
             callIdx={idx}
             call={call}
-            setCallElement={this.setCallElement}
-            setHoverIdx={this.setHoveredIdx}
+            setHoverChild={this.setHoverChild}
           />
         ))}
       </AnimateChildren>
     );
   }
 
-  clearHoveredIdx = () => {
+  clearHoverIdx = () => {
     this.setState({ hoveredIdx: null });
   }
 
-  setHoveredIdx = (idx) => {
+  setHoverChild = (idx, el) => {
+    this[`call-${idx}`] = el;
     this.setState({ hoveredIdx: idx });
   }
 
@@ -105,10 +105,6 @@ export default class Calls extends Component {
   clearHistory = () => {
     this.props.reset();
   }
-
-  setCallElement = (idx, el) => {
-    this[`call-${idx}`] = el;
-  };
 
   static propTypes = {
     calls: PropTypes.arrayOf(PropTypes.object).isRequired,

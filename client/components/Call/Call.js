@@ -10,8 +10,8 @@ export default class Call extends Component {
 
     return (
       <div
-        onMouseEnter={this.setParentIdx}
-        ref={this.setParentElement}
+        onMouseEnter={this.setParent}
+        ref={this.setElement}
         className={styles.call}
         {...this._test(`call-${call.callNo}`)}
         >
@@ -22,19 +22,18 @@ export default class Call extends Component {
     );
   }
 
-  setParentElement = (el) => {
-    this.props.setCallElement(this.props.callIdx, el);
+  setElement = (el) => {
+    this.element = el;
   }
 
-  setParentIdx = () => {
-    this.props.setHoverIdx(this.props.callIdx);
+  setParentHover = () => {
+    this.props.setHoverChild(this.element, this.props.callIdx);
   }
 
   static propTypes = {
     call: PropTypes.object.isRequired,
     callIdx: PropTypes.number.isRequired,
-    setCallElement: PropTypes.func.isRequired,
-    setHoverIdx: PropTypes.func.isRequired
+    setHoverChild: PropTypes.func.isRequired
   }
 
 }
