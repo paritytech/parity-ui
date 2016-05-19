@@ -24,8 +24,6 @@ module.exports = {
     client.assert.urlContains('/rpc');
     client.click(el('Header-debug-link'));
     client.assert.urlContains('/debug');
-    client.click(el('Header-apps-link'));
-    client.assert.urlContains('/apps');
     client.click(el('Header-home-link'));
     client.assert.urlContains('/status');
   },

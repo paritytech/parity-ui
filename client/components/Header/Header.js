@@ -68,12 +68,6 @@ export default class Header extends Component {
                 <span>Accounts</span>
               </Link>
             </li>
-            <li>
-              <Link to={'/apps'} activeClassName='active' {...this._test('apps-link')}>
-                <i className='icon-grid'></i>
-                <span>Apps</span>
-              </Link>
-            </li>
           </ul>
         </nav>
       </header>
