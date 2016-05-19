@@ -16,7 +16,14 @@
    $ cp -r ./myapp-src/* ./parity-myapp/src/web
    ```
 
-1. To create web3 in your app make sure to use: `new Web3(new Web3.providers.HttpProvider('/rpc/'))`
+1. Instead of creating `web3` in your app. Load (as the first script tag in `head`):
+
+   ```html
+   <script src="/parity-utils/inject.js"></script>
+   ```
+  
+   The `inject.js` script will create global `web3` instance with proper provider that should be used by your dapp.
+
 1. Create `./parity-myapp/Cargo.toml` with you apps details. See example here: [parity-status Cargo.toml](https://github.com/tomusdrw/parity-status/blob/master/Cargo.toml).
 
    ```bash
@@ -36,7 +43,7 @@
    $ ../../../parity-webapp/generate/index.js > ../lib.rs # we assume that you have `parity-webapp` repo
    ```
 
-   You still need to keep your files in `./parity-myapp/src/web` (only binary files are inlined in `lib.rs`)
+   You still need to keep your files in `./parity-myapp/src/web`
 
 1. Commit the results and put it to some github repo.
 
@@ -49,7 +56,7 @@
 
    ```toml
    # Use git repo and version
-   parity-myapp = { git = "https://github.com/johnwhitton/parity-myapp.git", version = "0.1.0" }
+   parity-myapp = { git = "https://github.com/ethcore/parity-myapp.git", version = "0.1.0" }
    # Or just specify path (speeds-up local development)
    parity-myapp = { path = "../../parity-myapp" }
    ```
