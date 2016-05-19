@@ -82,7 +82,7 @@ export default class Calls extends Component {
             key={calls.length - idx}
             callIdx={idx}
             call={call}
-            setHoverChild={this.setHoverChild}
+            setActiveElement={this.setActiveElement}
           />
         ))}
       </AnimateChildren>
@@ -93,7 +93,7 @@ export default class Calls extends Component {
     this.setState({ hoveredIdx: null });
   }
 
-  setHoverChild = (idx, el) => {
+  setActiveElement = (idx, el) => {
     this[`call-${idx}`] = el;
     this.setState({ hoveredIdx: idx });
   }
