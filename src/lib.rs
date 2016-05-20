@@ -17,8 +17,8 @@ impl WebApp for App {
   fn info(&self) -> Info {
     Info {
       name: "Ethereum Wallet".to_owned(),
-      version: "0.4.0".to_owned(),
-      author: "Ethcore <admin@ethcore.io>".to_owned(),
+      version: "0.4.1".to_owned(),
+      author: "Alexander Van de Sande <alex.vandesande@ethdev.com>, Fabian Vogelsteller <fabian.vogelsteller@gmail.com>".to_owned(),
       description: "Ethereum Wallet Ðapp for Parity".to_owned(),
       icon_url: "icon.png".to_owned(),
     }
