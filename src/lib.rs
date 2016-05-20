@@ -29,6 +29,8 @@ impl Default for App {
   fn default() -> Self {
     let files = {
       let mut files = HashMap::new();
+      files.insert("cols.frame.html", File { path: "cols.frame.html", content_type: "text/html", content: include_bytes!("./web/cols.frame.html") });
+      files.insert("cols.frame.js", File { path: "cols.frame.js", content_type: "application/javascript", content: include_bytes!("./web/cols.frame.js") });
       files.insert("home.js", File { path: "home.js", content_type: "application/javascript", content: include_bytes!("./web/home.js") });
       files.insert("index.html", File { path: "index.html", content_type: "text/html", content: include_bytes!("./web/index.html") });
       files.insert("inject.js", File { path: "inject.js", content_type: "application/javascript", content: include_bytes!("./web/inject.js") });
