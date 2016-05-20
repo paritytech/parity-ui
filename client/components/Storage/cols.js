@@ -50,9 +50,10 @@ export class Cols {
   }
 
   processQueue () {
-    let elem;
-    while (elem = this.queue.shift()) {
+    let elem = this.queue.shift();
+    while (elem) {
       this.sendRequest(elem.data, elem.callback);
+      elem = this.queue.shift();
     }
   }
 
@@ -73,8 +74,8 @@ export class Cols {
       id, data
     }, this.origin);
   }
-  
-  addToDom() {
+
+  addToDom () {
     document.querySelector('head').appendChild(this.iframe);
     return this;
   }
@@ -85,7 +86,7 @@ export class Cols {
   }
 
   // LocalStorage API
-  
+
   setItem (key, value, cb) {
     this.sendRequest({
       action: 'set',

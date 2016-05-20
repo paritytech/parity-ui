@@ -32,11 +32,11 @@ function processMessage (data, cb) {
   }
 
   if (action === 'set') {
-    localStorage[`${PREFIX}-${key}`] = value;
+    storage[`${PREFIX}-${key}`] = value;
     return cb(null, true);
   }
 
   if (action === 'get') {
-    return cb(null, localStorage[`${PREFIX}-${key}`]);
+    return cb(null, storage[`${PREFIX}-${key}`]);
   }
 }
