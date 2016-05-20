@@ -39,7 +39,10 @@ export default class AppsList extends React.Component {
     return (
       <span>
         {app.name}
-        <span className={styles.author}> by {app.author}</span>
+        <span
+          className={styles.author}
+          title={app.author}
+          > by {app.author}</span>
       </span>
     );
   }

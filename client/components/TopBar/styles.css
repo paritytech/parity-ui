@@ -1,6 +1,9 @@
 html {
   padding-top: 55px !important;
+}
+html,body {
   background: #fff;
+  margin: 0;
 }
 
 .header {
