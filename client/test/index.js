@@ -1,12 +1,13 @@
-import {Component} from 'react';
+import React from 'react';
 
 const isProd = process.env.NODE_ENV === 'production';
+const isPerfDebug = process.env.NODE_ENV === 'perf-debug';
 const isIntegrationTests = process.env.NODE_ENV === 'tests';
 
 // Component utils for integration tests hooks.
 const TEST_HOOK = 'data-test';
-Component.prototype._test = isProd ? noop : testHook;
-Component.prototype._testInherit = isProd ? noop : testHookInherit;
+React.Component.prototype._test = isProd ? noop : testHook;
+React.Component.prototype._testInherit = isProd ? noop : testHookInherit;
 
 function noop (name) {}
 
@@ -32,4 +33,8 @@ function testHook (name) {
 // Backend mocking framework
 if (isIntegrationTests) {
   require('./fake-backend');
+}
+if (isPerfDebug) {
+  const {whyDidYouUpdate} = require('why-did-you-update');
+  whyDidYouUpdate(React);
 }
