@@ -4,7 +4,7 @@ export class Cols {
 
   constructor (location, origin) {
     this.location = location;
-    this.origin = origin;
+    this.origin = origin.replace(/\/$/, '');
     this.iframe = document.createElement('iframe');
     this.callbacks = {};
     this.queue = [];
