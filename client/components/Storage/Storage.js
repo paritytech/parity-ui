@@ -1,32 +1,45 @@
+import {Cols} from './cols';
+import {isUsingSubdomains, appLink} from '../appLink';
+
 export default class {
 
   constructor (storage) {
-    this.storage = storage || window.localStorage;
+    this.storage = storage;
   }
 
-  getLastAccount () {
-    return this.storage[id('lastAccount')];
+  getLastAccount (cb) {
+    this.storage.getItem('lastAccount', cb);
   }
 
-  saveLastAccount (acc) {
-    this.storage[id('lastAccount')] = acc;
+  saveLastAccount (acc, cb) {
+    this.storage.setItem('lastAccount', acc, cb);
   }
 
-  getAccountsNames () {
-    const names = this.storage[id('accountsNames')];
-    try {
-      return JSON.parse(names);
-    } catch (e) {
-      return {};
-    }
+  getAccountsNames (cb) {
+    this.storage.getItem('accountsNames', (names) => {
+      try {
+        cb(JSON.parse(names));
+      } catch (e) {
+        cb({});
+      }
+    });
   }
 
-  setAccountsNames (names) {
-    this.storage[id('accountsNames')] = JSON.stringify(names);
+  setAccountsNames (names, cb) {
+    this.storage.setItem('accountsNames', JSON.stringify(names), cb);
   }
 
+  static cols = null;
+
+  static crossOrigin () {
+    const loc = window.location;
+    const home = appLink('home');
+    const origin = isUsingSubdomains() ? home : `${loc.protocol}//${loc.host}`;
+
+    const cols = this.cols || new Cols(home, origin).addToDom();
+    this.cols = cols;
+
+    return new this(cols);
+  }
 }
 
-function id (str) {
-  return `parity-${str}`;
-}

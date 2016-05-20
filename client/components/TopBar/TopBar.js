@@ -20,13 +20,13 @@ import styles from './styles.css';
 
 export default class TopBar extends Web3Component {
 
-  storage = new Storage();
+  storage = Storage.crossOrigin();
 
   state = {
     waiting: 0,
     accounts: [],
     allAccounts: [],
-    accountsNames: this.storage.getAccountsNames(),
+    accountsNames: {},
     sendingTransaction: false,
     accountsDetails: false
   };
@@ -38,6 +38,9 @@ export default class TopBar extends Web3Component {
   }
 
   componentWillMount () {
+    this.storage.getAccountsNames((accountsNames) => {
+      this.setState({accountsNames});
+    });
     this.listeners = [
       this.props.interceptor.intercept('eth_accounts', ::this.onEthAccounts),
       this.props.interceptor.intercept('eth_sendTransaction', ::this.onEthSendTransaction)

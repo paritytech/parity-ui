@@ -13,7 +13,8 @@ module.exports = {
   entry: {
     'index.app': './index.app.js',
     'inject': './inject.js',
-    'home': './home.js'
+    'home': './home.js',
+    'home/cols.frame': './cols.frame'
   },
   output: {
     path: path.join(__dirname, './static'),

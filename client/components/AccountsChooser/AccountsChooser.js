@@ -18,7 +18,7 @@ export class AccountChooser extends Web3Component {
     accounts: []
   };
 
-  storage = new Storage();
+  storage = Storage.crossOrigin();
 
   onTick (next) {
     this.context.web3.eth.getAccounts((err, accounts) => {
@@ -30,16 +30,18 @@ export class AccountChooser extends Web3Component {
         return;
       }
 
-      const idx = accounts.indexOf(this.storage.getLastAccount());
-      const defaultAccountIdx = idx !== -1 ? idx : this.state.defaultAccountIdx;
+      this.storage.getLastAccount((lastAccount) => {
+        const idx = accounts.indexOf(lastAccount);
+        const defaultAccountIdx = idx !== -1 ? idx : this.state.defaultAccountIdx;
 
-      this.setState({
-        accounts,
-        defaultAccountIdx
+        this.setState({
+          accounts,
+          defaultAccountIdx
+        });
+
+        this.props.onAllAccounts(accounts);
+        this.props.onChange(accounts[defaultAccountIdx]);
       });
-
-      this.props.onAllAccounts(accounts);
-      this.props.onChange(accounts[defaultAccountIdx]);
     });
   }
 
@@ -49,7 +51,6 @@ export class AccountChooser extends Web3Component {
     });
     const account = this.state.accounts[value];
     this.storage.saveLastAccount(account);
-
     this.props.onChange(account);
   }
 
