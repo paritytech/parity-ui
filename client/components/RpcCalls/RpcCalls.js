@@ -80,7 +80,7 @@ class RpcCalls extends Component {
       <div>
         <Toggle
           className={styles.jsonToggle}
-          onToggle={::this.onJsonToggle}
+          onToggle={this.onJsonToggle}
           label='JSON'
         />
         <h2 className={styles.header}>
@@ -125,7 +125,7 @@ class RpcCalls extends Component {
           searchText={name}
           floatingLabelText='Method name'
           dataSource={methods}
-          onNewRequest={::this.handleMethodChange}
+          onNewRequest={this.handleMethodChange}
           {...this._test('autocomplete')}
         />
         <div>
@@ -135,18 +135,18 @@ class RpcCalls extends Component {
     );
   }
 
-  handleMethodChange (name) {
+  handleMethodChange = (name) => {
     const method = rpcMethods.find(m => m.name === name);
     this.props.actions.selectRpcMethod(method);
   }
 
-  onRpcFire () {
+  onRpcFire = () => {
     if (this.state.jsonMode) {
       return this.onCustomRpcFire();
     }
 
     let { name, params, outputFormatter, inputFormatters } = this.props.rpc.selectedMethod;
-    params = params.map(::this.jsonParamValue);
+    params = params.map(this.jsonParamValue);
 
     this.props.actions.fireRpc({
       method: name,
@@ -234,14 +234,14 @@ class RpcCalls extends Component {
     const { name, params } = this.props.rpc.selectedMethod;
     const json = {
       method: name,
-      params: params.map(::this.jsonParamValue)
+      params: params.map(this.jsonParamValue)
     };
     this.setState({
       jsonEditorValue: json
     });
   }
 
-  onJsonToggle () {
+  onJsonToggle = () => {
     if (!this.state.jsonMode) {
       this.setJsonEditorValue();
     }
@@ -256,7 +256,7 @@ class RpcCalls extends Component {
     return (
       <div>
         <JsonEditor
-          onChange={::this.onJsonEditorChange}
+          onChange={this.onJsonEditorChange}
           value={this.state.jsonEditorValue}
         />
         {this.renderFormButton()}
@@ -270,21 +270,21 @@ class RpcCalls extends Component {
         {...this._test('fireRpc')}
         className={'dapp-block-button'}
         disabled={this.state.jsonEditorError}
-        onClick={::this.onRpcFire}
+        onClick={this.onRpcFire}
         >
         Fire!
       </button>
     );
   }
 
-  onJsonEditorChange (jsonEditorParsedValue, jsonEditorError) {
+  onJsonEditorChange = (jsonEditorParsedValue, jsonEditorError) => {
     this.setState({
       jsonEditorParsedValue,
       jsonEditorError
     });
   }
 
-  jsonParamValue (p) {
+  jsonParamValue = (p) => {
     if (_.isPlainObject(p)) {
       const { description, details } = p;
       return Object.keys(details).reduce((obj, key) => {

@@ -34,7 +34,7 @@ export default class JsonEditor extends Component {
     return (
       <div className='row'>
         <textarea
-          onChange={::this.onChange}
+          onChange={this.onChange}
           className={`${styles.editor} ${errorClass}`}
           value={this.state.value}
           />
@@ -54,7 +54,7 @@ export default class JsonEditor extends Component {
     );
   }
 
-  onChange (evt) {
+  onChange = (evt) => {
     const {value} = evt.target;
     let parsed;
     let error;
