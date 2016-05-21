@@ -10,7 +10,7 @@ export default class Call extends Component {
 
     return (
       <div
-        onMouseEnter={this.setActiveElement}
+        onMouseEnter={this.setActiveCall}
         ref={this.setElement}
         className={styles.call}
         {...this._test(`call-${call.callNo}`)}
@@ -26,13 +26,13 @@ export default class Call extends Component {
     this.element = el;
   }
 
-  setActiveElement = () => {
-    this.props.setActiveElement(this.props.call, this.element);
+  setActiveCall = () => {
+    this.props.setActiveCall(this.props.call, this.element);
   }
 
   static propTypes = {
     call: PropTypes.object.isRequired,
-    setActiveElement: PropTypes.func.isRequired
+    setActiveCall: PropTypes.func.isRequired
   }
 
 }

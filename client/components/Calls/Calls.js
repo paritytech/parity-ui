@@ -80,7 +80,7 @@ export default class Calls extends Component {
           <Call
             key={calls.length - idx}
             call={call}
-            setActiveElement={this.setActiveCall}
+            setActiveCall={this.setActiveCall}
           />
         ))}
       </AnimateChildren>

@@ -18,9 +18,7 @@ describe('components/Call', () => {
       rendered = shallow(
         <Call
           call={call}
-          callIdx={call.callIdx}
-          setCallElement={noop}
-          setHoverIdx={noop}
+          setActiveCall={noop}
         />
       );
     });
