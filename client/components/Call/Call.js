@@ -27,12 +27,11 @@ export default class Call extends Component {
   }
 
   setActiveElement = () => {
-    this.props.setActiveElement(this.element, this.props.callIdx);
+    this.props.setActiveElement(this.props.call, this.element);
   }
 
   static propTypes = {
     call: PropTypes.object.isRequired,
-    callIdx: PropTypes.number.isRequired,
     setActiveElement: PropTypes.func.isRequired
   }
 

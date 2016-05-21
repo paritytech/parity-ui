@@ -7,16 +7,15 @@ import styles from './style.css';
 export default class Calls extends Component {
 
   state = {
-    hoveredIdx: null
+    activeCall: null,
+    activeChild: null
   }
 
   render () {
-    const { hoveredIdx } = this.state;
-
     return (
       <div
         className='calls-container'
-        onMouseLeave={this.clearHoveredIdx}
+        onMouseLeave={this.clearActiveCall}
         {...this._test('container')}
       >
         {this.renderClear()}
@@ -26,8 +25,8 @@ export default class Calls extends Component {
           {this.renderCalls()}
         </div>
         <CallsToolbar
-          call={this.props.calls[hoveredIdx]}
-          callEl={this[`call-${hoveredIdx}`]}
+          call={this.state.activeCall}
+          callEl={this.state.activeChild}
           containerEl={this._callsHistory}
           actions={this.props.actions}
         />
@@ -80,22 +79,20 @@ export default class Calls extends Component {
         {calls.map((call, idx) => (
           <Call
             key={calls.length - idx}
-            callIdx={idx}
             call={call}
-            setActiveElement={this.setActiveElement}
+            setActiveElement={this.setActiveCall}
           />
         ))}
       </AnimateChildren>
     );
   }
 
-  clearHoverIdx = () => {
-    this.setState({ hoveredIdx: null });
+  clearActiveCall = () => {
+    this.setState({ activeCall: null, activeElement: null });
   }
 
-  setActiveElement = (idx, el) => {
-    this[`call-${idx}`] = el;
-    this.setState({ hoveredIdx: idx });
+  setActiveCall = (call, el) => {
+    this.setState({ activeCall: call, activeElement: el });
   }
 
   setCallsHistory = (el) => {
