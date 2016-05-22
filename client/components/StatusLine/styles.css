@@ -1,6 +1,7 @@
 .status {
   display: flex;
   font-family: 'Roboto', sans-serif;
+  line-height: 26px;
 }
 
 .info {
@@ -9,16 +10,19 @@
   margin: 0;
   padding: 0;
 }
+
 .info li {
-  padding: 3px 5px;
+  padding: 5px 5px 0;
   flex: 1;
   border-right: 1px solid #daa;
   border-left: 1px solid #eee;
   white-space: nowrap;
 }
+
 .info li:first-child {
   border-left: none;
 }
+
 .info li:last-child {
   border-right: none;
 }

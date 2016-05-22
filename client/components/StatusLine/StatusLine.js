@@ -57,8 +57,10 @@ export default class StatusLine extends Web3Component {
     web3.net.getPeerCount(handleError(peers => this.setState({
       connectedPeers: peers
     })));
-
-    // TODO get network name
+    // network
+    web3.version.getNetwork(handleError(network => this.setState({
+      network: networkName(network)
+    })));
   }
 
   render () {
@@ -110,4 +112,13 @@ export default class StatusLine extends Web3Component {
     );
   }
 
+}
+
+function networkName (netId) {
+  const networks = {
+    0x0: 'olympic',
+    0x1: 'homestead',
+    0x2: 'morden'
+  };
+  return networks[netId] || 'unknown';
 }
