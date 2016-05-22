@@ -52,6 +52,10 @@ export default class TopBar extends Web3Component {
   }
 
   onEthAccounts (payload, cb, next) {
+    if (this.props.options.allAccounts) {
+      return next();
+    }
+
     const response = {
       jsonrpc: payload.jsonrpc,
       id: payload.id,
@@ -193,6 +197,9 @@ export default class TopBar extends Web3Component {
 
   static propTypes = {
     interceptor: React.PropTypes.object.isRequired,
-    web3: React.PropTypes.object.isRequired
+    web3: React.PropTypes.object.isRequired,
+    options: React.PropTypes.shape({
+      allAccounts: React.PropTypes.bool.isRequired
+    }).isRequired
   };
 }

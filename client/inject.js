@@ -12,6 +12,7 @@ import Web3 from 'web3';
 import Web3Provider from './components/Web3Provider';
 import TopBar from './components/TopBar';
 import Interceptor from './components/TopBar/Interceptor';
+import readInjectOptions from './components/readInjectOptions';
 
 const http = new Web3.providers.HttpProvider('/rpc/');
 const interceptor = new Interceptor(http);
@@ -20,13 +21,18 @@ const rawWeb3 = new Web3(http);
 // expose global web3
 global.web3 = web3;
 
+const options = readInjectOptions();
 // Render account chooser
 const el = document.createElement('div');
 document.querySelector('html').appendChild(el);
 
 ReactDOM.render(
   <Web3Provider web3={rawWeb3}>
-    <TopBar interceptor={interceptor} web3={web3} />
+    <TopBar
+      interceptor={interceptor}
+      web3={web3}
+      options={options}
+      />
   </Web3Provider>,
   el
 );
