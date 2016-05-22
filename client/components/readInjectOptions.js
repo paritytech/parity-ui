@@ -7,7 +7,7 @@ export default function readInjectOptions () {
       allAccounts: false
     };
   }
-  
+
   return {
     allAccounts: script.hasAttribute('all-accounts')
   };
