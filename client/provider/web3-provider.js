@@ -9,6 +9,8 @@ import * as DebugActions from '../actions/debug';
 
 export class Web3Provider extends Web3Base {
 
+  state = {}
+
   constructor (web3, ethcoreWeb3, store) {
     super(web3, ethcoreWeb3);
     this.store = store;
