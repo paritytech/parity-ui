@@ -23,17 +23,20 @@ export default class EthereumWalletCompatibility {
         next();
         return;
       }
+
       const last = this.lastAccounts;
       this.lastAccounts = accountsStr;
       if (last !== null) {
         this.fireChanged(accounts);
       }
+
+      next();
     };
 
     const next = () => {
       setTimeout(() => {
         detectChange(next);
-      }, 200);
+      }, 2000);
     };
 
     next();
