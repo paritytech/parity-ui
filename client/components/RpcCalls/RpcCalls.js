@@ -17,7 +17,7 @@ import RpcNav from '../RpcNav';
 
 const rpcMethods = _.sortBy(rpcData.methods, 'name');
 
-class RpcCalls extends Component {
+export default class RpcCalls extends Component {
 
   constructor (...args) {
     super(...args);
@@ -304,18 +304,17 @@ class RpcCalls extends Component {
     return `params_${p}`;
   }
 
+  static propTypes = {
+    rpc: PropTypes.shape({
+      prevCalls: PropTypes.array.isRequired,
+      selectedMethod: PropTypes.object.isRequired
+    }).isRequired,
+    actions: PropTypes.shape({
+      fireRpc: PropTypes.func.isRequired,
+      selectRpcMethod: PropTypes.func.isRequired,
+      resetRpcPrevCalls: PropTypes.func.isRequired
+    }).isRequired
+  }
+
 }
-
-RpcCalls.propTypes = {
-  rpc: PropTypes.shape({
-    prevCalls: PropTypes.array.isRequired,
-    selectedMethod: PropTypes.object.isRequired
-  }).isRequired,
-  actions: PropTypes.shape({
-    fireRpc: PropTypes.func.isRequired,
-    selectRpcMethod: PropTypes.func.isRequired,
-    resetRpcPrevCalls: PropTypes.func.isRequired
-  }).isRequired
-};
-
 export default RpcCalls;

@@ -38,9 +38,9 @@ export default class Marked extends Component {
     return val;
   }
 
-}
+  static propTypes = {
+    val: PropTypes.any,
+    style: PropTypes.object
+  }
 
-Marked.propTypes = {
-  val: PropTypes.any,
-  style: PropTypes.object
-};
+}

@@ -42,8 +42,9 @@ export default class Response extends Component {
       </span>
     ));
   }
-}
 
-Response.propTypes = {
-  response: PropTypes.any.isRequired
-};
+  static propTypes = {
+    response: PropTypes.any.isRequired
+  }
+
+}

@@ -74,10 +74,10 @@ export default class Header extends Component {
     );
   }
 
-}
+  static propTypes = {
+    nodeName: PropTypes.string.isRequired,
+    noOfErrors: PropTypes.number.isRequired,
+    disconnected: PropTypes.bool
+  }
 
-Header.propTypes = {
-  nodeName: PropTypes.string.isRequired,
-  noOfErrors: PropTypes.number.isRequired,
-  disconnected: PropTypes.bool
-};
+}

@@ -34,13 +34,13 @@ export default class ToastrContainer extends Component {
     });
   }
 
-}
+  static propTypes = {
+    toastr: PropTypes.shape({
+      toasts: PropTypes.array.isRequired
+    }).isRequired,
+    actions: PropTypes.shape({
+      removeToast: PropTypes.func.isRequired
+    }).isRequired
+  }
 
-ToastrContainer.propTypes = {
-  toastr: PropTypes.shape({
-    toasts: PropTypes.array.isRequired
-  }).isRequired,
-  actions: PropTypes.shape({
-    removeToast: PropTypes.func.isRequired
-  }).isRequired
-};
+}
