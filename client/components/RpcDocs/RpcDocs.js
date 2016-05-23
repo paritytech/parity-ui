@@ -39,7 +39,7 @@ class RpcDocs extends Component {
                   floatingLabelText='Method name'
                   className={style.autocomplete}
                   dataSource={rpcMethods.map(m => m.name)}
-                  onNewRequest={::this.handleMethodChange}
+                  onNewRequest={this.handleMethodChange}
                   {...this._test('autocomplete')}
                 />
                 {this.renderData()}
@@ -80,7 +80,7 @@ class RpcDocs extends Component {
     );
   }
 
-  handleMethodChange (name) {
+  handleMethodChange = (name) => {
     ReactDOM.findDOMNode(this[`_method-${name}`]).scrollIntoViewIfNeeded();
   }
 

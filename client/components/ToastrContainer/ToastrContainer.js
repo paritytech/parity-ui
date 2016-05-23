@@ -9,7 +9,7 @@ export default class ToastrContainer extends Component {
   render () {
     return (
       <div className={styles.toastrContainer}>
-        {::this.renderToasts()}
+        {this.renderToasts()}
       </div>
     );
   }

@@ -9,7 +9,7 @@ class FakeRpcServer {
 
   start () {
     this.xhr = sinon.useFakeXMLHttpRequest();
-    this.xhr.onCreate = ::this.handleRequest;
+    this.xhr.onCreate = this.handleRequest;
     return () => this.xhr.restore();
   }
 
@@ -23,7 +23,7 @@ class FakeRpcServer {
     });
   }
 
-  handleRequest (req) {
+  handleRequest = (req) => {
     setTimeout(() => {
       req.body = JSON.parse(req.requestBody);
       const middlewaresForMethod = this.middlewares
