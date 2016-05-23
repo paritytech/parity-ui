@@ -1,7 +1,7 @@
 [package]
 description = "Injectable identity manager for Parity"
 name = "parity-idmanager"
-version = "0.2.2"
+version = "0.3.2"
 license = "GPL-3.0"
 authors = ["Ethcore <admin@ethcore.io>"]
 
