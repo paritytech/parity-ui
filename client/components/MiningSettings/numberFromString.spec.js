@@ -1,4 +1,4 @@
-import {numberFromString} from './numberFromString';
+import { numberFromString } from './numberFromString';
 
 describe('NUMBER FROM STRING', () => {
   it('should convert string to number', () => {

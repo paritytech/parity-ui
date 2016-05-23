@@ -1,4 +1,4 @@
-import {Component} from 'react';
+import { Component } from 'react';
 
 const isProd = process.env.NODE_ENV === 'production';
 const isIntegrationTests = process.env.NODE_ENV === 'tests';

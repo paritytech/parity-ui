@@ -1,7 +1,7 @@
 import sinon from 'sinon';
 import localStore from 'store';
 
-import {syncRpcStateFromLocalStorage} from '../actions/localstorage';
+import { syncRpcStateFromLocalStorage } from '../actions/localstorage';
 import rpcData from '../data/rpc.json';
 import LocalStorageMiddleware from './localstorage';
 

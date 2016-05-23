@@ -2,15 +2,15 @@ import React, { Component, PropTypes } from 'react';
 
 import formatNumber from 'format-number';
 import EditableValue from '../EditableValue';
-import {numberFromString} from './numberFromString';
-import {decodeExtraData} from './decodeExtraData';
+import { numberFromString } from './numberFromString';
+import { decodeExtraData } from './decodeExtraData';
 
 const toNiceNumber = formatNumber();
 
 export default class MiningSettings extends Component {
 
   render () {
-    const {mining, actions} = this.props;
+    const { mining, actions } = this.props;
 
     let onMinGasPriceChange = (newVal) => {
       actions.modifyMinGasPrice(numberFromString(newVal));
