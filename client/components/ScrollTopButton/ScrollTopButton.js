@@ -10,11 +10,6 @@ const scrollTopThreshold = 600;
 
 export default class ScrollTopButton extends Component {
 
-  constructor (...args) {
-    super(...args);
-    this.state = {};
-  }
-
   componentDidMount () {
     window.addEventListener('scroll', this.handleScroll);
   }

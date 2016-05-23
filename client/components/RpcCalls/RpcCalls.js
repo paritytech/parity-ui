@@ -19,11 +19,6 @@ const rpcMethods = _.sortBy(rpcData.methods, 'name');
 
 class RpcCalls extends Component {
 
-  constructor (...args) {
-    super(...args);
-    this.state = {};
-  }
-
   componentWillReceiveProps (nextProps) {
     const { paramsValues, params } = nextProps.rpc.selectedMethod;
     if (paramsValues) {

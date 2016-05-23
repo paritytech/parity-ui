@@ -13,7 +13,6 @@ export class Web3Provider extends Web3Base {
     super(web3, ethcoreWeb3);
     this.store = store;
     this.delay = 500;
-    this.state = {};
     this.running = false;
     this.tickArr = this.getTickArr();
   }
