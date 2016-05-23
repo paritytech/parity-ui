@@ -73,7 +73,7 @@ export class AccountChooser extends Web3Component {
           value={this.state.defaultAccountIdx}
           onChange={::this.handleChange}
           maxHeight={700}
-          styles={{width: '350px'}}
+          styles={obj}
           underlineStyle={{display: 'none'}}
           iconStyle={{ fill: '#888' }}
           >
@@ -97,3 +97,5 @@ export class AccountChooser extends Web3Component {
   };
 
 }
+
+const obj = {width: '350px'};
