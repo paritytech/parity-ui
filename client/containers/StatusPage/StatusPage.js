@@ -12,14 +12,15 @@ class StatusPage extends Component {
   render () {
     return <Status {...this.props} />;
   }
-}
 
-StatusPage.propTypes = {
-  status: PropTypes.object.isRequired,
-  settings: PropTypes.object.isRequired,
-  mining: PropTypes.object.isRequired,
-  actions: PropTypes.object.isRequired
-};
+  static propTypes = {
+    status: PropTypes.object.isRequired,
+    settings: PropTypes.object.isRequired,
+    mining: PropTypes.object.isRequired,
+    actions: PropTypes.object.isRequired
+  }
+
+}
 
 function mapStateToProps (state) {
   return state;

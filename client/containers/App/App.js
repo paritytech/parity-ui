@@ -39,16 +39,17 @@ class AppContainer extends Component {
       </AnimateChildren>
     );
   }
-}
 
-AppContainer.propTypes = {
-  children: PropTypes.object.isRequired,
-  toastr: PropTypes.object.isRequired,
-  status: PropTypes.object.isRequired,
-  logger: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired,
-  actions: PropTypes.object.isRequired
-};
+  static propTypes = {
+    children: PropTypes.object.isRequired,
+    toastr: PropTypes.object.isRequired,
+    status: PropTypes.object.isRequired,
+    logger: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired,
+    actions: PropTypes.object.isRequired
+  }
+
+}
 
 function mapStateToProps (state) {
   return state;
