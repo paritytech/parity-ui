@@ -80,7 +80,11 @@ export default class StatusLine extends Web3Component {
       );
     }
 
-    if (this.state.isSyncing) {
+    const {isSyncing, latestBlock, highestBlock} = this.state;
+    // TODO [ToDr] Because eth_syncing is a bit broken now we will be checking if there
+    // is actually anything to sync before displaying the progress bar.
+    // See: https://github.com/ethcore/parity/issues/1110
+    if (isSyncing && latestBlock < highestBlock) {
       return this.renderSyncing();
     }
 
