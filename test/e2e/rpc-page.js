@@ -46,7 +46,7 @@ module.exports = {
     client.expect.element(el('Calls-empty')).to.be.visible;
     // remove icon shouldn't be rendered, and neither do any calls
     client.expect.element(el('Calls-remove')).to.not.be.present;
-    client.expect.element('[data-test*="Calls-call*"]').to.not.be.present;
+    client.expect.element('[data-test*="Call-call*"]').to.not.be.present;
   },
 
   'Assert form' (client) {
@@ -67,10 +67,10 @@ module.exports = {
     // // submit form
     client.click(button);
     // // assert response
-    client.waitForElementVisible(el('Calls-call-1'), 1000, false);
-    client.expect.element(el('Calls-call-1', '> span:nth-child(1)')).text.to.contain('#1');
-    client.expect.element(el('Calls-call-1', '> pre:nth-of-type(1)')).text.to.contain(`${method}(${valueToSet})`);
-    client.expect.element(el('Calls-call-1', '> pre:nth-of-type(2)')).text.to.contain(mckResponse);
+    client.waitForElementVisible(el('Call-call-1'), 1000, false);
+    client.expect.element(el('Call-call-1', '> span:nth-child(1)')).text.to.contain('#1');
+    client.expect.element(el('Call-call-1', '> pre:nth-of-type(1)')).text.to.contain(`${method}(${valueToSet})`);
+    client.expect.element(el('Call-call-1', '> pre:nth-of-type(2)')).text.to.contain(mckResponse);
   },
 
   after (client) {

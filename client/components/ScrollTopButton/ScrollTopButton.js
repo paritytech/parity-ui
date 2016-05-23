@@ -13,7 +13,6 @@ export default class ScrollTopButton extends Component {
   constructor (...args) {
     super(...args);
     this.state = {};
-    this.handleScroll = ::this.handleScroll;
   }
 
   componentDidMount () {
@@ -40,7 +39,7 @@ export default class ScrollTopButton extends Component {
     );
   }
 
-  handleScroll (event) {
+  handleScroll = (event) => {
     let { scrollTop } = event.srcElement.body;
     let { showScrollButton } = this.state;
 

@@ -9,7 +9,7 @@ describe('components/Calls', () => {
   describe('rendering (no calls)', () => {
     let rendered;
 
-    beforeEach(() => {
+    before(() => {
       const calls = [];
 
       rendered = shallow(<Calls calls={calls} />);
@@ -36,7 +36,7 @@ describe('components/Calls', () => {
   describe('rendering (calls supplied)', () => {
     let rendered;
 
-    beforeEach(() => {
+    before(() => {
       const calls = [
         { callNo: 0, name: 'eth_call', params: '', response: '' },
         { callNo: 1, name: 'eth_sendTransaction', params: '', response: '' }
@@ -47,7 +47,7 @@ describe('components/Calls', () => {
 
     it('renders calls', () => {
       expect(rendered.find('div[data-test="Calls-empty-wrapper"]')).to.not.exist;
-      expect(rendered.find('div.row div')).to.have.exactly(2).descendants('div[data-test]');
+      expect(rendered.find('div.row div')).to.have.exactly(2).descendants('Call');
     });
 
     it('renders the clear button', () => {

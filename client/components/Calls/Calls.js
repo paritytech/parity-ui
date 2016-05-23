@@ -1,38 +1,32 @@
-
 import React, { Component, PropTypes } from 'react';
 import AnimateChildren from '../../components-compositors/Animated/children';
+import Call from '../Call';
 import CallsToolbar from '../CallsToolbar';
-import Response from '../Response';
 import styles from './style.css';
 
 export default class Calls extends Component {
 
-  constructor (...args) {
-    super(...args);
-    this.state = {};
+  state = {
+    activeCall: null,
+    activeChild: null
   }
 
   render () {
-    let {hoveredIdx} = this.state;
-
-    const onMouseLeaveContainer = () => this.setState({hoveredIdx: null});
-    const setCallsHistory = (el) => { this._callsHistory = el; };
-
     return (
       <div
         className='calls-container'
-        onMouseLeave={onMouseLeaveContainer}
+        onMouseLeave={this.clearActiveCall}
         {...this._test('container')}
       >
         {this.renderClear()}
         <h2 className={styles.header}>History</h2>
-        <div className={`${styles.history} row`} ref={setCallsHistory}>
+        <div className={`${styles.history} row`} ref={this.setCallsHistory}>
           {this.renderNoCallsMsg()}
           {this.renderCalls()}
         </div>
         <CallsToolbar
-          call={this.props.calls[hoveredIdx]}
-          callEl={this[`call-${hoveredIdx}`]}
+          call={this.state.activeCall}
+          callEl={this.state.activeChild}
           containerEl={this._callsHistory}
           actions={this.props.actions}
         />
@@ -45,13 +39,11 @@ export default class Calls extends Component {
       return;
     }
 
-    const clearHistory = () => this.props.reset();
-
     return (
       <a
         {...this._test('remove')}
         title='Clear RPC calls history'
-        onClick={clearHistory}
+        onClick={this.clearHistory}
         className={styles.removeIcon}
         >
         <i className='icon-trash'></i>
@@ -76,43 +68,49 @@ export default class Calls extends Component {
   }
 
   renderCalls () {
-    const {calls} = this.props;
+    const { calls } = this.props;
+
     if (!calls.length) {
       return;
     }
 
-    const _calls = calls.map(
-      (c, idx) => {
-        const onMouseEnter = () => this.setState({hoveredIdx: idx});
-        const setCall = (el) => { this[`call-${idx}`] = el; };
-
-        return (
-          <div
+    return (
+      <AnimateChildren>
+        {calls.map((call, idx) => (
+          <Call
             key={calls.length - idx}
-            onMouseEnter={onMouseEnter}
-            ref={setCall}
-            className={styles.call}
-            {...this._test(`call-${c.callNo}`)}
-            >
-            <span className={styles.callNo}>#{c.callNo}</span>
-            <pre>{c.name}({c.params.toString()})</pre>
-            <Response response={c.response} />
-          </div>
-        );
-      }
+            call={call}
+            setActiveCall={this.setActiveCall}
+          />
+        ))}
+      </AnimateChildren>
     );
+  }
 
-    return <AnimateChildren>{_calls}</AnimateChildren>;
+  clearActiveCall = () => {
+    this.setState({ activeCall: null, activeElement: null });
+  }
+
+  setActiveCall = (call, el) => {
+    this.setState({ activeCall: call, activeElement: el });
+  }
+
+  setCallsHistory = (el) => {
+    this._callsHistory = el;
+  }
+
+  clearHistory = () => {
+    this.props.reset();
+  }
+
+  static propTypes = {
+    calls: PropTypes.arrayOf(PropTypes.object).isRequired,
+    actions: PropTypes.shape({
+      fireRpc: PropTypes.func.isRequired,
+      copyToClipboard: PropTypes.func.isRequired,
+      selectRpcMethod: PropTypes.func.isRequired
+    }).isRequired,
+    reset: PropTypes.func
   }
 
 }
-
-Calls.propTypes = {
-  calls: PropTypes.arrayOf(PropTypes.object).isRequired,
-  actions: PropTypes.shape({
-    fireRpc: PropTypes.func.isRequired,
-    copyToClipboard: PropTypes.func.isRequired,
-    selectRpcMethod: PropTypes.func.isRequired
-  }).isRequired,
-  reset: PropTypes.func
-};
