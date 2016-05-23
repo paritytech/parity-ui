@@ -36,12 +36,20 @@ export class Account extends Web3Component {
     const acc = this.props.address;
     const address = this.context.web3.toChecksumAddress(acc);
     return (
-      <div className={styles.account} title={address}>
+      <div className={styles.account} title={this.renderTitle(address)}>
         <Identicon seed={acc} />
         { this.renderName(address) }
         { this.renderBalance() }
       </div>
     );
+  }
+
+  renderTitle = (address) => {
+    if (this.props.name) {
+      return this.props.name + ' ' + address;
+    }
+
+    return address;
   }
 
   renderBalance () {
@@ -68,7 +76,7 @@ export class Account extends Web3Component {
     }
     return (
       <span>
-        {name}
+        <span className={styles.name}>{name}</span>
         <span className={styles.address}>[{ this.tinyAddress(address) }]</span>
       </span>
     );

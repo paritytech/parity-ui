@@ -1,4 +1,5 @@
 import './index.html';
+import styles from './inject.css';
 
 import ReactDOM from 'react-dom';
 import React from 'react';
@@ -30,12 +31,15 @@ const el = document.createElement('div');
 document.querySelector('html').appendChild(el);
 
 ReactDOM.render(
-  <Web3Provider web3={rawWeb3}>
-    <TopBar
-      interceptor={interceptor}
-      web3={web3}
-      options={options}
-      />
-  </Web3Provider>,
+  // wrapping id used to resest css, see inject.css
+  <div className={styles.reset}>
+    <Web3Provider web3={rawWeb3}>
+      <TopBar
+        interceptor={interceptor}
+        web3={web3}
+        options={options}
+        />
+    </Web3Provider>
+  </div>,
   el
 );
