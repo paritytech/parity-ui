@@ -1,4 +1,3 @@
-
 import React, { Component, PropTypes } from 'react';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import { sortBy, find, extend } from 'lodash';
@@ -17,46 +16,50 @@ const rpcMethods = sortBy(rpcData.methods, 'name');
 export default class CallsToolbar extends Component {
 
   render () {
-    const {call, callEl, containerEl} = this.props;
+    const { call, callEl, containerEl } = this.props;
+
     if (!call) {
       return null;
     }
 
-    const wrapStyle = {top: callEl.offsetTop - SCROLLBAR_WIDTH - containerEl.scrollTop};
+    const wrapStyle = { top: callEl.offsetTop - SCROLLBAR_WIDTH - containerEl.scrollTop };
     if (this.hasScrollbar(containerEl)) {
       wrapStyle.right = 13;
     }
-
-    const setCall = () => this.setCall(call);
-    const makeCall = () => this.makeCall(call);
-    const copyToClipboard = () => this.props.actions.copyToClipboard('method copied to clipboard');
 
     return (
       <div
         className={styles.callActionsWrap}
         style={wrapStyle}
         >
-        <IconButton className={styles.callActionsButton}><MoreHorizIcon /></IconButton>
-        <div className={styles.callActions}>
+        <IconButton
+          className={styles.callActionsButton}
+          {...this._test('button-more')}
+          >
+          <MoreHorizIcon />
+        </IconButton>
+        <div className={styles.callActions} {...this._test('button-container')}>
           <IconButton
             className={styles.callAction}
-            onClick={setCall}
+            onClick={this.setCall}
             tooltip='Set'
             tooltipPosition='top-left'
+            {...this._test('button-setCall')}
             >
             <InputIcon className={styles.callActionIcon} />
           </IconButton>
           <IconButton
             className={styles.callAction}
-            onClick={makeCall}
+            onClick={this.makeCall}
             tooltip='Fire again'
             tooltipPosition='top-left'
+            {...this._test('button-makeCall')}
             >
             <CallIcon className={styles.callActionIcon} />
           </IconButton>
           <CopyToClipboard
             text={JSON.stringify(call)}
-            onCopy={copyToClipboard}
+            onCopy={this.copyToClipboard}
             >
             <IconButton
               className={styles.callAction}
@@ -72,20 +75,28 @@ export default class CallsToolbar extends Component {
     );
   }
 
-  setCall (call) {
-    let method = find(rpcMethods, {name: call.name});
-    this.props.actions.selectRpcMethod(extend({}, method, {paramsValues: call.params}));
+  setCall = () => {
+    const { call } = this.props;
+    let method = find(rpcMethods, { name: call.name });
+
+    this.props.actions.selectRpcMethod(extend({}, method, { paramsValues: call.params }));
   }
 
-  makeCall (call) {
-    this.setCall(call);
-    let method = find(rpcMethods, {name: call.name});
+  makeCall = () => {
+    const { call } = this.props;
+    let method = find(rpcMethods, { name: call.name });
+
+    this.setCall();
     this.props.actions.fireRpc({
       method: method.name,
       outputFormatter: method.outputFormatter,
       inputFormatters: method.inputFormatters,
       params: call.params
     });
+  }
+
+  copyToClipboard = () => {
+    this.props.actions.copyToClipboard('method copied to clipboard');
   }
 
   hasScrollbar (el) {
