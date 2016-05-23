@@ -75,9 +75,9 @@ export default class JsonEditor extends Component {
     this.props.onChange(parsed, error);
   }
 
-}
+  static propTypes = {
+    onChange: PropTypes.func.isRequired,
+    value: PropTypes.object
+  }
 
-JsonEditor.propTypes = {
-  onChange: PropTypes.func.isRequired,
-  value: PropTypes.object
-};
+}

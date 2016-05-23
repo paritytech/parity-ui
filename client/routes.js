@@ -37,8 +37,9 @@ export default class Routes extends Component {
       </Router>
     );
   }
-}
 
-Routes.propTypes = {
-  store: PropTypes.object.isRequired
-};
+  static propTypes = {
+    store: PropTypes.object.isRequired
+  }
+
+}

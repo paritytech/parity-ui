@@ -165,13 +165,13 @@ export default class EditableValue extends Component {
     );
   }
 
-}
+  static propTypes = {
+    onSubmit: PropTypes.func.isRequired,
+    value: PropTypes.string,
+    defaultValue: PropTypes.string,
+    children: PropTypes.element,
+    autocomplete: PropTypes.bool,
+    dataSource: PropTypes.arrayOf(PropTypes.string)
+  }
 
-EditableValue.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-  value: PropTypes.string,
-  defaultValue: PropTypes.string,
-  children: PropTypes.element,
-  autocomplete: PropTypes.bool,
-  dataSource: PropTypes.arrayOf(PropTypes.string)
-};
+}

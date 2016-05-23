@@ -14,11 +14,12 @@ class DebugPage extends Component {
     return <Debug {...this.props} />;
   }
 
+  static propTypes = {
+    actions: PropTypes.object.isRequired,
+    debug: PropTypes.object.isRequired
+  }
+
 }
-DebugPage.propTypes = {
-  actions: PropTypes.object.isRequired,
-  debug: PropTypes.object.isRequired
-};
 
 function mapStateToProps (state) {
   return state;

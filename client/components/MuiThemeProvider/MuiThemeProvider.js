@@ -18,6 +18,7 @@ const muiTheme = getMuiTheme({
 });
 
 export default class WrappedMuiThemeProvider extends Component {
+
   render () {
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
@@ -27,8 +28,9 @@ export default class WrappedMuiThemeProvider extends Component {
       </MuiThemeProvider>
     );
   }
-}
 
-WrappedMuiThemeProvider.propTypes = {
-  children: PropTypes.object.isRequired
-};
+  static propTypes = {
+    children: PropTypes.object.isRequired
+  }
+
+}

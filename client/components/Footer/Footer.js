@@ -38,10 +38,11 @@ export default class Footer extends Component {
       </IconButton>
     );
   }
-}
 
-Footer.propTypes = {
-  version: PropTypes.string.isRequired,
-  logging: PropTypes.bool.isRequired,
-  updateLogging: PropTypes.func.isRequired
-};
+  static propTypes = {
+    version: PropTypes.string.isRequired,
+    logging: PropTypes.bool.isRequired,
+    updateLogging: PropTypes.func.isRequired
+  }
+
+}

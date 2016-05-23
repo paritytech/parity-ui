@@ -64,23 +64,24 @@ export default class MiningSettings extends Component {
       </div>
     );
   }
-}
 
-MiningSettings.propTypes = {
-  accounts: PropTypes.arrayOf(PropTypes.string).isRequired,
-  version: PropTypes.string.isRequired,
-  mining: PropTypes.shape({
-    author: PropTypes.string.isRequired,
-    extraData: PropTypes.string.isRequired,
-    defaultExtraData: PropTypes.string.isRequired,
-    minGasPrice: PropTypes.string.isRequired,
-    gasFloorTarget: PropTypes.string.isRequired
-  }).isRequired,
-  actions: PropTypes.shape({
-    modifyMinGasPrice: PropTypes.func.isRequired,
-    modifyAuthor: PropTypes.func.isRequired,
-    modifyGasFloorTarget: PropTypes.func.isRequired,
-    modifyExtraData: PropTypes.func.isRequired,
-    resetExtraData: PropTypes.func.isRequired
-  }).isRequired
-};
+  static propTypes = {
+    accounts: PropTypes.arrayOf(PropTypes.string).isRequired,
+    version: PropTypes.string.isRequired,
+    mining: PropTypes.shape({
+      author: PropTypes.string.isRequired,
+      extraData: PropTypes.string.isRequired,
+      defaultExtraData: PropTypes.string.isRequired,
+      minGasPrice: PropTypes.string.isRequired,
+      gasFloorTarget: PropTypes.string.isRequired
+    }).isRequired,
+    actions: PropTypes.shape({
+      modifyMinGasPrice: PropTypes.func.isRequired,
+      modifyAuthor: PropTypes.func.isRequired,
+      modifyGasFloorTarget: PropTypes.func.isRequired,
+      modifyExtraData: PropTypes.func.isRequired,
+      resetExtraData: PropTypes.func.isRequired
+    }).isRequired
+  }
+
+}
