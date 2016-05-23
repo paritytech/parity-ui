@@ -1,5 +1,7 @@
 import React from 'react';
 
+import LinearProgress from 'material-ui/LinearProgress';
+
 import {Web3Component} from '../Web3Component/Web3Component';
 import {appLink} from '../appLink';
 
@@ -12,14 +14,14 @@ export default class StatusLine extends Web3Component {
   state = {
     isReady: false,
     isSyncing: false,
-    latestBlock: '1234',
-    startingBlock: '1234',
-    highestBlock: '1234',
+    latestBlock: 1234,
+    startingBlock: 1234,
+    highestBlock: 1234,
     connectedPeers: 25,
     network: 'homestead'
   }
 
-  onTick () {
+  onTick (next) {
     const {web3} = this.context;
     const handleError = (f) => (err, data) => {
       if (err) {
@@ -27,6 +29,8 @@ export default class StatusLine extends Web3Component {
         this.setState({
           isError: true
         });
+        // Make sure to call next even if we have an error.
+        next();
         return;
       }
       this.setState({
@@ -34,8 +38,11 @@ export default class StatusLine extends Web3Component {
       });
       f(data);
     };
+
     // Syncing
     web3.eth.getSyncing(handleError(syncing => {
+      next();
+
       if (!syncing) {
         this.setState({
           isSyncing: false
@@ -45,18 +52,21 @@ export default class StatusLine extends Web3Component {
 
       this.setState({
         isSyncing: true,
-        startingBlock: syncing.startingBlock,
-        highestBlock: syncing.highestBlock
+        startingBlock: parseInt(syncing.startingBlock, 10),
+        highestBlock: parseInt(syncing.highestBlock, 10)
       });
     }));
+
     // Latest Block
     web3.eth.getBlockNumber(handleError(blockNumber => this.setState({
-      latestBlock: blockNumber
+      latestBlock: parseInt(blockNumber, 10)
     })));
+
     // peers
     web3.net.getPeerCount(handleError(peers => this.setState({
       connectedPeers: peers
     })));
+
     // network
     web3.version.getNetwork(handleError(network => this.setState({
       network: networkName(network)
@@ -101,18 +111,28 @@ export default class StatusLine extends Web3Component {
   }
 
   renderSyncing () {
-    // TOOD [ToDr] Add progress bar
-    const {latestBlock, highestBlock} = this.state;
+    const {startingBlock, latestBlock, highestBlock} = this.state;
     return (
-      <div className={styles.status}>
-        <span>
-          Syncing #{latestBlock}/{highestBlock}...
-        </span>
+      <div className={styles.status} title='Syncing...'>
+        <LinearProgress
+          style={s.progress}
+          min={startingBlock}
+          max={highestBlock}
+          value={latestBlock}
+          mode={'determinate'}
+          />
+        #{latestBlock}/{highestBlock}...
       </div>
     );
   }
-
 }
+
+const s = {
+  progress: {
+    width: '100px',
+    margin: '10px 5px'
+  }
+};
 
 function networkName (netId) {
   const networks = {
