@@ -1,8 +1,6 @@
 import React from 'react';
 
 const isProd = process.env.NODE_ENV === 'production';
-const isPerfDebug = process.env.NODE_ENV === 'perf-debug';
-const isIntegrationTests = process.env.NODE_ENV === 'tests';
 
 // Component utils for integration tests hooks.
 const TEST_HOOK = 'data-test';
@@ -20,6 +18,7 @@ function testHookInherit (name) {
     [TEST_HOOK]: hook
   };
 }
+
 function testHook (name) {
   let hook = this.constructor.name;
   if (name) {
@@ -28,13 +27,4 @@ function testHook (name) {
   return {
     [TEST_HOOK]: hook
   };
-}
-
-// Backend mocking framework
-if (isIntegrationTests) {
-  require('./fake-backend');
-}
-if (isPerfDebug) {
-  const {whyDidYouUpdate} = require('why-did-you-update');
-  whyDidYouUpdate(React);
 }
