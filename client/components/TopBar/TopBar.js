@@ -78,8 +78,7 @@ export default class TopBar extends Web3Component {
     this.setState({
       sendingTransaction: true,
       transaction: payload,
-      callbackFunc: cb,
-      sendTxFunc: next
+      callbackFunc: cb
     });
   }
 
@@ -87,8 +86,7 @@ export default class TopBar extends Web3Component {
     this.setState({
       sendingTransaction: false,
       transaction: null,
-      callbackFunc: null,
-      sendTxFunc: null
+      callbackFunc: null
     });
   }
 
@@ -97,10 +95,9 @@ export default class TopBar extends Web3Component {
     this.clearTx();
   }
 
-  confirmTransaction () {
-    this.state.sendTxFunc(() => {
-      this.clearTx();
-    });
+  confirmTransaction (err, data) {
+    this.state.callbackFunc(err, data);
+    this.clearTx();
   }
 
   changeAccount (account) {

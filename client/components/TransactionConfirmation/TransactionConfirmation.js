@@ -13,9 +13,9 @@ import styles from './styles.css';
 export class TransactionConfirmation extends Web3Component {
 
   state = {
-    unlocking: false,
+    sending: false,
     password: '',
-    passwordError: false
+    error: false
   };
 
   componentWillReceiveProps () {
@@ -42,7 +42,7 @@ export class TransactionConfirmation extends Web3Component {
   onPasswordChange (val) {
     this.setState({
       password: val.target.value,
-      passwordError: false
+      error: false
     });
   }
 
@@ -74,9 +74,9 @@ export class TransactionConfirmation extends Web3Component {
   }
 
   renderPassword (from) {
-    const { password, passwordError, unlocking } = this.state;
+    const { password, error, sending } = this.state;
 
-    if (unlocking) {
+    if (sending) {
       return (
         <div className={styles.progress}>
           <LinearProgress mode='indeterminate' />
@@ -84,13 +84,13 @@ export class TransactionConfirmation extends Web3Component {
       );
     }
 
-    const error = password ? (passwordError ? 'Invalid password.' : null) : 'Type your password.';
+    const errorMsg = password ? (error ? 'Invalid password or transaction.' : null) : 'Type your password.';
 
     return (
       <TextField
         fullWidth
         hintText={`Password for ${from}`}
-        errorText={error}
+        errorText={errorMsg}
         floatingLabelText='Unlock the account'
         type='password'
         onChange={::this.onPasswordChange}
@@ -116,45 +116,46 @@ export class TransactionConfirmation extends Web3Component {
   }
 
   confirm () {
-    const from = this.props.transaction.params[0].from;
+    const txRequest = this.props.transaction.params[0];
     const pass = this.state.password;
 
     this.setState({
-      unlocking: true,
-      passwordError: false
+      sending: true,
+      error: false
     });
 
-    this.context.web3.personal.unlockAccount(from, pass, 1, (err, ok) => {
-      if (err || !ok) {
+    this.context.web3.eth.signAndSendTransaction(txRequest, pass, (err, txHash) => {
+      // TODO [ToDr] Not sure if there is a better way to detect error
+      if (err || txHash === '0x0000000000000000000000000000000000000000000000000000000000000000') {
         this.setState({
-          unlocking: false,
-          passwordError: true
+          sending: false,
+          error: true
         });
         return;
       }
 
       this.setState({
-        unlocking: false,
+        sending: false,
         password: ''
       });
-      this.props.onConfirm();
+      this.props.onConfirm(err, txHash);
     });
   }
 
   renderDialogActions () {
-    const { unlocking, password } = this.state;
+    const { sending, password } = this.state;
     return [
       <FlatButton
         label='Abort'
         secondary
-        disabled={unlocking}
+        disabled={sending}
         onTouchTap={this.props.onAbort}
       />,
       <FlatButton
         label='Confirm'
         primary
         keyboardFocused={!!password.length}
-        disabled={!password.length || unlocking}
+        disabled={!password.length || sending}
         onTouchTap={::this.confirm}
       />
     ];

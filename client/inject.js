@@ -9,6 +9,7 @@ injectTapEventPlugin();
 
 import Web3 from 'web3';
 
+import web3extensions from './components/web3.extensions';
 import Web3Provider from './components/Web3Provider';
 import TopBar from './components/TopBar';
 import Interceptor from './components/TopBar/Interceptor';
@@ -18,6 +19,8 @@ const http = new Web3.providers.HttpProvider('/rpc/');
 const interceptor = new Interceptor(http);
 const web3 = new Web3(interceptor);
 const rawWeb3 = new Web3(http);
+rawWeb3._extend(web3extensions(rawWeb3));
+
 // expose global web3
 global.web3 = web3;
 
