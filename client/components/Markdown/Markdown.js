@@ -5,8 +5,6 @@ import styles from './style.css';
 
 export default class Marked extends Component {
 
-  state = {}
-
   render () {
     let {parsed} = this.state;
     if (!parsed) {
