@@ -7,8 +7,13 @@ export default class {
   constructor (storage) {
     this.storage = storage;
     this.ethWallet = new EthereumWalletCompatibility();
-    this.ethWallet.onAccountsNamesChanged((accounts) => {
+
+    this.ethWallet.onAccountsNamesChanged((names) => {
       this.setAccountsNames(names);
+    });
+    // Override names at start
+    this.getAccountsNames((accounts) => {
+      this.ethWallet.setAccountsNames(accounts);
     });
   }
 

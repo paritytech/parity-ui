@@ -1,7 +1,6 @@
 
 const accountPattern = /minimongo__ethereum_accounts__/;
 
-
 export default class EthereumWalletCompatibility {
 
   lastAccounts = null;
@@ -49,13 +48,13 @@ export default class EthereumWalletCompatibility {
   getAccounts () {
     return Object.keys(this.storage).filter((key) => accountPattern.test(key));
   }
-  
+
   setAccountsNames (names) {
-    this.getAccounts().map((key) => {
+    this.getAccounts().map((key, idx) => {
       try {
         const val = JSON.parse(this.storage.getItem(key));
         // modify the name
-        val.data.name = names[val.data.address]
+        val.data.name = names[val.data.address] || `Account ${idx + 1}`;
         this.storage.setItem(key, JSON.stringify(val));
       } catch (e) {
         // Just skip invalid items
