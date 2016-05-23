@@ -24,13 +24,13 @@ export default class EditableValue extends Component {
     });
   }
 
-  onChange (value) {
+  onChange = (value) => {
     this.setState({
       value: value
     });
   }
 
-  onOpenEdit (evt) {
+  onOpenEdit = (evt) => {
     this.setState({
       inEditMode: true
     });
@@ -41,21 +41,21 @@ export default class EditableValue extends Component {
     this._input.focus();
   }
 
-  onCancel (evt) {
+  onCancel = (evt) => {
     this.setState({
       inEditMode: false,
       value: this.props.value
     });
   }
 
-  onSubmit () {
+  onSubmit = () => {
     this.setState({
       inEditMode: false
     });
     this.props.onSubmit(this.state.value, false);
   }
 
-  onResetToDefault () {
+  onResetToDefault = () => {
     this.props.onSubmit(this.props.defaultValue, true);
   }
 
@@ -63,7 +63,7 @@ export default class EditableValue extends Component {
     return (
       <form
         className={`${valueStyles.valueContainer} ${style.container}`}
-        onSubmit={::this.onSubmit}
+        onSubmit={this.onSubmit}
         {...this._testInherit()}
         >
         {this.renderResetButton()}
@@ -88,7 +88,7 @@ export default class EditableValue extends Component {
           className={inEditMode ? style.input : valueStyles.value}
           type='text'
           value={value}
-          onClick={::this.onOpenEdit}
+          onClick={this.onOpenEdit}
           ref={setInput}
           onChange={onChange}
           readOnly={!inEditMode}
@@ -103,8 +103,8 @@ export default class EditableValue extends Component {
         fullWidth
         searchText={value}
         dataSource={this.props.dataSource}
-        onUpdateInput={::this.onChange}
-        onNewRequest={::this.onChange}
+        onUpdateInput={this.onChange}
+        onNewRequest={this.onChange}
         openOnFocus
         filter={AutoComplete.noFilter}
       />
@@ -124,7 +124,7 @@ export default class EditableValue extends Component {
       <a
         key={'reset'}
         className={`${style.icon} ${style.firstIcon}`}
-        onClick={::this.onResetToDefault}
+        onClick={this.onResetToDefault}
         title={`Reset to ${this.props.defaultValue}`}
         {...this._testInherit('reset')}
         >
@@ -139,7 +139,7 @@ export default class EditableValue extends Component {
         <a
           key={'submit'}
           className={style.iconSuccess}
-          onClick={::this.onSubmit}
+          onClick={this.onSubmit}
           {...this._testInherit('submit')}
           >
           <i className='icon-check'></i>
@@ -147,7 +147,7 @@ export default class EditableValue extends Component {
         <a
           key={'cancel'}
           className={style.icon}
-          onClick={::this.onCancel}
+          onClick={this.onCancel}
           {...this._testInherit('cancel')}
           >
           <i className='icon-close'></i>
@@ -159,7 +159,7 @@ export default class EditableValue extends Component {
       <a
         key={'edit'}
         className={style.icon}
-        onClick={::this.onOpenEdit}
+        onClick={this.onOpenEdit}
         title='Edit'
         {...this._testInherit('edit')}
         >

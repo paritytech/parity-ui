@@ -34,17 +34,17 @@ class Debug extends Component {
     const toggleClass = this.props.debug.logging ? 'icon-control-pause' : 'icon-control-play';
     return (
       <div className={style.actions}>
-        <a><i onClick={::this.toggle} className={toggleClass}></i></a>
-        <a><i onClick={::this.clear} className='icon-trash'></i></a>
+        <a><i onClick={this.toggle} className={toggleClass}></i></a>
+        <a><i onClick={this.clear} className='icon-trash'></i></a>
       </div>
     );
   }
 
-  clear () {
+  clear = () => {
     this.props.actions.removeDevLogs();
   }
 
-  toggle () {
+  toggle = () => {
     this.props.actions.updateDevLogging(!this.props.debug.logging);
   }
 
