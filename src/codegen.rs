@@ -13,8 +13,12 @@
 
 // You should have received a copy of the GNU General Public License
 // along with Parity.  If not, see <http://www.gnu.org/licenses/>.
-use aster;
-use glob;
+
+extern crate aster;
+extern crate quasi;
+extern crate glob;
+extern crate mime_guess;
+
 use mime_guess::guess_mime_type;
 use std::path::{Path, PathBuf};
 
