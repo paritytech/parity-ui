@@ -14,6 +14,7 @@ import {Web3Component} from '../Web3Component/Web3Component';
 import AccountsDetails from '../AccountsDetails';
 import SubdomainDialog from '../SubdomainDialog';
 import StatusLine from '../StatusLine';
+import DappNav from '../DappNav';
 
 import Storage from '../Storage';
 import {appLink} from '../appLink';
@@ -171,6 +172,7 @@ export default class TopBar extends Web3Component {
                   <ReportProblem />
                 </SubdomainDialog>
               </div>
+              <DappNav />
               <StatusLine />
             </div>
             <AccountChooser
