@@ -7,12 +7,9 @@ import valueStyles from '../Value/styles.css';
 
 export default class EditableValue extends Component {
 
-  constructor (...args) {
-    super(...args);
-    this.state = {
-      value: this.props.value,
-      inEditMode: false
-    };
+  state = {
+    value: this.props.value,
+    inEditMode: false
   }
 
   componentWillReceiveProps (newProps) {

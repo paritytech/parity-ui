@@ -5,10 +5,7 @@ import styles from './style.css';
 
 export default class Marked extends Component {
 
-  constructor (...args) {
-    super(...args);
-    this.state = {};
-  }
+  state = {}
 
   render () {
     let { parsed } = this.state;
