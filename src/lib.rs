@@ -17,7 +17,7 @@ impl WebApp for App {
   fn info(&self) -> Info {
     Info {
       name: "Identity Manager".to_owned(),
-      version: "0.3.2".to_owned(),
+      version: "0.4.0".to_owned(),
       author: "Ethcore <admin@ethcore.io>".to_owned(),
       description: "Injectable identity manager for Parity".to_owned(),
       icon_url: "icon.png".to_owned(),
