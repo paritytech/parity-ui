@@ -13,7 +13,6 @@ module.exports = {
   entry: {
     'index.app': './index.app.js',
     'inject': './inject.js',
-    'parity-utils/inject': './inject.js',
     'home': './home.js',
     'home/cols.frame': './cols.frame'
   },
@@ -113,9 +112,6 @@ module.exports = {
         target: 'http://localhost:8080'
       },
       '/api*': {
-        target: 'http://localhost:8080'
-      },
-      '/dao*': {
         target: 'http://localhost:8080'
       }
     }
