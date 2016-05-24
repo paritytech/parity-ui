@@ -75,6 +75,7 @@ fn implement_webapp(
 
   let statements = files
       .iter()
+      .filter(|path_buf| path_buf.is_file())
       .map(|path_buf| {
         let path = path_buf.as_path();
         let filename = path.file_name().and_then(|s| s.to_str()).expect("Only UTF8 paths.");
