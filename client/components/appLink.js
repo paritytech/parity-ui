@@ -9,6 +9,10 @@ export function appLink (appId) {
   return `/${appId}/`;
 }
 
+export function appPrettyLink () {
+  return `http://${window.location.pathname.replace(/\//g, '')}.${SUBDOMAIN}`;
+}
+
 export function isUsingSubdomains () {
   const host = window.location.host.toString();
   const len = host.length;

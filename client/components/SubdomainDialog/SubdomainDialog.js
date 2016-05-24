@@ -3,7 +3,7 @@ import React from 'react';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 
-import {isUsingSubdomains} from '../appLink';
+import { isUsingSubdomains, appPrettyLink } from '../appLink';
 
 import styles from './styles.css';
 
@@ -62,7 +62,7 @@ export default class SubdomainDialog extends React.Component {
         <p>
           Instead of: <code>{window.location.toString()}</code>
           <br />
-          in your address bar you would see: <code>http://home.parity/</code>
+          in your address bar you would see: <code>{appPrettyLink()}</code>
         </p>
         <h3>To configure the routing use this <code>proxy.pac</code> file:</h3>
         <a target='proxy.pac' href={proxyPacLocation}><pre>{proxyPacLocation}</pre></a>
@@ -97,6 +97,10 @@ export default class SubdomainDialog extends React.Component {
         onClick={this.close}
       />
     ];
+  }
+
+  getApp () {
+    return window.location.pathname.replace(/\//g, '');
   }
 
   static propTypes = {
