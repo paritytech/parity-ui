@@ -8,7 +8,7 @@ import './index.html';
 import './index.css';
 import '!file-loader?name=icon.png!./icon.png';
 import 'dapp-styles/dapp-styles.less';
-import './test';
+import './env-specific';
 
 import Web3 from 'web3'; // must b after ./test otherwise it breaks
 import middlewares from './middleware';

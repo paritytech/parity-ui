@@ -4,6 +4,8 @@ var path = require('path');
 
 var ENV = process.env.NODE_ENV || 'development';
 var isProd = ENV === 'production';
+var isPerfDebug = process.env.NODE_ENV === 'perf-debug';
+var isIntegrationTests = process.env.NODE_ENV === 'tests';
 
 module.exports = {
   debug: !isProd,
@@ -106,12 +108,15 @@ module.exports = {
       })
     ];
 
+    if (!isPerfDebug) {
+      plugins.push(replaceWithEmpty('perf-debug'));
+    }
+
+    if (!isIntegrationTests) {
+      plugins.push(replaceWithEmpty('integration-tests'));
+    }
+
     if (isProd) {
-      plugins.push(
-        new webpack.NormalModuleReplacementPlugin(/fake-backend/, function (result) {
-          result.request = result.request.replace(/(fake-backend)/, '$1-mock');
-        })
-      );
       plugins.push(new webpack.optimize.OccurrenceOrderPlugin(false));
       plugins.push(new webpack.optimize.DedupePlugin());
       plugins.push(new webpack.optimize.UglifyJsPlugin({
@@ -140,3 +145,10 @@ module.exports = {
     }
   }
 };
+
+function replaceWithEmpty (what) {
+  const r = new RegExp('(' + what + ')');
+  return new webpack.NormalModuleReplacementPlugin(r, function (result) {
+    result.request = result.request.replace(r, 'empty');
+  });
+}
