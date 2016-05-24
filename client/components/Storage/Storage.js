@@ -7,6 +7,7 @@ export default class {
   constructor (storage) {
     this.storage = storage;
     this.ethWallet = new EthereumWalletCompatibility();
+    this.listeners = [];
 
     this.ethWallet.onAccountsNamesChanged((names) => {
       this.setAccountsNames(names);
@@ -15,6 +16,15 @@ export default class {
     this.getAccountsNames((accounts) => {
       this.ethWallet.setAccountsNames(accounts);
     });
+  }
+
+  onAccountsNames (cb) {
+    this.getAccountsNames(cb);
+    this.listeners.push(cb);
+    return () => {
+      const idx = this.listeners.indexOf(cb);
+      this.listeners.splice(idx, 1);
+    };
   }
 
   getLastAccount (cb) {
@@ -38,6 +48,7 @@ export default class {
   setAccountsNames (names, cb) {
     this.storage.setItem('accountsNames', JSON.stringify(names), cb);
     this.ethWallet.setAccountsNames(names);
+    this.listeners.map(cb => cb(names));
   }
 
   static cols = null;

@@ -1,4 +1,5 @@
 import React from 'react';
+import isEqual from 'lodash.isequal';
 
 import AppsIcon from 'material-ui/svg-icons/navigation/apps';
 import ReportProblem from 'material-ui/svg-icons/action/report-problem';
@@ -39,9 +40,14 @@ export default class TopBar extends Web3Component {
   }
 
   componentWillMount () {
-    this.storage.getAccountsNames((accountsNames) => {
+    this.storageListener = this.storage.onAccountsNames((accountsNames) => {
+      if (isEqual(this.state.accountsNames, accountsNames)) {
+        return;
+      }
+
       this.setState({accountsNames});
     });
+
     this.listeners = [
       this.props.interceptor.intercept('eth_accounts', ::this.onEthAccounts),
       this.props.interceptor.intercept('eth_sendTransaction', ::this.onEthSendTransaction)
@@ -49,6 +55,7 @@ export default class TopBar extends Web3Component {
   }
 
   componentWillUnmount () {
+    this.storageListener();
     this.listeners.map((off) => off());
   }
 

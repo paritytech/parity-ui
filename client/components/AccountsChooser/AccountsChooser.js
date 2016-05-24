@@ -3,7 +3,7 @@ import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 import SettingsIcon from 'material-ui/svg-icons/action/settings';
 
-import {isEqual} from 'lodash';
+import isEqual from 'lodash.isequal';
 
 import {Web3Component} from '../Web3Component/Web3Component';
 import {Account} from '../Account/Account';
