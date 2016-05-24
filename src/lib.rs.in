@@ -14,9 +14,29 @@
 // You should have received a copy of the GNU General Public License
 // along with Parity.  If not, see <http://www.gnu.org/licenses/>.
 
-#[cfg(feature = "with-syntex")]
-include!(concat!(env!("OUT_DIR"), "/lib.rs"));
+extern crate parity_webapp;
 
-#[cfg(not(feature = "with-syntex"))]
-include!("lib.rs.in");
+use std::default::Default;
+use std::collections::HashMap;
+use parity_webapp::{WebApp, File, Info};
 
+#[derive(WebAppFiles)]
+pub struct App {
+  files: HashMap<&'static str, File>,
+}
+
+impl WebApp for App {
+  fn file(&self, path: &str) -> Option<&File> {
+    self.files.get(path)
+  }
+
+  fn info(&self) -> Info {
+    Info {
+      name: "Status Page",
+      version: env!("CARGO_PKG_VERSION"),
+      author: "Ethcore <admin@ethcore.io>",
+      description: "Status Page for Parity",
+      icon_url: "icon.png",
+    }
+  }
+}

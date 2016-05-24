@@ -1,9 +1,18 @@
 [package]
 description = "Status Page for Parity"
 name = "parity-status"
-version = "0.4.3"
+version = "0.5.0"
 license = "GPL-3.0"
 authors = ["Ethcore <admin@ethcore.io>"]
+build = "build.rs"
+
+[features]
+default = ["with-syntex"]
+with-syntex = ["parity-webapp/with-syntex"]
+
+[build-dependencies]
+parity-webapp = { git = "https://github.com/ethcore/parity-webapp.git", version = "0.3" }
 
 [dependencies]
-parity-webapp = { git = "https://github.com/ethcore/parity-webapp.git", version = "0.2" }
+parity-webapp = { git = "https://github.com/ethcore/parity-webapp.git", version = "0.3" }
+
