@@ -13,27 +13,43 @@
 
 // You should have received a copy of the GNU General Public License
 // along with Parity.  If not, see <http://www.gnu.org/licenses/>.
+//
 
+extern crate aster;
+extern crate quasi;
+extern crate glob;
+extern crate mime_guess;
 
-#![cfg_attr(not(feature = "with-syntex"), feature(rustc_private, plugin))]
-#![cfg_attr(not(feature = "with-syntex"), plugin(quasi_macros))]
+mod codegen;
+mod build;
 
-#[cfg(feature = "with-syntex")]
-extern crate syntex;
+pub use build::inner::build;
+use std::default::Default;
 
-#[cfg(feature = "with-syntex")]
-#[macro_use]
-extern crate syntex_syntax as syntax;
+#[derive(Clone)]
+pub struct File {
+	pub path: &'static str,
+	pub content: &'static [u8],
+	pub content_type: &'static str,
+}
 
-#[cfg(feature = "with-syntex")]
-include!(concat!(env!("OUT_DIR"), "/lib.rs"));
+#[derive(Clone, Debug)]
+pub struct Info {
+  pub name: &'static str,
+  pub version: &'static str,
+  pub author: &'static str,
+  pub description: &'static str,
+  pub icon_url: &'static str,
+}
 
-#[cfg(not(feature = "with-syntex"))]
-#[macro_use]
-extern crate syntax;
+pub trait WebApp : Default + Send + Sync {
+  fn file(&self, path: &str) -> Option<&File>;
+  fn info(&self) -> Info;
+}
 
-#[cfg(not(feature = "with-syntex"))]
-extern crate rustc_plugin;
-
-#[cfg(not(feature = "with-syntex"))]
-include!("lib.rs.in");
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn it_works() {
+    }
+}

@@ -15,25 +15,31 @@
 // along with Parity.  If not, see <http://www.gnu.org/licenses/>.
 
 
-#![cfg_attr(not(feature = "with-syntex"), feature(rustc_private, plugin))]
-#![cfg_attr(not(feature = "with-syntex"), plugin(quasi_macros))]
-
 #[cfg(feature = "with-syntex")]
-extern crate syntex;
+mod inner {
+	extern crate syntex;
+  extern crate quasi_codegen;
 
-#[cfg(feature = "with-syntex")]
-#[macro_use]
-extern crate syntex_syntax as syntax;
+	use std::env;
+	use std::path::Path;
 
-#[cfg(feature = "with-syntex")]
-include!(concat!(env!("OUT_DIR"), "/lib.rs"));
+	pub fn main() {
+		let out_dir = env::var_os("OUT_DIR").unwrap();
+		let mut registry = syntex::Registry::new();
+		quasi_codegen::register(&mut registry);
+
+		let src = Path::new("src/lib.rs.in");
+		let dst = Path::new(&out_dir).join("lib.rs");
+
+		registry.expand("", &src, &dst).unwrap();
+	}
+}
 
 #[cfg(not(feature = "with-syntex"))]
-#[macro_use]
-extern crate syntax;
+mod inner {
+	pub fn main() {}
+}
 
-#[cfg(not(feature = "with-syntex"))]
-extern crate rustc_plugin;
-
-#[cfg(not(feature = "with-syntex"))]
-include!("lib.rs.in");
+fn main() {
+	inner::main();
+}
