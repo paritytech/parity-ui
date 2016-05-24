@@ -88,11 +88,11 @@ export default class Calls extends Component {
   }
 
   clearActiveCall = () => {
-    this.setState({ activeCall: null, activeElement: null });
+    this.setState({ activeCall: null, activeChild: null });
   }
 
   setActiveCall = (call, el) => {
-    this.setState({ activeCall: call, activeElement: el });
+    this.setState({ activeCall: call, activeChild: el });
   }
 
   setCallsHistory = (el) => {
