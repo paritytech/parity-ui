@@ -86,9 +86,10 @@ fn implement_webapp(
         let path_lit = builder.expr().str(file_path);
         let mime_lit = builder.expr().str(mime_type.as_str());
         let web_path_lit = builder.expr().str(file_path_in_source);
+        let macro_id = builder.id("include_bytes!");
 
         quote_stmt!(cx, 
-          files.insert($path_lit, File { path: $path_lit, content_type: $mime_lit, content: include_bytes!($web_path_lit) });
+          files.insert($path_lit, File { path: $path_lit, content_type: $mime_lit, content: $macro_id($web_path_lit) });
         ).expect("The statement is always ok, because it just uses literals.")
       }).collect::<Vec<ast::Stmt>>();
   
