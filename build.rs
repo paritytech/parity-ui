@@ -14,9 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Parity.  If not, see <http://www.gnu.org/licenses/>.
 
-#[cfg(feature = "with-syntex")]
-include!(concat!(env!("OUT_DIR"), "/lib.rs"));
+extern crate parity_webapp;
 
-#[cfg(not(feature = "with-syntex"))]
-include!("lib.rs.in");
-
+fn main() {
+  parity_webapp::build();
+}
