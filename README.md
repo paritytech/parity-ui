@@ -2,7 +2,7 @@
 1. Clone this repository.
    
    ```bash
-   $ git clone https://github.com/tomusdrw/parity-webapp.git
+   $ git clone https://github.com/ethcore/parity-webapp.git
    ```
 1. Create a new directory for your webapp. (`./parity-myapp`)
 
@@ -24,26 +24,16 @@
   
    The `inject.js` script will create global `web3` instance with proper provider that should be used by your dapp.
 
-1. Create `./parity-myapp/Cargo.toml` with you apps details. See example here: [parity-status Cargo.toml](https://github.com/tomusdrw/parity-status/blob/master/Cargo.toml).
+1. Create `./parity-myapp/Cargo.toml` with you apps details. See example here: [parity-status Cargo.toml](https://github.com/ethcore/parity-status/blob/master/Cargo.toml).
 
    ```bash
-   $ wget https://raw.githubusercontent.com/tomusdrw/parity-status/master/Cargo.toml -O ./parity-myapp/Cargo.toml
+   $ wget https://raw.githubusercontent.com/ethcore/parity-status/master/Cargo.toml -O ./parity-myapp/Cargo.toml
+   $ wget https://raw.githubusercontent.com/ethcore/parity-status/master/build.rs -O ./parity-myapp/build.rs
+   $ wget https://raw.githubusercontent.com/ethcore/parity-status/master/src/lib.rs -O ./parity-myapp/src/lib.rs
+   $ wget https://raw.githubusercontent.com/ethcore/parity-status/master/src/lib.rs.in -O ./parity-myapp/src/lib.rs.in
    $ vim ./parity-myapp/Cargo.toml # Edit the details
+   $ vim ./parity-myapp/src/lib.rs.in # Edit the details
    ```
-
-1. Use included generator to create a rust source code of your web app.
-
-   ```bash
-   # Install dependencies
-   $ cd ./parity-webapp/generate && npm install && cd -
-   ```
-
-   ```bash
-   $ cd ./parity-myapp/src/web # You need to be in web folder
-   $ ../../../parity-webapp/generate/index.js > ../lib.rs # we assume that you have `parity-webapp` repo
-   ```
-
-   You still need to keep your files in `./parity-myapp/src/web`
 
 1. Commit the results and put it to some github repo.
 
