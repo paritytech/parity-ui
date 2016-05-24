@@ -1,10 +1,20 @@
 import {Cols} from './cols';
 import {isUsingSubdomains, appLink} from '../appLink';
+import EthereumWalletCompatibility from './eth-wallet-compat';
 
 export default class {
 
   constructor (storage) {
     this.storage = storage;
+    this.ethWallet = new EthereumWalletCompatibility();
+
+    this.ethWallet.onAccountsNamesChanged((names) => {
+      this.setAccountsNames(names);
+    });
+    // Override names at start
+    this.getAccountsNames((accounts) => {
+      this.ethWallet.setAccountsNames(accounts);
+    });
   }
 
   getLastAccount (cb) {
@@ -27,6 +37,7 @@ export default class {
 
   setAccountsNames (names, cb) {
     this.storage.setItem('accountsNames', JSON.stringify(names), cb);
+    this.ethWallet.setAccountsNames(names);
   }
 
   static cols = null;
