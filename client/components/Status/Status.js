@@ -19,7 +19,7 @@ export default class Status extends Component {
   }
 
   renderSettings () {
-    const {status, settings} = this.props;
+    const { status, settings } = this.props;
     return (
       <div {...this._test('settings')}>
         <h1><span>Network</span> settings</h1>
@@ -71,7 +71,7 @@ export default class Status extends Component {
   }
 
   render () {
-    const {status} = this.props;
+    const { status } = this.props;
     const bestBlock = formatNumber()(status.bestBlock);
     const hashrate = bytes(status.hashrate) || 0;
 

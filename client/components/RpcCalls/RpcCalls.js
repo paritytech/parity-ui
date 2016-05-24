@@ -55,7 +55,7 @@ export default class RpcCalls extends Component {
               </div>
             </div>
           </div>
-          <div style={{clear: 'both'}}></div>
+          <div style={{ clear: 'both' }}></div>
           <div className='dapp-container'>
             <div className='row'>
               <div className='col col-6 mobile-full'>
@@ -121,7 +121,7 @@ export default class RpcCalls extends Component {
     return (
       <div>
         <AutoComplete
-          style={{marginTop: 0}}
+          style={{ marginTop: 0 }}
           searchText={name}
           floatingLabelText='Method name'
           dataSource={methods}
@@ -184,11 +184,11 @@ export default class RpcCalls extends Component {
                 return (
                   <TextField
                     key={p}
-                    inputStyle={{marginTop: 0}}
+                    inputStyle={{ marginTop: 0 }}
                     fullWidth
                     hintText={p}
                     title={p}
-                    hintStyle={{maxWidth: '100%', overflow: 'hidden', whiteSpace: 'nowrap'}}
+                    hintStyle={{ maxWidth: '100%', overflow: 'hidden', whiteSpace: 'nowrap' }}
                     value={this.paramValue(p)}
                     onChange={onChange}
                     {...this._test(this.paramKey(p))}
@@ -213,11 +213,11 @@ export default class RpcCalls extends Component {
             return (
               <li key={k}>
                 <TextField
-                  inputStyle={{marginTop: 0}}
+                  inputStyle={{ marginTop: 0 }}
                   fullWidth
                   title={`${k}: ${details[k]}`}
                   hintText={`${k}: ${details[k]}`}
-                  hintStyle={{maxWidth: '100%', overflow: 'hidden', whiteSpace: 'nowrap'}}
+                  hintStyle={{ maxWidth: '100%', overflow: 'hidden', whiteSpace: 'nowrap' }}
                   value={this.paramValue(`${description}.${k}`)}
                   onChange={onChange}
                   {...this._test(this.paramKey(k))}
@@ -245,7 +245,7 @@ export default class RpcCalls extends Component {
     if (!this.state.jsonMode) {
       this.setJsonEditorValue();
     }
-    this.setState({jsonMode: !this.state.jsonMode});
+    this.setState({ jsonMode: !this.state.jsonMode });
   }
 
   renderJsonForm () {

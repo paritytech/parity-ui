@@ -27,7 +27,7 @@ function mapStateToProps (state) {
 
 function mapDispatchToProps (dispatch) {
   return {
-    actions: bindActionCreators(extend({}, debugActions, {updateLogging}), dispatch)
+    actions: bindActionCreators(extend({}, debugActions, { updateLogging }), dispatch)
   };
 }
 

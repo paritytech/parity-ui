@@ -34,7 +34,7 @@ function mapStateToProps (state) {
 
 function mapDispatchToProps (dispatch) {
   return {
-    actions: bindActionCreators(extend({}, RpcActions, {copyToClipboard}, {updateLogging}), dispatch)
+    actions: bindActionCreators(extend({}, RpcActions, { copyToClipboard }, { updateLogging }), dispatch)
   };
 }
 

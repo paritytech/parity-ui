@@ -1,5 +1,5 @@
 
-import {handleActions} from 'redux-actions';
+import { handleActions } from 'redux-actions';
 import rpcMetods from '../data/rpc.json';
 
 const initialState = {

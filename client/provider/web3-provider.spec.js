@@ -1,5 +1,5 @@
 import sinon from 'sinon';
-import {Web3Provider} from './web3-provider';
+import { Web3Provider } from './web3-provider';
 import * as StatusActions from '../actions/status';
 
 describe('WEB3 PROVIDER', () => {
