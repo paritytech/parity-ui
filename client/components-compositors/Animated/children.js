@@ -37,11 +37,12 @@ export default class AnimateChildren extends Component {
 
     return children;
   }
-}
 
-AnimateChildren.propTypes = {
-  children: PropTypes.any.isRequired,
-  pathname: PropTypes.string,
-  isView: PropTypes.bool,
-  absolute: PropTypes.bool
-};
+  static propTypes = {
+    children: PropTypes.any.isRequired,
+    pathname: PropTypes.string,
+    isView: PropTypes.bool,
+    absolute: PropTypes.bool
+  }
+
+}

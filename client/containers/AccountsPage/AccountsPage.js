@@ -3,6 +3,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 class AccountsPage extends Component {
+
   render () {
     return (
       <div className='dapp-flex-content'>
@@ -12,12 +13,13 @@ class AccountsPage extends Component {
       </div>
     );
   }
+
+  static propTypes = {
+    logger: PropTypes.object.isRequired,
+    actions: PropTypes.object.isRequired,
+    status: PropTypes.object.isRequired
+  }
 }
-AccountsPage.propTypes = {
-  logger: PropTypes.object.isRequired,
-  actions: PropTypes.object.isRequired,
-  status: PropTypes.object.isRequired
-};
 
 function mapStateToProps (state) {
   return state;

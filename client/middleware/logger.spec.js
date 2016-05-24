@@ -19,7 +19,7 @@ describe('MIDDLEWARE: LOGGER', () => {
       // given
       const store = { getState: () => state };
       const next = sinon.spy();
-      const action = {type: 'test action'};
+      const action = { type: 'test action' };
       const middleware = logger(store)(next);
       expect(middleware).to.be.a('function');
       expect(action).to.be.an('object');
@@ -36,7 +36,7 @@ describe('MIDDLEWARE: LOGGER', () => {
       // given
       const store = { getState: () => state };
       const next = sinon.spy();
-      const action = {type: 'test error action'};
+      const action = { type: 'test error action' };
       const middleware = logger(store)(next);
       expect(middleware).to.be.a('function');
       expect(action).to.be.an('object');

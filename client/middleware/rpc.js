@@ -18,7 +18,7 @@ export default class RpcMiddleware {
         return next(action);
       }
 
-      const {method, inputFormatters, outputFormatter, params} = action.payload;
+      const { method, inputFormatters, outputFormatter, params } = action.payload;
       const formattedParams = rpcProvider.formatParams(params, inputFormatters);
 
       if (hasErrors(formattedParams)) {

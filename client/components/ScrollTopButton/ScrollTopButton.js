@@ -3,17 +3,14 @@ import React, { Component } from 'react';
 import IconButton from 'material-ui/IconButton';
 import ArrowUpwardIcon from 'material-ui/svg-icons/navigation/arrow-upward';
 
-import {scrollTo} from './util';
+import { scrollTo } from './util';
 import styles from './style.css';
 
 const scrollTopThreshold = 600;
 
 export default class ScrollTopButton extends Component {
 
-  constructor (...args) {
-    super(...args);
-    this.state = {};
-  }
+  state = {}
 
   componentDidMount () {
     window.addEventListener('scroll', this.handleScroll);

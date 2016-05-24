@@ -1,4 +1,4 @@
-import {decodeExtraData} from './decodeExtraData';
+import { decodeExtraData } from './decodeExtraData';
 
 describe('MINING SETTINGS', () => {
   describe('EXTRA DATA', () => {

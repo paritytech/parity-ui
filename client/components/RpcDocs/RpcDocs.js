@@ -31,7 +31,7 @@ class RpcDocs extends Component {
               </div>
             </div>
           </div>
-          <div style={{clear: 'both'}}></div>
+          <div style={{ clear: 'both' }}></div>
           <div className='dapp-container'>
             <div className='row'>
               <div className='col col-12'>

@@ -1,5 +1,5 @@
 import sinon from 'sinon/pkg/sinon';
-import mockedResponses from '../../test/mocked-responses.json';
+import mockedResponses from '../../../test/mocked-responses.json';
 
 class FakeRpcServer {
   constructor () {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import '../../test';
+import '../../env-specific/tests';
 
 import Response from './Response';
 

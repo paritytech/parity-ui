@@ -2,15 +2,15 @@ import React, { Component, PropTypes } from 'react';
 
 import formatNumber from 'format-number';
 import EditableValue from '../EditableValue';
-import {numberFromString} from './numberFromString';
-import {decodeExtraData} from './decodeExtraData';
+import { numberFromString } from './numberFromString';
+import { decodeExtraData } from './decodeExtraData';
 
 const toNiceNumber = formatNumber();
 
 export default class MiningSettings extends Component {
 
   render () {
-    const {mining, actions} = this.props;
+    const { mining, actions } = this.props;
 
     let onMinGasPriceChange = (newVal) => {
       actions.modifyMinGasPrice(numberFromString(newVal));
@@ -64,23 +64,24 @@ export default class MiningSettings extends Component {
       </div>
     );
   }
-}
 
-MiningSettings.propTypes = {
-  accounts: PropTypes.arrayOf(PropTypes.string).isRequired,
-  version: PropTypes.string.isRequired,
-  mining: PropTypes.shape({
-    author: PropTypes.string.isRequired,
-    extraData: PropTypes.string.isRequired,
-    defaultExtraData: PropTypes.string.isRequired,
-    minGasPrice: PropTypes.string.isRequired,
-    gasFloorTarget: PropTypes.string.isRequired
-  }).isRequired,
-  actions: PropTypes.shape({
-    modifyMinGasPrice: PropTypes.func.isRequired,
-    modifyAuthor: PropTypes.func.isRequired,
-    modifyGasFloorTarget: PropTypes.func.isRequired,
-    modifyExtraData: PropTypes.func.isRequired,
-    resetExtraData: PropTypes.func.isRequired
-  }).isRequired
-};
+  static propTypes = {
+    accounts: PropTypes.arrayOf(PropTypes.string).isRequired,
+    version: PropTypes.string.isRequired,
+    mining: PropTypes.shape({
+      author: PropTypes.string.isRequired,
+      extraData: PropTypes.string.isRequired,
+      defaultExtraData: PropTypes.string.isRequired,
+      minGasPrice: PropTypes.string.isRequired,
+      gasFloorTarget: PropTypes.string.isRequired
+    }).isRequired,
+    actions: PropTypes.shape({
+      modifyMinGasPrice: PropTypes.func.isRequired,
+      modifyAuthor: PropTypes.func.isRequired,
+      modifyGasFloorTarget: PropTypes.func.isRequired,
+      modifyExtraData: PropTypes.func.isRequired,
+      resetExtraData: PropTypes.func.isRequired
+    }).isRequired
+  }
+
+}
