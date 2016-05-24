@@ -15,11 +15,10 @@
 // along with Parity.  If not, see <http://www.gnu.org/licenses/>.
 
 extern crate aster;
-extern crate quasi;
 extern crate glob;
 extern crate mime_guess;
 
-use mime_guess::guess_mime_type;
+use self::mime_guess::guess_mime_type;
 use std::path::{Path, PathBuf};
 
 use syntax::ast::{MetaItem, Item};
