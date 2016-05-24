@@ -1,5 +1,5 @@
 
-import {Web3Base} from '../provider/web3-base';
+import { Web3Base } from '../provider/web3-base';
 
 export default class WebInteractions extends Web3Base {
 

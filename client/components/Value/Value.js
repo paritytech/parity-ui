@@ -21,9 +21,10 @@ export default class Value extends Component {
       </div>
     );
   }
-}
 
-Value.propTypes = {
-  value: PropTypes.any,
-  children: PropTypes.element
-};
+  static propTypes = {
+    value: PropTypes.any,
+    children: PropTypes.element
+  }
+
+}

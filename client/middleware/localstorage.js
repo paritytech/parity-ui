@@ -1,6 +1,6 @@
 
 import localStore from 'store';
-import {syncRpcStateFromLocalStorage} from '../actions/localstorage';
+import { syncRpcStateFromLocalStorage } from '../actions/localstorage';
 import rpcMetods from '../data/rpc.json';
 
 export default class localStorageMiddleware {

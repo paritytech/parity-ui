@@ -1,5 +1,5 @@
 
-import {Link} from 'react-router';
+import { Link } from 'react-router';
 import React, { Component, PropTypes } from 'react';
 
 import style from './styles.css';
@@ -7,7 +7,7 @@ import style from './styles.css';
 export default class Header extends Component {
 
   renderErrors () {
-    const {disconnected} = this.props;
+    const { disconnected } = this.props;
     const hasErrors = this.props.noOfErrors > 0;
     if (!disconnected && !hasErrors) {
       return;
@@ -62,7 +62,7 @@ export default class Header extends Component {
                 <span>Debug</span>
               </Link>
             </li>
-            <li style={{display: 'none'}}>
+            <li style={{ display: 'none' }}>
               <Link to={'/accounts'} activeClassName='active' {...this._test('accounts-link')}>
                 <i className='icon-users'></i>
                 <span>Accounts</span>
@@ -74,10 +74,10 @@ export default class Header extends Component {
     );
   }
 
-}
+  static propTypes = {
+    nodeName: PropTypes.string.isRequired,
+    noOfErrors: PropTypes.number.isRequired,
+    disconnected: PropTypes.bool
+  }
 
-Header.propTypes = {
-  nodeName: PropTypes.string.isRequired,
-  noOfErrors: PropTypes.number.isRequired,
-  disconnected: PropTypes.bool
-};
+}

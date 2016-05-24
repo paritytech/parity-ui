@@ -3,7 +3,7 @@ import React, { Component, PropTypes } from 'react';
 
 import style from './style.css';
 
-class Debug extends Component {
+export default class Debug extends Component {
 
   render () {
     return (
@@ -48,24 +48,22 @@ class Debug extends Component {
     this.props.actions.updateDevLogging(!this.props.debug.logging);
   }
 
+  static propTypes = {
+    actions: PropTypes.shape({
+      removeDevLogs: PropTypes.func.isRequired,
+      updateDevLogging: PropTypes.func.isRequired
+    }).isRequired,
+    debug: PropTypes.shape({
+      levels: PropTypes.string.isRequired,
+      logging: PropTypes.bool.isRequired,
+      logs: PropTypes.arrayOf(PropTypes.string).isRequired
+    }).isRequired,
+    status: PropTypes.shape({
+      name: PropTypes.string,
+      bestBlock: PropTypes.string.isRequired,
+      hashrate: PropTypes.string.isRequired,
+      peers: PropTypes.number.isRequired
+    }).isRequired
+  }
+
 }
-
-Debug.propTypes = {
-  actions: PropTypes.shape({
-    removeDevLogs: PropTypes.func.isRequired,
-    updateDevLogging: PropTypes.func.isRequired
-  }).isRequired,
-  debug: PropTypes.shape({
-    levels: PropTypes.string.isRequired,
-    logging: PropTypes.bool.isRequired,
-    logs: PropTypes.arrayOf(PropTypes.string).isRequired
-  }).isRequired,
-  status: PropTypes.shape({
-    name: PropTypes.string,
-    bestBlock: PropTypes.string.isRequired,
-    hashrate: PropTypes.string.isRequired,
-    peers: PropTypes.number.isRequired
-  }).isRequired
-};
-
-export default Debug;

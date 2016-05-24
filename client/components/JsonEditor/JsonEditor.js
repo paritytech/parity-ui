@@ -20,11 +20,11 @@ export default class JsonEditor extends Component {
   }
 
   componentWillReceiveProps (nextProps) {
-    let {value} = nextProps;
+    let { value } = nextProps;
 
     if (!isEqual(value, this.props.value)) {
       value = formatJson.plain(value);
-      this.setState({value});
+      this.setState({ value });
     }
   }
 
@@ -44,7 +44,7 @@ export default class JsonEditor extends Component {
   }
 
   renderError () {
-    const {error} = this.state;
+    const { error } = this.state;
     if (!error) {
       return;
     }
@@ -55,7 +55,7 @@ export default class JsonEditor extends Component {
   }
 
   onChange = (evt) => {
-    const {value} = evt.target;
+    const { value } = evt.target;
     let parsed;
     let error;
 
@@ -75,9 +75,9 @@ export default class JsonEditor extends Component {
     this.props.onChange(parsed, error);
   }
 
-}
+  static propTypes = {
+    onChange: PropTypes.func.isRequired,
+    value: PropTypes.object
+  }
 
-JsonEditor.propTypes = {
-  onChange: PropTypes.func.isRequired,
-  value: PropTypes.object
-};
+}

@@ -1,11 +1,11 @@
-import React from 'react';
+import { Component } from 'react';
 
 const isProd = process.env.NODE_ENV === 'production';
 
 // Component utils for integration tests hooks.
 const TEST_HOOK = 'data-test';
-React.Component.prototype._test = isProd ? noop : testHook;
-React.Component.prototype._testInherit = isProd ? noop : testHookInherit;
+Component.prototype._test = isProd ? noop : testHook;
+Component.prototype._testInherit = isProd ? noop : testHookInherit;
 
 function noop (name) {}
 

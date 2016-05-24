@@ -14,11 +14,12 @@ class DebugPage extends Component {
     return <Debug {...this.props} />;
   }
 
+  static propTypes = {
+    actions: PropTypes.object.isRequired,
+    debug: PropTypes.object.isRequired
+  }
+
 }
-DebugPage.propTypes = {
-  actions: PropTypes.object.isRequired,
-  debug: PropTypes.object.isRequired
-};
 
 function mapStateToProps (state) {
   return state;
@@ -26,7 +27,7 @@ function mapStateToProps (state) {
 
 function mapDispatchToProps (dispatch) {
   return {
-    actions: bindActionCreators(extend({}, debugActions, {updateLogging}), dispatch)
+    actions: bindActionCreators(extend({}, debugActions, { updateLogging }), dispatch)
   };
 }
 

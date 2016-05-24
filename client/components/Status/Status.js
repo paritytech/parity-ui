@@ -7,7 +7,7 @@ import style from './style.css';
 import Value from '../Value';
 import MiningSettings from '../MiningSettings';
 
-class Status extends Component {
+export default class Status extends Component {
 
   renderNodeName () {
     const { status } = this.props;
@@ -19,7 +19,7 @@ class Status extends Component {
   }
 
   renderSettings () {
-    const {status, settings} = this.props;
+    const { status, settings } = this.props;
     return (
       <div {...this._test('settings')}>
         <h1><span>Network</span> settings</h1>
@@ -71,7 +71,7 @@ class Status extends Component {
   }
 
   render () {
-    const {status} = this.props;
+    const { status } = this.props;
     const bestBlock = formatNumber()(status.bestBlock);
     const hashrate = bytes(status.hashrate) || 0;
 
@@ -109,27 +109,25 @@ class Status extends Component {
     );
   }
 
+  static propTypes = {
+    mining: PropTypes.object.isRequired,
+    settings: PropTypes.shape({
+      chain: PropTypes.string.isRequired,
+      networkPort: PropTypes.number.isRequired,
+      maxPeers: PropTypes.number.isRequired,
+      rpcEnabled: PropTypes.bool.isRequired,
+      rpcInterface: PropTypes.string.isRequired,
+      rpcPort: PropTypes.number.isRequired
+    }).isRequired,
+    status: PropTypes.shape({
+      name: PropTypes.string,
+      version: PropTypes.string.isRequired,
+      bestBlock: PropTypes.string.isRequired,
+      hashrate: PropTypes.string.isRequired,
+      accounts: PropTypes.arrayOf(PropTypes.string).isRequired,
+      peers: PropTypes.number.isRequired
+    }).isRequired,
+    actions: PropTypes.object.isRequired
+  }
+
 }
-
-Status.propTypes = {
-  mining: PropTypes.object.isRequired,
-  settings: PropTypes.shape({
-    chain: PropTypes.string.isRequired,
-    networkPort: PropTypes.number.isRequired,
-    maxPeers: PropTypes.number.isRequired,
-    rpcEnabled: PropTypes.bool.isRequired,
-    rpcInterface: PropTypes.string.isRequired,
-    rpcPort: PropTypes.number.isRequired
-  }).isRequired,
-  status: PropTypes.shape({
-    name: PropTypes.string,
-    version: PropTypes.string.isRequired,
-    bestBlock: PropTypes.string.isRequired,
-    hashrate: PropTypes.string.isRequired,
-    accounts: PropTypes.arrayOf(PropTypes.string).isRequired,
-    peers: PropTypes.number.isRequired
-  }).isRequired,
-  actions: PropTypes.object.isRequired
-};
-
-export default Status;

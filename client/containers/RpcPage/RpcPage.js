@@ -20,6 +20,12 @@ class RpcPage extends Component {
     );
   }
 
+  static propTypes = {
+    children: PropTypes.object.isRequired,
+    rpc: PropTypes.object.isRequired,
+    actions: PropTypes.object.isRequired
+  }
+
 }
 
 function mapStateToProps (state) {
@@ -28,15 +34,9 @@ function mapStateToProps (state) {
 
 function mapDispatchToProps (dispatch) {
   return {
-    actions: bindActionCreators(extend({}, RpcActions, {copyToClipboard}, {updateLogging}), dispatch)
+    actions: bindActionCreators(extend({}, RpcActions, { copyToClipboard }, { updateLogging }), dispatch)
   };
 }
-
-RpcPage.propTypes = {
-  children: PropTypes.object.isRequired,
-  rpc: PropTypes.object.isRequired,
-  actions: PropTypes.object.isRequired
-};
 
 export default connect(
   mapStateToProps,

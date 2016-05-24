@@ -22,10 +22,11 @@ export default class Box extends Component {
       </div>
     );
   }
-}
 
-Box.propTypes = {
-  title: PropTypes.string.isRequired,
-  value: PropTypes.string,
-  children: PropTypes.element
-};
+  static propTypes = {
+    title: PropTypes.string.isRequired,
+    value: PropTypes.string,
+    children: PropTypes.element
+  }
+
+}

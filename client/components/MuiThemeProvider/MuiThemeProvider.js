@@ -5,7 +5,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 // http://stackoverflow.com/a/34015469/988941
 injectTapEventPlugin();
 
-import {deepOrange500} from 'material-ui/styles/colors';
+import { deepOrange500 } from 'material-ui/styles/colors';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
@@ -18,6 +18,7 @@ const muiTheme = getMuiTheme({
 });
 
 export default class WrappedMuiThemeProvider extends Component {
+
   render () {
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
@@ -27,8 +28,9 @@ export default class WrappedMuiThemeProvider extends Component {
       </MuiThemeProvider>
     );
   }
-}
 
-WrappedMuiThemeProvider.propTypes = {
-  children: PropTypes.object.isRequired
-};
+  static propTypes = {
+    children: PropTypes.object.isRequired
+  }
+
+}
