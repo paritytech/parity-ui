@@ -8,6 +8,7 @@ import {Web3Component} from '../Web3Component/Web3Component';
 import {Identicon} from '../Identicon/Identicon';
 
 import styles from './styles.css';
+import resetStyles from '../../reset.css';
 
 export default class AccountDetails extends Web3Component {
 
@@ -30,6 +31,7 @@ export default class AccountDetails extends Web3Component {
         title='Account Details'
         actions={this.renderDialogActions()}
         open={open}
+        className={resetStyles.reset}
         autoScrollBodyContent
         onRequestClose={::this.onCancel}
         >

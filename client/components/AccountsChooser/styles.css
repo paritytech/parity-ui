@@ -10,6 +10,6 @@
   vertical-align: -7px;
 }
 .accounts {
-  width: 350px;
+  max-width: 350px;
   text-align: left;
 }

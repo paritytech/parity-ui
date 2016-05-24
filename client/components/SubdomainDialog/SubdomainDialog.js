@@ -6,6 +6,7 @@ import FlatButton from 'material-ui/FlatButton';
 import { isUsingSubdomains, appPrettyLink } from '../appLink';
 
 import styles from './styles.css';
+import resetStyles from '../../reset.css';
 
 export default class SubdomainDialog extends React.Component {
 
@@ -42,6 +43,7 @@ export default class SubdomainDialog extends React.Component {
         </a>
         <Dialog
           title='Proxy configuration'
+          className={resetStyles.reset}
           actions={this.renderDialogActions()}
           onRequestClose={this.close}
           open={isOpen}
