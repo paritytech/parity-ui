@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/ethcore/parity-dapps-rs.svg?branch=master)](https://travis-ci.org/ethcore/parity-dapps-rs)
 # How to create parity webapplication.
 1. Clone this repository.
    
