@@ -101,10 +101,6 @@ export default class SubdomainDialog extends React.Component {
     ];
   }
 
-  getApp () {
-    return window.location.pathname.replace(/\//g, '');
-  }
-
   static propTypes = {
     children: React.PropTypes.element.isRequired
   };

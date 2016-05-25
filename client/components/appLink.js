@@ -10,11 +10,11 @@ export function appLink (appId) {
 }
 
 export function appPrettyLink () {
-  return getAppFromWindow() + SUBDOMAIN;
+  return window.location.protocol + '://' + getAppFromWindow() + SUBDOMAIN;
 }
 
 function getAppFromWindow () {
-  return `http://${window.location.pathname.replace(/\//g, '')}`;
+  return window.location.pathname.replace(/\//g, '');
 }
 
 export function isUsingSubdomains () {
