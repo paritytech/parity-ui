@@ -1,6 +1,6 @@
 [package]
 description = "Ethereum Wallet Ðapp for Parity"
-name = "parity-wallet"
+name = "parity-dapps-wallet"
 version = "0.5.0"
 license = "GPL-3.0"
 authors = ["Alexander Van de Sande <alex.vandesande@ethdev.com>", "Fabian Vogelsteller <fabian.vogelsteller@gmail.com>"]
@@ -8,11 +8,11 @@ build = "build.rs"
 
 [features]
 default = ["with-syntex"]
-with-syntex = ["parity-webapp/with-syntex"]
+with-syntex = ["parity-dapps/with-syntex"]
 
 [build-dependencies]
-parity-webapp = { git = "https://github.com/ethcore/parity-webapp.git", version = "0.3" }
+parity-dapps = { git = "https://github.com/ethcore/parity-dapps-rs.git", version = "0.3" }
 
 [dependencies]
-parity-webapp = { git = "https://github.com/ethcore/parity-webapp.git", version = "0.3" }
+parity-dapps = { git = "https://github.com/ethcore/parity-dapps-rs.git", version = "0.3" }
 
