@@ -1,6 +1,6 @@
 [package]
-description = "Base Package for all parity webapplications"
-name = "parity-webapp"
+description = "Base Package for all parity dapps"
+name = "parity-dapps"
 version = "0.3.0"
 license = "GPL-3.0"
 authors = ["Ethcore <admin@ethcore.io"]
