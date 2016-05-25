@@ -31,7 +31,18 @@ export default class Call extends Component {
   }
 
   formatParams (params) {
-    return JSON.stringify(params).slice(1, -1);
+    return params.reduce((str, p) => {
+      if (str !== '') {
+        str += ', ';
+      }
+      if (p === undefined) {
+        return str;
+      }
+      if (typeof p === 'object' || typeof p === 'string') {
+        p = JSON.stringify(p);
+      }
+      return str + p;
+    }, '');
   }
 
   static propTypes = {
