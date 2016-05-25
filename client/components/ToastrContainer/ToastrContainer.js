@@ -2,7 +2,7 @@
 import React, { Component, PropTypes } from 'react';
 import Paper from 'material-ui/Paper';
 
-import styles from './styles.css';
+import styles from './ToastrContainer.css';
 
 export default class ToastrContainer extends Component {
 

@@ -1,23 +1,23 @@
 import React, { Component, PropTypes } from 'react';
 
 import Response from '../Response';
-import styles from './style.css';
+import styles from './Call.css';
 
 export default class Call extends Component {
 
   render () {
-    const { call } = this.props;
-
+    let { callNo, name, params, response } = this.props.call;
+    params = this.formatParams(params);
     return (
       <div
         onMouseEnter={this.setActiveCall}
         ref={this.setElement}
         className={styles.call}
-        {...this._test(`call-${call.callNo}`)}
+        {...this._test(`call-${callNo}`)}
         >
-        <span className={styles.callNo} {...this._test('callNo')}>#{call.callNo}</span>
-        <pre {...this._test('name')}>{call.name}({call.params.toString()})</pre>
-        <Response response={call.response} />
+        <span className={styles.callNo} {...this._test('callNo')}>#{callNo}</span>
+        <pre {...this._test('name')}>{name}({params})</pre>
+        <Response response={response} />
       </div>
     );
   }
@@ -28,6 +28,21 @@ export default class Call extends Component {
 
   setActiveCall = () => {
     this.props.setActiveCall(this.props.call, this.element);
+  }
+
+  formatParams (params) {
+    return params.reduce((str, p) => {
+      if (str !== '') {
+        str += ', ';
+      }
+      if (p === undefined) {
+        return str;
+      }
+      if (typeof p === 'object' || typeof p === 'string') {
+        p = JSON.stringify(p);
+      }
+      return str + p;
+    }, '');
   }
 
   static propTypes = {

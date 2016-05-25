@@ -4,7 +4,7 @@ import IconButton from 'material-ui/IconButton';
 import ArrowUpwardIcon from 'material-ui/svg-icons/navigation/arrow-upward';
 
 import { scrollTo } from './util';
-import styles from './style.css';
+import styles from './ScrollTopButton.css';
 
 const scrollTopThreshold = 600;
 

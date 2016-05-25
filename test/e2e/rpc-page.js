@@ -20,23 +20,10 @@ module.exports = {
   'Assert inner nav' (client) {
     const callsLink = el('RpcNav-rpc-calls-link');
     const docsLink = el('RpcNav-rpc-docs-link');
-    // calls link active, rest not
-    client.expect.element(callsLink).to.have.attribute('class').contain('activeNav');
-    client.expect.element(docsLink).to.not.have.attribute('class').contain('activeNav');
-    // navigate to docs
     client.click(docsLink);
     client.assert.urlContains('rpc/docs');
-    // docs link active, rest not
-    client.expect.element(docsLink).to.have.attribute('class').contain('activeNav');
-    client.expect.element(callsLink).to.not.have.attribute('class').contain('activeNav');
-    // // navigate back
     client.click(callsLink);
     client.assert.urlContains('rpc/calls');
-    // calls link active, rest not
-    client.expect.element(callsLink).to.have.attribute('class').contain('activeNav');
-    // dockLink has class attribute set to undefined. nightwatch doesn't handle it
-    // todo [adgo] - submit pr/issue to nightwatch and uncomments
-    // client.expect.element(docsLink).to.not.have.attribute('class').contain('activeNav');
   },
 
   'Assert call history when there are no calls' (client) {

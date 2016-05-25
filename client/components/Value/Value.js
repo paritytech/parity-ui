@@ -1,7 +1,7 @@
 
 import React, { Component, PropTypes } from 'react';
 
-import styles from './styles.css';
+import styles from './Value.css';
 
 export default class Value extends Component {
 

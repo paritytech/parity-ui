@@ -3,7 +3,7 @@ import React, { Component, PropTypes } from 'react';
 import IconButton from 'material-ui/IconButton';
 import IconEventNote from 'material-ui/svg-icons/notification/event-note';
 
-import styles from './styles.css';
+import styles from './Footer.css';
 
 export default class Footer extends Component {
 

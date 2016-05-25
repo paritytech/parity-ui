@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import AnimateChildren from '../../components-compositors/Animated/children';
 import Call from '../Call';
 import CallsToolbar from '../CallsToolbar';
-import styles from './style.css';
+import styles from './Calls.css';
 
 export default class Calls extends Component {
 
