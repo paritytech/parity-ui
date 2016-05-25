@@ -2,6 +2,7 @@ import React from 'react';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 import SettingsIcon from 'material-ui/svg-icons/action/settings';
+import AddIcon from 'material-ui/svg-icons/content/add';
 
 import isEqual from 'lodash.isequal';
 
@@ -85,6 +86,12 @@ export class AccountChooser extends Web3Component {
           ))}
         </DropDownMenu>
         { settings }
+        <a
+          onClick={this.props.onOpenCreateAccount}
+          title='Create Account'
+          >
+          <AddIcon />
+        </a>
       </div>
     );
   }
@@ -93,7 +100,8 @@ export class AccountChooser extends Web3Component {
     accountsNames: React.PropTypes.object.isRequired,
     onChange: React.PropTypes.func.isRequired,
     onAllAccounts: React.PropTypes.func.isRequired,
-    onOpenDetails: React.PropTypes.func
+    onOpenDetails: React.PropTypes.func,
+    onOpenCreateAccount: React.PropTypes.func
   };
 
 }

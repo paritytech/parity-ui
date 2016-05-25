@@ -13,6 +13,7 @@ import {AccountChooser} from '../AccountsChooser/AccountsChooser';
 import {Web3Component} from '../Web3Component/Web3Component';
 import AccountsDetails from '../AccountsDetails';
 import SubdomainDialog from '../SubdomainDialog';
+import CreateAccount from '../CreateAccount';
 import StatusLine from '../StatusLine';
 
 import Storage from '../Storage';
@@ -192,9 +193,21 @@ export default class TopBar extends Web3Component {
             onAbort={::this.abortTransaction}
             onConfirm={::this.confirmTransaction}
             />
+          <CreateAccount
+            open={this.state.createAccountOpen}
+            onClose={this.closeCreateAccount}
+          />
         </div>
       </MuiThemeProvider>
     );
+  }
+
+  closeCreateAccount = () => {
+    this.setState({ createAccountOpen: false });
+  }
+
+  openCreateAccount = () => {
+    this.setState({ createAccountOpen: true });
   }
 
   forceNavigation = () => {
