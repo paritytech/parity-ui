@@ -1,10 +1,10 @@
 import React from 'react';
 
-import styles from './styles.css';
+import styles from './Identicon.css';
 
 import * as blockies from 'exports?blockies!blockies/blockies';
 
-export class Identicon extends React.Component {
+export default class Identicon extends React.Component {
 
   state = {
     src: ''

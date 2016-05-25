@@ -8,9 +8,9 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 const muiTheme = getMuiTheme({});
 
-import {TransactionConfirmation} from '../TransactionConfirmation/TransactionConfirmation';
-import {AccountChooser} from '../AccountsChooser/AccountsChooser';
-import {Web3Component} from '../Web3Component/Web3Component';
+import TransactionConfirmation from '../TransactionConfirmation';
+import AccountChooser from '../AccountsChooser';
+import Web3Component from '../Web3Component';
 import AccountsDetails from '../AccountsDetails';
 import SubdomainDialog from '../SubdomainDialog';
 import StatusLine from '../StatusLine';
@@ -18,7 +18,7 @@ import StatusLine from '../StatusLine';
 import Storage from '../Storage';
 import {appLink} from '../appLink';
 
-import styles from './styles.css';
+import styles from './TopBar.css';
 
 export default class TopBar extends Web3Component {
 

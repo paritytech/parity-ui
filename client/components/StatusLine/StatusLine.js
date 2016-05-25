@@ -2,10 +2,10 @@ import React from 'react';
 
 import LinearProgress from 'material-ui/LinearProgress';
 
-import {Web3Component} from '../Web3Component/Web3Component';
+import Web3Component from '../Web3Component';
 import {appLink} from '../appLink';
 
-import styles from './styles.css';
+import styles from './StatusLine.css';
 
 const DEFAULT_NETWORK = 'homestead';
 
