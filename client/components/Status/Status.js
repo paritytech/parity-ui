@@ -3,7 +3,7 @@ import React, { Component, PropTypes } from 'react';
 import formatNumber from 'format-number';
 import bytes from 'bytes';
 
-import style from './style.css';
+import styles from './Status.css';
 import Value from '../Value';
 import MiningSettings from '../MiningSettings';
 
@@ -28,7 +28,7 @@ export default class Status extends Component {
           value={settings.chain}
           {...this._test('chain')}
           />
-        <div className={style.row}>
+        <div className={styles.row}>
           <div className='col col-6 mobile-full'>
             <h3>Peers</h3>
             <Value
@@ -50,7 +50,7 @@ export default class Status extends Component {
           value={settings.rpcEnabled ? 'yes' : 'no'}
           {...this._test('rpc-enabled')}
           />
-        <div className={style.row}>
+        <div className={styles.row}>
           <div className='col col-6 mobile-full'>
             <h3>RPC Interface</h3>
             <Value

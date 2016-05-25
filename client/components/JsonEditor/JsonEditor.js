@@ -3,7 +3,7 @@ import React, { Component, PropTypes } from 'react';
 import { isEqual } from 'lodash';
 import formatJson from 'format-json';
 
-import styles from './style.css';
+import styles from './JsonEditor.css';
 
 export default class JsonEditor extends Component {
 

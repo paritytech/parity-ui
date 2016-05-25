@@ -2,7 +2,7 @@
 import { Link } from 'react-router';
 import React, { Component, PropTypes } from 'react';
 
-import style from './styles.css';
+import styles from './Header.css';
 
 export default class Header extends Component {
 
@@ -16,14 +16,14 @@ export default class Header extends Component {
     return (
       <nav>
         <ul>
-          <li className={disconnected ? {} : style.hidden}>
-            <a className={style.error} disabled title='It seems that we cannot connect to your node. Make sure the node is online and RPC is enabled.'>
+          <li className={disconnected ? {} : styles.hidden}>
+            <a className={styles.error} disabled title='It seems that we cannot connect to your node. Make sure the node is online and RPC is enabled.'>
               <i className='icon-power'></i>
               <span>Node is Down</span>
             </a>
           </li>
-          <li className={hasErrors && !disconnected ? {} : style.hidden}>
-            <a className={style.warning} disabled title='Some RPC calls returned errors. Check console for more details.'>
+          <li className={hasErrors && !disconnected ? {} : styles.hidden}>
+            <a className={styles.warning} disabled title='Some RPC calls returned errors. Check console for more details.'>
               <i className='icon-flag'></i>
               <span>Errors</span>
             </a>
@@ -36,7 +36,7 @@ export default class Header extends Component {
   render () {
     return (
       <header className='dapp-header' {...this._testInherit()}>
-        <hgroup className={style.title}>
+        <hgroup className={styles.title}>
           <h1>Status Page</h1>
           <h3>{this.props.nodeName}</h3>
         </hgroup>

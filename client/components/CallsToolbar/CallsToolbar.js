@@ -9,7 +9,7 @@ import AssignmentIcon from 'material-ui/svg-icons/action/assignment';
 import InputIcon from 'material-ui/svg-icons/action/input';
 
 import { SCROLLBAR_WIDTH } from '../../constants';
-import styles from './style.css';
+import styles from './CallsToolbar.css';
 import rpcData from '../../data/rpc.json';
 const rpcMethods = sortBy(rpcData.methods, 'name');
 

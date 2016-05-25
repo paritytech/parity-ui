@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 
 import Response from '../Response';
-import styles from './style.css';
+import styles from './Call.css';
 
 export default class Call extends Component {
 
