@@ -14,8 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Parity.  If not, see <http://www.gnu.org/licenses/>.
 
-extern crate parity_webapp;
+extern crate parity_dapps;
 
 fn main() {
-  parity_webapp::build();
+  parity_dapps::build();
 }
