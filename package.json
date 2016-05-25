@@ -13,7 +13,7 @@
     "lint": "eslint --ignore-path .gitignore .",
     "ci": "npm run lint & npm run testOnce & npm run nightwatchCI",
     "test": "npm run testOnce -- -w",
-    "testCoverage": "babel-node node_modules/istanbul/lib/cli.js cover _mocha -- 'client/**/*.spec.js'",
+    "testCoverage": "istanbul cover _mocha -- 'client/**/*.spec.js'",
     "testOnce": "mocha 'client/**/*.spec.js'",
     "nightwatch": "NODE_ENV=tests nightwatch",
     "nightwatchCI": "npm run nightwatch  -- -e saucelabs",
@@ -34,7 +34,6 @@
     "url": "https://github.com/ethcore/eth-node-status-page/issues"
   },
   "devDependencies": {
-    "babel": "6.5.2",
     "babel-cli": "^6.8.0",
     "babel-core": "^6.5.2",
     "babel-eslint": "6.0.2",
