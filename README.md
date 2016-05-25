@@ -2,7 +2,7 @@
 1. Clone this repository.
    
    ```bash
-   $ git clone https://github.com/ethcore/parity-webapp.git
+   $ git clone https://github.com/ethcore/parity-dapps-rs.git
    ```
 1. Create a new directory for your webapp. (`./parity-myapp`)
 
@@ -27,10 +27,10 @@
 1. Create `./parity-myapp/Cargo.toml` with you apps details. See example here: [parity-status Cargo.toml](https://github.com/ethcore/parity-status/blob/master/Cargo.toml).
 
    ```bash
-   $ wget https://raw.githubusercontent.com/ethcore/parity-status/master/Cargo.toml -O ./parity-myapp/Cargo.toml
-   $ wget https://raw.githubusercontent.com/ethcore/parity-status/master/build.rs -O ./parity-myapp/build.rs
-   $ wget https://raw.githubusercontent.com/ethcore/parity-status/master/src/lib.rs -O ./parity-myapp/src/lib.rs
-   $ wget https://raw.githubusercontent.com/ethcore/parity-status/master/src/lib.rs.in -O ./parity-myapp/src/lib.rs.in
+   $ wget https://raw.githubusercontent.com/ethcore/parity-dapps-builtins-rs/master/Cargo.toml -O ./parity-myapp/Cargo.toml
+   $ wget https://raw.githubusercontent.com/ethcore/parity-dapps-builtins-rs/master/build.rs -O ./parity-myapp/build.rs
+   $ wget https://raw.githubusercontent.com/ethcore/parity-dapps-builtins-rs/master/src/lib.rs -O ./parity-myapp/src/lib.rs
+   $ wget https://raw.githubusercontent.com/ethcore/parity-dapps-builtins-rs/master/src/lib.rs.in -O ./parity-myapp/src/lib.rs.in
    $ vim ./parity-myapp/Cargo.toml # Edit the details
    $ vim ./parity-myapp/src/lib.rs.in # Edit the details
    ```
