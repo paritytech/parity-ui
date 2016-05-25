@@ -2,8 +2,8 @@
 import React, { Component, PropTypes } from 'react';
 import AutoComplete from 'material-ui/AutoComplete';
 
-import style from './styles.css';
-import valueStyles from '../Value/styles.css';
+import styles from './EditableValue.css';
+import valueStyles from '../Value/Value.css';
 
 export default class EditableValue extends Component {
 
@@ -59,12 +59,12 @@ export default class EditableValue extends Component {
   render () {
     return (
       <form
-        className={`${valueStyles.valueContainer} ${style.container}`}
+        className={`${valueStyles.valueContainer} ${styles.container}`}
         onSubmit={this.onSubmit}
         {...this._testInherit()}
         >
         {this.renderResetButton()}
-        <div className={this.state.inEditMode ? style.iconsVisible : style.icons}>
+        <div className={this.state.inEditMode ? styles.iconsVisible : styles.icons}>
           {this.props.children}
           {this.renderButtons()}
         </div>
@@ -82,7 +82,7 @@ export default class EditableValue extends Component {
     if (!inEditMode || !this.props.autocomplete) {
       return (
         <input
-          className={inEditMode ? style.input : valueStyles.value}
+          className={inEditMode ? styles.input : valueStyles.value}
           type='text'
           value={value}
           onClick={this.onOpenEdit}
@@ -96,7 +96,7 @@ export default class EditableValue extends Component {
     return (
       <AutoComplete
         name='EditableValueAutoComplete' // avoid Material Ui warning
-        className={style.autocomplete}
+        className={styles.autocomplete}
         fullWidth
         searchText={value}
         dataSource={this.props.dataSource}
@@ -120,7 +120,7 @@ export default class EditableValue extends Component {
     return (
       <a
         key={'reset'}
-        className={`${style.icon} ${style.firstIcon}`}
+        className={`${styles.icon} ${styles.firstIcon}`}
         onClick={this.onResetToDefault}
         title={`Reset to ${this.props.defaultValue}`}
         {...this._testInherit('reset')}
@@ -135,7 +135,7 @@ export default class EditableValue extends Component {
       return [
         <a
           key={'submit'}
-          className={style.iconSuccess}
+          className={styles.iconSuccess}
           onClick={this.onSubmit}
           {...this._testInherit('submit')}
           >
@@ -143,7 +143,7 @@ export default class EditableValue extends Component {
         </a>,
         <a
           key={'cancel'}
-          className={style.icon}
+          className={styles.icon}
           onClick={this.onCancel}
           {...this._testInherit('cancel')}
           >
@@ -155,7 +155,7 @@ export default class EditableValue extends Component {
     return (
       <a
         key={'edit'}
-        className={style.icon}
+        className={styles.icon}
         onClick={this.onOpenEdit}
         title='Edit'
         {...this._testInherit('edit')}

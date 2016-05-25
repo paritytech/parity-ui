@@ -3,7 +3,6 @@ import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { extend } from 'lodash';
-import './style.css';
 import * as RpcActions from '../../actions/rpc';
 import { updateLogging } from '../../actions/logger';
 import { copyToClipboard } from '../../actions/clipboard';

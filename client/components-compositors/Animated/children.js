@@ -2,7 +2,7 @@
 import React, { Component, PropTypes } from 'react';
 import { isReactComponent } from '../../util/react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import './style.css';
+import './AnimateChildren.css';
 
 export default class AnimateChildren extends Component {
   render () {

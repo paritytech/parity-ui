@@ -2,7 +2,7 @@
 import React, { Component, PropTypes } from 'react';
 import { isArray, isPlainObject } from 'lodash';
 
-import styles from './style.css';
+import styles from './Response.css';
 
 export default class Response extends Component {
 

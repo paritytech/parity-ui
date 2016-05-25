@@ -1,7 +1,7 @@
 
 import marked from 'marked';
 import React, { Component, PropTypes } from 'react';
-import styles from './style.css';
+import styles from './Markdown.css';
 
 export default class Marked extends Component {
 
