@@ -34,15 +34,22 @@ describe('components/Calls', () => {
   });
 
   describe('rendering (calls supplied)', () => {
+    const calls = [
+      { callNo: 0, name: 'eth_call', params: '', response: '' },
+      { callNo: 1, name: 'eth_sendTransaction', params: '', response: '' }
+    ];
+    const actions = { action1: true, action2: true };
+
     let rendered;
+    let instance;
 
     before(() => {
-      const calls = [
-        { callNo: 0, name: 'eth_call', params: '', response: '' },
-        { callNo: 1, name: 'eth_sendTransaction', params: '', response: '' }
-      ];
+      rendered = shallow(<Calls calls={calls} actions={actions} />);
+      instance = rendered.instance();
+    });
 
-      rendered = shallow(<Calls calls={calls} />);
+    it('renders the clear button', () => {
+      expect(rendered).to.have.exactly(1).descendants('a[data-test="Calls-remove"]');
     });
 
     it('renders calls', () => {
@@ -50,8 +57,26 @@ describe('components/Calls', () => {
       expect(rendered.find('div.row div')).to.have.exactly(2).descendants('Call');
     });
 
-    it('renders the clear button', () => {
-      expect(rendered).to.have.exactly(1).descendants('a[data-test="Calls-remove"]');
+    it('passes the correct properties to Call', () => {
+      const call = rendered.find('Call').first();
+
+      expect(call).to.have.prop('setActiveCall', instance.setActiveCall);
+      expect(call).to.have.prop('call').deep.equal(calls[0]);
+    });
+
+    it('passes the correct properties to CallsToolbar', () => {
+      const child = { offsetTop: 0 };
+      const container = { scrollTop: 0 };
+
+      instance.setCallsHistory(container);
+      rendered.setState({ activeCall: 'dummyActiveCall', activeChild: child });
+
+      const toolbar = rendered.find('CallsToolbar').first();
+
+      expect(toolbar).to.have.prop('call', 'dummyActiveCall');
+      expect(toolbar).to.have.prop('actions').deep.equal(actions);
+      expect(toolbar).to.have.prop('callEl').deep.equal(child);
+      expect(toolbar).to.have.prop('containerEl').deep.equal(container);
     });
   });
 
@@ -67,6 +92,12 @@ describe('components/Calls', () => {
 
       rendered = shallow(<Calls calls={calls} />);
       instance = rendered.instance();
+    });
+
+    it('sets the element via setCallsHistory', () => {
+      instance.setCallsHistory('dummyElement');
+
+      expect(instance._callsHistory).to.equal('dummyElement');
     });
 
     it('sets state via setActiveCall', () => {
