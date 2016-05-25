@@ -16,6 +16,21 @@ export default class DappNav extends React.Component {
     this.fetchApps();
   }
 
+  componentWillUnmount () {
+    document.removeEventListener('keydown', this.onKeyPressedWhenActive);
+  }
+
+  componentDidUpdate (prevProps, prevState) {
+    if (this.gotActive(prevState)) {
+      document.addEventListener('keydown', this.onKeyPressedWhenActive);
+      this.focusAutoComplete();
+    }
+
+    if (this.gotNonActive(prevState)) {
+      document.removeEventListener('keydown', this.onKeyPressedWhenActive);
+    }
+  }
+
   render () {
     const isActiveclass = this.state.active ? styles.isActive : '';
     return (
@@ -46,9 +61,6 @@ export default class DappNav extends React.Component {
       return;
     }
 
-    // without this hack the menu isn't aligned properly
-    setTimeout(this.focusAutoComplete, 0);
-
     return (
       <AutoComplete
         name='DappNavAutoComplete' // avoid Material Ui warning
@@ -70,7 +82,7 @@ export default class DappNav extends React.Component {
     window.location = appLink(name);
   }
 
-  toggleActive = (asdasd, asd) => {
+  toggleActive = () => {
     const { active } = this.state;
     this.setState({active: !active});
   }
@@ -127,6 +139,20 @@ export default class DappNav extends React.Component {
           apps: []
         });
       });
+  }
+
+  gotActive (prevState) {
+    return !prevState.active && this.state.active;
+  }
+
+  gotNonActive (prevState) {
+    return prevState.active && !this.state.active;
+  }
+
+  onKeyPressedWhenActive = (evt) => {
+    if (evt.keyCode === 27) {
+      this.setState({ active: false });
+    }
   }
 
 }
