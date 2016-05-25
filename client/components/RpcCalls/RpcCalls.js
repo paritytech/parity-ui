@@ -16,6 +16,7 @@ import rpcData from '../../data/rpc.json';
 import RpcNav from '../RpcNav';
 
 const rpcMethods = _.sortBy(rpcData.methods, 'name');
+const rpcMethodsNames = rpcMethods.map((m) => m.name);
 
 export default class RpcCalls extends Component {
 
@@ -36,6 +37,12 @@ export default class RpcCalls extends Component {
         this.setJsonEditorValue();
       }
     }
+  }
+
+  shouldComponentUpdate (nextProps, nextState) {
+    return this.selectedMethodChanged(nextProps) ||
+            this.prevCallsChanged(nextProps) ||
+            this.stateChanged(nextState);
   }
 
   render () {
@@ -112,16 +119,13 @@ export default class RpcCalls extends Component {
   }
 
   renderMethodList () {
-    const methods = rpcMethods.map(m => m.name);
-
-    const { name, desc } = this.props.rpc.selectedMethod;
+    const { desc } = this.props.rpc.selectedMethod;
     return (
       <div>
         <AutoComplete
           style={{ marginTop: 0 }}
-          searchText={name}
-          floatingLabelText='Method name'
-          dataSource={methods}
+          floatingLabelText='Choose method'
+          dataSource={rpcMethodsNames}
           onNewRequest={this.handleMethodChange}
           {...this._test('autocomplete')}
         />
@@ -147,8 +151,8 @@ export default class RpcCalls extends Component {
 
     this.props.actions.fireRpc({
       method: name,
-      outputFormatter: outputFormatter,
-      inputFormatters: inputFormatters,
+      outputFormatter,
+      inputFormatters,
       params
     });
   }
@@ -299,6 +303,18 @@ export default class RpcCalls extends Component {
 
   paramKey (p) {
     return `params_${p}`;
+  }
+
+  selectedMethodChanged (nextProps) {
+    return nextProps.rpc.selectedMethod.name !== this.props.rpc.selectedMethod.name;
+  }
+
+  stateChanged (nextState) {
+    return !_.isEqual(nextState, this.state);
+  }
+
+  prevCallsChanged (nextProps) {
+    return nextProps.rpc.prevCalls.length !== this.props.rpc.prevCalls.length;
   }
 
   static propTypes = {
