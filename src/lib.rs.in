@@ -14,13 +14,13 @@
 // You should have received a copy of the GNU General Public License
 // along with Parity.  If not, see <http://www.gnu.org/licenses/>.
 
-extern crate parity_webapp;
+extern crate parity_dapps;
 
-use std::default::Default;
 use std::collections::HashMap;
-use parity_webapp::{WebApp, File, Info};
+use parity_dapps::{WebApp, File, Info};
 
 #[derive(WebAppFiles)]
+#[webapp(path = "./web")]
 pub struct App {
   files: HashMap<&'static str, File>,
 }

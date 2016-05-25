@@ -1,6 +1,6 @@
 [package]
-description = "Injectable identity manager for Parity"
-name = "parity-idmanager"
+description = "Parity built-in dapps."
+name = "parity-bultins"
 version = "0.5.0"
 license = "GPL-3.0"
 authors = ["Ethcore <admin@ethcore.io>"]
@@ -8,11 +8,11 @@ build = "build.rs"
 
 [features]
 default = ["with-syntex"]
-with-syntex = ["parity-webapp/with-syntex"]
+with-syntex = ["parity-dapps/with-syntex"]
 
 [build-dependencies]
-parity-webapp = { git = "https://github.com/ethcore/parity-webapp.git", version = "0.3" }
+parity-dapps = { git = "https://github.com/ethcore/parity-dapps-rs.git", version = "0.3" }
 
 [dependencies]
-parity-webapp = { git = "https://github.com/ethcore/parity-webapp.git", version = "0.3" }
+parity-dapps = { git = "https://github.com/ethcore/parity-dapps-rs.git", version = "0.3" }
 
