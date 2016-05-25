@@ -57,6 +57,7 @@ describe('components/Calls', () => {
 
   describe('actions', () => {
     let rendered;
+    let instance;
 
     before(() => {
       const calls = [
@@ -65,19 +66,20 @@ describe('components/Calls', () => {
       ];
 
       rendered = shallow(<Calls calls={calls} />);
+      instance = rendered.instance();
     });
 
-    it('sets the activeCall & activeChild state via setActiveCall', () => {
-      rendered.instance().setActiveCall('dummyActiveCall', 'dummyActiveChild');
+    it('sets state via setActiveCall', () => {
+      instance.setActiveCall('dummyActiveCall', 'dummyActiveChild');
 
       expect(rendered).to.have.state('activeCall', 'dummyActiveCall');
       expect(rendered).to.have.state('activeChild', 'dummyActiveChild');
     });
 
-    it('clears the activeCall & activeChild state via clearActiveCall', () => {
-      rendered.instance().setActiveCall('dummyActiveCall', 'dummyActiveChild');
+    it('clears state via clearActiveCall', () => {
+      instance.setActiveCall('dummyActiveCall', 'dummyActiveChild');
       expect(rendered).to.have.state('activeCall', 'dummyActiveCall');
-      rendered.instance().clearActiveCall();
+      instance.clearActiveCall();
 
       expect(rendered).to.have.state('activeCall', null);
       expect(rendered).to.have.state('activeChild', null);
