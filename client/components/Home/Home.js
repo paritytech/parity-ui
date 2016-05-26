@@ -7,7 +7,7 @@ import CircularProgress from 'material-ui/CircularProgress';
 import AppsList from '../AppsList';
 import SubdomainDialog from '../SubdomainDialog';
 
-import styles from './styles.css';
+import styles from './Home.css';
 
 export default class Home extends React.Component {
 

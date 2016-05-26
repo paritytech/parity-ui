@@ -1,4 +1,4 @@
-export default class {
+export default class Interceptor {
 
   constructor (provider) {
     this.provider = provider;

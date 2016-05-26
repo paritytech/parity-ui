@@ -1,4 +1,5 @@
 import React from 'react';
+import isEqual from 'lodash.isequal';
 
 import AppsIcon from 'material-ui/svg-icons/navigation/apps';
 import ReportProblem from 'material-ui/svg-icons/action/report-problem';
@@ -7,9 +8,9 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 const muiTheme = getMuiTheme({});
 
-import {TransactionConfirmation} from '../TransactionConfirmation/TransactionConfirmation';
-import {AccountChooser} from '../AccountsChooser/AccountsChooser';
-import {Web3Component} from '../Web3Component/Web3Component';
+import TransactionConfirmation from '../TransactionConfirmation';
+import AccountChooser from '../AccountsChooser';
+import Web3Component from '../Web3Component';
 import AccountsDetails from '../AccountsDetails';
 import SubdomainDialog from '../SubdomainDialog';
 import StatusLine from '../StatusLine';
@@ -17,7 +18,7 @@ import StatusLine from '../StatusLine';
 import Storage from '../Storage';
 import {appLink} from '../appLink';
 
-import styles from './styles.css';
+import styles from './TopBar.css';
 
 export default class TopBar extends Web3Component {
 
@@ -35,9 +36,14 @@ export default class TopBar extends Web3Component {
   listeners = [];
 
   componentWillMount () {
-    this.storage.getAccountsNames((accountsNames) => {
+    this.storageListener = this.storage.onAccountsNames((accountsNames) => {
+      if (isEqual(this.state.accountsNames, accountsNames)) {
+        return;
+      }
+
       this.setState({accountsNames});
     });
+
     this.listeners = [
       this.props.interceptor.intercept('eth_accounts', ::this.onEthAccounts),
       this.props.interceptor.intercept('eth_sendTransaction', ::this.onEthSendTransaction)
@@ -45,6 +51,7 @@ export default class TopBar extends Web3Component {
   }
 
   componentWillUnmount () {
+    this.storageListener();
     this.listeners.map((off) => off());
   }
 

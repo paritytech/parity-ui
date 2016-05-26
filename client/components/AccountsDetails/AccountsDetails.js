@@ -4,16 +4,15 @@ import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
 import Dialog from 'material-ui/Dialog';
 
-import {Web3Component} from '../Web3Component/Web3Component';
-import {Identicon} from '../Identicon/Identicon';
+import Web3Component from '../Web3Component';
+import Identicon from '../Identicon';
 
-import styles from './styles.css';
 import resetStyles from '../../reset.css';
+import styles from './AccountsDetails.css';
 
 export default class AccountDetails extends Web3Component {
 
-  state = {
-  };
+  state = {};
 
   componentDidMount () {
     this.componentWillReceiveProps(this.props);

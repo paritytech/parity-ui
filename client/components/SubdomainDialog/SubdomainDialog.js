@@ -5,8 +5,8 @@ import FlatButton from 'material-ui/FlatButton';
 
 import { isUsingSubdomains, appPrettyLink } from '../appLink';
 
-import styles from './styles.css';
 import resetStyles from '../../reset.css';
+import styles from './SubdomainDialog.css';
 
 export default class SubdomainDialog extends React.Component {
 

@@ -23,17 +23,29 @@ export default class EthereumWalletCompatibility {
         next();
         return;
       }
+
       const last = this.lastAccounts;
       this.lastAccounts = accountsStr;
-      if (last !== null) {
-        this.fireChanged(accounts);
+      if (last === null) {
+        next();
+        return;
       }
+
+      const names = Object.keys(accounts)
+        .map(k => accounts[k])
+        .map(v => JSON.parse(v))
+        .reduce((memo, v) => {
+          memo[v.data.address] = v.data.name;
+          return memo;
+        }, {});
+      this.fireChanged(names);
+      next();
     };
 
     const next = () => {
       setTimeout(() => {
         detectChange(next);
-      }, 200);
+      }, 2000);
     };
 
     next();

@@ -1,18 +1,17 @@
 import React from 'react';
 
-import styles from './styles.css';
+import styles from './Account.css';
 
-import {Web3Component} from '../Web3Component/Web3Component';
-import {Identicon} from '../Identicon/Identicon';
+import Web3Component from '../Web3Component';
+import Identicon from '../Identicon';
 
-export class Account extends Web3Component {
+export default class Account extends Web3Component {
 
   state = {
     balance: null
   };
 
-  constructor (...args) {
-    super(...args);
+  componentDidMount () {
     this.fetchBalance(this.props.address);
   }
 
@@ -46,7 +45,7 @@ export class Account extends Web3Component {
 
   renderTitle = (address) => {
     if (this.props.name) {
-      return this.props.name + ' ' + address;
+      return address + ' ' + this.props.name;
     }
 
     return address;

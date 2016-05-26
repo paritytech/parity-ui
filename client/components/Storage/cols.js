@@ -1,6 +1,6 @@
 import {NAMESPACE, FRAME_URL} from './cols.data';
 
-export class Cols {
+export default class Cols {
 
   constructor (location, origin) {
     this.location = location;
