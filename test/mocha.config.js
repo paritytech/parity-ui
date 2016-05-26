@@ -2,9 +2,11 @@ import 'mock-local-storage';
 
 import chai from 'chai';
 import chaiEnzyme from 'chai-enzyme';
+import sinonChai from 'sinon-chai';
 import jsdom from 'jsdom';
 
 chai.use(chaiEnzyme());
+chai.use(sinonChai);
 
 // expose expect to global so we won't have to manually import & define it in every test
 global.expect = chai.expect;
