@@ -4,7 +4,7 @@ import {GridList, GridTile} from 'material-ui/GridList';
 
 import {appLink} from '../appLink';
 
-import styles from './styles.css';
+import styles from './AppsList.css';
 
 export default class AppsList extends React.Component {
 

@@ -6,13 +6,13 @@ import AddIcon from 'material-ui/svg-icons/content/add';
 
 import isEqual from 'lodash.isequal';
 
-import {Web3Component} from '../Web3Component/Web3Component';
-import {Account} from '../Account/Account';
+import Web3Component from '../Web3Component';
+import Account from '../Account';
 import Storage from '../Storage';
 
-import styles from './styles.css';
+import styles from './AccountChooser.css';
 
-export class AccountChooser extends Web3Component {
+export default class AccountChooser extends Web3Component {
 
   state = {
     defaultAccountIdx: 0,

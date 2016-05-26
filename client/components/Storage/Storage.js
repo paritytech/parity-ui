@@ -1,4 +1,4 @@
-import {Cols} from './cols';
+import Cols from './cols';
 import {isUsingSubdomains, appLink} from '../appLink';
 import EthereumWalletCompatibility from './eth-wallet-compat';
 

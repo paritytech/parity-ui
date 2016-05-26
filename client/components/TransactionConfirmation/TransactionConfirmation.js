@@ -5,12 +5,12 @@ import TextField from 'material-ui/TextField';
 import Dialog from 'material-ui/Dialog';
 import LinearProgress from 'material-ui/LinearProgress';
 
-import {Account} from '../Account/Account';
-import {Web3Component} from '../Web3Component/Web3Component';
+import Account from '../Account';
+import Web3Component from '../Web3Component';
 
-import styles from './styles.css';
+import styles from './TransactionConfirmation.css';
 
-export class TransactionConfirmation extends Web3Component {
+export default class TransactionConfirmation extends Web3Component {
 
   state = {
     sending: false,

@@ -1,7 +1,7 @@
 
 import React from 'react';
 
-export class Web3Component extends React.Component {
+export default class Web3Component extends React.Component {
 
   componentDidMount () {
     this.setState({
