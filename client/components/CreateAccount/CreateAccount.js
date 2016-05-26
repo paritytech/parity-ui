@@ -5,6 +5,10 @@ import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import Dialog from 'material-ui/Dialog';
 
+import _ from 'lodash';
+
+import validations from './validations.data';
+import FormValidationDisplay from '../FormValidationDisplay';
 import Identicon from '../Identicon';
 import styles from './CreateAccount.css';
 import Web3Component from '../Web3Component/Web3Component';
@@ -38,17 +42,51 @@ export default class AccountDetails extends Web3Component {
           fullWidth
           type='password'
           name={'new-account-password'}
-          floatingLabelText='`DATA` - Password'
+          floatingLabelText='Type password'
           value={this.state.password}
           onChange={this.modifyPassword}
         />
+        {this.renderValidations()}
         <RaisedButton
           label='Submit'
+          className={styles.submit}
           primary
+          disabled={!this.isValid()}
           onTouchTap={this.submit}
         />
       </div>
     );
+  }
+
+  renderValidations () {
+    const { password } = this.state;
+    if (!password) {
+      return;
+    }
+
+    return (
+      <div>
+        {validations.map(
+          (v, idx) => {
+            return (
+              <FormValidationDisplay
+                {...v}
+                key={idx}
+                value={password}
+              />
+            );
+          }
+        )}
+      </div>
+    );
+  }
+
+  isValid = () => {
+    const { password } = this.state;
+    if (!password) {
+      return;
+    }
+    return _.every(validations, (v) => v.predicate(password));
   }
 
   renderCreatedAccount () {
@@ -72,7 +110,7 @@ export default class AccountDetails extends Web3Component {
     return (
       <p className={styles.noAccount}>
         You have no accounts associated with your running parity node.<br />
-        Enter a passphrase belo and click submit to create one.
+        Enter a passphrase below and click submit to create one.
       </p>
     );
   }
