@@ -14,7 +14,6 @@ import web3extensions from './components/web3.extensions';
 import Web3Provider from './components/Web3Provider';
 import TopBar from './components/TopBar';
 import Interceptor from './components/TopBar/Interceptor';
-import { addCssToDocument } from './utils/utils';
 import readInjectOptions from './utils/readInjectOptions';
 
 const http = new Web3.providers.HttpProvider('/rpc/');
@@ -27,7 +26,6 @@ rawWeb3._extend(web3extensions(rawWeb3));
 global.web3 = web3;
 
 const options = readInjectOptions();
-initOptions(options);
 
 // Render account chooser
 const el = document.createElement('div');
@@ -46,9 +44,3 @@ ReactDOM.render(
   </div>,
   el
 );
-
-function initOptions (options) {
-  if (options.customStyle) {
-    addCssToDocument(options.customStyle);
-  }
-}

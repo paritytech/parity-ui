@@ -9,7 +9,6 @@ export default function readInjectOptions () {
   }
 
   return {
-    allAccounts: script.hasAttribute('all-accounts'),
-    customStyle: script.getAttribute('custom-style')
+    allAccounts: script.hasAttribute('all-accounts')
   };
 }
