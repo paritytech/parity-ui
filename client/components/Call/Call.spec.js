@@ -69,7 +69,7 @@ describe('components/Call', () => {
       });
 
       it('skips an undefined value', () => {
-        expect(instance.formatParams(['1', undefined, 3])).to.equal('"1", 2');
+        expect(instance.formatParams(['1', undefined, 3])).to.equal('"1", , 3');
       });
     });
   });
