@@ -9,7 +9,9 @@ setInterval(() => {
   web3.eth.getAccounts(withError((accounts) => {
     web3.defaultAccount = accounts[0];
     redrawAccounts(accounts);
-
+    if (!accounts[0]) {
+      return;
+    }
     web3.eth.getBalance(accounts[0], withError((balance) => {
       redrawBalance(balance);
     }));

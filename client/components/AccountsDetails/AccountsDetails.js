@@ -3,6 +3,7 @@ import React from 'react';
 import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
 import Dialog from 'material-ui/Dialog';
+import AddIcon from 'material-ui/svg-icons/content/add';
 
 import Web3Component from '../Web3Component';
 import Identicon from '../Identicon';
@@ -26,7 +27,7 @@ export default class AccountDetails extends Web3Component {
 
     return (
       <Dialog
-        title='Account Details'
+        title='Accounts Details'
         actions={this.renderDialogActions()}
         open={open}
         autoScrollBodyContent
@@ -35,6 +36,7 @@ export default class AccountDetails extends Web3Component {
         <div className={styles.accounts}>
           {this.renderAccounts(accounts)}
         </div>
+        {this.renderCreateAccountButton()}
       </Dialog>
     );
   }
@@ -94,6 +96,18 @@ export default class AccountDetails extends Web3Component {
     ];
   }
 
+  renderCreateAccountButton () {
+    return (
+      <a
+        onClick={this.props.onOpenCreateAccount}
+        className={styles.createAccountButton}
+        title='create account'
+        >
+        <AddIcon />
+      </a>
+    );
+  }
+
   onCancel () {
     this.componentWillReceiveProps(this.props);
     this.props.onClose(this.state);
@@ -106,6 +120,7 @@ export default class AccountDetails extends Web3Component {
   static propTypes = {
     open: React.PropTypes.bool.isRequired,
     accounts: React.PropTypes.array.isRequired,
+    onOpenCreateAccount: React.PropTypes.func.isRequired,
     onClose: React.PropTypes.func.isRequired
   };
 

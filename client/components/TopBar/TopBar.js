@@ -3,6 +3,7 @@ import isEqual from 'lodash.isequal';
 
 import AppsIcon from 'material-ui/svg-icons/navigation/apps';
 import ReportProblem from 'material-ui/svg-icons/action/report-problem';
+import SettingsIcon from 'material-ui/svg-icons/action/settings';
 
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -31,6 +32,7 @@ export default class TopBar extends Web3Component {
     allAccounts: [],
     accountsNames: {},
     sendingTransaction: false,
+    createAccountOpen: false,
     accountsDetails: false
   };
 
@@ -50,91 +52,20 @@ export default class TopBar extends Web3Component {
     });
 
     this.listeners = [
-      this.props.interceptor.intercept('eth_accounts', ::this.onEthAccounts),
-      this.props.interceptor.intercept('eth_sendTransaction', ::this.onEthSendTransaction)
+      this.props.interceptor.intercept('eth_accounts', this.onEthAccounts),
+      this.props.interceptor.intercept('eth_sendTransaction', this.onEthSendTransaction)
     ];
   }
 
+  componentDidMount () {
+    super.componentDidMount();
+    this.handleFirstRun();
+  }
+
   componentWillUnmount () {
+    super.componentWillUnmount();
     this.storageListener();
     this.listeners.map((off) => off());
-  }
-
-  onEthAccounts (payload, cb, next) {
-    if (this.props.options.allAccounts) {
-      return next();
-    }
-
-    const response = {
-      jsonrpc: payload.jsonrpc,
-      id: payload.id,
-      result: this.state.accounts
-    };
-
-    if (cb) {
-      return cb(null, response);
-    }
-
-    return response;
-  }
-
-  onEthSendTransaction (payload, cb, next) {
-    if (!cb) {
-      throw new Error('Synchronous sendTransaction is not supported.');
-    }
-
-    this.setState({
-      sendingTransaction: true,
-      transaction: payload,
-      callbackFunc: cb
-    });
-  }
-
-  clearTx () {
-    this.setState({
-      sendingTransaction: false,
-      transaction: null,
-      callbackFunc: null
-    });
-  }
-
-  abortTransaction () {
-    this.state.callbackFunc('aborted');
-    this.clearTx();
-  }
-
-  confirmTransaction (err, data) {
-    this.state.callbackFunc(err, data);
-    this.clearTx();
-  }
-
-  changeAccount (account) {
-    this.setState({
-      accounts: [account]
-    });
-    // set default account
-    this.props.web3.defaultAccount = account;
-    this.context.web3.defaultAccount = account;
-  }
-
-  onAllAccounts (accounts) {
-    this.setState({
-      allAccounts: accounts
-    });
-  }
-
-  onOpenAccountDetails () {
-    this.setState({
-      accountsDetails: true
-    });
-  }
-
-  onAccountsDetailsClose (names) {
-    this.setState({
-      accountsDetails: false,
-      accountsNames: names
-    });
-    this.storage.setAccountsNames(names);
   }
 
   render () {
@@ -155,6 +86,8 @@ export default class TopBar extends Web3Component {
       );
     }
 
+    const { allAccounts, accountsNames, accountsDetails, createAccountOpen } = this.state;
+
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
         <div>
@@ -174,45 +107,185 @@ export default class TopBar extends Web3Component {
               </div>
               <StatusLine />
             </div>
-            <AccountChooser
-              accountsNames={this.state.accountsNames}
-              onChange={::this.changeAccount}
-              onAllAccounts={::this.onAllAccounts}
-              onOpenDetails={::this.onOpenAccountDetails}
-              />
+            <div className={styles.manageAccounts}>
+              {this.renderManageAccounts()}
+            </div>
           </div>
           <AccountsDetails
-            open={this.state.accountsDetails}
-            accounts={this.state.allAccounts}
-            accountsNames={this.state.accountsNames}
-            onClose={::this.onAccountsDetailsClose}
+            open={accountsDetails}
+            accounts={allAccounts}
+            onOpenCreateAccount={this.onOpenCreateAccount}
+            accountsNames={accountsNames}
+            onClose={this.onAccountsDetailsClose}
             />
+          <CreateAccount
+            open={createAccountOpen}
+            accounts={allAccounts}
+            onClose={this.closeCreateAccount}
+          />
           <TransactionConfirmation
             open={this.state.sendingTransaction}
             transaction={this.state.transaction}
-            onAbort={::this.abortTransaction}
-            onConfirm={::this.confirmTransaction}
+            onAbort={this.abortTransaction}
+            onConfirm={this.confirmTransaction}
             />
-          <CreateAccount
-            open={this.state.createAccountOpen}
-            onClose={this.closeCreateAccount}
-          />
         </div>
       </MuiThemeProvider>
     );
+  }
+
+  renderManageAccounts () {
+    const { allAccounts, accountsNames } = this.state;
+
+    if (!allAccounts.length) {
+      return (
+      <a onClick={this.onOpenCreateAccount} className={styles.createAccount}>
+        Create account
+      </a>
+      );
+    }
+
+    return (
+      <div>
+        <AccountChooser
+          accounts={allAccounts}
+          accountsNames={accountsNames}
+          onChange={this.changeAccount}
+          onAllAccounts={this.onAllAccounts}
+        />
+        <a
+          className={styles.settings}
+          href='javascript:void(0)'
+          onClick={this.onOpenAccountDetails}
+          >
+          <SettingsIcon />
+        </a>
+      </div>
+    );
+  }
+
+  onTick (next) {
+    this.context.web3.eth.getAccounts((err, allAccounts) => {
+      if (err) {
+        next();
+        return console.error(err);
+      }
+
+      if (isEqual(allAccounts, this.state.allAccounts)) {
+        return next();
+      }
+
+      console.info('changes in accounts detceted');
+      this.setState({allAccounts});
+      next();
+    });
+  }
+
+  onEthAccounts = (payload, cb, next) => {
+    if (this.props.options.allAccounts) {
+      return next();
+    }
+
+    const response = {
+      jsonrpc: payload.jsonrpc,
+      id: payload.id,
+      result: this.state.accounts
+    };
+
+    if (cb) {
+      return cb(null, response);
+    }
+
+    return response;
+  }
+
+  onEthSendTransaction = (payload, cb, next) => {
+    if (!cb) {
+      throw new Error('Synchronous sendTransaction is not supported.');
+    }
+
+    this.setState({
+      sendingTransaction: true,
+      transaction: payload,
+      callbackFunc: cb
+    });
+  }
+
+  clearTx = () => {
+    this.setState({
+      sendingTransaction: false,
+      transaction: null,
+      callbackFunc: null
+    });
+  }
+
+  abortTransaction = () => {
+    this.state.callbackFunc('aborted');
+    this.clearTx();
+  }
+
+  confirmTransaction = (err, data) => {
+    this.state.callbackFunc(err, data);
+    this.clearTx();
+  }
+
+  changeAccount = (account) => {
+    this.setState({
+      accounts: [account]
+    });
+    // set default account
+    this.props.web3.defaultAccount = account;
+    this.context.web3.defaultAccount = account;
+  }
+
+  onAllAccounts = (accounts) => {
+    this.setState({
+      allAccounts: accounts
+    });
+  }
+
+  onOpenAccountDetails = () => {
+    this.setState({
+      accountsDetails: true
+    });
+  }
+
+  onAccountsDetailsClose = (names) => {
+    this.setState({
+      accountsDetails: false,
+      accountsNames: names
+    });
+    this.storage.setAccountsNames(names);
   }
 
   closeCreateAccount = () => {
     this.setState({ createAccountOpen: false });
   }
 
-  openCreateAccount = () => {
+  onOpenCreateAccount = () => {
     this.setState({ createAccountOpen: true });
   }
 
   forceNavigation = () => {
     window.location.reload(true);
-  };
+  }
+
+  handleFirstRun = () => {
+    this.storage.getNotFirstRun((notFirstRun) => {
+      if (notFirstRun) {
+        return;
+      }
+      this.storage.saveNotFirstRun();
+      // wait for first tick
+      setTimeout(() => {
+        if (this.state.allAccounts.length) {
+          return;
+        }
+        console.info('first run with no accounts, prompting to create account');
+        this.onOpenCreateAccount();
+      }, 1000);
+    });
+  }
 
   static propTypes = {
     interceptor: React.PropTypes.object.isRequired,
