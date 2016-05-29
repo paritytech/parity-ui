@@ -98,8 +98,12 @@ export default class Cols {
   fallbackRequest (data, callback) {
     if (data.action === 'set') {
       window.localStorage.setItem(data.key, data.value);
-      return callback(true);
+      if (callback) {
+        callback(true);
+      }
+      return;
     }
+
     if (data.action === 'get') {
       return callback(window.localStorage.getItem(data.key));
     }
