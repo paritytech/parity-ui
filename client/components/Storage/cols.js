@@ -9,6 +9,7 @@ export default class Cols {
     this.callbacks = {};
     this.queue = [];
     this.isLoaded = false;
+    this.isError = false;
     this.nonce = 0;
     this.responseListener = this.responseListener.bind(this);
 
@@ -42,8 +43,13 @@ export default class Cols {
   }
 
   initFrame () {
-    this.iframe.addEventListener('load', () => {
+    this.iframe.addEventListener('load', (err) => {
+      if (err) {
+        window.console.warn('Could not load cross-origin frame. Falling back to LocalStorage.');
+      }
+
       this.isLoaded = true;
+      this.isError = err;
       this.processQueue();
     });
     this.iframe.src = `${this.location}${FRAME_URL}`;
@@ -60,6 +66,10 @@ export default class Cols {
   sendRequest (data, callback) {
     if (!this.isLoaded) {
       this.queue.push({data, callback});
+      return;
+    }
+    if (this.isError) {
+      this.fallbackRequest(data, callback);
       return;
     }
     this.nonce++;
@@ -83,6 +93,16 @@ export default class Cols {
   destroy () {
     this.iframe.parentNode.removeChild(this.iframe);
     window.removeEventListener('message', this.responseListener);
+  }
+
+  fallbackRequest (data, callback) {
+    if (data.action === 'set') {
+      window.localStorage.setItem(data.key, data.value);
+      return callback(true);
+    }
+    if (data.action === 'get') {
+      return callback(window.localStorage.getItem(data.key));
+    }
   }
 
   // LocalStorage API
