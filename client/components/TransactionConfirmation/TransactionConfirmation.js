@@ -124,9 +124,10 @@ export default class TransactionConfirmation extends Web3Component {
       error: false
     });
 
-    this.context.web3.eth.signAndSendTransaction(txRequest, pass, (err, txHash) => {
-      // TODO [ToDr] Not sure if there is a better way to detect error
+    this.context.web3.personal.signAndSendTransaction(txRequest, pass, (err, txHash) => {
+      // TODO [ToDr] 0x0 is a valid response. We should wait some time and then timeout.
       if (err || txHash === '0x0000000000000000000000000000000000000000000000000000000000000000') {
+        console.error(err);
         this.setState({
           sending: false,
           error: true
