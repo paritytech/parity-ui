@@ -1,5 +1,5 @@
 html {
-  padding-top: 55px !important;
+  padding-top: 54px !important;
 }
 html,body {
   background: #fff;
@@ -9,8 +9,7 @@ html,body {
 .header {
   float: left;
   opacity: 0.5;
-  margin-left: 30px;
-  margin-top: 20px;
+  margin-top: 15px;
   display: flex;
 }
 .dialog {
@@ -25,7 +24,7 @@ html,body {
   right: 0;
   left: 0;
   text-align: right;
-  padding-bottom: 5px;
+  padding: 0 30px 5px;
   border-bottom: 1px solid #d3cbc8;
   background: #dfd6d3;
   box-shadow: 0 -3px 2px -3px rgba(119, 102, 102, 0.75);

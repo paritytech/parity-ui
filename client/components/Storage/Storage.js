@@ -46,7 +46,7 @@ export default class {
   getAccountsNames (cb) {
     this.storage.getItem('accountsNames', (names) => {
       try {
-        cb(JSON.parse(names));
+        cb(JSON.parse(names || '{}'));
       } catch (e) {
         cb({});
       }

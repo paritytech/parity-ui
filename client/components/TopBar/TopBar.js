@@ -16,6 +16,7 @@ import AccountsDetails from '../AccountsDetails';
 import SubdomainDialog from '../SubdomainDialog';
 import CreateAccount from '../CreateAccount';
 import StatusLine from '../StatusLine';
+import DappNav from '../DappNav';
 
 import Storage from '../Storage';
 import {appLink} from '../appLink';
@@ -23,6 +24,14 @@ import {appLink} from '../appLink';
 import styles from './TopBar.css';
 
 export default class TopBar extends Web3Component {
+
+  static propTypes = {
+    interceptor: React.PropTypes.object.isRequired,
+    web3: React.PropTypes.object.isRequired,
+    options: React.PropTypes.shape({
+      allAccounts: React.PropTypes.bool.isRequired
+    }).isRequired
+  }
 
   storage = Storage.crossOrigin();
 
@@ -37,10 +46,6 @@ export default class TopBar extends Web3Component {
   };
 
   listeners = [];
-
-  constructor (...args) {
-    super(...args);
-  }
 
   componentWillMount () {
     this.storageListener = this.storage.onAccountsNames((accountsNames) => {
@@ -100,6 +105,7 @@ export default class TopBar extends Web3Component {
                   <ReportProblem />
                 </SubdomainDialog>
               </div>
+              <DappNav />
               <StatusLine />
             </div>
             <div className={styles.manageAccounts}>
@@ -231,7 +237,9 @@ export default class TopBar extends Web3Component {
     });
     // set default account
     this.props.web3.defaultAccount = account;
+    this.props.web3.settings.defaultAccount = account;
     this.context.web3.defaultAccount = account;
+    this.context.web3.settings.defaultAccount = account;
   }
 
   onAllAccounts = (accounts) => {
@@ -281,11 +289,4 @@ export default class TopBar extends Web3Component {
     });
   }
 
-  static propTypes = {
-    interceptor: React.PropTypes.object.isRequired,
-    web3: React.PropTypes.object.isRequired,
-    options: React.PropTypes.shape({
-      allAccounts: React.PropTypes.bool.isRequired
-    }).isRequired
-  };
 }

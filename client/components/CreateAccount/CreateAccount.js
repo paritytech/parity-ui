@@ -40,7 +40,7 @@ export default class AccountDetails extends Web3Component {
 
   renderForm () {
     const { password, isValid } = this.state;
-    const errorText = isValid ? null : 'fix errors below';
+    const errorText = !isValid && password ? 'fix errors below' : null;
     return (
       <div>
         <TextField

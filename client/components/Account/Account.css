@@ -8,3 +8,12 @@
   vertical-align: middle;
   margin-right: 3px;
 }
+
+.name {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 110px;
+  display: inline-block;
+  vertical-align: middle;
+}

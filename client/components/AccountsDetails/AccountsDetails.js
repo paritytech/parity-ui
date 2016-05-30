@@ -8,6 +8,7 @@ import AddIcon from 'material-ui/svg-icons/content/add';
 import Web3Component from '../Web3Component';
 import Identicon from '../Identicon';
 
+import resetStyles from '../../reset.css';
 import styles from './AccountsDetails.css';
 
 export default class AccountDetails extends Web3Component {
@@ -30,6 +31,7 @@ export default class AccountDetails extends Web3Component {
         title='Accounts Details'
         actions={this.renderDialogActions()}
         open={open}
+        className={resetStyles.reset}
         autoScrollBodyContent
         onRequestClose={::this.onCancel}
         >
