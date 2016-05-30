@@ -1,2 +1,14 @@
 src/
 npm-debug.log
+node_modules
+scripts
+test
+.babelrc
+.editorconfig
+.esintrc.json
+.gitignore
+.itanbul.yml
+.npmignore
+.travis.yml
+.CHANGELOG.md
+webpack.config.js

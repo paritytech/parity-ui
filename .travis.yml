@@ -26,4 +26,15 @@ script:
 
 after_success:
   - ./scripts/deploy-to-github-pages.sh
-  - ./scripts/publish.sh
+
+before_deploy:
+  - ./scripts/pre-publish.sh
+
+deploy:
+  provider: npm
+  email: adamgoldman7@gmail.com
+  api_key:
+    secure: lz1o7WTOIMcI6nA8CI23/27MtDktcAwvkR8UgPM7cK5vcmpGTW5tkOV5vGLZL26gX1sarJ/cl51uQ5Xl4ydolmFAaDxYMx7zvcH0UCjESFTr/BBnGZmPoVBnwqqzzw0hzil4yba0ZohoLpGou9VGOJTN/eRKGEdGTvaahDZkXNUBaWZpbqaDH/EPzeHvwCGJFaM2bBbHyNJHl1yIk/rD+0wx6voSM6ibsEC02Zsn9Pq37srKw5R+qvPtRJZzR43O5DqUSa+X2o5ypg1eUwjjVlp8UtPtVTyAwpYwyZNCW3oR9SXHH/ZJ5MIO7eETWpUXIxOHZlS0qkwbn69VU9Ma98aDh8Swln8akSOfUHQ1/ZZoQSxkM0+vz5Z3r2RVTo4xyXN4/mPpOlp8cVMfje59atVnzUI5CT81C+TqvkDTNe1U2qNW4fQ2OuKxcoo2FQUnn0qBA3hpg9zdHIZhnJSUCsLcswpbfaFaz1KBfrPp87UiXY0rNY2Qpr2QZLsq4n+7yHKl/5rfbe+ASlcGXhBQwur/EYuC0PBTEusGxSzJLXizPmLaQbzPtntaH75zw1hxh2vN6YlR/pYE6cP2IL8XAZABNL8IYRh0eeh32ZNtXfzNvszdizxnGMgQe6fINAT/6sHNb0fRl3NZnm3a3SfhN5ulW3pyIKXTvMge2KPyrk4=
+  on:
+    tags: true
+    repo: ethcore/dapps-react-ui
