@@ -2,16 +2,13 @@
 # See https://medium.com/@nthgergo/publishing-gh-pages-with-travis-ci-53a8270e87db
 set -o errexit
 
-SOURCE_BRANCH="master"
-
 # Don't deploy if
 # 1. Pull request
 # 2. Not source branch
 # 3. Not pushing GH tags
-if [[ ("$TRAVIS_PULL_REQUEST" != "false") || ("$TRAVIS_BRANCH" != "$SOURCE_BRANCH") || ( -z ${TRAVIS_TAG+x} ) ]]; then
+if [[ ("$TRAVIS_PULL_REQUEST" != "false") || ( -z ${TRAVIS_TAG+x} ) ]]; then
     echo 'Not deploying because:';
     if [[ ("$TRAVIS_PULL_REQUEST" != "false") ]]; then echo 'its a pull request'; fi
-    if [[ ("$TRAVIS_BRANCH" != "$SOURCE_BRANCH") ]]; then echo 'not src branch'; fi
     if [[ ( -z ${TRAVIS_TAG+x} ) ]]; then echo 'not tags'; fi
     exit 0
 fi
