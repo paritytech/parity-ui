@@ -67,6 +67,10 @@ describe('components/Call', () => {
       it('stringifies an object object', () => {
         expect(instance.formatParams([{ name: '1' }])).to.equal('{"name":"1"}');
       });
+
+      it('skips an undefined value', () => {
+        expect(instance.formatParams(['1', undefined, 3])).to.equal('"1", , 3');
+      });
     });
   });
 });
