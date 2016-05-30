@@ -1,12 +1,10 @@
-node_modules
-npm-debug.log
-build
-coverage
+node_modules/
+coverage/
 
-# Exclude compiled files
-/build
+# compiled files
+build/
 
-# Exclude IDE project folders
+# IDE project folders
 .idea
 *.sublime-project
 *.sublime-workspace
@@ -14,3 +12,6 @@ jsconfig.json
 
 # OS files
 .DS_STORE
+
+# Logs
+npm-debug.log
