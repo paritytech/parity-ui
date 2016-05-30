@@ -35,6 +35,14 @@ export default class {
     this.storage.setItem('lastAccount', acc, cb);
   }
 
+  getNotFirstRun (cb) {
+    this.storage.getItem('notFirstRun', cb);
+  }
+
+  saveNotFirstRun (cb) {
+    this.storage.setItem('notFirstRun', true, cb);
+  }
+
   getAccountsNames (cb) {
     this.storage.getItem('accountsNames', (names) => {
       try {
