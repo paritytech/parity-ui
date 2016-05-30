@@ -57,11 +57,6 @@ export default class TopBar extends Web3Component {
     ];
   }
 
-  componentDidMount () {
-    super.componentDidMount();
-    this.handleFirstRun();
-  }
-
   componentWillUnmount () {
     super.componentWillUnmount();
     this.storageListener();
@@ -166,6 +161,7 @@ export default class TopBar extends Web3Component {
 
   onTick (next) {
     this.context.web3.eth.getAccounts((err, allAccounts) => {
+      this.handleFirstRun(allAccounts);
       if (err) {
         next();
         return console.error(err);
@@ -270,20 +266,18 @@ export default class TopBar extends Web3Component {
     window.location.reload(true);
   }
 
-  handleFirstRun = () => {
-    this.storage.getNotFirstRun((notFirstRun) => {
+  handleFirstRun = (allAccounts) => {
+    this.handleFirstRun = () => {}; // change to noop after first tick
+    this.storage.getNotFirstRun(notFirstRun => {
       if (notFirstRun) {
         return;
       }
       this.storage.saveNotFirstRun();
-      // wait for first tick
-      setTimeout(() => {
-        if (this.state.allAccounts.length) {
-          return;
-        }
-        console.info('first run with no accounts, prompting to create account');
-        this.onOpenCreateAccount();
-      }, 1000);
+      if (allAccounts.length) {
+        return;
+      }
+      console.info('first run with no accounts, prompting to create account');
+      this.onOpenCreateAccount();
     });
   }
 

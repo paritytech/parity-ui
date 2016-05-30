@@ -5,9 +5,9 @@ import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import Dialog from 'material-ui/Dialog';
 
-import _ from 'lodash';
+import every from 'lodash.every';
 
-import validations from './validations.data';
+import validationsData from './validations.data';
 import FormValidationDisplay from '../FormValidationDisplay';
 import Identicon from '../Identicon';
 import styles from './CreateAccount.css';
@@ -15,7 +15,10 @@ import Web3Component from '../Web3Component/Web3Component';
 
 export default class AccountDetails extends Web3Component {
 
-  state = {};
+  state = {
+    validations: [],
+    isValid: false
+  };
 
   render () {
     const { open } = this.props;
@@ -36,14 +39,17 @@ export default class AccountDetails extends Web3Component {
   }
 
   renderForm () {
+    const { password, isValid } = this.state;
+    const errorText = isValid ? null : 'fix errors below';
     return (
       <div>
         <TextField
+          errorText={errorText}
           fullWidth
           type='password'
           name={'new-account-password'}
           floatingLabelText='Type password'
-          value={this.state.password}
+          value={password}
           onChange={this.modifyPassword}
         />
         {this.renderValidations()}
@@ -51,7 +57,7 @@ export default class AccountDetails extends Web3Component {
           label='Submit'
           className={styles.submit}
           primary
-          disabled={!this.isValid()}
+          disabled={!isValid}
           onTouchTap={this.submit}
         />
       </div>
@@ -66,27 +72,19 @@ export default class AccountDetails extends Web3Component {
 
     return (
       <div>
-        {validations.map(
+        {validationsData.map(
           (v, idx) => {
             return (
               <FormValidationDisplay
-                {...v}
+                text={v.text}
                 key={idx}
-                value={password}
+                isValid={this.state.validations[idx]}
               />
             );
           }
         )}
       </div>
     );
-  }
-
-  isValid = () => {
-    const { password } = this.state;
-    if (!password) {
-      return;
-    }
-    return _.every(validations, (v) => v.predicate(password));
   }
 
   renderCreatedAccount () {
@@ -121,7 +119,12 @@ export default class AccountDetails extends Web3Component {
   }
 
   modifyPassword = (evt) => {
-    this.setState({ password: evt.target.value });
+    const password = evt.target.value;
+    const validations = validationsData.map(v => v.predicate(password));
+    const isValid = every(validations);
+    this.setState({
+      password, isValid, validations
+    });
   }
 
   renderDialogActions () {
