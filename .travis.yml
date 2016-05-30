@@ -15,7 +15,7 @@ env:
 matrix:
   include:
   - env: SCRIPT=lint
-  - env: SCRIPT=coveralls
+  - env: SCRIPT=testOnce
 
 cache:
   directories:

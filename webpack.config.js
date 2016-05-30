@@ -89,13 +89,13 @@ module.exports = {
           NODE_ENV: JSON.stringify(ENV),
           RPC_ADDRESS: JSON.stringify(process.env.RPC_ADDRESS)
         }
-      })
+      }),
+      new WebpackErrorNotificationPlugin(/* strategy, options */)
     ];
 
     if (isProd) {
       plugins.push(new webpack.optimize.OccurrenceOrderPlugin(false));
       plugins.push(new webpack.optimize.DedupePlugin());
-      plugins.push(new WebpackErrorNotificationPlugin(/* strategy, options */));
       plugins.push(new webpack.optimize.UglifyJsPlugin({
         screwIe8: true,
         compress: {
