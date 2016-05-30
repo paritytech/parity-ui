@@ -8,7 +8,7 @@ SOURCE_BRANCH="master"
 # 1. Pull request
 # 2. Not source branch
 # 3. Not pushing GH tags
-if [[ ("$TRAVIS_PULL_REQUEST" != "false") || ("$TRAVIS_BRANCH" != "$SOURCE_BRANCH") || ( -z ${var+x} ) ]]; then
+if [[ ("$TRAVIS_PULL_REQUEST" != "false") || ("$TRAVIS_BRANCH" != "$SOURCE_BRANCH") || ( -z ${TRAVIS_TAG+x} ) ]]; then
     echo 'Not deploying';
     exit 0
 fi
