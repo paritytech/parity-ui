@@ -25,5 +25,5 @@ script:
   - if [ "$SCRIPT" ]; then npm run $SCRIPT; fi
 
 after_success:
-  - ./scripts/deploy-to-github-pages
-  - ./scripts/publish
+  - ./scripts/deploy-to-github-pages.sh
+  - ./scripts/publish.sh
