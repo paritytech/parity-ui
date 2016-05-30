@@ -36,10 +36,6 @@ export default class TopBar extends Web3Component {
 
   listeners = [];
 
-  constructor (...args) {
-    super(...args);
-  }
-
   componentWillMount () {
     this.storageListener = this.storage.onAccountsNames((accountsNames) => {
       if (isEqual(this.state.accountsNames, accountsNames)) {

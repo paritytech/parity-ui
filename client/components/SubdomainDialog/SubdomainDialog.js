@@ -3,8 +3,9 @@ import React from 'react';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 
-import {isUsingSubdomains} from '../appLink';
+import { isUsingSubdomains, appPrettyLink } from '../appLink';
 
+import resetStyles from '../../reset.css';
 import styles from './SubdomainDialog.css';
 
 export default class SubdomainDialog extends React.Component {
@@ -42,6 +43,7 @@ export default class SubdomainDialog extends React.Component {
         </a>
         <Dialog
           title='Proxy configuration'
+          className={resetStyles.reset}
           actions={this.renderDialogActions()}
           onRequestClose={this.close}
           open={isOpen}
@@ -62,7 +64,7 @@ export default class SubdomainDialog extends React.Component {
         <p>
           Instead of: <code>{window.location.toString()}</code>
           <br />
-          in your address bar you would see: <code>http://home.parity/</code>
+          in your address bar you would see: <code>{appPrettyLink()}</code>
         </p>
         <h3>To configure the routing use this <code>proxy.pac</code> file:</h3>
         <a target='proxy.pac' href={proxyPacLocation}><pre>{proxyPacLocation}</pre></a>
