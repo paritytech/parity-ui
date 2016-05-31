@@ -1,7 +1,9 @@
 node_modules/
 coverage/
 
+
 # compiled files
+index.js
 build/
 
 # IDE project folders
