@@ -19,16 +19,19 @@ pub struct File {
   pub mime: String,
 }
 
-fn file(name: &str, mime: &str) -> File {
-  File {
-    content: include_str!(name),
+#[inline]
+fn file(content: &str, mime: &str) -> Option<File> {
+  Some(File {
+    content: content.into(),
     mime: mime.into(),
-  }
+  })
 }
 
 pub fn handle(resource: &str) -> Option<File> {
   match resource {
-    "/" | "/index.html" | "" => file("./web/index.html"),
-    "/preact.js" => file("./web/preact.js"),
+    "/" | "/index.html" | "" => file(include_str!("./web/index.html"), "text/html"),
+    "/index.js" => file(include_str!("./web/index.js"), "application/javascript"),
+    "/preact.js" => file(include_str!("./web/preact.js"), "application/javascript"),
+    _ => None,
   }
 }
