@@ -29,7 +29,7 @@ fn file(content: &str, mime: &str) -> Option<File> {
 
 pub fn handle(resource: &str) -> Option<File> {
   match resource {
-    "/" | "/index.html" | "" => file(include_str!("./web/index.html"), "text/html"),
+    "/" | "/index.html" => file(include_str!("./web/index.html"), "text/html"),
     "/index.js" => file(include_str!("./web/index.js"), "application/javascript"),
     "/preact.js" => file(include_str!("./web/preact.js"), "application/javascript"),
     _ => None,
