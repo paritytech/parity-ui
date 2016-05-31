@@ -1,8 +1,8 @@
 {
   "name": "dapps-react-ui",
-  "version": "0.0.41",
+  "version": "0.0.44",
   "description": "React ui reusable components for dapps",
-  "main": "./src/index.js",
+  "main": "./index.js",
   "scripts": {
     "install": "napa alexvandesande/blockies",
     "start": "webpack-dev-server -d --history-api-fallback --hot --inline --progress --colors --port 3000",
@@ -17,7 +17,7 @@
     "testOnce": "mocha 'src/**/*.spec.js'",
     "prebuild": "npm run clean",
     "build": "NODE_ENV=production webpack --progress --colors",
-    "customPublish": "./scripts/publish.sh",
+    "localPublish": "./scripts/local-publish.sh",
     "clean": "rm build -rf"
   },
   "repository": {
@@ -35,6 +35,11 @@
   "homepage": "https://github.com/ethcore/dapps-react-ui#readme",
   "semistandard": {
     "parser": "babel-eslint"
+  },
+  "peerDependencies": {
+    "react": "^15.0.0",
+    "material-ui": "0.15.0",
+    "react-tap-event-plugin": "^1.0.0"
   },
   "devDependencies": {
     "babel-core": "^6.5.2",
@@ -68,8 +73,8 @@
     "napa": "^2.3.0",
     "postcss-loader": "^0.8.1",
     "pre-git": "^3.8.1",
-    "react": "^15.0.0",
     "react-addons-test-utils": "15.1.0",
+    "react": "^15.0.0",
     "react-dom": "^15.0.0",
     "react-hot-loader": "^1.3.0",
     "react-router": "^2.0.0",
@@ -83,15 +88,14 @@
     "webpack-dev-server": "^1.14.1",
     "webpack-error-notification": "0.1.6",
     "exports-loader": "0.6.3",
+    "react-tap-event-plugin": "^1.0.0",
     "webpack-hot-middleware": "^2.7.1"
   },
   "dependencies": {
     "classnames": "^2.2.3",
-    "ethereum-rpc-json": "0.0.0",
+    "ethereum-rpc-json": "*",
     "lodash.isequal": "^4.2.0",
-    "material-ui": "0.15.0",
     "napa": "2.3.0",
-    "react-tap-event-plugin": "^1.0.0",
     "web3": "0.16.0"
   },
   "config": {
