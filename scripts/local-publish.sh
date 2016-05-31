@@ -6,5 +6,6 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 "${DIR}/pre-publish.sh"
 npm publish
 rm -f "${DIR}/../index.js"
+rm -rf "${DIR}/../build"
 
 exit 0
