@@ -30,6 +30,7 @@ fn file(content: &str, mime: &str) -> Option<File> {
 pub fn handle(resource: &str) -> Option<File> {
   match resource {
     "/" | "/index.html" => file(include_str!("./web/index.html"), "text/html"),
+    "/favicon.ico" => file("", "image/ico"),
     "/index.js" => file(include_str!("./web/index.js"), "application/javascript"),
     "/preact.js" => file(include_str!("./web/preact.js"), "application/javascript"),
     "/milligram.css" => file(include_str!("./web/milligram.css"), "text/css"),
