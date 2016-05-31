@@ -32,6 +32,7 @@ pub fn handle(resource: &str) -> Option<File> {
     "/" | "/index.html" => file(include_str!("./web/index.html"), "text/html"),
     "/index.js" => file(include_str!("./web/index.js"), "application/javascript"),
     "/preact.js" => file(include_str!("./web/preact.js"), "application/javascript"),
+    "/milligram.css" => file(include_str!("./web/milligram.css"), "text/css"),
     _ => None,
   }
 }
