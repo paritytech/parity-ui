@@ -18,7 +18,7 @@ export default class RpcAutoComplete extends Component {
     filter: (searchText, key) => searchText === '' || key.toLowerCase().indexOf(searchText.toLowerCase()) !== -1,
     name: 'RpcAutoComplete', // avoid material ui key bug
     openOnFocus: true,
-    floatingLabelText: 'Method name'
+    floatingLabelText: 'Choose Method'
   };
 
   shouldComponentUpdate () {
