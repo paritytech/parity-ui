@@ -1,6 +1,5 @@
 src/
 build/
-node_modules/
 scripts/
 test/
 npm-debug.log
@@ -11,5 +10,5 @@ npm-debug.log
 .istanbul.yml
 .npmignore
 .travis.yml
-CHANGELOG.md
 webpack.config.js
+*.sublime-project

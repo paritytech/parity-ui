@@ -16,6 +16,9 @@ module.exports = {
     'docs/docs': './docs/docs.js'
   },
   output: {
+    library: 'dapps-react-ui',
+    libraryTarget: 'umd',
+    umdNamedDefine: true,
     path: path.join(__dirname, './build'),
     filename: '[name].js'
   },
@@ -94,17 +97,8 @@ module.exports = {
     ];
 
     if (isProd) {
-      plugins.push(new webpack.optimize.OccurrenceOrderPlugin(false));
+      plugins.push(new webpack.optimize.OccurrenceOrderPlugin());
       plugins.push(new webpack.optimize.DedupePlugin());
-      plugins.push(new webpack.optimize.UglifyJsPlugin({
-        screwIe8: true,
-        compress: {
-          warnings: false
-        },
-        output: {
-          comments: false
-        }
-      }));
     }
 
     return plugins;

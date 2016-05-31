@@ -1,11 +1,11 @@
 {
   "name": "dapps-react-ui",
-  "version": "0.0.45",
+  "version": "0.0.48",
   "description": "React ui reusable components for dapps",
   "main": "./index.js",
   "scripts": {
     "install": "napa alexvandesande/blockies",
-    "start": "webpack-dev-server -d --history-api-fallback --hot --inline --progress --colors --port 3000",
+    "start": "webpack-dev-server -d --history-api-fallback --hot --inline --progress --colors --port 3020",
     "startPerf": "NODE_ENV=perf-debug npm start",
     "startTest": "NODE_ENV=tests npm start",
     "webpack": "webpack",
@@ -90,13 +90,13 @@
     "webpack-error-notification": "0.1.6",
     "exports-loader": "0.6.3",
     "react-tap-event-plugin": "^1.0.0",
+    "napa": "2.3.0",
     "webpack-hot-middleware": "^2.7.1"
   },
   "dependencies": {
     "classnames": "^2.2.3",
     "ethereum-rpc-json": "*",
     "lodash.isequal": "^4.2.0",
-    "napa": "2.3.0",
     "web3": "0.16.0"
   },
   "config": {
