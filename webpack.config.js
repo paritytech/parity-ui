@@ -22,6 +22,11 @@ module.exports = {
     path: path.join(__dirname, './build'),
     filename: '[name].js'
   },
+  externals: [
+    /^material-ui/,
+    'react',
+    'react-tap-event-plugin'
+  ],
   module: {
     loaders: [
       {
@@ -89,7 +94,7 @@ module.exports = {
     var plugins = [
       new webpack.DefinePlugin({
         'process.env': {
-          NODE_ENV: JSON.stringify(ENV),
+          NODE_ENV: JSON.stringify('development'),
           RPC_ADDRESS: JSON.stringify(process.env.RPC_ADDRESS)
         }
       }),

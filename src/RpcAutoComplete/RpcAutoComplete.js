@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 
 import AutoComplete from 'material-ui/AutoComplete';
 import rpcMethods from 'ethereum-rpc-json';
+const rpcMethodsNames = rpcMethods.map(m => m.name);
 
 export default class RpcAutoComplete extends Component {
 
@@ -25,14 +26,10 @@ export default class RpcAutoComplete extends Component {
     return false;
   }
 
-  componentWillMount () {
-    this.rpcMethodsNames = rpcMethods.map(m => m.name);
-  }
-
   render () {
     return (
       <AutoComplete
-        dataSource={ this.rpcMethodsNames }
+        dataSource={ rpcMethodsNames }
         { ...this.props }
       />
     );
