@@ -14,4 +14,4 @@ jsconfig.json
 .DS_STORE
 
 # Logs
-npm-debug.log
+*.log*
