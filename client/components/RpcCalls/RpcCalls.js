@@ -11,7 +11,7 @@ import AnimateChildren from '../../components-compositors/Animated/children';
 import JsonEditor from '../JsonEditor';
 import Calls from '../Calls';
 import Markdown from '../Markdown';
-import styles from './style.css';
+import styles from './RpcCalls.css';
 import rpcData from '../../data/rpc.json';
 import RpcNav from '../RpcNav';
 

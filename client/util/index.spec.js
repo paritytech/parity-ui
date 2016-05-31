@@ -1,4 +1,4 @@
-import { toPromise, stringifyIfObject, identity } from './index';
+import { toPromise, stringifyIfObject, identity } from './';
 
 describe('util/index', () => {
   describe('toPromise', () => {

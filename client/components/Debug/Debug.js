@@ -1,19 +1,19 @@
 
 import React, { Component, PropTypes } from 'react';
 
-import style from './style.css';
+import styles from './Debug.css';
 
 export default class Debug extends Component {
 
   render () {
     return (
       <div className='dapp-flex-content'>
-        <main className={`dapp-content ${style.container}`}>
+        <main className={`dapp-content ${styles.container}`}>
           <div className={'dapp-container'}>
             <h1><span>Debugging</span> logs</h1>
             {this.renderActions()}
-            <h2 className={style.subheader}>{this.props.debug.levels || '-'}</h2>
-            <div className={style.logs}>
+            <h2 className={styles.subheader}>{this.props.debug.levels || '-'}</h2>
+            <div className={styles.logs}>
               {this.renderLogs()}
             </div>
           </div>
@@ -24,7 +24,7 @@ export default class Debug extends Component {
 
   renderLogs () {
     return this.props.debug.logs.slice().reverse().map((log, idx) => (
-      <pre className={style.log} key={idx}>
+      <pre className={styles.log} key={idx}>
         {log}
       </pre>
     ));
@@ -33,7 +33,7 @@ export default class Debug extends Component {
   renderActions () {
     const toggleClass = this.props.debug.logging ? 'icon-control-pause' : 'icon-control-play';
     return (
-      <div className={style.actions}>
+      <div className={styles.actions}>
         <a><i onClick={this.toggle} className={toggleClass}></i></a>
         <a><i onClick={this.clear} className='icon-trash'></i></a>
       </div>
