@@ -3,9 +3,8 @@ import React, { Component, PropTypes } from 'react';
 import _ from 'lodash';
 
 import Toggle from 'material-ui/Toggle/Toggle';
-import AutoComplete from '../AutoComplete';
 import TextField from 'material-ui/TextField';
-
+import { RpcAutoComplete } from 'dapps-react-ui';
 import { formatRpcMd } from '../../util/rpc-md';
 import AnimateChildren from '../../components-compositors/Animated/children';
 import JsonEditor from '../JsonEditor';
@@ -16,11 +15,10 @@ import rpcData from '../../data/rpc.json';
 import RpcNav from '../RpcNav';
 
 const rpcMethods = _.sortBy(rpcData.methods, 'name');
-const rpcMethodsNames = rpcMethods.map((m) => m.name);
 
 export default class RpcCalls extends Component {
 
-  state = {}
+  state = {};
 
   componentWillReceiveProps (nextProps) {
     const { paramsValues, params } = nextProps.rpc.selectedMethod;
@@ -37,12 +35,6 @@ export default class RpcCalls extends Component {
         this.setJsonEditorValue();
       }
     }
-  }
-
-  shouldComponentUpdate (nextProps, nextState) {
-    return this.selectedMethodChanged(nextProps) ||
-            this.prevCallsChanged(nextProps) ||
-            this.stateChanged(nextState);
   }
 
   render () {
@@ -122,12 +114,10 @@ export default class RpcCalls extends Component {
     const { desc } = this.props.rpc.selectedMethod;
     return (
       <div>
-        <AutoComplete
+        <RpcAutoComplete
           style={{ marginTop: 0 }}
-          floatingLabelText='Choose method'
-          dataSource={rpcMethodsNames}
           onNewRequest={this.handleMethodChange}
-          {...this._test('autocomplete')}
+          { ...this._test('rpcAutoComplete')}
         />
         <div>
           <Markdown val={desc} />
