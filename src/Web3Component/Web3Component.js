@@ -1,5 +1,5 @@
-
-import React, { Component, PropTypes } from 'react';
+// no need for react since not using JSX
+import { Component, PropTypes } from 'react';
 
 export default class Web3Component extends Component {
 

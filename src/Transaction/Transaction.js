@@ -61,14 +61,14 @@ export default class Transaction extends Web3Component {
           name='password'
           floatingLabelText='password'
           type='password'
-          value={this.state.password}
+          value={ this.state.password }
         />
         <TextField
           onChange={ this.modifyGasPrice }
           name='gasPrice'
           floatingLabelText='gas price'
           type='number'
-          value={this.state.gasPrice}
+          value={ this.state.gasPrice }
         />
       </div>
     );

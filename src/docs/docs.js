@@ -4,8 +4,9 @@ import ReactDOM from 'react-dom';
 
 import Web3Provider from '../Web3Provider';
 import Web3 from 'web3';
-const http = new Web3.providers.HttpProvider('/rpc/');
-const web3 = new Web3(http);
+import Web3WsProvider from '../util/Web3WebSocketProvider';
+const web3WsProvider = new Web3WsProvider();
+const web3 = new Web3(web3WsProvider);
 
 import AccountWeb3Docs from '../AccountWeb3/AccountWeb3.docs';
 import TransactionWeb3Docs from '../TransactionWeb3/TransactionWeb3.docs';

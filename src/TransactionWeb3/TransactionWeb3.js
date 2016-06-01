@@ -21,7 +21,7 @@ export default class TransactionWeb3 extends Web3Component {
   render () {
     const value = this.context.web3.fromWei(this.props.value);
     return (
-      <Transaction { ...this.props } { ...value }/>
+      <Transaction { ...this.props } { ...value } />
     );
   }
 

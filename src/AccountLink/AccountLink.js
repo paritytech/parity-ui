@@ -24,7 +24,7 @@ export default class AccountLink extends Component {
       <a
         href={ this.state.link }
         target='_blank'
-        className={ `${styles.container} ${className}`}
+        className={ `${styles.container} ${className}` }
         >
         { children }
       </a>
