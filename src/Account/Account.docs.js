@@ -1,21 +1,16 @@
 import React, { Component } from 'react';
-import Web3Provider from '../Web3Provider';
-import Web3 from 'web3';
-const http = new Web3.providers.HttpProvider('/rpc/');
-const web3 = new Web3(http);
 
 import Account from './';
 
-const address = '0xe6378318641F99c2B6624700B3f342D1c6E84852';
+const address = '0x52D0BF77acE2d1fB2370267911Ff7Df9CdB4af2E';
+const balance = 2345892754628937456;
 
 export default class AccountDocs extends Component {
   render () {
     return (
       <div>
         <h1>Account</h1>
-        <Web3Provider web3={ web3 }>
-          <Account address={ address } />
-        </Web3Provider>
+        <Account address={ address } balance={ balance } />
       </div>
     );
   }

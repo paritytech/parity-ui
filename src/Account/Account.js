@@ -1,45 +1,26 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 
 import styles from './Account.css';
 
-import Web3Component from '../Web3Component';
 import Identicon from '../Identicon';
 import AccountLink from '../AccountLink';
 
-export default class Account extends Web3Component {
+export default class Account extends Component {
 
-  state = {
-    balance: null
+  static propTypes = {
+    className: PropTypes.string,
+    address: PropTypes.string.isRequired,
+    balance: PropTypes.oneOfType([PropTypes.string, PropTypes.object, PropTypes.number]).isRequired,
+    name: PropTypes.string
   };
 
-  componentDidMount () {
-    this.fetchBalance(this.props.address);
-  }
-
-  componentWillReceiveProps (newProps) {
-    this.fetchBalance(newProps.address);
-  }
-
-  fetchBalance (address) {
-    this.context.web3.eth.getBalance(address, (err, balance) => {
-      if (err) {
-        return;
-      }
-
-      this.setState({
-        balance
-      });
-    });
-  }
-
   render () {
-    const acc = this.props.address;
-    const address = this.context.web3.toChecksumAddress(acc);
+    const { address, balance, name, className } = this.props;
     return (
-      <div className={ styles.account } title={ this.renderTitle(address) }>
-        <Identicon seed={ acc } />
-        { this.renderName(address) }
-        { this.renderBalance() }
+      <div className={ `${styles.acc} ${className}` } title={ this.renderTitle(address) }>
+        <Identicon seed={ address } />
+        { this.renderName(address, name) }
+        { this.renderBalance(balance) }
       </div>
     );
   }
@@ -52,21 +33,19 @@ export default class Account extends Web3Component {
     return address;
   }
 
-  renderBalance () {
-    const { balance } = this.state;
+  renderBalance (balance) {
     if (balance === null) {
       return (
         <span> (...)</span>
       );
     }
-    const val = this.context.web3.fromWei(balance);
+    balance = +balance;
     return (
-      <span> { val.toFixed(2) } Eth</span>
+      <span> { balance.toFixed(2) } Eth</span>
     );
   }
 
-  renderName (address) {
-    const { name } = this.props;
+  renderName (address, name) {
     if (!name) {
       return (
         <AccountLink acc={ address }>
@@ -93,10 +72,5 @@ export default class Account extends Web3Component {
     const len = acc.length;
     return acc.slice(2, 8) + '..' + acc.slice(len - 7);
   }
-
-  static propTypes = {
-    address: React.PropTypes.string.isRequired,
-    name: React.PropTypes.string
-  };
 
 }

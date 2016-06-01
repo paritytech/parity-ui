@@ -1,11 +1,16 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 
 import styles from './Identicon.css';
 import AccountLink from '../AccountLink';
 
 import * as blockies from 'blockies/blockies';
 
-export default class Identicon extends React.Component {
+export default class Identicon extends Component {
+
+  static propTypes = {
+    className: PropTypes.string,
+    seed: PropTypes.string.isRequired
+  };
 
   state = {
     src: ''
@@ -24,7 +29,7 @@ export default class Identicon extends React.Component {
 
   updateIcon (seed) {
     const dataUrl = blockies.create({
-      seed: seed,
+      seed: seed.toLowerCase(), // in case it's a checksummed address
       size: 8,
       scale: 8
     }).toDataURL();
@@ -35,14 +40,13 @@ export default class Identicon extends React.Component {
   }
 
   render () {
+    const { seed, className } = this.props;
+
     return (
-      <AccountLink acc={ this.props.seed }>
+      <AccountLink acc={ seed } className={ className }>
         <img src={ this.state.src } className={ styles.icon } />
       </AccountLink>
     );
   }
 
-  static propTypes = {
-    seed: React.PropTypes.string.isRequired
-  };
 }

@@ -1,6 +1,16 @@
-import React from 'react';
 
-export default class Web3Provider extends React.Component {
+import React, { Component, PropTypes } from 'react';
+
+export default class Web3Provider extends Component {
+
+  static childContextTypes = {
+    web3: PropTypes.object.isRequired
+  };
+
+  static propTypes = {
+    web3: PropTypes.object.isRequired,
+    children: PropTypes.element
+  };
 
   getChildContext () {
     return {
@@ -12,12 +22,4 @@ export default class Web3Provider extends React.Component {
     return this.props.children;
   }
 
-  static childContextTypes = {
-    web3: React.PropTypes.object.isRequired
-  };
-
-  static propTypes = {
-    web3: React.PropTypes.object.isRequired,
-    children: React.PropTypes.element
-  };
 }

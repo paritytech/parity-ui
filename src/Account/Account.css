@@ -1,9 +1,9 @@
-.account {
+.acc {
   text-align: center;
   display: inline-block;
 }
 
-.account > * {
+.acc > * {
   display: block;
 }
 
@@ -11,7 +11,7 @@
   font-family: monospace;
 }
 
-.account img {
+.acc img {
   width: 28px;
   height: 28px;
   vertical-align: middle;
