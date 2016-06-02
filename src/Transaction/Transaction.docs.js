@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import Transaction from './';
 
 const transaction = {
-  id: 1,
+  id: '00x1',
   from: '0x52D0BF77acE2d1fB2370267911Ff7Df9CdB4af2E',
   to: '0xe6378318641F99c2B6624700B3f342D1c6E84852',
   gas: 10,

@@ -8,7 +8,7 @@ const web3 = new Web3(http);
 import Transaction from './';
 
 const transaction = {
-  id: 1,
+  id: '001x0',
   from: '0xe6378318641F99c2B6624700B3f342D1c6E84852',
   to: '0xe6378318641F99c2B6624700B3f342D1c6E84852',
   gas: 10,
