@@ -17,6 +17,7 @@
 pub struct File {
   pub content: String,
   pub mime: String,
+  pub safe_to_embed: bool,
 }
 
 #[inline]
@@ -24,17 +25,22 @@ fn file(content: &str, mime: &str) -> Option<File> {
   Some(File {
     content: content.into(),
     mime: mime.into(),
+    safe_to_embed: false,
   })
 }
 
 pub fn handle(resource: &str) -> Option<File> {
   match resource {
     "/" | "/index.html" => file(include_str!("./web/index.html"), "text/html"),
-    "/count.html" => file(include_str!("./web/count.html"), "text/html"),
     "/favicon.ico" => file("", "image/ico"),
     "/index.js" => file(include_str!("./web/index.js"), "application/javascript"),
     "/preact.js" => file(include_str!("./web/preact.js"), "application/javascript"),
     "/milligram.css" => file(include_str!("./web/milligram.css"), "text/css"),
+    "/count.html" => Some(File {
+      content: include_str!("./web/count.html").into(), 
+      mime: "text/html".into(),
+      safe_to_embed: true
+    }),
     _ => None,
   }
 }
