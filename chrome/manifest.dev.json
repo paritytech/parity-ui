@@ -1,0 +1,16 @@
+{
+  "version": "0.0.0",
+  "name": "parity-sys-ui",
+  "manifest_version": 2,
+  "description": "Parity system ui",
+  "browser_action": {
+    "default_title": "Parity system ui",
+    "default_popup": "popup.html",
+    "default_icon": "img/icon-16.png"
+  },
+  "background": {
+    "page": "background.html"
+  },
+  "permissions": [ "storage" ],
+  "content_security_policy": "default-src 'self'; script-src 'self' http://localhost:3030 https://localhost:3030 'unsafe-eval'; connect-src ws://localhost:8180 http://localhost:3030 https://localhost:3030; style-src * 'unsafe-inline' 'self' blob:; img-src 'self' data:;"
+}

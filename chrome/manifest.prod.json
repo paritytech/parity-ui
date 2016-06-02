@@ -1,0 +1,20 @@
+{
+  "version": "0.0.0",
+  "name": "parity-sys-ui",
+  "manifest_version": 2,
+  "description": "Parity system ui",
+  "browser_action": {
+    "default_title": "React Chrome Extension Example",
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "16": "img/icon-16.png",
+    "48": "img/icon-48.png",
+    "128": "img/icon-128.png"
+  },
+  "background": {
+    "page": "background.html"
+  },
+  "permissions": [ "storage" ],
+  "content_security_policy": "default-src 'self'; connect-src ws://localhost:8180; script-src 'self'; style-src * 'unsafe-inline'; img-src 'self' data:;"
+}
