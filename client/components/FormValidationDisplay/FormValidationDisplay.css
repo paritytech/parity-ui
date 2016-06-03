@@ -1,0 +1,16 @@
+.container {
+  transition: color 0.5s;
+}
+
+.container svg {
+  transition: color 0.5s;
+}
+
+.container.isValid {
+  color: green;
+}
+
+.container.isValid svg {
+  transition: color 0.5s;
+  fill: green !important;
+}

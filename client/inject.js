@@ -1,4 +1,5 @@
 import './index.html';
+import styles from './reset.css';
 
 import ReactDOM from 'react-dom';
 import React from 'react';
@@ -13,7 +14,7 @@ import web3extensions from './components/web3.extensions';
 import Web3Provider from './components/Web3Provider';
 import TopBar from './components/TopBar';
 import Interceptor from './components/TopBar/Interceptor';
-import readInjectOptions from './components/readInjectOptions';
+import readInjectOptions from './utils/readInjectOptions';
 
 const http = new Web3.providers.HttpProvider('/rpc/');
 const interceptor = new Interceptor(http);
@@ -25,17 +26,21 @@ rawWeb3._extend(web3extensions(rawWeb3));
 global.web3 = web3;
 
 const options = readInjectOptions();
+
 // Render account chooser
 const el = document.createElement('div');
 document.querySelector('html').appendChild(el);
 
 ReactDOM.render(
-  <Web3Provider web3={rawWeb3}>
-    <TopBar
-      interceptor={interceptor}
-      web3={web3}
-      options={options}
-      />
-  </Web3Provider>,
+  // wrapping id used to resest css, see inject.css
+  <div className={styles.reset}>
+    <Web3Provider web3={rawWeb3}>
+      <TopBar
+        interceptor={interceptor}
+        web3={web3}
+        options={options}
+        />
+    </Web3Provider>
+  </div>,
   el
 );
