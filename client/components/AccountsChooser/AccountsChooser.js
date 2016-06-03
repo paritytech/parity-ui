@@ -23,10 +23,12 @@ export default class AccountChooser extends Web3Component {
   onTick (next) {
     this.context.web3.eth.getAccounts((err, accounts) => {
       if (err) {
+        next(10);
         return;
       }
 
       if (isEqual(accounts, this.state.accounts)) {
+        next(5);
         return;
       }
 

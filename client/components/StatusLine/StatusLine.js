@@ -23,6 +23,7 @@ export default class StatusLine extends Web3Component {
 
   onTick (next) {
     const {web3} = this.context;
+    let errorCalled = false;
     const handleError = (f) => (err, data) => {
       if (err) {
         console.error(err);
@@ -30,7 +31,11 @@ export default class StatusLine extends Web3Component {
           isError: true
         });
         // Make sure to call next even if we have an error.
-        next();
+        if (!errorCalled) {
+          next(5);
+          // Never call next callback in case of error in the same context.
+          errorCalled = true;
+        }
         return;
       }
       this.setState({
