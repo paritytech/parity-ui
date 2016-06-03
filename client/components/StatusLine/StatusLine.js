@@ -28,7 +28,8 @@ export default class StatusLine extends Web3Component {
       if (err) {
         console.error(err);
         this.setState({
-          isError: true
+          isError: true,
+          isReady: false
         });
         // Make sure to call next even if we have an error.
         if (!errorCalled) {
@@ -47,6 +48,10 @@ export default class StatusLine extends Web3Component {
     // Syncing
     web3.eth.getSyncing(handleError(syncing => {
       next();
+
+      this.setState({
+        isReady: true
+      });
 
       if (!syncing) {
         this.setState({
@@ -79,7 +84,7 @@ export default class StatusLine extends Web3Component {
   }
 
   render () {
-    if (this.state.isReady) {
+    if (!this.state.isReady) {
       return (
         <div className={styles.status}>...</div>
       );
