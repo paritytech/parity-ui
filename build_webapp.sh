@@ -4,16 +4,16 @@ set -e
 
 # This script assumes following directory structure:
 # - parity-idmanager-rs
-# - parity-web-ui ($ git clone https://github.com/ethcore/parity-web-ui.git)
+# - parity-dapps-home ($ git clone https://github.com/ethcore/parity-dapps-home.git)
 
-cd ../parity-web-ui
+cd ../parity-dapps-home
 rm static -R || true
 npm run build
 # Back
 cd -
 cd ./src/web
 rm -rf *
-UI=../../../parity-web-ui/static
+UI=../../../parity-dapps-home/static
 
 cp ${UI}/inject.js .
 cp ${UI}/home.js .

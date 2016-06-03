@@ -32,10 +32,10 @@ impl WebApp for App {
 
   fn info(&self) -> Info {
     Info {
-      name: "Identity Manager",
+      name: "Parity Home Screen",
       version: env!("CARGO_PKG_VERSION"),
       author: "Ethcore <admin@ethcore.io>",
-      description: "Injectable identity manager for Parity",
+      description: "Home Screen and injectable topbar for Parity Dapps.",
       icon_url: "icon.png",
     }
   }
