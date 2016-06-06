@@ -59,6 +59,7 @@
     "lodash.every": "4.4.0",
     "lodash.isequal": "^4.2.0",
     "material-ui": "0.15.0",
+    "react-copy-to-clipboard": "^4.1.0",
     "react-tap-event-plugin": "^1.0.0",
     "web3": "^0.15.3"
   },
