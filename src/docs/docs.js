@@ -19,6 +19,8 @@ ReactDOM.render(
   <MuiThemeProvider>
     <Web3Provider web3={ web3 }>
       <div>
+        <TransactionWeb3Docs />
+        <hr />
         <RpcAutoCompleteDocs />
         <hr />
         <AccountLinkDocs />
@@ -26,8 +28,6 @@ ReactDOM.render(
         <IdenticonDocs />
         <hr />
         <AccountWeb3Docs />
-        <hr />
-        <TransactionWeb3Docs />
         <hr />
       </div>
     </Web3Provider>

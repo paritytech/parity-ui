@@ -7,7 +7,7 @@ export default class TransactionWeb3 extends Web3Component {
 
   static propTypes = {
     className: PropTypes.string,
-    id: PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired,
     from: PropTypes.string.isRequired,
     gasPrice: PropTypes.any,
     gas: PropTypes.any,
@@ -21,7 +21,7 @@ export default class TransactionWeb3 extends Web3Component {
   render () {
     const value = this.context.web3.fromWei(this.props.value);
     return (
-      <Transaction { ...this.props } { ...value } />
+      <Transaction { ...this.props } value={ value } />
     );
   }
 

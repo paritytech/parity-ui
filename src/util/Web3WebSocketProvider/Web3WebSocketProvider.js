@@ -44,24 +44,12 @@ export default class Web3WebSocketProvider {
     }
     this.id++;
     const { id } = this;
-    // const payload = this.toPayload(method, params, id);
     this.ws.send(JSON.stringify(payload));
     if (!cb) {
       return;
     }
 
     this.callbacks[id] = cb;
-  }
-
-  sendRawAsync () {
-
-  }
-
-  toPayload (method, params, id) {
-    return JSON.stringify({
-      method, params, id,
-      jsonrpc: '2.0'
-    });
   }
 
   executeQueue () {
@@ -71,6 +59,7 @@ export default class Web3WebSocketProvider {
     });
   }
 
+  // Compatibility with rest of W3 providers
   isConnected () {
     return this.isWsConnected;
   }

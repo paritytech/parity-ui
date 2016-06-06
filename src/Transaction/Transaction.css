@@ -1,6 +1,21 @@
-.container > * {
+.mainContainer > * {
   display: inline-block;
-  vertical-align: bottom;
+  vertical-align: middle;
+}
+
+.bottomContainer {
+  display: inline-block;
+  min-width: 180px;
+  color: rgba(0, 0, 0, .3);
+  font-size: .8em;
+}
+
+.bottomContainer > * {
+  float: left;
+}
+
+.transaction {
+  margin-right: 30px;
 }
 
 .transaction > * {
@@ -21,7 +36,8 @@
   text-align: center;
   margin-right: 10px;
   margin-left: 10px;
-  padding-top: 25px;
+  position: relative;
+  top: -20px;
 }
 
 .inputs {
@@ -32,8 +48,52 @@
   top: -15px; /* due to material ui weird styling */
 }
 
-.miningTime {
-  float: right;
+.total {
+  font-size: 0.6em;
+  opacity: .5;
+}
+
+.confirmButton {
+  margin-bottom: 10px;
+  display: block !important;
+}
+
+/* the link that opens the rejection form */
+.reject {
+  opacity: .7;
+}
+
+.reject a {
+  cursor: pointer;
+  color: #00e;
+  opacity: .7;
+}
+
+/* the rejection button itself, once .reject has been pressed */
+.rejectButton {
+  display: block !important;
+  margin-bottom: 5px;
+}
+
+.rejectText {
+  margin-bottom: 10px;
+}
+
+.closeRejectText {
+  cursor: pointer;
+  display: block;
+  color: #00e;
+  opacity: .7;
+}
+
+.spinner {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+}
+
+.spinner img {
+  max-width: 100%;
 }
 
 .miningTime svg {
@@ -43,25 +103,23 @@
   bottom: -3px;
 }
 
-.miningTime:after {
+.fee {
+  background: url('../assets/pickaxe.png');
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+}
+
+.feeSlider {
+  margin-top: 5px;
+  margin-bottom: 20px;
+}
+
+.toggleGasButton {
+  cursor: pointer;
+  float: right;
+}
+
+.toggleGasButton:after {
   clear: both;
-}
-
-.total {
-  margin-right: 10px;
-  font-size: 0.8em;
-  opacity: .8;
-}
-
-.actions {
-  position: relative;
-  top: -5px;
-}
-
-.action {
-  display: block !important;
-}
-
-.action:first-child {
-  margin-bottom: 5px;
 }
