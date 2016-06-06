@@ -273,7 +273,6 @@ export default class Transaction extends Web3Component {
   }
 
   modifyFee = (fee) => {
-    debugger
     const totalValue = fee + this.props.value;
     const estimatedMiningTime = this.getEstimatedMiningTime(fee);
     this.setState({ fee, totalValue, estimatedMiningTime });
