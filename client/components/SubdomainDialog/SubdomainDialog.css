@@ -14,3 +14,20 @@
   padding: 10px;
   border: 1px solid #ddd;
 }
+
+.copiedToClipboardMsg.hidden {
+  opacity: 1;
+}
+
+.copiedToClipboardMsg {
+  opacity: 0;
+  transition: 0.5s opacity;
+}
+
+.copyToClipboardIcon {
+  height: 20px !important;
+  width: 20px !important;
+  margin-right: 4px;
+  margin-bottom: -5px;
+  cursor: pointer;
+}

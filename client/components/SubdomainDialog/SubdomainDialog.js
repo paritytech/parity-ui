@@ -2,6 +2,8 @@ import React from 'react';
 
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
+import AssignmentIcon from 'material-ui/svg-icons/action/assignment';
+import CopyToClipboard from 'react-copy-to-clipboard';
 
 import { isUsingSubdomains, appPrettyLink } from '../appLink';
 
@@ -11,7 +13,8 @@ import styles from './SubdomainDialog.css';
 export default class SubdomainDialog extends React.Component {
 
   state = {
-    isOpen: false
+    isOpen: false,
+    clipboardMsgOpen: false
   };
 
   open = () => {
@@ -66,8 +69,17 @@ export default class SubdomainDialog extends React.Component {
           <br />
           in your address bar you would see: <code>{appPrettyLink()}</code>
         </p>
-        <h3>To configure the routing use this <code>proxy.pac</code> file:</h3>
-        <a target='proxy.pac' href={proxyPacLocation}><pre>{proxyPacLocation}</pre></a>
+        <h3>To configure the routing add the following link to your proxy configuration url</h3>
+        <pre>
+          <CopyToClipboard
+            text={proxyPacLocation}
+            onCopy={this.onCopyToClipboard}
+            >
+            <AssignmentIcon className={styles.copyToClipboardIcon} />
+          </CopyToClipboard>
+          <span>{ proxyPacLocation }</span>
+          { this.renderCopiedToClipboardmsg() }
+        </pre>
         <h3>Follow those links to learn how to configure your proxy settings:</h3>
         <ul>
           <li><a target='_blank' href='https://support.apple.com/kb/PH18553'>
@@ -82,6 +94,19 @@ export default class SubdomainDialog extends React.Component {
         </ul>
       </div>
     );
+  }
+
+  onCopyToClipboard = () => {
+    this.setState({ clipboardMsgOpen: true });
+    setTimeout(() => {
+      this.setState({ clipboardMsgOpen: false });
+    }, 5000);
+  }
+
+  renderCopiedToClipboardmsg () {
+    const hiddenClass = this.state.clipboardMsgOpen ? styles.hidden : '';
+
+    return <span className={ `${styles.copiedToClipboardMsg} ${hiddenClass}` }> | Copied to clipboard!</span>;
   }
 
   getProxyPacLocation () {
