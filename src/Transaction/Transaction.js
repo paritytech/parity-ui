@@ -53,14 +53,16 @@ export default class Transaction extends Web3Component {
   render () {
     const { from, to, value, className } = this.props;
     return (
-      <div className={ className }>
+      <div className={ `${styles.container} ${className}` }>
         <div className={ styles.mainContainer }>
           { this.renderTransaction(from, to, value) }
-          { this.renderConfirmForm() }
-          { this.renderRejectForm() }
+          <div className={ styles.forms }>
+            { this.renderConfirmForm() }
+            { this.renderRejectForm() }
+          </div>
         </div>
         <div className={ styles.bottomContainer }>
-          { this.renderFeePrice() }
+          { this.renderFee() }
           { this.renderEstimatedMinimgTime() }
           { this.renderData() }
           { this.renderFeeCustomization() }
@@ -94,7 +96,7 @@ export default class Transaction extends Web3Component {
     }
 
     return (
-      <div className={ styles.form }>
+      <div className={ styles.confirmForm }>
         <TextField
           onChange={ this.modifyPassword }
           name='password'
@@ -173,7 +175,7 @@ export default class Transaction extends Web3Component {
     }, 1000);
   }
 
-  renderFeePrice () {
+  renderFee () {
     const { fee } = this.state;
     return (
       <div>
@@ -181,6 +183,7 @@ export default class Transaction extends Web3Component {
           className={ styles.fee }
           onClick={ this.toggleFeeCustomization }
           data-tip
+          data-place='right'
           data-for='fee'
           data-effect='solid'
           >
@@ -201,6 +204,7 @@ export default class Transaction extends Web3Component {
         <span
           className={ styles.miningTime }
           data-tip
+          data-place='right'
           data-for='miningTime'
           data-effect='solid'
           >
@@ -221,6 +225,7 @@ export default class Transaction extends Web3Component {
       <div
         className={ styles.data }
         data-tip
+        data-place='right'
         data-for='data'
         data-effect='solid'
         >
@@ -268,6 +273,7 @@ export default class Transaction extends Web3Component {
   }
 
   modifyFee = (fee) => {
+    debugger
     const totalValue = fee + this.props.value;
     const estimatedMiningTime = this.getEstimatedMiningTime(fee);
     this.setState({ fee, totalValue, estimatedMiningTime });
@@ -314,7 +320,7 @@ export default class Transaction extends Web3Component {
           { this.state.totalValue } ETH
         </div>
         <ReactTooltip id='totalValue'>
-          The value of the transaction including the mining fee.
+          The value of the transaction including the mining fee. <br />
           This is the maximum amount of ether that you will pay.
         </ReactTooltip>
       </div>
