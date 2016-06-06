@@ -103,6 +103,13 @@
   bottom: -3px;
 }
 
+.data svg {
+  width: 16px !important;
+  height: 16px !important;
+  position: relative;
+  bottom: -3px;
+}
+
 .fee {
   background: url('../assets/pickaxe.png');
   display: inline-block;
@@ -111,15 +118,8 @@
 }
 
 .feeSlider {
-  margin-top: 5px;
-  margin-bottom: 20px;
-}
-
-.toggleGasButton {
-  cursor: pointer;
-  float: right;
-}
-
-.toggleGasButton:after {
+  float: none;
   clear: both;
+  margin-top: 35px;
+  margin-bottom: 20px;
 }

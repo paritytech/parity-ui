@@ -10,14 +10,14 @@ export default class AnimateChildren extends Component {
     return (
       <ReactCSSTransitionGroup
         component='div'
-        className={className}
+        className={ className }
         transitionName='transition'
         transitionAppear
-        transitionAppearTimeout={0}
-        transitionLeaveTimeout={0}
-        transitionEnterTimeout={0}
+        transitionAppearTimeout={ 0 }
+        transitionLeaveTimeout={ 0 }
+        transitionEnterTimeout={ 0 }
         >
-        {this.renderChildren()}
+        { this.renderChildren() }
       </ReactCSSTransitionGroup>
     );
   }

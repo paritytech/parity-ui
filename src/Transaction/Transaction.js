@@ -7,7 +7,6 @@ import HourGlassIcon from 'material-ui/svg-icons/action/hourglass-empty';
 import DescriptionIcon from 'material-ui/svg-icons/action/description';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
-import AnimateChildren from '../components-compositors/Animated/children';
 // todo [adgo] - replace to Account without Web3
 import AccountWeb3 from '../AccountWeb3';
 import Web3Component from '../Web3Component';
@@ -57,15 +56,14 @@ export default class Transaction extends Web3Component {
       <div className={ className }>
         <div className={ styles.mainContainer }>
           { this.renderTransaction(from, to, value) }
-          <AnimateChildren absolute>
-            { this.renderConfirmForm() }
-            { this.renderRejectForm() }
-          </AnimateChildren>
+          { this.renderConfirmForm() }
+          { this.renderRejectForm() }
         </div>
         <div className={ styles.bottomContainer }>
           { this.renderFeePrice() }
           { this.renderEstimatedMinimgTime() }
           { this.renderData() }
+          { this.renderFeeCustomization() }
         </div>
       </div>
     );
@@ -185,11 +183,9 @@ export default class Transaction extends Web3Component {
           data-tip
           data-for='fee'
           data-effect='solid'
-          data-place='top'
           >
           { fee }
         </span>
-        { this.renderFeeCustomization(fee) }
         <ReactTooltip id='fee'>
           { fee } [ETH]: This is the most amount of money that might be used to process this transaction. <br />
           You can increase it to lower mining time.
@@ -205,7 +201,6 @@ export default class Transaction extends Web3Component {
         <span
           className={ styles.miningTime }
           data-tip
-          data-place='top'
           data-for='miningTime'
           data-effect='solid'
           >
@@ -221,15 +216,26 @@ export default class Transaction extends Web3Component {
   }
 
   renderData () {
+    const { data } = this.props;
     return (
-      <div>
+      <div
+        className={ styles.data }
+        data-tip
+        data-for='data'
+        data-effect='solid'
+        >
         <DescriptionIcon />
-        Data: { this.props.data || 'empty' }
+        { data || 'empty' }
+        <ReactTooltip id='data'>
+          Extra data to send along your transaction: { data || 'empty' }
+        </ReactTooltip>
       </div>
     );
   }
 
-  renderFeeCustomization (fee) {
+  renderFeeCustomization () {
+    const { fee } = this.state;
+
     if (!this.state.feeCustomizationOpen) {
       return;
     }
@@ -239,9 +245,8 @@ export default class Transaction extends Web3Component {
     const marks = { [min]: 'Cheaper', [max]: 'Faster' };
 
     return (
-      <div>
+      <div className={ styles.feeSlider }>
         <Slider
-          className={ styles.feeSlider }
           onChange={ this.modifyFee }
           min={ min }
           max={ max }
@@ -283,16 +288,35 @@ export default class Transaction extends Web3Component {
   renderValue (value) {
     return (
       <div>
-        <strong>{ value } </strong>
-        <small>ETH</small>
+        <div
+          data-tip
+          data-for='value'
+          data-effect='solid'
+          >
+          <strong>{ value } </strong>
+          <small>ETH</small>
+        </div>
+        <ReactTooltip id='value'>
+          The value of the transaction
+        </ReactTooltip>
       </div>
     );
   }
 
   renderTotalValue () {
     return (
-      <div className={ styles.total }>
-        { this.state.totalValue } ETH
+      <div>
+        <div
+          data-tip
+          data-for='totalValue'
+          data-effect='solid'
+          className={ styles.total }>
+          { this.state.totalValue } ETH
+        </div>
+        <ReactTooltip id='totalValue'>
+          The value of the transaction including the mining fee.
+          This is the maximum amount of ether that you will pay.
+        </ReactTooltip>
       </div>
     );
   }
