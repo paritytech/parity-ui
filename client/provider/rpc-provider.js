@@ -51,7 +51,7 @@ export default class RpcProvider {
       }
 
       try {
-        return `${formatter(param)}`;
+        return formatter(param);
       } catch (err) {
         param = stringifyIfObject(param);
         const msg = `error using ${formatterName} on ${param}: ${err}`;
