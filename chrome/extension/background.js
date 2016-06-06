@@ -26,3 +26,4 @@ promisifyAll(chrome.storage, [
 
 require('./background/badge');
 require('./background/ws');
+require('./proxy/proxy');
