@@ -1,3 +1,5 @@
+/* global chrome */
+
 // init
 chrome.storage.local.get('transactions', (obj) => {
   let { transactions } = obj;

@@ -15,6 +15,6 @@
   "background": {
     "page": "background.html"
   },
-  "permissions": [ "storage" ],
+  "permissions": [ "storage", "proxy" ],
   "content_security_policy": "default-src 'self'; connect-src ws://localhost:8180; script-src 'self'; style-src * 'unsafe-inline'; img-src 'self' data:;"
 }

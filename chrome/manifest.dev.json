@@ -11,6 +11,6 @@
   "background": {
     "page": "background.html"
   },
-  "permissions": [ "storage" ],
+  "permissions": [ "storage", "proxy" ],
   "content_security_policy": "default-src 'self'; script-src 'self' http://localhost:3030 https://localhost:3030 'unsafe-eval'; connect-src ws://localhost:8180 http://localhost:3030 https://localhost:3030; style-src * 'unsafe-inline' 'self' blob:; img-src 'self' data:;"
 }
