@@ -65,7 +65,7 @@ module.exports = [
     returns: BOOLEAN_RESPONSE
   },
   {
-    name: 'eth_signAndSendTransaction',
+    name: 'personal_signAndSendTransaction',
     desc: 'Sends and signs a transaction given account passphrase. Does not require the account to be unlocked nor unlocks the account for future transactions. ',
     params: [
       {
