@@ -65,7 +65,7 @@ export default class {
   static crossOrigin () {
     const loc = window.location;
     const home = appLink('home');
-    const origin = isUsingSubdomains() ? `${loc.protocol}${home}` : `${loc.protocol}//${loc.host}`;
+    const origin = isUsingSubdomains() ? `${home}` : `${loc.protocol}//${loc.host}`;
 
     const cols = this.cols || new Cols(home, origin).addToDom();
     this.cols = cols;
