@@ -26,18 +26,18 @@ export default class TransactionsMiddleware {
   }
 
   onConfirm = (store, next, action) => {
-    const { id, password, gasPrice } = action.payload;
-    this.ws.send('personal_confirmTransaction', [ id, {}, password ], (res) => {
-      log('res', res);
+    const { id, password, fee } = action.payload;
+    this.ws.send('personal_confirmTransaction', [ id, {}, password ], res => {
+      log('[WS] transction middleware confirm', res);
     });
     return next(action);
   }
 
   onReject = (store, next, action) => {
     const id = action.payload;
-    this.ws.send('personal_rejectTransaction', [ id ], (res) => {
-      log('res', res);
-    } );
+    this.ws.send('personal_rejectTransaction', [ id ], res => {
+      log('[WS] transction middleware reject', res);
+    });
     return next(action);
   }
 
