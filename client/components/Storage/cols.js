@@ -44,13 +44,13 @@ export default class Cols {
   }
 
   initFrame () {
-    this.iframe.addEventListener('load', (err) => {
-      if (err) {
-        window.console.warn('Could not load cross-origin frame. Falling back to LocalStorage.');
-      }
+    this.iframe.addEventListener('load', (ev) => {
+      // if (err) {
+        // window.console.warn('Could not load cross-origin frame. Falling back to LocalStorage.');
+      // }
 
       this.isLoaded = true;
-      this.isError = err;
+      this.isError = false;
       this.processQueue();
     });
     this.iframe.src = `${this.location}${FRAME_URL}`;
