@@ -9,6 +9,7 @@ import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 // todo [adgo] - replace to Account without Web3
 import AccountWeb3 from '../AccountWeb3';
+import feeImgSrc from '../assets/pickaxe.png';
 import Web3Component from '../Web3Component';
 import styles from './Transaction.css';
 
@@ -53,7 +54,7 @@ export default class Transaction extends Web3Component {
   render () {
     const { from, to, value, className } = this.props;
     return (
-      <div className={ `${styles.container} ${className}` }>
+      <div className={ `${styles.container} ${className || ''}` }>
         <div className={ styles.mainContainer }>
           { this.renderTransaction(from, to, value) }
           <div className={ styles.forms }>
@@ -187,11 +188,13 @@ export default class Transaction extends Web3Component {
           data-for='fee'
           data-effect='solid'
           >
+          <img src={ feeImgSrc } />
           { fee }
         </span>
         <ReactTooltip id='fee'>
           { fee } [ETH]: This is the most amount of money that might be used to process this transaction. <br />
           You can increase it to lower mining time.
+          <strong>click to edit</strong>
         </ReactTooltip>
       </div>
     );

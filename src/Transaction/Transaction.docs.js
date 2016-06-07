@@ -14,10 +14,12 @@ const transaction = {
   rejectTransaction: id => console.log('Transaction rejected: ', id)
 };
 
+const containerStyle = { width: 700 }; // mimic sysui chrome extension width
+
 export default class TransactionDocs extends Component {
   render () {
     return (
-      <div>
+      <div style={ containerStyle }>
         <h1>Transaction</h1>
         <Transaction { ...transaction } />
       </div>
