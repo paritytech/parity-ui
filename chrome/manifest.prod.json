@@ -12,5 +12,5 @@
     "page": "background.html"
   },
   "permissions": [ "storage", "proxy" ],
-  "content_security_policy": "default-src 'self'; connect-src ws://localhost:8180; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:;"
+  "content_security_policy": "default-src 'self'; connect-src ws://localhost:8180; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:;"
 }
