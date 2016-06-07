@@ -11,9 +11,9 @@ module.exports = {
   devtool: isProd ? '#source-map' : '#cheap-module-eval-source-map',
   context: path.join(__dirname, './client'),
   entry: {
-    'index.app': './index.app.js',
-    'inject': './inject.js',
-    'home': './home.js',
+    'index.app': ['whatwg-fetch', './index.app.js'],
+    'inject': ['whatwg-fetch', './inject.js'],
+    'home': ['whatwg-fetch', './home.js'],
     'home/cols.frame': './cols.frame'
   },
   output: {
