@@ -215,8 +215,10 @@ export default class TopBar extends Web3Component {
       accounts: [account]
     });
     // set default account
+    this.props.web3.defaultAccount = account;
     this.props.web3.eth.defaultAccount = account;
     this.props.web3.settings.defaultAccount = account;
+    this.context.web3.defaultAccount = account;
     this.context.web3.eth.defaultAccount = account;
     this.context.web3.settings.defaultAccount = account;
   }

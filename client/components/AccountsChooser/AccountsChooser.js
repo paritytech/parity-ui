@@ -13,7 +13,7 @@ import styles from './AccountChooser.css';
 export default class AccountChooser extends Web3Component {
 
   state = {
-    defaultAccountIdx: -1
+    defaultAccountIdx: 0
   };
 
   storage = Storage.local();
