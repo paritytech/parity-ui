@@ -27,22 +27,13 @@ export default class TransactionsMiddleware {
 
   onConfirm = (store, next, action) => {
     const { id, password, gasPrice } = action.payload;
-    this.ws.send(
-      JSON.stringify({ 
-        event: "confirm_transaction",
-        id, password, gasPrice
-      })
-    );
+    this.ws.send('personal_confirmTransaction', [ id, {}, password ]);
     return next(action);
   }
 
   onReject = (store, next, action) => {
-    this.ws.send(
-      JSON.stringify({ 
-        id: action.payload, 
-        event: "reject_transaction" 
-      })
-    );
+    const id = action.payload;
+    this.ws.send('personal_rejectTransaction', [ id ] );
     return next(action);
   }
 
