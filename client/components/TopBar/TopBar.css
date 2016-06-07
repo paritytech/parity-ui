@@ -31,6 +31,13 @@ html,body {
   z-index: -1;
 }
 
+.dapps {
+  width: 32px;
+  height: 32px;
+  position: relative;
+  top: -4px;
+}
+
 .createAccount {
   cursor: pointer;
 }

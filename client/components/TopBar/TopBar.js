@@ -1,7 +1,7 @@
 import React from 'react';
 import isEqual from 'lodash.isequal';
 
-import AppsIcon from 'material-ui/svg-icons/navigation/apps';
+import AppsIcon from './logo.svg';
 import ReportProblem from 'material-ui/svg-icons/action/report-problem';
 import SettingsIcon from 'material-ui/svg-icons/action/settings';
 
@@ -98,7 +98,7 @@ export default class TopBar extends Web3Component {
                 onClick={this.forceNavigation}
                 title='Home @ Parity'
                 >
-                <AppsIcon />
+                <img src={AppsIcon} className={styles.dapps} />
               </a>
               <div className={styles.dialog}>
                 <SubdomainDialog>
