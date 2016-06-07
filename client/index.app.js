@@ -7,7 +7,8 @@ if (!web3) {
 
 setInterval(() => {
   web3.eth.getAccounts(withError((accounts) => {
-    web3.defaultAccount = accounts[0];
+    console.log('[APP] accounts', accounts);
+    web3.eth.defaultAccount = accounts[0];
     redrawAccounts(accounts);
     if (!accounts[0]) {
       return;

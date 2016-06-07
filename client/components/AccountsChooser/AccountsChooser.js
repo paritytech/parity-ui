@@ -13,7 +13,7 @@ import styles from './AccountChooser.css';
 export default class AccountChooser extends Web3Component {
 
   state = {
-    defaultAccountIdx: 0
+    defaultAccountIdx: -1
   };
 
   storage = Storage.local();
@@ -58,12 +58,17 @@ export default class AccountChooser extends Web3Component {
         underlineStyle={{display: 'none'}}
         iconStyle={{ fill: '#888' }}
         >
+        <MenuItem
+          key={'choose'}
+          value={-1}
+          primaryText='choose account for this dapp' />
         {this.props.accounts.map((acc, idx) => (
           <MenuItem
             key={acc}
             value={idx}
             primaryText={<Account address={acc} name={this.props.accountsNames[acc]}/>} />
         ))}
+
       </DropDownMenu>
     );
   }

@@ -9,7 +9,6 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 const muiTheme = getMuiTheme({});
 
-import TransactionConfirmation from '../TransactionConfirmation';
 import AccountChooser from '../AccountsChooser';
 import Web3Component from '../Web3Component';
 import AccountsDetails from '../AccountsDetails';
@@ -57,8 +56,7 @@ export default class TopBar extends Web3Component {
     });
 
     this.listeners = [
-      this.props.interceptor.intercept('eth_accounts', this.onEthAccounts),
-      this.props.interceptor.intercept('eth_sendTransaction', this.onEthSendTransaction)
+      this.props.interceptor.intercept('eth_accounts', this.onEthAccounts)
     ];
   }
 
@@ -124,12 +122,6 @@ export default class TopBar extends Web3Component {
             accounts={allAccounts}
             onClose={this.closeCreateAccount}
           />
-          <TransactionConfirmation
-            open={this.state.sendingTransaction}
-            transaction={this.state.transaction}
-            onAbort={this.abortTransaction}
-            onConfirm={this.confirmTransaction}
-            />
         </div>
       </MuiThemeProvider>
     );
@@ -200,18 +192,6 @@ export default class TopBar extends Web3Component {
     return response;
   }
 
-  onEthSendTransaction = (payload, cb, next) => {
-    if (!cb) {
-      throw new Error('Synchronous sendTransaction is not supported.');
-    }
-
-    this.setState({
-      sendingTransaction: true,
-      transaction: payload,
-      callbackFunc: cb
-    });
-  }
-
   clearTx = () => {
     this.setState({
       sendingTransaction: false,
@@ -235,9 +215,9 @@ export default class TopBar extends Web3Component {
       accounts: [account]
     });
     // set default account
-    this.props.web3.defaultAccount = account;
+    this.props.web3.eth.defaultAccount = account;
     this.props.web3.settings.defaultAccount = account;
-    this.context.web3.defaultAccount = account;
+    this.context.web3.eth.defaultAccount = account;
     this.context.web3.settings.defaultAccount = account;
   }
 
