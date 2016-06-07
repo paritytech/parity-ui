@@ -35,6 +35,7 @@ pub fn handle(resource: &str) -> Option<File> {
     "/favicon.ico" => file("", "image/ico"),
     "/index.js" => file(include_str!("./web/index.js"), "application/javascript"),
     "/preact.js" => file(include_str!("./web/preact.js"), "application/javascript"),
+    "/sha3.min.js" => file(include_str!("./web/sha3.min.js"), "application/javascript"),
     "/milligram.css" => file(include_str!("./web/milligram.css"), "text/css"),
     "/count.html" => Some(File {
       content: include_str!("./web/count.html").into(), 
