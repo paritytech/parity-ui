@@ -29,7 +29,6 @@ export default class AccountChooser extends Web3Component {
 
       this.props.onChange(this.props.accounts[defaultAccountIdx]);
     });
-
   }
 
   componentWillReceiveProps (nextProps) {
