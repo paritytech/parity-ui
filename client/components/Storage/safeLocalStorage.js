@@ -11,7 +11,7 @@ function displayWarning (e) {
 
 export default class SafeLocalStorage {
 
-  static keys() {
+  static keys () {
     try {
       return Object.keys(window.localStorage);
     } catch (e) {
@@ -19,8 +19,8 @@ export default class SafeLocalStorage {
       return [];
     }
   }
-  
-  static setItem(key, value, cb) {
+
+  static setItem (key, value, cb) {
     try {
       return window.localStorage.setItem(key, value);
     } catch (e) {
@@ -32,7 +32,7 @@ export default class SafeLocalStorage {
     }
   }
 
-  static getItem(key, cb) {
+  static getItem (key, cb) {
     let ret = null;
     try {
       ret = window.localStorage.getItem(key);
