@@ -18,6 +18,10 @@ export default class AccountChooser extends Web3Component {
 
   storage = Storage.local();
 
+  componentWillMount () {
+    this.props.onChange(this.props.accounts[this.state.defaultAccountIdx]);
+  }
+
   componentWillReceiveProps (nextProps) {
     const { accounts } = nextProps;
 
