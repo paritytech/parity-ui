@@ -1,4 +1,4 @@
-# Minimal System UI for Parity
+# Minimal Signer UI for Parity
 
 Minimal GUI for confirming transactions.
 

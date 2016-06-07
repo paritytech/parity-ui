@@ -1,7 +1,7 @@
 {
   "name": "parity-dapps-minimal-sysui-rs",
   "version": "1.0.0",
-  "description": "Minimal System UI",
+  "description": "Minimal Signer UI",
   "main": "webpack.config.js",
   "scripts": {
     "start": "webpack-dev-server --port 8181"
