@@ -1,9 +1,9 @@
-const WS_URL = 'ws://localhost:8180';
+import Ws from '../../util/ws';
 
 export default class TransactionsMiddleware {
 
   constructor () {
-    this.ws = new WebSocket(WS_URL);
+    this.ws = new Ws();
   }
 
   toMiddleware () {
@@ -27,13 +27,17 @@ export default class TransactionsMiddleware {
 
   onConfirm = (store, next, action) => {
     const { id, password, gasPrice } = action.payload;
-    this.ws.send('personal_confirmTransaction', [ id, {}, password ]);
+    this.ws.send('personal_confirmTransaction', [ id, {}, password ], (res) => {
+      log('res', res);
+    });
     return next(action);
   }
 
   onReject = (store, next, action) => {
     const id = action.payload;
-    this.ws.send('personal_rejectTransaction', [ id ] );
+    this.ws.send('personal_rejectTransaction', [ id ], (res) => {
+      log('res', res);
+    } );
     return next(action);
   }
 

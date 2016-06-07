@@ -9,8 +9,12 @@ export default class MainSection extends Component {
     actions: PropTypes.object.isRequired
   };
 
-  render() {
+  render () {
     const { actions, transactions } = this.props;
+    if (!transactions.length) {
+      return this.renderNoTransactionsMsg();
+    }
+
     return (
       <div>
         {
@@ -32,4 +36,13 @@ export default class MainSection extends Component {
       </div>
     );
   }
+
+  renderNoTransactionsMsg () {
+    return (
+      <div className={ styles.noTransactionsMsg }>
+        <h1>No transactions pending</h1>
+      </div>
+    );
+  }
+
 }

@@ -45,11 +45,9 @@ export default class LocalstorageMiddleware {
   subscribeToLocalStorageTransactions (dispatch) {
     chrome.storage.onChanged.addListener((changes, namespace) => {
       if (namespace === 'local' && 'transactions' in changes) {
-        const { transactions } = changes;
-        log('LS: transactions changed!');
-        log('new value: ', transactions.newValue);
-        log('old value: ', transactions.oldValue);
-        dispatch(updateTransactions(transactions.newValue));
+        log('LS middleware: transactions changed!');
+        const transactions = JSON.parse(changes.transactions.newValue);
+        dispatch(updateTransactions(transactions));
       }
     });
   }
