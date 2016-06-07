@@ -1,11 +1,13 @@
 
+import localStorage from './safeLocalStorage';
+
 const accountPattern = /minimongo__ethereum_accounts__/;
 
 export default class EthereumWalletCompatibility {
 
   lastAccounts = null;
   callbacks = [];
-  storage = window.localStorage;
+  storage = localStorage;
 
   constructor () {
     this.startDetectingChanges();
@@ -14,7 +16,7 @@ export default class EthereumWalletCompatibility {
   startDetectingChanges () {
     const detectChange = (next) => {
       const accounts = this.getAccounts().reduce((all, key) => {
-        all[key] = this.storage[key];
+        all[key] = this.storage.getItem(key);
         return all;
       }, {});
 
@@ -58,7 +60,7 @@ export default class EthereumWalletCompatibility {
   }
 
   getAccounts () {
-    return Object.keys(this.storage).filter((key) => accountPattern.test(key));
+    return this.storage.keys().filter((key) => accountPattern.test(key));
   }
 
   setAccountsNames (names) {

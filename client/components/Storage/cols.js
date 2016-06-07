@@ -1,4 +1,5 @@
 import {NAMESPACE, FRAME_URL} from './cols.data';
+import localStorage from './safeLocalStorage';
 
 export default class Cols {
 
@@ -97,7 +98,7 @@ export default class Cols {
 
   fallbackRequest (data, callback) {
     if (data.action === 'set') {
-      window.localStorage.setItem(data.key, data.value);
+      localStorage.setItem(data.key, data.value);
       if (callback) {
         callback(true);
       }
@@ -105,7 +106,7 @@ export default class Cols {
     }
 
     if (data.action === 'get') {
-      return callback(window.localStorage.getItem(data.key));
+      return callback(localStorage.getItem(data.key));
     }
   }
 

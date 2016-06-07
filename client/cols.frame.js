@@ -1,7 +1,6 @@
 import '!file?name=home/[name].html!./cols.frame.html';
 import {NAMESPACE, PREFIX} from './components/Storage/cols.data';
-
-const storage = window.localStorage;
+import localStorage from './components/Storage/safeLocalStorage';
 
 window.addEventListener('message', function (ev) {
   const {source, origin, data} = ev;
@@ -32,11 +31,11 @@ function processMessage (data, cb) {
   }
 
   if (action === 'set') {
-    storage[`${PREFIX}-${key}`] = value;
+    localStorage.setItem(`${PREFIX}-${key}`, value);
     return cb(null, true);
   }
 
   if (action === 'get') {
-    return cb(null, storage[`${PREFIX}-${key}`]);
+    return cb(null, localStorage.getItem(`${PREFIX}-${key}`));
   }
 }
