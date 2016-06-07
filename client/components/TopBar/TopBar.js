@@ -177,7 +177,6 @@ export default class TopBar extends Web3Component {
         return next(10);
       }
 
-      console.info('changes in accounts detceted');
       this.setState({allAccounts});
       next();
     });
@@ -284,7 +283,6 @@ export default class TopBar extends Web3Component {
       if (allAccounts.length) {
         return;
       }
-      console.info('first run with no accounts, prompting to create account');
       this.onOpenCreateAccount();
     });
   }

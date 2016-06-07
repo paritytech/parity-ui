@@ -20,22 +20,31 @@ export default class SafeLocalStorage {
     }
   }
   
-  static setItem(key, value) {
+  static setItem(key, value, cb) {
     try {
       return window.localStorage.setItem(key, value);
     } catch (e) {
       return displayWarning(e);
+    } finally {
+      if (cb) {
+        cb(true);
+      }
     }
   }
 
-  static getItem(key) {
+  static getItem(key, cb) {
+    let ret = null;
     try {
-      return window.localStorage.getItem(key);
+      ret = window.localStorage.getItem(key);
     } catch (e) {
       displayWarning(e);
       // just return undefined
-      return;
+      ret = undefined;
     }
+    if (cb) {
+      cb(ret);
+    }
+    return ret;
   }
 
 }

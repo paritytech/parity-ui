@@ -16,7 +16,7 @@ export default class AccountChooser extends Web3Component {
     defaultAccountIdx: 0
   };
 
-  storage = Storage.crossOrigin();
+  storage = Storage.local();
 
   componentWillReceiveProps (nextProps) {
     const { accounts } = nextProps;

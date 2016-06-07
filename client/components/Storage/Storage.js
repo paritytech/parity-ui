@@ -1,6 +1,7 @@
 import Cols from './cols';
 import {isUsingSubdomains, appLink} from '../appLink';
 import EthereumWalletCompatibility from './eth-wallet-compat';
+import localStorage from './safeLocalStorage';
 
 export default class {
 
@@ -70,6 +71,10 @@ export default class {
     this.cols = cols;
 
     return new this(cols);
+  }
+
+  static local () {
+    return new this(localStorage);
   }
 }
 
