@@ -25,7 +25,7 @@ export default class AccountDetails extends Web3Component {
 
     return (
       <Dialog
-        title='Create Account'
+        title={this.state.createdAccount ? 'Account Created' : 'New Account'}
         actions={this.renderDialogActions()}
         open={open}
         autoScrollBodyContent
@@ -39,39 +39,34 @@ export default class AccountDetails extends Web3Component {
   }
 
   renderForm () {
+    if (this.state.createdAccount) {
+      return;
+    }
+
     const { password, isValid } = this.state;
-    const errorText = !isValid && password ? 'fix errors below' : null;
+    const errorText = !isValid && password ? ' ' : null;
     return (
       <div>
+        <br />
+        <p>Provide passphrase to protect your account. Make sure to note it down - it's not recoverable.</p>
         <TextField
           errorText={errorText}
           fullWidth
           type='password'
           name={'new-account-password'}
-          floatingLabelText='Type password'
+          floatingLabelText='Type password to encrypt your private key'
           value={password}
           onChange={this.modifyPassword}
         />
         {this.renderValidations()}
-        <RaisedButton
-          label='Submit'
-          className={styles.submit}
-          primary
-          disabled={!isValid}
-          onTouchTap={this.submit}
-        />
       </div>
     );
   }
 
   renderValidations () {
-    const { password } = this.state;
-    if (!password) {
-      return;
-    }
-
     return (
       <div>
+        <br />
         {validationsData.map(
           (v, idx) => {
             return (
@@ -95,20 +90,23 @@ export default class AccountDetails extends Web3Component {
 
     return (
       <p className={styles.newAccount}>
-        Your new account is <Identicon seed={createdAccount} /><strong>{createdAccount}</strong>. <br />
+        New account address is: <br />
+        <Identicon seed={createdAccount} /><code>{createdAccount}</code>
+        <br />
         You can now choose it in the top right corner and expose it to dapps.
       </p>
     );
   }
 
   renderNoAccountsMsg () {
-    if (this.props.accounts.length) {
+    if (this.props.accounts.length || this.state.createdAccount) {
       return;
     }
+
     return (
       <p className={styles.noAccount}>
-        You have no accounts associated with your running parity node.<br />
-        Enter a passphrase below and click submit to create one.
+        You don't have any accounts created.<br />
+        Enter a passphrase below to create one.
       </p>
     );
   }
@@ -128,16 +126,38 @@ export default class AccountDetails extends Web3Component {
   }
 
   renderDialogActions () {
+    if (this.state.createdAccount) {
+      return (
+        <FlatButton
+          label='Ok'
+          primary
+          onTouchTap={this.onClose}
+        />
+      );
+    }
     return [
       <FlatButton
-        label='Ok'
+        label='Cancel'
         secondary
         onTouchTap={this.onClose}
+      />,
+      <RaisedButton
+        label='Create'
+        className={styles.submit}
+        primary
+        disabled={!this.state.isValid}
+        onTouchTap={this.submit}
       />
     ];
   }
 
   onClose = () => {
+    this.setState({
+      password: '',
+      isValid: false,
+      createdAccount: false,
+      validations: []
+    });
     this.props.onClose();
   }
 

@@ -38,7 +38,6 @@ export default class AccountDetails extends Web3Component {
         <div className={styles.accounts}>
           {this.renderAccounts(accounts)}
         </div>
-        {this.renderCreateAccountButton()}
       </Dialog>
     );
   }
@@ -85,6 +84,12 @@ export default class AccountDetails extends Web3Component {
   renderDialogActions () {
     return [
       <FlatButton
+        style={{ float: 'left' }}
+        label={<span className={styles.newAccount}><AddIcon /> New Account</span>}
+        primary
+        onTouchTap={this.props.onOpenCreateAccount}
+      />,
+      <FlatButton
         label='Cancel'
         secondary
         onTouchTap={::this.onCancel}
@@ -96,18 +101,6 @@ export default class AccountDetails extends Web3Component {
         onTouchTap={::this.onClose}
       />
     ];
-  }
-
-  renderCreateAccountButton () {
-    return (
-      <a
-        onClick={this.props.onOpenCreateAccount}
-        className={styles.createAccountButton}
-        title='create account'
-        >
-        <AddIcon />
-      </a>
-    );
   }
 
   onCancel () {

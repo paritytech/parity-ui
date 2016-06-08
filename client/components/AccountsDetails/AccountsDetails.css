@@ -14,15 +14,7 @@
   flex: 1;
 }
 
-.createAccountButton {
-  position: absolute;
-  top: 28px;
-  right: 20px;
+.newAccount svg {
+  vertical-align: -7px;
   opacity: 0.4;
-  cursor: pointer;
-  transition: opacity 0.3s ease-in-out;
-}
-
-.createAccountButton:hover {
-  opacity: 0.8;
 }
