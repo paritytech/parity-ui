@@ -1,5 +1,7 @@
 import React from 'react';
 
+import isEqual from 'lodash.isequal';
+
 import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
 import Dialog from 'material-ui/Dialog';
@@ -18,7 +20,11 @@ export default class TransactionConfirmation extends Web3Component {
     error: false
   };
 
-  componentWillReceiveProps () {
+  componentWillReceiveProps (newProps) {
+    if (isEqual(this.props, newProps)) {
+      return;
+    }
+
     this.setState({
       password: ''
     });
@@ -93,6 +99,7 @@ export default class TransactionConfirmation extends Web3Component {
         errorText={errorMsg}
         floatingLabelText='Unlock the account'
         type='password'
+        value={this.state.password}
         onChange={::this.onPasswordChange}
         onKeyDown={::this.onPasswordKeyDown}
       />

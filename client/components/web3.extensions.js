@@ -10,6 +10,12 @@ export default function web3extensions (web3) {
         call: 'personal_signAndSendTransaction',
         params: 2,
         inputFormatter: [formatters.inputTransactionFormatter, null]
+      }),
+      new Method({
+        name: 'signerEnabled',
+        call: 'personal_signerEnabled',
+        params: 0,
+        inputFormatter: []
       })
     ],
     properties: []

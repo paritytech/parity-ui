@@ -9,6 +9,7 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 const muiTheme = getMuiTheme({});
 
+import TransactionConfirmation from '../TransactionConfirmation';
 import AccountChooser from '../AccountsChooser';
 import Web3Component from '../Web3Component';
 import AccountsDetails from '../AccountsDetails';
@@ -41,7 +42,8 @@ export default class TopBar extends Web3Component {
     accountsNames: {},
     sendingTransaction: false,
     createAccountOpen: false,
-    accountsDetails: false
+    accountsDetails: false,
+    isSignerEnabled: false
   };
 
   listeners = [];
@@ -56,7 +58,8 @@ export default class TopBar extends Web3Component {
     });
 
     this.listeners = [
-      this.props.interceptor.intercept('eth_accounts', this.onEthAccounts)
+      this.props.interceptor.intercept('eth_accounts', this.onEthAccounts),
+      this.props.interceptor.intercept('eth_sendTransaction', this.onEthSendTransaction)
     ];
   }
 
@@ -122,6 +125,12 @@ export default class TopBar extends Web3Component {
             accounts={allAccounts}
             onClose={this.closeCreateAccount}
           />
+          <TransactionConfirmation
+            open={this.state.sendingTransaction}
+            transaction={this.state.transaction}
+            onAbort={this.abortTransaction}
+            onConfirm={this.confirmTransaction}
+          />
         </div>
       </MuiThemeProvider>
     );
@@ -166,6 +175,13 @@ export default class TopBar extends Web3Component {
   }
 
   onTick (next) {
+    this.context.web3.personal.signerEnabled((err, isSignerEnabled) => {
+      if (err) {
+        return;
+      }
+
+      this.setState({ isSignerEnabled });
+    });
     this.context.web3.eth.getAccounts((err, allAccounts) => {
       this.handleFirstRun(allAccounts);
       if (err) {
@@ -199,6 +215,23 @@ export default class TopBar extends Web3Component {
     }
 
     return response;
+  }
+
+  onEthSendTransaction = (payload, cb, next) => {
+    // Don't intercept sendTransaction if we are running with signer module.
+    if (this.state.isSignerEnabled) {
+      return next();
+    }
+
+    if (!cb) {
+      throw new Error('Synchronous sendTransaction is not supported.');
+    }
+
+    this.setState({
+      sendingTransaction: true,
+      transaction: payload,
+      callbackFunc: cb
+    });
   }
 
   clearTx = () => {
