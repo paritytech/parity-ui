@@ -19,25 +19,19 @@ export default class AccountChooser extends Web3Component {
   storage = Storage.local();
 
   componentWillMount () {
-    this.storage.getLastAccount((lastAccount) => {
-      const idx = this.props.accounts.indexOf(lastAccount);
-      const defaultAccountIdx = idx !== -1 ? idx : this.state.defaultAccountIdx;
-
-      this.setState({
-        defaultAccountIdx
-      });
-
-      this.props.onChange(this.props.accounts[defaultAccountIdx]);
-    });
+    this.refreshLastSelectedAccount(this.props);
   }
 
   componentWillReceiveProps (nextProps) {
-    const { accounts } = nextProps;
-
-    if (isEqual(accounts, this.props.accounts)) {
+    if (isEqual(nextProps.accounts, this.props.accounts)) {
       return;
     }
 
+    this.refreshLastSelectedAccount(nextProps);
+  }
+
+  refreshLastSelectedAccount(props) {
+    const { accounts } = props;
     this.storage.getLastAccount((lastAccount) => {
       const idx = accounts.indexOf(lastAccount);
       const defaultAccountIdx = idx !== -1 ? idx : this.state.defaultAccountIdx;
@@ -47,7 +41,7 @@ export default class AccountChooser extends Web3Component {
       });
 
       this.props.onChange(accounts[defaultAccountIdx]);
-    });
+    }); 
   }
 
   handleChange (e, index, value) {
