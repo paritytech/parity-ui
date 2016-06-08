@@ -93,7 +93,7 @@ export default class DappNav extends React.Component {
   toggleActive = () => {
     const { active } = this.state;
     this.setActive(!active);
-    
+
     if (!active) {
       setTimeout(() => {
         this.focusAutoComplete();

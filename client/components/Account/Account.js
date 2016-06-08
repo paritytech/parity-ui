@@ -55,12 +55,12 @@ export default class Account extends Web3Component {
     const { balance } = this.state;
     if (balance === null) {
       return (
-        <span> (...)</span>
+        <span className={styles.balance}> (...)</span>
       );
     }
     const val = this.context.web3.fromWei(balance);
     return (
-      <span> {val.toFixed(2)} Eth</span>
+      <span className={styles.balance}> {val.toFixed(2)} Eth</span>
     );
   }
 

@@ -150,7 +150,7 @@ export default class TopBar extends Web3Component {
     }
 
     return (
-      <div>
+      <div className={styles.nowrap}>
         <AccountChooser
           accounts={allAccounts}
           accountsNames={accountsNames}

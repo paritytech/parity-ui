@@ -6,6 +6,10 @@ html,body {
   margin: 0;
 }
 
+.nowrap {
+  white-space: nowrap;
+}
+
 .header {
   float: left;
   opacity: 0.5;
