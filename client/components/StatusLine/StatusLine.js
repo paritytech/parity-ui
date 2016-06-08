@@ -126,13 +126,12 @@ export default class StatusLine extends Web3Component {
 
   renderSyncing () {
     const {startingBlock, latestBlock, highestBlock} = this.state;
+    const val = 100 * (latestBlock - startingBlock) / (highestBlock - startingBlock);
     return (
       <div className={styles.status} title='Syncing...'>
         <LinearProgress
           style={s.progress}
-          min={startingBlock}
-          max={highestBlock}
-          value={latestBlock}
+          value={val}
           mode={'determinate'}
           />
         #{latestBlock}/{highestBlock}...
