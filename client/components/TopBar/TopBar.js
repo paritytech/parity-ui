@@ -106,8 +106,10 @@ export default class TopBar extends Web3Component {
                   <ReportProblem />
                 </SubdomainDialog>
               </div>
-              <DappNav />
-              <StatusLine />
+              <DappNav onSearchActive={this.onSearchActive}/>
+              <div className={this.state.searchActive ? styles.statusHidden : styles.statusVisible }>
+                <StatusLine />
+              </div>
             </div>
             <div className={styles.manageAccounts}>
               {this.renderManageAccounts()}
@@ -196,6 +198,12 @@ export default class TopBar extends Web3Component {
       this.fixAccountNames(this.state.accountsNames, allAccounts);
       this.setState({allAccounts});
       next();
+    });
+  }
+
+  onSearchActive = (active) => {
+    this.setState({
+      searchActive: active
     });
   }
 

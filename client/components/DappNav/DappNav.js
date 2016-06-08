@@ -17,21 +17,11 @@ export default class DappNav extends React.Component {
 
   componentDidMount () {
     this.fetchApps();
+    document.addEventListener('keydown', this.onKeyPressedWhenActive);
   }
 
   componentWillUnmount () {
     document.removeEventListener('keydown', this.onKeyPressedWhenActive);
-  }
-
-  componentDidUpdate (prevProps, prevState) {
-    if (this.gotActive(prevState)) {
-      document.addEventListener('keydown', this.onKeyPressedWhenActive);
-      this.focusAutoComplete();
-    }
-
-    if (this.gotNonActive(prevState)) {
-      document.removeEventListener('keydown', this.onKeyPressedWhenActive);
-    }
   }
 
   render () {
@@ -83,7 +73,7 @@ export default class DappNav extends React.Component {
     if (this.state.searchText) {
       return;
     }
-    this.setState({ active: false });
+    this.setActive(false);
   }
 
   onUpdateInput = (searchText) => {
@@ -102,7 +92,13 @@ export default class DappNav extends React.Component {
 
   toggleActive = () => {
     const { active } = this.state;
-    this.setState({active: !active});
+    this.setActive(!active);
+    
+    if (!active) {
+      setTimeout(() => {
+        this.focusAutoComplete();
+      });
+    }
   }
 
   filterSearch = (searchText, key) => {
@@ -136,18 +132,19 @@ export default class DappNav extends React.Component {
       });
   }
 
-  gotActive (prevState) {
-    return !prevState.active && this.state.active;
-  }
-
-  gotNonActive (prevState) {
-    return prevState.active && !this.state.active;
-  }
-
   onKeyPressedWhenActive = (evt) => {
     if (evt.keyCode === 27) {
-      this.setState({ active: false });
+      this.setActive(false);
     }
   }
+
+  setActive (val) {
+    this.setState({ active: val });
+    this.props.onSearchActive(val);
+  }
+
+  static propTypes = {
+    onSearchActive: React.PropTypes.func.isRequired
+  };
 
 }
