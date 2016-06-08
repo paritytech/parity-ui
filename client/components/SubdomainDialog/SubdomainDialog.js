@@ -77,7 +77,9 @@ export default class SubdomainDialog extends React.Component {
             >
             <AssignmentIcon className={styles.copyToClipboardIcon} />
           </CopyToClipboard>
-          <span>{ proxyPacLocation }</span>
+          <a href={proxyPacLocation} target='_blank'>
+            { proxyPacLocation }
+          </a>
           { this.renderCopiedToClipboardmsg() }
         </pre>
         <h3>Follow those links to learn how to configure your proxy settings:</h3>
