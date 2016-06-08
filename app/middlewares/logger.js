@@ -1,7 +1,7 @@
 
 export default store => next => action => {
   if (store.getState().logger.logging) {
-    const msg = [`[${now()}] action:`, `${action.type};`, 'payload: ', action.payload];
+    const msg = [`[APP] [${now()}] action:`, `${action.type};`, 'payload: ', action.payload];
     const logMethod = action.type.indexOf('error') > -1 ? 'error' : 'log';
     log(...msg); // todo [adgo] - implement error logs
   }

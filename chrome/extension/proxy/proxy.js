@@ -12,12 +12,12 @@ class ProxyManager {
 
   onInit () {
     chrome.proxy.settings.get({}, details => {
-      console.log('proxy details: ', details);
+      console.log('[BG PROXY] proxy details: ', details);
       if (this.alreadyConfigured(details.value)) {
-        return console.log('proxy is already configured at: ', this.targetPacFileUrl);
+        return console.log('[BG PROXY] proxy is already configured at: ', this.targetPacFileUrl);
       }
 
-      console.log('configuring proxy to use PacFile from: ', this.targetPacFileUrl);
+      console.log('[BG PROXY] configuring proxy to use PacFile from: ', this.targetPacFileUrl);
 
       const value = {
         mode: 'pac_script',
@@ -29,7 +29,7 @@ class ProxyManager {
       chrome.proxy.settings.set({
         value
       }, () => {
-        console.log('proxy set!');
+        console.log('[BG PROXY] proxy set!');
       });
     });
   }
