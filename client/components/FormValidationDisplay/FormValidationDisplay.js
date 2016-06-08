@@ -19,8 +19,8 @@ export default class FormValidationDisplay extends React.Component {
   }
 
   static propTypes = {
-    isValid: React.PropTypes.bool.required,
-    text: React.PropTypes.string.required
+    isValid: React.PropTypes.bool.isRequired,
+    text: React.PropTypes.string.isRequired
   }
 
 }

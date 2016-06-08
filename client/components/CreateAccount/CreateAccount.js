@@ -13,9 +13,11 @@ import Identicon from '../Identicon';
 import styles from './CreateAccount.css';
 import Web3Component from '../Web3Component/Web3Component';
 
-export default class AccountDetails extends Web3Component {
+export default class CreateAccount extends Web3Component {
 
   state = {
+    createdAccount: false,
+    password: '',
     validations: [],
     isValid: false
   };
@@ -73,7 +75,7 @@ export default class AccountDetails extends Web3Component {
               <FormValidationDisplay
                 text={v.text}
                 key={idx}
-                isValid={this.state.validations[idx]}
+                isValid={this.state.validations[idx] || false}
               />
             );
           }
