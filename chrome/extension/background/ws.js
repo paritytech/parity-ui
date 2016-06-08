@@ -18,11 +18,11 @@ class Ws {
     this.id = 1;
     this.callbacks = {};
     chrome.storage.onChanged.addListener(this.onSysuiTokenChange);
+    this.reset();
     this.init();
   }
 
   init () {
-    this.reset();
     chrome.storage.local.get('sysuiToken', obj => {
       let { sysuiToken } = obj;
 
@@ -62,7 +62,7 @@ class Ws {
   }
 
   onWsOpen = () => {
-    chrome.browserAction.setBadgeText({ text: 'c' }); // connecting ...
+    chrome.browserAction.setBadgeText({ text: 'c' }); // connected, will b replaced by fetching transactions ...
     chrome.storage.local.set({ isConnected: JSON.stringify(true) });
     chrome.storage.local.set({ transactions: JSON.stringify([]) });
     this.ws.addEventListener('disconnect', this.onWsDisconnect);
@@ -71,12 +71,13 @@ class Ws {
   }
 
   onWsError = (err) => {
-    this.reset();
     console.warn('[BG WS] error ', err);
+    this.reset();
   }
 
   onWsDisconnect = () => {
     console.warn('[BG WS] disconnect!');
+    this.reset();
     this.init();
   }
 
