@@ -17,6 +17,7 @@
 }
 .from span, .to span {
   display: block;
+  max-width: none;
 }
 
 .tx {
