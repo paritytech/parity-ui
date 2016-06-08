@@ -5,11 +5,14 @@ import AutoComplete from 'material-ui/AutoComplete';
 import SearchIcon from 'material-ui/svg-icons/action/search';
 
 import styles from './DappNav.css';
+
+import fetchApps from '../fetchApps';
 import { appLink } from '../appLink';
 
 export default class DappNav extends React.Component {
   state = {
-    apps: []
+    apps: [],
+    appNames: []
   }
 
   componentDidMount () {
@@ -56,7 +59,7 @@ export default class DappNav extends React.Component {
   }
 
   renderSearchBar () {
-    const { active, apps } = this.state;
+    const { active, appNames } = this.state;
     if (!active) {
       return;
     }
@@ -65,12 +68,26 @@ export default class DappNav extends React.Component {
       <AutoComplete
         name='DappNavAutoComplete' // avoid Material Ui warning
         openOnFocus
-        hintText='Pick a dapp to navigate to'
+        hintText='Search Dapps'
         onNewRequest={this.onChooseApp}
+        onUpdateInput={this.onUpdateInput}
+        onBlur={this.onBlur}
         filter={this.filterSearch}
-        dataSource={apps}
+        dataSource={appNames}
       />
     );
+  }
+
+  onBlur = () => {
+    // Dont close when there is some searchText
+    if (this.state.searchText) {
+      return;
+    }
+    this.setState({ active: false });
+  }
+
+  onUpdateInput = (searchText) => {
+    this.setState({ searchText });
   }
 
   focusAutoComplete = () => {
@@ -78,8 +95,9 @@ export default class DappNav extends React.Component {
     ReactDOM.findDOMNode(node).focus();
   }
 
-  onChooseApp (name) {
-    window.location = appLink(name);
+  onChooseApp = (name) => {
+    const app = this.state.apps.filter(app => app.name === name)[0];
+    window.location = appLink(app.id);
   }
 
   toggleActive = () => {
@@ -91,43 +109,19 @@ export default class DappNav extends React.Component {
     return searchText === '' || key.toLowerCase().indexOf(searchText.toLowerCase()) !== -1;
   }
 
-  filterApps (apps) {
-    // We are going to filter apps with the same
-    // names, versions and descriptions.
-    // We are also getting rid of `home.parity` app.
-
-    const known = {};
-    return apps.filter(app => {
-      const uid = app.name + app.version + app.description;
-
-      if (app.id === 'home') {
-        return false;
-      }
-
-      if (known[uid]) {
-        known[uid].ids.push(app.id);
-        return false;
-      }
-
-      known[uid] = app;
-      app.ids = [app.id];
-      return true;
-    });
-  }
-
   fetchApps = () => {
     this.setState({
       isLoading: true,
       isError: false
     });
 
-    window.fetch('/api/apps')
-      .then(res => res.json())
+    fetchApps()
       .then(apps => {
         this.setState({
           isLoading: false,
           isError: false,
-          apps: this.filterApps(apps).map((app) => app.id)
+          apps: apps,
+          appNames: apps.map(app => app.name)
         });
       })
       .catch(err => {
@@ -136,7 +130,8 @@ export default class DappNav extends React.Component {
         this.setState({
           isLoading: false,
           isError: true,
-          apps: []
+          apps: [],
+          appNames: []
         });
       });
   }
