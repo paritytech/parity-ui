@@ -30,7 +30,7 @@ export default class AccountChooser extends Web3Component {
     this.refreshLastSelectedAccount(nextProps);
   }
 
-  refreshLastSelectedAccount(props) {
+  refreshLastSelectedAccount (props) {
     const { accounts } = props;
     this.storage.getLastAccount((lastAccount) => {
       const idx = accounts.indexOf(lastAccount);
@@ -41,7 +41,7 @@ export default class AccountChooser extends Web3Component {
       });
 
       this.props.onChange(accounts[defaultAccountIdx]);
-    }); 
+    });
   }
 
   handleChange (e, index, value) {

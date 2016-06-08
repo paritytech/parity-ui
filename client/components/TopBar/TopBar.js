@@ -156,7 +156,7 @@ export default class TopBar extends Web3Component {
     );
   }
 
-  fixAccountNames(names, accounts) {
+  fixAccountNames (names, accounts) {
     const copy = Object.assign({}, names);
     const accountsNames = accounts.reduce((memo, acc, idx) => {
       memo[acc] = names[acc] || `Account ${idx + 1}`;

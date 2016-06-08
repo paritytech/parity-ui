@@ -63,7 +63,7 @@ export default class Cols {
         this.isError = false;
         this.isLoaded = true;
         this.processQueue();
-      })
+      });
     });
     this.iframe.src = `${this.location}${FRAME_URL}`;
   }
