@@ -30,6 +30,10 @@ function processMessage (data, cb) {
     return cb('Missing fields. Action:', action, 'Key: ', key);
   }
 
+  if (action === 'ping') {
+    return cb(null, true);
+  }
+
   if (action === 'set') {
     localStorage.setItem(`${PREFIX}-${key}`, value);
     return cb(null, true);

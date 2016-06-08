@@ -45,13 +45,25 @@ export default class Cols {
 
   initFrame () {
     this.iframe.addEventListener('load', (ev) => {
-      // if (err) {
-        // window.console.warn('Could not load cross-origin frame. Falling back to LocalStorage.');
-      // }
+      // If we don't get ping response in time we have to assume that
+      // the frame was loaded incorrectly
+      const timeout = setTimeout(() => {
+        console.warn('Failed to load Cross-Origin frame. Falling back to LocalStorage');
+        this.isError = true;
+        this.isLoaded = true;
+        this.processQueue();
+      }, 50);
 
-      this.isLoaded = true;
-      this.isError = false;
-      this.processQueue();
+      // Try to ping the frame to make sure it's loaded correctly
+      this.forceSendRequest({
+        action: 'ping',
+        key: 'any'
+      }, () => {
+        clearTimeout(timeout);
+        this.isError = false;
+        this.isLoaded = true;
+        this.processQueue();
+      })
     });
     this.iframe.src = `${this.location}${FRAME_URL}`;
   }
@@ -73,6 +85,10 @@ export default class Cols {
       this.fallbackRequest(data, callback);
       return;
     }
+    this.forceSendRequest(data, callback);
+  }
+
+  forceSendRequest (data, callback) {
     this.nonce++;
     const id = this.nonce;
 
