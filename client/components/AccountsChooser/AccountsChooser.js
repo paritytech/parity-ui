@@ -69,7 +69,8 @@ export default class AccountChooser extends Web3Component {
           <MenuItem
             key={acc}
             value={idx}
-            primaryText={<Account address={acc} name={this.props.accountsNames[acc]}/>} />
+            primaryText={<Account address={acc} name={this.props.accountsNames[acc]} />}
+            />
         ))}
 
       </DropDownMenu>

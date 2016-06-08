@@ -52,7 +52,7 @@ export default class TopBar extends Web3Component {
         return;
       }
 
-      this.setState({accountsNames});
+      this.fixAccountNames(accountsNames, this.state.allAccounts);
     });
 
     this.listeners = [
@@ -76,7 +76,7 @@ export default class TopBar extends Web3Component {
         this.setState({
           waiting: this.state.waiting + 1
         });
-      }, 10);
+      }, 5);
       return (
         <div className={styles.topbar}>
             <h4 className={styles.header}>Loading...</h4>
@@ -144,7 +144,6 @@ export default class TopBar extends Web3Component {
           accounts={allAccounts}
           accountsNames={accountsNames}
           onChange={this.changeAccount}
-          onAllAccounts={this.onAllAccounts}
         />
         <a
           className={styles.settings}
@@ -157,11 +156,20 @@ export default class TopBar extends Web3Component {
     );
   }
 
+  fixAccountNames(names, accounts) {
+    const copy = Object.assign({}, names);
+    const accountsNames = accounts.reduce((memo, acc, idx) => {
+      memo[acc] = names[acc] || `Account ${idx + 1}`;
+      return memo;
+    }, copy);
+    this.setState({ accountsNames });
+  }
+
   onTick (next) {
     this.context.web3.eth.getAccounts((err, allAccounts) => {
       this.handleFirstRun(allAccounts);
       if (err) {
-        next(5);
+        next(10);
         return console.error(err);
       }
 
@@ -169,6 +177,7 @@ export default class TopBar extends Web3Component {
         return next(10);
       }
 
+      this.fixAccountNames(this.state.accountsNames, allAccounts);
       this.setState({allAccounts});
       next();
     });
@@ -221,12 +230,6 @@ export default class TopBar extends Web3Component {
     this.context.web3.defaultAccount = account;
     this.context.web3.eth.defaultAccount = account;
     this.context.web3.settings.defaultAccount = account;
-  }
-
-  onAllAccounts = (accounts) => {
-    this.setState({
-      allAccounts: accounts
-    });
   }
 
   onOpenAccountDetails = () => {

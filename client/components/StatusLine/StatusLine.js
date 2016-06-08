@@ -33,7 +33,7 @@ export default class StatusLine extends Web3Component {
         });
         // Make sure to call next even if we have an error.
         if (!errorCalled) {
-          next(5);
+          next(10);
           // Never call next callback in case of error in the same context.
           errorCalled = true;
         }
@@ -48,6 +48,21 @@ export default class StatusLine extends Web3Component {
     // Syncing
     web3.eth.getSyncing(handleError(syncing => {
       next();
+
+      // Latest Block
+      web3.eth.getBlockNumber(handleError(blockNumber => this.setState({
+        latestBlock: parseInt(blockNumber, 10)
+      })));
+
+      // peers
+      web3.net.getPeerCount(handleError(peers => this.setState({
+        connectedPeers: peers
+      })));
+
+      // network
+      web3.version.getNetwork(handleError(network => this.setState({
+        network: networkName(network)
+      })));
 
       this.setState({
         isReady: true
@@ -66,21 +81,6 @@ export default class StatusLine extends Web3Component {
         highestBlock: parseInt(syncing.highestBlock, 10)
       });
     }));
-
-    // Latest Block
-    web3.eth.getBlockNumber(handleError(blockNumber => this.setState({
-      latestBlock: parseInt(blockNumber, 10)
-    })));
-
-    // peers
-    web3.net.getPeerCount(handleError(peers => this.setState({
-      connectedPeers: peers
-    })));
-
-    // network
-    web3.version.getNetwork(handleError(network => this.setState({
-      network: networkName(network)
-    })));
   }
 
   render () {

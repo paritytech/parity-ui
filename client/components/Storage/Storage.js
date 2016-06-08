@@ -15,7 +15,7 @@ export default class {
     });
     // Override names at start
     this.getAccountsNames((accounts) => {
-      this.ethWallet.setAccountsNames(accounts);
+      this.ethWallet.setWalletAccountsNames(accounts);
     });
   }
 
@@ -56,7 +56,7 @@ export default class {
 
   setAccountsNames (names, cb) {
     this.storage.setItem('accountsNames', JSON.stringify(names), cb);
-    this.ethWallet.setAccountsNames(names);
+    this.ethWallet.setWalletAccountsNames(names);
     this.listeners.map(cb => cb(names));
   }
 
