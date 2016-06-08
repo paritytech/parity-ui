@@ -18,6 +18,8 @@ class Ws {
     this.id = 1;
     this.callbacks = {};
     chrome.storage.onChanged.addListener(this.onSysuiTokenChange);
+    chrome.runtime.onMessage.addListener(this.onChromeMsg);
+    
     this.reset();
     this.init();
   }
@@ -62,7 +64,7 @@ class Ws {
   }
 
   onWsOpen = () => {
-    this.setBadgeText('c'); // connected, will b replaced by fetching transactions ...
+    this.setBadgeText('c'); // connected, will b replaced after fetching transactions for the first time
     chrome.storage.local.set({ isConnected: JSON.stringify(true) });
     chrome.storage.local.set({ transactions: JSON.stringify([]) });
     this.ws.addEventListener('disconnect', this.onWsDisconnect);
@@ -83,7 +85,6 @@ class Ws {
   }
 
   onWsMsg = msg => {
-    console.log('msg', msg);
     try {
       msg = JSON.parse(msg.data);
     } catch (err) {
@@ -100,21 +101,21 @@ class Ws {
   }
 
   timeoutFetchTransactions = () => {
-    // todo [adgo] - check if need to add :: binding to fetchTransactions here
     setTimeout(::this.fetchTransactions, 2000);
   }
 
   fetchTransactions () {
     this.send('personal_transactionsToConfirm', [], txsWs => {
-      console.log('[BG WS] txs: ', txsWs);
       this.setBadgeText(txsWs.length)
       chrome.storage.local.get('transactions', obj => {
         try {
           const transactionsLs = JSON.parse(obj.transactions);
-          console.log('[BG WS] chrome LS txs: ', transactionsLs);
           if (isEqual(txsWs, transactionsLs)) {
             return;
           }
+          console.log('[BG WS] transactions changed')
+          console.log('[BG WS] from LS: ', transactionsLs)
+          console.log('[BG WS] from WS: ', txsWs)
           chrome.storage.local.set({ transactions: JSON.stringify(txsWs) });
         } catch (err) {
           console.warn('[BG WS] bad data from extension local storage! object should contain transactions ', obj);
@@ -133,13 +134,22 @@ class Ws {
       id, method, params
     });
     this.callbacks[id] = callback;
-    console.log('payload', payload)
     this.ws.send(payload);
   }
 
   setBadgeText (text) {
     text = String(text);
     chrome.browserAction.setBadgeText({ text });
+  }
+
+  onChromeMsg = (request, sender, cb) => {
+    console.log('[BG WS] incoming chrome msg', request);
+    if (!request.type === 'ws') {
+      return;
+    }
+
+    const { method, params } = request;
+    this.send(method, params, cb);
   }
 
 }

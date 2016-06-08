@@ -1,3 +1,5 @@
+/* global chrome */
+
 export default class TransactionsMiddleware {
 
   toMiddleware () {
@@ -21,19 +23,21 @@ export default class TransactionsMiddleware {
 
   onConfirm = (store, next, action) => {
     const { id, password, fee } = action.payload;
-
-    // this.ws.send('personal_confirmTransaction', [ id, {}, password ], res => {
-    //   log('[WS] transction middleware confirm', res);
-    // });
+    this.sendMsg('personal_confirmTransaction', [ id, {}, password ]);
     return next(action);
   }
 
   onReject = (store, next, action) => {
     const id = action.payload;
-    // this.ws.send('personal_rejectTransaction', [ id ], res => {
-    //   log('[WS] transction middleware reject', res);
-    // });
+    this.sendMsg('personal_rejectTransaction', [ id ]);
     return next(action);
+  }
+
+  sendMsg (method, params) {
+    const type = 'ws';
+    chrome.runtime.sendMessage({ type, method, params }, res => {
+      log('[APP] cb ', type,  res);
+    });
   }
 
 }
