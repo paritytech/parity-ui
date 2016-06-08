@@ -1,12 +1,13 @@
 {
-  "name": "react-chrome-extension-boilerplate",
-  "version": "0.9.0",
-  "description": "Boilerplate for Chrome extension React.js project",
+  "name": "parity-sysui-chrome-extension",
+  "version": "0.0.0",
+  "description": "Parity system ui - chrome extension",
   "scripts": {
     "install": "napa alexvandesande/blockies",
     "start": "node scripts/dev",
     "build": "node scripts/build",
     "compress": "node scripts/compress",
+    "genZip": "npm run build && npm run compress",
     "compress-keygen": "crx keygen",
     "clean": "rimraf build/ dev/ *.zip *.crx",
     "lint": "eslint app chrome test scripts",
@@ -15,19 +16,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/jhen0409/react-chrome-extension-boilerplate.git"
+    "url": "https://github.com/ethcore/parity-sysui-chrome-extension.git"
   },
   "keywords": [
-    "chrome",
-    "extension",
-    "react",
-    "redux",
-    "hot reload",
-    "webpack",
-    "boilerplate"
+    "parity-sysui"
   ],
-  "author": "Jhen <developer@jhen.me>",
-  "license": "MIT",
+  "author": "Ethcore team <admin@ethcore.io>",
+  "license": "GPL-3.0",
   "devDependencies": {
     "babel-core": "^6.3.15",
     "babel-eslint": "^6.0.0",
@@ -82,6 +77,7 @@
     "react-dock": "^0.2.3",
     "react-dom": "^15.0.2",
     "react-redux": "^4.3.0",
+    "react-tap-event-plugin": "^1.0.0",
     "redux": "^3.2.1",
     "redux-actions": "0.9.1",
     "redux-thunk": "^2.0.1",
