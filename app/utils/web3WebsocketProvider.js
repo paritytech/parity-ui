@@ -21,12 +21,13 @@ export default class Ws {
         return this.onNotAuthorized();
       }
 
+      sysuiToken = JSON.parse(sysuiToken)
       const hash = this.hash(sysuiToken);
 
       // Initializing WebSocket with wrong hash will throw an error
       // So it's wrapped in try/ catch
       try {
-        this.ws = new WebSocket('ws://localhost:8180/ws', hash);
+        this.ws = new WebSocket('ws://localhost:8180', hash);
       } catch (e) {
         console.warn(e)
         return this.onNotAuthorized();

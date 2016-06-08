@@ -13,12 +13,17 @@ export default class NotAuthorized extends Component {
 
 	state = {
 		token: this.props.token,
+		tokenInvalid: null,
 		processing: false
 	};
 
 	componentwillReceiveProps (nextProps) {
 		const { token } = nextProps;
 		this.setState({ token })
+	}
+
+	componentWillUnmount () {
+		clearTimeout(this.tokenInvalidTimeout)
 	}
 
 	render () {
@@ -44,6 +49,7 @@ export default class NotAuthorized extends Component {
 					Submit
 				</RaisedButton>
 				{ this.renderProcessing() }
+				{ this.renderInvalidToken() }
 			</div>
 		);
 	}
@@ -56,6 +62,7 @@ export default class NotAuthorized extends Component {
 		const token = this.state.token.replace(/\s*\-*/g, '');
 		this.props.submit(token);
 		this.setState({ processing: true });
+		this.tokenInvalidTimeout = setTimeout(this.onTokenInvalid, 4000); // if token is valid this component should unmount. after 4 sconds we assume it's invalid.
 	}
 
 	renderProcessing () {
@@ -64,8 +71,23 @@ export default class NotAuthorized extends Component {
 		}
 
 		return (
-			<span>Processing ...</span>
+			<p>Processing ...</p>
 		);
+	}
+
+	renderInvalidToken () {
+		if (!this.state.tokenInvalid) {
+			return null;
+		}
+
+		return <p>This token is invalid</p>;
+	}
+
+	onTokenInvalid = () => {
+		this.setState({
+			processing: false,
+			tokenInvalid: true
+		});
 	}
 
 }

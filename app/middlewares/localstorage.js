@@ -59,10 +59,6 @@ export default class LocalstorageMiddleware {
   initTransactions (dispatch, stateStoredTransactions) {
     chrome.storage.local.get('transactions', obj => {
       const transactions = JSON.parse(obj.transactions);
-      if (isEqual(stateStoredTransactions, transactions)) {
-        return;
-      }
-
       dispatch(updateTransactions(transactions));
     });
   }

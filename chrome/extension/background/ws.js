@@ -30,6 +30,7 @@ class Ws {
         return console.log('[BG WS] no sysuiToken in LS');
       }
 
+      sysuiToken = JSON.parse(sysuiToken)
       const hash = this.hash(sysuiToken);
 
       this.ws = new WebSocket('ws://localhost:8180', hash);
@@ -39,10 +40,9 @@ class Ws {
   }
 
   reset () {
-    chrome.storage.local.set({ sysuiToken: null });
     chrome.storage.local.set({ isConnected: JSON.stringify(false) });
     chrome.storage.local.set({ transactions: JSON.stringify([]) });
-    chrome.browserAction.setBadgeText({ text: '!' });
+    this.setBadgeText('!');
   }
 
   // when token changes in chrome LS
@@ -62,16 +62,17 @@ class Ws {
   }
 
   onWsOpen = () => {
-    chrome.browserAction.setBadgeText({ text: 'c' }); // connected, will b replaced by fetching transactions ...
+    this.setBadgeText('c'); // connected, will b replaced by fetching transactions ...
     chrome.storage.local.set({ isConnected: JSON.stringify(true) });
     chrome.storage.local.set({ transactions: JSON.stringify([]) });
     this.ws.addEventListener('disconnect', this.onWsDisconnect);
     this.ws.addEventListener('message', this.onWsMsg);
-    this.fetchTransactions(this.timeoutFetchTransactions); // poll transactions
+    this.fetchTransactions();
   }
 
   onWsError = (err) => {
     console.warn('[BG WS] error ', err);
+    chrome.storage.local.set({ sysuiToken: null });
     this.reset();
   }
 
@@ -82,6 +83,7 @@ class Ws {
   }
 
   onWsMsg = msg => {
+    console.log('msg', msg);
     try {
       msg = JSON.parse(msg.data);
     } catch (err) {
@@ -99,13 +101,13 @@ class Ws {
 
   timeoutFetchTransactions = () => {
     // todo [adgo] - check if need to add :: binding to fetchTransactions here
-    setTimeout(this.fetchTransactions, 2000);
+    setTimeout(::this.fetchTransactions, 2000);
   }
 
-  fetchTransactions (cb) {
-    ws.send('personal_transactionsToConfirm', [], txsWs => {
+  fetchTransactions () {
+    this.send('personal_transactionsToConfirm', [], txsWs => {
       console.log('[BG WS] txs: ', txsWs);
-      chrome.browserAction.setBadgeText({ text: txsWs.length });
+      this.setBadgeText(txsWs.length)
       chrome.storage.local.get('transactions', obj => {
         try {
           const transactionsLs = JSON.parse(obj.transactions);
@@ -116,6 +118,8 @@ class Ws {
           chrome.storage.local.set({ transactions: JSON.stringify(txsWs) });
         } catch (err) {
           console.warn('[BG WS] bad data from extension local storage! object should contain transactions ', obj);
+        } finally {
+          this.timeoutFetchTransactions()
         }
       });
     });
@@ -129,7 +133,13 @@ class Ws {
       id, method, params
     });
     this.callbacks[id] = callback;
+    console.log('payload', payload)
     this.ws.send(payload);
+  }
+
+  setBadgeText (text) {
+    text = String(text);
+    chrome.browserAction.setBadgeText({ text });
   }
 
 }
