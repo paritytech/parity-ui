@@ -1,5 +1,5 @@
 import isEqual from 'lodash.isequal';
-import { updateTransactions } from '../actions/transactions';
+import { updatePendingTransactions } from '../actions/transactions';
 import { updateIsAuthorized, updateIsConnected } from '../actions/ws';
 
 export default class LocalstorageMiddleware {
@@ -26,8 +26,8 @@ export default class LocalstorageMiddleware {
   onInitApp = (store, next, action) => {
     const { dispatch } = store;
     const transactions = store.getState().transactions;
-    this.initTransactions(dispatch, transactions);
-    this.subscribeToTransactions(dispatch);
+    this.initPendingTransactions(dispatch, transactions);
+    this.subscribeToPendingTransactions(dispatch);
     this.initIsConnected(dispatch);
     this.subscribeToIsConnected(dispatch);
     return next(action);
@@ -54,23 +54,23 @@ export default class LocalstorageMiddleware {
     });
   }
 
-  // ws.js will update transactions from parity client to localstorage
+  // ws.js will update pendingTransactions from parity client to localstorage
   // this updates the transactions from localstorage to redux on init
-  initTransactions (dispatch, stateStoredTransactions) {
-    chrome.storage.local.get('transactions', obj => {
-      const transactions = JSON.parse(obj.transactions);
-      dispatch(updateTransactions(transactions));
+  initPendingTransactions (dispatch, stateStoredTransactions) {
+    chrome.storage.local.get('pendingTransactions', obj => {
+      const pendingTransactions = JSON.parse(obj.pendingTransactions);
+      dispatch(updatePendingTransactions(pendingTransactions));
     });
   }
 
-  // ws.js will update transactions from parity client to localstorage
+  // ws.js will update pendingTransactions from parity client to localstorage
   // this listenes to incoming transaction and syncs the changes with redux
-  subscribeToTransactions (dispatch) {
+  subscribeToPendingTransactions (dispatch) {
     chrome.storage.onChanged.addListener((changes, namespace) => {
-      if (namespace === 'local' && 'transactions' in changes) {
-        log('[APP] LS middleware: transactions changed!');
-        const transactions = JSON.parse(changes.transactions.newValue);
-        dispatch(updateTransactions(transactions));
+      if (namespace === 'local' && 'pendingTransactions' in changes) {
+        log('[APP] LS middleware: pendingTransactions changed!');
+        const pendingTransactions = JSON.parse(changes.pendingTransactions.newValue);
+        dispatch(updatePendingTransactions(pendingTransactions));
       }
     });
   }

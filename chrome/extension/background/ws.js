@@ -8,7 +8,6 @@ import { keccak_256 } from 'js-sha3';
 // try to connect with token
 // if correct, start polling transactions, set badge text to number, set transactions to LS
 // not correct, display set badge to !
-// on error, reconnect from LS
 // on disconnect reconnect from LS 
 // (think about what to do on disconnect due to token change)
 
@@ -43,7 +42,7 @@ class Ws {
 
   reset () {
     chrome.storage.local.set({ isConnected: JSON.stringify(false) });
-    chrome.storage.local.set({ transactions: JSON.stringify([]) });
+    chrome.storage.local.set({ pendingTransactions: JSON.stringify([]) });
     this.setBadgeText('!');
   }
 
@@ -66,7 +65,7 @@ class Ws {
   onWsOpen = () => {
     this.setBadgeText('c'); // connected, will b replaced after fetching transactions for the first time
     chrome.storage.local.set({ isConnected: JSON.stringify(true) });
-    chrome.storage.local.set({ transactions: JSON.stringify([]) });
+    chrome.storage.local.set({ pendingTransactions: JSON.stringify([]) });
     this.ws.addEventListener('disconnect', this.onWsDisconnect);
     this.ws.addEventListener('message', this.onWsMsg);
     this.fetchTransactions();
@@ -107,16 +106,16 @@ class Ws {
   fetchTransactions () {
     this.send('personal_transactionsToConfirm', [], txsWs => {
       this.setBadgeText(txsWs.length)
-      chrome.storage.local.get('transactions', obj => {
+      chrome.storage.local.get('pendingTransactions', obj => {
         try {
-          const transactionsLs = JSON.parse(obj.transactions);
+          const transactionsLs = JSON.parse(obj.pendingTransactions);
           if (isEqual(txsWs, transactionsLs)) {
             return;
           }
           console.log('[BG WS] transactions changed')
           console.log('[BG WS] previous (LS): ', transactionsLs)
           console.log('[BG WS] current (WS): ', txsWs)
-          chrome.storage.local.set({ transactions: JSON.stringify(txsWs) });
+          chrome.storage.local.set({ pendingTransactions: JSON.stringify(txsWs) });
         } catch (err) {
           console.warn('[BG WS] bad data from extension local storage! object should contain transactions ', obj);
         } finally {
@@ -143,7 +142,7 @@ class Ws {
   }
 
   onChromeMsg = (request, sender, cb) => {
-    console.log('[BG WS] incoming chrome msg', request, cb);
+    console.log('[BG WS] incoming chrome msg', request);
     if (!request.type === 'ws') {
       return;
     }

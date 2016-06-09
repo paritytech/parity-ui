@@ -22,7 +22,7 @@ import style from './App.css';
 export default class App extends Component {
 
   static propTypes = {
-    transactions: PropTypes.arrayOf(PropTypes.object).isRequired,
+    transactions: PropTypes.object.isRequired,
     ws: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired
   };

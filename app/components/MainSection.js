@@ -3,10 +3,25 @@ import { TransactionWeb3 } from 'dapps-react-ui';
 import NotAuthorized from './NotAuthorized';
 import styles from './MainSection.css';
 
+class FinishedTransaction extends Component {
+  render () {
+    return (
+      <div>
+        This is a finished Transaction:
+        ID: { this.props.id }
+        FROM: { this.props.from }
+      </div>
+    );
+  }
+}
+
 export default class MainSection extends Component {
 
   static propTypes = {
-    transactions: PropTypes.array.isRequired,
+    transactions: PropTypes.shape({
+      finished: PropTypes.array.isRequired, // todo [adgo] - specify
+      pending: PropTypes.array.isRequired // todo [adgo] - specify
+    }).isRequired,
     actions: PropTypes.object.isRequired,
     ws: PropTypes.shape({
       isConnected: PropTypes.bool.isRequired,
@@ -24,30 +39,39 @@ export default class MainSection extends Component {
       return this.renderNotConnected();
     }
 
-    if (!transactions.length) {
+    if (!transactions.pending.length && !transactions.finished.length) {
       return this.renderNoTransactionsMsg();
     }
 
     return (
       <div>
-
-        {
-          transactions.map(
-            data => (
-              <TransactionWeb3
-                className={ styles.transaction }
-                rejectTransaction={ actions.rejectTransaction }
-                confirmTransaction={ actions.confirmTransaction }
-                key={ data.id }
-                id={ data.id }
-                from={ data.transaction.from }
-                to={ data.transaction.to }
-                value={ data.transaction.value }
-              />
-            )
-          )
-        }
+        { this.renderFinishedTransactions() }
+        { this.renderPendingTransactions() }
       </div>
+    );
+  }
+
+  renderPendingTransactions () {
+    const { actions, transactions } = this.props;
+    return transactions.pending.map(
+      data => (
+        <TransactionWeb3
+          className={ styles.transaction }
+          rejectTransaction={ actions.rejectTransaction }
+          confirmTransaction={ actions.confirmTransaction }
+          key={ data.id }
+          id={ data.id }
+          from={ data.transaction.from }
+          to={ data.transaction.to }
+          value={ data.transaction.value }
+        />
+      )
+    );
+  }
+
+  renderFinishedTransactions () {
+    return this.props.transactions.finished.map(
+      t => <FinishedTransaction key={ t.id } { ...t } />
     );
   }
 

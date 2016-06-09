@@ -33,8 +33,8 @@ export default class Ws {
         return this.onNotAuthorized();
       }
 
-      this.ws.addEventListener('error', this.onWsError);
-      this.ws.addEventListener('open', this.onWsOpen);
+      this.ws.addEventListener('error', ::this.onWsError);
+      this.ws.addEventListener('open', ::this.onWsOpen);
     });
   }
 
@@ -59,10 +59,11 @@ export default class Ws {
   }
 
   onWsOpen = () => {
+    console.log('[Web3 WS Provider] connected')
     this.isWsConnected = true;
-
-    this.ws.addEventListener('disconnect', this.onWsDisconnect);
-    this.ws.addEventListener('message', this.onWsMsg);
+    this.executeQueue();
+    this.ws.addEventListener('disconnect', ::this.onWsDisconnect);
+    this.ws.addEventListener('message', ::this.onWsMsg);
   }
 
   onWsError = (err) => {
@@ -75,6 +76,7 @@ export default class Ws {
   }
 
   onWsMsg = msg => {
+    console.log('[Web3 WS Provider] incoming msg ', msg)
     try {
       msg = JSON.parse(msg.data);
     } catch (err) {

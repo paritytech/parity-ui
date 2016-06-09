@@ -1,12 +1,26 @@
 
 import { handleActions } from 'redux-actions';
 
-const initialState = [];
+const initialState = {
+	pending: [],
+	finished: []
+}
 
 export default handleActions({
 
-  'update transactions' (state, action) {
-    return action.payload;
+  'update pendingTransactions' (state, action) {
+    return {
+    	...state,
+    	pending: action.payload
+    };
+  },
+
+  'add finishedTransactions' (state, action) {
+  	log('[APP] add finishedTransactions ', state, action);
+    return {
+    	...state,
+    	finished: [action.payload].concat(state.finished)
+    };
   }
 
 }, initialState);

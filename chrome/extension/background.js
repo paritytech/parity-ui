@@ -24,6 +24,5 @@ promisifyAll(chrome.storage, [
   'local',
 ]);
 
-require('./background/badge');
 require('./background/ws');
 require('./proxy/proxy');
