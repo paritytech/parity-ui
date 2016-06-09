@@ -36,7 +36,7 @@ export default class TransactionsMiddleware {
   sendMsg (method, params) {
     const type = 'ws';
     chrome.runtime.sendMessage({ type, method, params }, res => {
-      log('[APP] cb ', type,  res);
+      log('[APP] cb ', method,  res);
     });
   }
 

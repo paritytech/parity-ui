@@ -114,8 +114,8 @@ class Ws {
             return;
           }
           console.log('[BG WS] transactions changed')
-          console.log('[BG WS] from LS: ', transactionsLs)
-          console.log('[BG WS] from WS: ', txsWs)
+          console.log('[BG WS] previous (LS): ', transactionsLs)
+          console.log('[BG WS] current (WS): ', txsWs)
           chrome.storage.local.set({ transactions: JSON.stringify(txsWs) });
         } catch (err) {
           console.warn('[BG WS] bad data from extension local storage! object should contain transactions ', obj);
@@ -143,13 +143,13 @@ class Ws {
   }
 
   onChromeMsg = (request, sender, cb) => {
-    console.log('[BG WS] incoming chrome msg', request);
+    console.log('[BG WS] incoming chrome msg', request, cb);
     if (!request.type === 'ws') {
       return;
     }
-
     const { method, params } = request;
     this.send(method, params, cb);
+    return true; // needed for chrome async messaging cb, more info on: https://developer.chrome.com/extensions/runtime#event-onMessage
   }
 
 }
