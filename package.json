@@ -98,7 +98,9 @@
     "classnames": "^2.2.3",
     "ethereum-rpc-json": "*",
     "lodash.isequal": "^4.2.0",
-    "napa": "^2.3.0"
+    "napa": "^2.3.0",
+    "rc-slider": "^3.7.0",
+    "react-tooltip": "^2.0.3"
   },
   "config": {
     "pre-git": {
