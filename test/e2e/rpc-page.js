@@ -37,7 +37,7 @@ module.exports = {
   },
 
   'Assert form' (client) {
-    const autocomplete = el('RpcCalls-autocomplete');
+    const autocomplete = el('RpcCalls-rpcAutoComplete');
     const button = el('RpcCalls-fireRpc');
     const method = 'ethcore_setExtraData';
     const methodData = rpcMethods.find(m => m.name === method);

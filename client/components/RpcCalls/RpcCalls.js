@@ -3,9 +3,8 @@ import React, { Component, PropTypes } from 'react';
 import _ from 'lodash';
 
 import Toggle from 'material-ui/Toggle/Toggle';
-import AutoComplete from '../AutoComplete';
 import TextField from 'material-ui/TextField';
-
+import { RpcAutoComplete } from 'dapps-react-ui';
 import { formatRpcMd } from '../../util/rpc-md';
 import AnimateChildren from '../../components-compositors/Animated/children';
 import JsonEditor from '../JsonEditor';
@@ -19,7 +18,7 @@ const rpcMethods = _.sortBy(rpcData.methods, 'name');
 
 export default class RpcCalls extends Component {
 
-  state = {}
+  state = {};
 
   componentWillReceiveProps (nextProps) {
     const { paramsValues, params } = nextProps.rpc.selectedMethod;
@@ -112,18 +111,13 @@ export default class RpcCalls extends Component {
   }
 
   renderMethodList () {
-    const methods = rpcMethods.map(m => m.name);
-
-    const { name, desc } = this.props.rpc.selectedMethod;
+    const { desc } = this.props.rpc.selectedMethod;
     return (
       <div>
-        <AutoComplete
+        <RpcAutoComplete
           style={{ marginTop: 0 }}
-          searchText={name}
-          floatingLabelText='Method name'
-          dataSource={methods}
           onNewRequest={this.handleMethodChange}
-          {...this._test('autocomplete')}
+          { ...this._test('rpcAutoComplete')}
         />
         <div>
           <Markdown val={desc} />
@@ -147,8 +141,8 @@ export default class RpcCalls extends Component {
 
     this.props.actions.fireRpc({
       method: name,
-      outputFormatter: outputFormatter,
-      inputFormatters: inputFormatters,
+      outputFormatter,
+      inputFormatters,
       params
     });
   }
@@ -299,6 +293,18 @@ export default class RpcCalls extends Component {
 
   paramKey (p) {
     return `params_${p}`;
+  }
+
+  selectedMethodChanged (nextProps) {
+    return nextProps.rpc.selectedMethod.name !== this.props.rpc.selectedMethod.name;
+  }
+
+  stateChanged (nextState) {
+    return !_.isEqual(nextState, this.state);
+  }
+
+  prevCallsChanged (nextProps) {
+    return nextProps.rpc.prevCalls.length !== this.props.rpc.prevCalls.length;
   }
 
   static propTypes = {
