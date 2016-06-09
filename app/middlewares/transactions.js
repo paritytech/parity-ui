@@ -1,7 +1,15 @@
 /* global chrome */
 import { addFinishedTransaction } from '../actions/transactions';
 
+import WsBase from '../utils/wsBase';
+
+const ws = new WsBase();
+
 export default class TransactionsMiddleware {
+
+  constructor () {
+    this.ws = ws;
+  }
 
   toMiddleware () {
     return store => next => action => {
@@ -9,6 +17,7 @@ export default class TransactionsMiddleware {
       switch (action.type) {
         case 'confirm transaction': delegate = this.onConfirm; break;
         case 'reject transaction': delegate = this.onReject; break;
+        case 'update token': delegate = this.onUpdateToken; break;
         default:
           next(action);
           return;
@@ -25,7 +34,7 @@ export default class TransactionsMiddleware {
   onConfirm = (store, next, action) => {
     const { id, password, fee } = action.payload;
     const transaction = this.getTransaction(store, id); // needed for uccessful cb
-    this.sendMsg('personal_confirmTransaction', [ id, {}, password ], res => {
+    this.ws.send('personal_confirmTransaction', [ id, {}, password ], res => {
       // todo [adgo] - detect errors better
       if (typeof res === 'string') {
         transaction.hash = res;
@@ -38,7 +47,7 @@ export default class TransactionsMiddleware {
   onReject = (store, next, action) => {
     const id = action.payload;
     const transaction = this.getTransaction(store, id); // needed for uccessful cb
-    this.sendMsg('personal_rejectTransaction', [ id ], res => {
+    this.ws.send('personal_rejectTransaction', [ id ], res => {
       if (res === true) {
         store.dispatch(addFinishedTransaction(transaction));
       }
@@ -46,9 +55,10 @@ export default class TransactionsMiddleware {
     return next(action);
   }
 
-  sendMsg (method, params, cb) {
-    const type = 'ws';
-    chrome.runtime.sendMessage({ type, method, params }, cb);
+  onUpdateToken = (store, next, action) => {
+    const token = action.payload;
+    this.ws.setToken(token);
+    this.ws.init(token);
   }
 
   getTransaction (store, id) {

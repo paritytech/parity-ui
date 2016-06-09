@@ -3,12 +3,12 @@ import rootReducer from '../reducers';
 import thunk from 'redux-thunk';
 import middlewares from '../middlewares';
 
-const enhancer = compose(
-  applyMiddleware(thunk, ...middlewares()),
-  window.devToolsExtension ? window.devToolsExtension() : nope => nope
-);
 
 export default function () {
+  const enhancer = compose(
+    applyMiddleware(thunk, ...middlewares()),
+    window.devToolsExtension ? window.devToolsExtension() : nope => nope
+  );
   const store = createStore(rootReducer, enhancer);
 
   if (module.hot) {

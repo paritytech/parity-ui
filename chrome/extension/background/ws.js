@@ -34,7 +34,11 @@ class Ws {
       sysuiToken = JSON.parse(sysuiToken)
       const hash = this.hash(sysuiToken);
 
-      this.ws = new WebSocket('ws://localhost:8180', hash);
+      try {
+        this.ws = new WebSocket('ws://localhost:8180', hash);
+      } catch (err) {
+        console.warn('cant connect to ws ', err);
+      }
       this.ws.addEventListener('error', this.onWsError);
       this.ws.addEventListener('open', this.onWsOpen);
     });
