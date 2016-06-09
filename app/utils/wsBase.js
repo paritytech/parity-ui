@@ -8,11 +8,8 @@ export default class Ws {
     this.callbacks = {};
   }
 
-  setToken (token) {
+  init (token) {
     this.token = token;
-  }
-
-  init () {
     if (!this.token) {
       this.isConnected = false;
       return console.log('[WS Base] no token');
@@ -49,7 +46,7 @@ export default class Ws {
 
   onWsDisconnect () {
     console.warn('[WS Base] disconnect!');
-    this.init();
+    this.init(this.token);
   }
 
   onWsMsg (msg) {

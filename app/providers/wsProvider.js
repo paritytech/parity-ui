@@ -1,7 +1,7 @@
 import isEqual from 'lodash.isequal';
 import wsBase from '../utils/wsBase';
 import { updatePendingTransactions } from '../actions/transactions';
-import { updateIsConnected } from '../actions/ws';
+import { updateIsConnected, updateToken } from '../actions/ws';
 
 export default class WsProvider extends wsBase {
 
@@ -9,6 +9,11 @@ export default class WsProvider extends wsBase {
 		super();
 		this.store = store;
     log('[Provider] init')
+  }
+
+  init (token) {
+    this.store.dispatch(updateToken(token));
+    super.init(token);
   }
 
   onWsOpen () {

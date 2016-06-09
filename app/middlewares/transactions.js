@@ -35,6 +35,7 @@ export default class TransactionsMiddleware {
     const { id, password, fee } = action.payload;
     const transaction = this.getTransaction(store, id); // needed for uccessful cb
     this.ws.send('personal_confirmTransaction', [ id, {}, password ], res => {
+      log('[APP] confirm transaction cb ', res);
       // todo [adgo] - detect errors better
       if (typeof res === 'string') {
         transaction.hash = res;
@@ -48,6 +49,7 @@ export default class TransactionsMiddleware {
     const id = action.payload;
     const transaction = this.getTransaction(store, id); // needed for uccessful cb
     this.ws.send('personal_rejectTransaction', [ id ], res => {
+      log('[APP] reject transaction cb ', res);
       if (res === true) {
         store.dispatch(addFinishedTransaction(transaction));
       }
@@ -57,7 +59,6 @@ export default class TransactionsMiddleware {
 
   onUpdateToken = (store, next, action) => {
     const token = action.payload;
-    this.ws.setToken(token);
     this.ws.init(token);
   }
 

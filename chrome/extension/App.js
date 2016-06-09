@@ -25,7 +25,7 @@ chrome.storage.local.get('sysuiToken', initSysuiToken);
 chrome.storage.onChanged.addListener(onSysuiTokenChange);
 
 function initSysuiToken(obj) {
-  log('initSysuiToken', obj);
+  console.log('initSysuiToken', obj)
   let { sysuiToken } = obj;
 
   if (!sysuiToken) {
@@ -33,8 +33,6 @@ function initSysuiToken(obj) {
   }
 
   sysuiToken = JSON.parse(sysuiToken)
-  store.dispatch(updateToken(sysuiToken))
-  wsProvider.setToken(sysuiToken);
 	wsProvider.init(sysuiToken);
 }
 
@@ -43,7 +41,5 @@ function onSysuiTokenChange(changes, namespace) {
     return;
   }
   const newSysuiToken = JSON.parse(changes.sysuiToken.newValue);
-  store.dispatch(updateToken(sysuiToken))
-  wsProvider.setToken(sysuiToken);
-  wsProvider.init(sysuiToken);
+  wsProvider.init(newSysuiToken);
 }
