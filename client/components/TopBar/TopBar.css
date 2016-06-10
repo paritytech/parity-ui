@@ -12,12 +12,12 @@ html,body {
 
 .header {
   float: left;
-  opacity: 0.5;
   margin-top: 15px;
   display: flex;
 }
 .dialog {
   margin-left: 10px;
+  opacity: 0.6;
 }
 .dialog svg {
   fill: #F57F17 !important;
@@ -57,7 +57,7 @@ html,body {
     display: block;
   }
   100% {
-    opacity: 1;
+    opacity: 0.6;
     display: block;
   }
 }
@@ -71,6 +71,9 @@ html,body {
 
 .createAccount {
   cursor: pointer;
+  line-height: 26px;
+  display: inline-block;
+  margin: 14px 0;
 }
 
 .settings {
@@ -84,3 +87,14 @@ html,body {
 .settings svg {
   vertical-align: -7px;
 }
+
+.unconfirmedTx {
+  border: none;
+  background: transparent;
+  margin: 0;
+  padding: 0;
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+}
+

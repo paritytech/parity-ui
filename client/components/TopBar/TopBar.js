@@ -111,9 +111,7 @@ export default class TopBar extends Web3Component {
                 <StatusLine />
               </div>
             </div>
-            <div className={styles.manageAccounts}>
-              {this.renderManageAccounts()}
-            </div>
+            {this.renderManageAccounts()}
           </div>
           <AccountsDetails
             open={accountsDetails}
@@ -138,14 +136,32 @@ export default class TopBar extends Web3Component {
     );
   }
 
+  renderUnconfirmedTransactions () {
+    const { isSignerEnabled } = this.state;
+
+    if (!isSignerEnabled) {
+      return;
+    }
+
+    const port = isSignerEnabled === true ? 8180 : isSignerEnabled;
+
+    return (
+      <iframe
+        className={styles.unconfirmedTx}
+        src={`http://127.0.0.1:${port}/count.html`}
+        seamless
+      />
+    );
+  }
+
   renderManageAccounts () {
     const { allAccounts, accountsNames } = this.state;
 
     if (!allAccounts.length) {
       return (
-      <a onClick={this.onOpenCreateAccount} className={styles.createAccount}>
-        Create account
-      </a>
+        <a onClick={this.onOpenCreateAccount} className={styles.createAccount}>
+          Create account
+        </a>
       );
     }
 
@@ -163,6 +179,7 @@ export default class TopBar extends Web3Component {
           >
           <SettingsIcon />
         </a>
+        {this.renderUnconfirmedTransactions()}
       </div>
     );
   }
