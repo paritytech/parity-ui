@@ -77,7 +77,6 @@ class Ws {
 
   onWsError = (err) => {
     console.warn('[BG WS] error ', err);
-    chrome.storage.local.set({ sysuiToken: null });
     this.reset();
   }
 

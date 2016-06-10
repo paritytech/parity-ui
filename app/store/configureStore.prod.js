@@ -4,10 +4,10 @@ import thunk from 'redux-thunk';
 import middlewares from '../middlewares';
 
 const enhancer = compose(
-  applyMiddleware(thunk, ...middlewares())
+  applyMiddleware(thunk, ...middlewares(tokenSetter))
 );
 
-export default function () {
+export default function (tokenSetter) {
   return createStore(rootReducer, enhancer);
 }
 

@@ -1,45 +1,43 @@
-/* global chrome */
-import { updateToken } from '../../app/actions/ws';
-
-import React from 'react';
-import ReactDOM from 'react-dom';
-
-import Root from '../../app/containers/Root';
-import { initApp } from '../../app/actions/app';
 import './App.css';
+import app from '../../app/app';
 
-import WsProvider from '../../app/providers/wsProvider';
+tokenGetter (initToken => {
+  app(initToken, tokenSetter, tokenListener)
+})
 
-const createStore = require('../../app/store/configureStore');
-const store = createStore();
-store.dispatch(initApp());
-ReactDOM.render(
-  <Root store={store} />,
-  document.querySelector('#root')
-);
+function tokenGetter (cb) {
+  chrome.storage.local.get('sysuiToken', obj => {
+    let { sysuiToken } = obj;
 
-const wsProvider = new WsProvider(store);
+    if (!sysuiToken) {
+      return cb(null);
+    }
 
-chrome.storage.local.get('sysuiToken', initSysuiToken);
+    try {
+      sysuiToken = JSON.parse(sysuiToken)
+    } catch (err) {
+      return console.warn('error parsing sysui token: ', sysuiToken, err);
+    }
 
-chrome.storage.onChanged.addListener(onSysuiTokenChange);
-
-function initSysuiToken(obj) {
-  console.log('initSysuiToken', obj)
-  let { sysuiToken } = obj;
-
-  if (!sysuiToken) {
-    return;
-  }
-
-  sysuiToken = JSON.parse(sysuiToken)
-	wsProvider.init(sysuiToken);
+    cb(sysuiToken);
+  });
 }
 
-function onSysuiTokenChange(changes, namespace) {
-  if (!(namespace === 'local' && 'sysuiToken' in changes)) {
-    return;
-  }
-  const newSysuiToken = JSON.parse(changes.sysuiToken.newValue);
-  wsProvider.init(newSysuiToken);
+function tokenSetter (token, cb) {
+  chrome.storage.local.set({ sysuiToken: JSON.stringify(token) }, cb);
+}
+
+function tokenListener (cb) {
+  chrome.storage.onChanged.addListener((changes, namespace) => {
+    if (!(namespace === 'local' && 'sysuiToken' in changes)) {
+      return cb(false);
+    }
+    let token;
+    try {
+      token = JSON.parse(changes.sysuiToken.newValue);
+    } catch (err) {
+      return console.warn('error parsing token ', token, err)
+    }
+    cb(token);
+  });
 }

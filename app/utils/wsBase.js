@@ -33,7 +33,7 @@ export default class Ws {
   }
 
   onWsOpen () {
-    log('[WS Base] connected');
+    console.log('[WS Base] connected');
     this.ws.addEventListener('disconnect', ::this.onWsDisconnect);
     this.ws.addEventListener('message', ::this.onWsMsg);
     this.isConnected = true;

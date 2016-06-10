@@ -1,17 +1,17 @@
 
 // Middleware classes (except logger)
 import Transactions from './transactions';
-import Localstorage from './localstorage';
+import Auth from './auth';
 import logger from './logger';
 
-export default function middlewares (ws) {
+export default function middlewares (tokenSetter) {
   // Middleware instances
-  const transactions = new Transactions(ws);
-  const localstorage = new Localstorage();
+  const transactions = new Transactions();
+  const auth = new Auth(tokenSetter);
 
   return [
     logger,
-    localstorage.toMiddleware(),
+    auth.toMiddleware(),
     transactions.toMiddleware()
   ];
 }

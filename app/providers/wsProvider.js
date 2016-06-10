@@ -8,7 +8,7 @@ export default class WsProvider extends wsBase {
 	constructor (store) {
 		super();
 		this.store = store;
-    log('[Provider] init')
+    console.log('[Provider] init')
   }
 
   init (token) {
@@ -17,7 +17,7 @@ export default class WsProvider extends wsBase {
   }
 
   onWsOpen () {
-    log('[Provider] open')
+    console.log('[Provider] open')
     super.onWsOpen();
     this.store.dispatch(updateIsConnected(true));
 		this.pollTransactions();
@@ -30,7 +30,7 @@ export default class WsProvider extends wsBase {
     		return this.timeoutFetchTransactions();
     	}
 
-    	log('[WS Provider] transactions changed ', txsWs);
+    	console.log('[WS Provider] transactions changed ', txsWs);
     	this.store.dispatch(updatePendingTransactions(txsWs));
       this.timeoutFetchTransactions();
     });

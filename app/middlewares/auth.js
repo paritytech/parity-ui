@@ -1,5 +1,9 @@
 export default class LocalstorageMiddleware {
 
+  constructor (tokenSetter) {
+    this.setToken = tokenSetter;
+  }
+
   toMiddleware () {
     return store => next => action => {
       let delegate;
@@ -19,7 +23,8 @@ export default class LocalstorageMiddleware {
   }
 
   onSubmitToken (store, next, action) {
-    chrome.storage.local.set({ sysuiToken: JSON.stringify(action.payload) });
+    this.setToken(action.payload);
+    next(action);
   }
 
 }

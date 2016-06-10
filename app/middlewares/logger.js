@@ -3,7 +3,7 @@ export default store => next => action => {
   if (store.getState().logger.logging) {
     const msg = [`[APP] [${now()}] action:`, `${action.type};`, 'payload: ', action.payload];
     const logMethod = action.type.indexOf('error') > -1 ? 'error' : 'log';
-    log(...msg); // todo [adgo] - implement error logs
+    console.log(...msg); // todo [adgo] - implement error logs
   }
   return next(action);
 };
@@ -15,4 +15,3 @@ function now () {
   const hour = date.getHours();
   return `${hour}::${minutes}::${seconds}`;
 }
-
