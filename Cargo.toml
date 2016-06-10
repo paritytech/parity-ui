@@ -5,3 +5,7 @@ license = "GPL-3.0"
 authors = ["Ethcore <admin@ethcore.io>"]
 
 [dependencies]
+
+[features]
+# default = ["dev"]
+dev = []
