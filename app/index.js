@@ -16,11 +16,11 @@ import middlewares from './middlewares';
 import createStore from './store/configureStore';
 import Routes from './routes';
 
-export default function app (initToken, tokenSetter, addTokenListener) {
+export default function app (initToken, tokenSetter, addTokenListener, initialState) {
   const web3WebSocketProvider = new Web3WebSocketProvider(initToken, addTokenListener);
   const web3 = new Web3(web3WebSocketProvider);
 
-  const store = createStore(middlewares(tokenSetter));
+  const store = createStore(middlewares(tokenSetter), initialState);
   ReactDOM.render(
     <Provider store={ store }>
       <Web3Provider web3={ web3 }>
