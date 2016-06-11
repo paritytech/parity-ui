@@ -4,22 +4,23 @@ import ReactDOM from 'react-dom';
 
 import Web3Provider from '../Web3Provider';
 import Web3 from 'web3';
-import Web3WsProvider from '../util/Web3WebSocketProvider';
-const web3WsProvider = new Web3WsProvider();
-const web3 = new Web3(web3WsProvider);
+const web3 = new Web3(new Web3.providers.HttpProvider(process.env.RPC_ADDRESS || '/rpc/'));
 
+import MuiThemeProvider from '../MuiThemeProvider';
 import AccountWeb3Docs from '../AccountWeb3/AccountWeb3.docs';
-import TransactionWeb3Docs from '../TransactionWeb3/TransactionWeb3.docs';
+import TransactionDocs from '../Transaction/Transaction.docs';
+import TransactionFinishedDocs from '../TransactionFinished/TransactionFinished.docs';
 import AccountLinkDocs from '../AccountLink/AccountLink.docs';
 import IdenticonDocs from '../Identicon/Identicon.docs';
 import RpcAutoCompleteDocs from '../RpcAutoComplete/RpcAutoComplete.docs';
-import MuiThemeProvider from '../MuiThemeProvider';
 
 ReactDOM.render(
   <MuiThemeProvider>
     <Web3Provider web3={ web3 }>
       <div>
-        <TransactionWeb3Docs />
+        <TransactionFinishedDocs />
+        <hr />
+        <TransactionDocs />
         <hr />
         <RpcAutoCompleteDocs />
         <hr />
@@ -34,3 +35,4 @@ ReactDOM.render(
   </MuiThemeProvider>,
   document.getElementById('root')
 );
+

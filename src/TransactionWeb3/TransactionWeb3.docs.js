@@ -1,11 +1,6 @@
 import React, { Component } from 'react';
 
-import Web3Provider from '../Web3Provider';
-import Web3 from 'web3';
-const http = new Web3.providers.HttpProvider('/rpc/');
-const web3 = new Web3(http);
-
-import Transaction from './';
+import TransactionWeb3 from './';
 
 const transaction = {
   id: '001x0',
@@ -26,9 +21,7 @@ export default class TransactionDocs extends Component {
     return (
       <div style={ containerStyle }>
         <h1>Transaction</h1>
-        <Web3Provider web3={ web3 }>
-          <Transaction { ...transaction } />
-        </Web3Provider>
+        <TransactionWeb3 { ...transaction } />
       </div>
     );
   }
