@@ -21,8 +21,8 @@ export default class Transaction extends Web3Component {
     from: PropTypes.string.isRequired,
     gasPrice: PropTypes.any,
     gas: PropTypes.any,
-    to: PropTypes.string.isRequired,
-    nonce: PropTypes.number.isRequired,
+    to: PropTypes.string, // undefined if it's a contract
+    nonce: PropTypes.number,
     value: PropTypes.any.isRequired,
     confirmTransaction: PropTypes.func.isRequired,
     rejectTransaction: PropTypes.func.isRequired
@@ -42,7 +42,7 @@ export default class Transaction extends Web3Component {
   }
 
   componentWillUnmount () {
-    // in reject counter is active
+    // in case reject counter is active
     this.resetReject();
   }
 

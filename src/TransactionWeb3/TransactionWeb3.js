@@ -11,8 +11,8 @@ export default class TransactionWeb3 extends Web3Component {
     from: PropTypes.string.isRequired,
     gasPrice: PropTypes.any,
     gas: PropTypes.any,
-    to: PropTypes.string.isRequired,
-    nonce: PropTypes.number.isRequired,
+    to: PropTypes.string,
+    nonce: PropTypes.number,
     value: PropTypes.any.isRequired,
     confirmTransaction: PropTypes.func.isRequired,
     rejectTransaction: PropTypes.func.isRequired
