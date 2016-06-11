@@ -1,0 +1,58 @@
+.container {
+  padding: 25px;
+}
+
+.mainContainer > * {
+  display: inline-block;
+  vertical-align: middle;
+  min-height: 110px;
+}
+
+.transaction {
+  margin-right: 30px;
+}
+
+.transaction > * {
+  display: inline-block;
+}
+
+.from img, .to img {
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  margin: 5px;
+}
+.from span, .to span {
+  display: block;
+}
+
+.tx {
+  text-align: center;
+  margin-right: 10px;
+  margin-left: 10px;
+  position: relative;
+  top: -20px;
+}
+
+.total {
+  font-size: 0.6em;
+  opacity: .5;
+}
+
+.fee {
+  cursor: pointer;
+}
+
+.fee img {
+  width: 20px;
+  height: 20px;
+  vertical-align: bottom;
+}
+
+.isConfirmed {
+  color: green;
+}
+
+.isRejected {
+  color: red;
+}

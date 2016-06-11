@@ -1,7 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { TransactionWeb3 } from 'dapps-react-ui';
+import FinishedTransactions from '../FinishedTransactions';
 
-import styles from './Transactions';
+import styles from './Transactions.css';
 
 export default class Transactions extends Component {
 
@@ -51,7 +52,7 @@ export default class Transactions extends Component {
 
   renderFinishedTransactions () {
     return this.props.transactions.finished.map(
-      t => <p>{ t }</p>
+      t => <FinishedTransactions { ...t } key={ t.id } />
     );
   }
 
