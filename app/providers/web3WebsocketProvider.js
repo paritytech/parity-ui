@@ -71,11 +71,11 @@ export default class Ws {
     this.init();
   }
 
-  errorOutQueue () {
+  errorOutCallbacks () {
     this.callbacks.forEach(cb => {
       cb('WS disconnected, cb cannot be called');
     });
-    this.queue = [];
+    this.callbacks = {};
   }
 
   onWsMsg (msg) {

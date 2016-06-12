@@ -48,12 +48,15 @@ export default class Ws {
 
   onWsDisconnect () {
     console.warn('[WS Base] disconnect!');
-    this.clearCallbacks('WS disconnected');
+    this.errorOutCallbacks();
     this.init(this.token);
   }
 
-  clearCallbacks (msg) {
-
+  errorOutCallbacks () {
+    this.callbacks.forEach(cb => {
+      cb('WS disconnected, cb cannot be called');
+    });
+    this.callbacks = {};
   }
 
   onWsMsg (msg) {
