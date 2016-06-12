@@ -2,6 +2,7 @@ import isEqual from 'lodash.isequal';
 import wsBase from '../utils/wsBase';
 import { updatePendingTransactions } from '../actions/transactions';
 import { updateIsConnected, updateToken } from '../actions/ws';
+import { updateIsLoading } from '../actions/app';
 
 export default class WsProvider extends wsBase {
 
@@ -20,7 +21,13 @@ export default class WsProvider extends wsBase {
     console.log('[WS Provider] open');
     super.onWsOpen();
     this.store.dispatch(updateIsConnected(true));
+    this.store.dispatch(updateIsLoading(false));
     this.pollTransactions();
+  }
+
+  onWsError (err) {
+    super.onWsError(err);
+    this.store.dispatch(updateIsLoading(false));
   }
 
   pollTransactions () {

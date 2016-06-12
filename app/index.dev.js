@@ -46,5 +46,5 @@ function initialState () {
       ],
       pending: []
     }
-  }
+  };
 }

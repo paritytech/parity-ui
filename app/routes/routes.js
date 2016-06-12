@@ -6,6 +6,7 @@ import { createHashHistory } from 'history';
 import { syncHistoryWithStore } from 'react-router-redux';
 
 import RootContainer from '../containers/Root';
+import LoadingPage from '../containers/LoadingPage';
 import TransactionsPage from '../containers/TransactionsPage';
 import UnAuthorizedPage from '../containers/UnAuthorizedPage';
 
@@ -19,10 +20,13 @@ export default class Routes extends Component {
     const history = syncHistoryWithStore(routerHistory, this.props.store);
     return (
       <Router history={ history }>
-        <Route path={ '/' } component={ RootContainer }>
-          <IndexRedirect to='transactions' />
-          <Route path={ 'transactions' } component={ TransactionsPage } />
-          <Route path={ 'unAuthorized' } component={ UnAuthorizedPage } />
+        <Route component={ RootContainer }>
+          <Route path={ '/loading' } component={ LoadingPage } />
+          <Route path={ '/unAuthorized' } component={ UnAuthorizedPage } />
+          <Route path={ '/' } onEnter={ this.requireAuth }>
+            <IndexRedirect to='transactions' />
+            <Route path={ 'transactions' } component={ TransactionsPage } />
+          </Route>
         </Route>
       </Router>
     );
@@ -30,6 +34,17 @@ export default class Routes extends Component {
 
   static propTypes = {
     store: PropTypes.object.isRequired
-  }
+  };
+
+  requireAuth = (nextState, replace) => {
+    const { app, ws } = this.props.store.getState();
+    if (app.isLoading) {
+      return replace('/loading');
+    }
+
+    if (!ws.isConnected) {
+      return replace('/unAuthorized');
+    }
+  };
 
 }

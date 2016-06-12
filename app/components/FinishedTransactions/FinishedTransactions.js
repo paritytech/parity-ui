@@ -13,7 +13,8 @@ export default class FinihsedTransactions extends Component {
     fee: PropTypes.number.isRequired,
     to: PropTypes.string, // undefined if it's a contract
     txHash: PropTypes.string, // undefined if it's rejected
-    data: PropTypes.string
+    data: PropTypes.string,
+    className: PropTypes.string
   };
 
   state = {
