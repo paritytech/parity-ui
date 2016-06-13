@@ -34,7 +34,7 @@ export default class UnAuthorized extends Component {
   componentWillReceiveProps (nextProps) {
     const { token, port } = nextProps.ws;
     const { proxy } = nextProps;
-    this.setState({ token, port });
+    this.setState({ token, port, proxy });
   }
 
   componentWillUnmount () {

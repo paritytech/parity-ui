@@ -21,7 +21,7 @@ function mapStateToProps (state) {
 
 function mapDispatchToProps (dispatch) {
   return {
-    actions: bindActionCreators({ updateToken, updatePort, updateProxy } , dispatch)
+    actions: bindActionCreators({ updateToken, updatePort, updateProxy }, dispatch)
   };
 }
 

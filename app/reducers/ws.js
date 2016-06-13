@@ -27,7 +27,7 @@ export default handleActions({
     return {
       ...state,
       port: action.payload
-    }
+    };
   }
 
 }, initialState);
