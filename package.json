@@ -94,7 +94,7 @@
     "url-loader": "^0.5.7",
     "webpack": "^1.13.1",
     "webpack-dev-server": "^1.14.1",
-    "webpack-error-notification": "0.1.6",
+    "webpack-error-notification": "^0.1.6",
     "webpack-hot-middleware": "^2.10.0",
     "webpack-httpolyglot-server": "^0.2.0",
     "why-did-you-update": "0.0.8",

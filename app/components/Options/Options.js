@@ -11,7 +11,7 @@ export default class UnAuthorized extends Component {
     proxy: PropTypes.string.isRequired,
     ws: PropTypes.shape({
       token: PropTypes.string.isRequired,
-      path: PropTypes.number.isRequired
+      path: PropTypes.string.isRequired
     }).isRequired,
     actions: PropTypes.shape({
       updateToken: PropTypes.func.isRequired,
@@ -57,7 +57,7 @@ export default class UnAuthorized extends Component {
     const { path } = this.state;
     return (
       <div>
-        <h2>Path</h2>
+        <h2>WS Path</h2>
         <TextField
           name='path'
           type='number'
@@ -68,6 +68,7 @@ export default class UnAuthorized extends Component {
         <br />
         <RaisedButton
           primary
+          className={ styles.button }
           onClick={ this.onSubmitPath }
          >
          Submit Path
@@ -90,6 +91,7 @@ export default class UnAuthorized extends Component {
         <br />
         <RaisedButton
           primary
+          className={ styles.button }
           onClick={ this.onSubmitProxy }
          >
          Submit proxy file url
@@ -120,6 +122,7 @@ export default class UnAuthorized extends Component {
         </div>
         <RaisedButton
           primary
+          className={ styles.button }
           onClick={ this.onSubmitToken }
           disabled={ processingToken }
          >

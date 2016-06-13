@@ -24,9 +24,11 @@ function addTokenListener (cb) {
 }
 
 function initialState (initToken) {
+  return {};
   return {
     ws: {
-      token: initToken
+      token: initToken,
+      path: '127.0.0.1:8180'
     },
     transactions: {
       finished: [

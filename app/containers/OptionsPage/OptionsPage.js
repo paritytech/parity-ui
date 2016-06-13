@@ -5,12 +5,15 @@ import { connect } from 'react-redux';
 import { updateToken, updateWsPath } from '../../actions/ws';
 import { updateProxy } from '../../actions/proxy';
 
+import Header from '../../components/Header';
 import Options from '../../components/Options';
 
 class OptionsPage extends Component {
   render () {
     return (
-      <Options { ...this.props } />
+      <div>
+        <Options { ...this.props } />
+      </div>
     );
   }
 }

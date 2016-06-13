@@ -1,6 +1,7 @@
 var rucksack = require('rucksack-css');
 var webpack = require('webpack');
 var path = require('path');
+var WebpackErrorNotificationPlugin = require('webpack-error-notification');
 
 var ENV = process.env.NODE_ENV || 'development';
 var isProd = ENV === 'production';
@@ -90,7 +91,8 @@ module.exports = {
           NODE_ENV: JSON.stringify(ENV),
           RPC_ADDRESS: JSON.stringify(process.env.RPC_ADDRESS)
         }
-      })
+      }),
+      new WebpackErrorNotificationPlugin(/* strategy, options */)
     ];
 
     if (isProd) {

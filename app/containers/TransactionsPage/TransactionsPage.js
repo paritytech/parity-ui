@@ -2,14 +2,18 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
+
 import * as TransactionActions from '../../actions/transactions';
 
+import Header from '../../components/Header';
 import Transactions from '../../components/Transactions';
 
 class TransactionsPage extends Component {
   render () {
     return (
-      <Transactions { ...this.props } />
+      <div>
+        <Transactions { ...this.props } />
+      </div>
     );
   }
 }

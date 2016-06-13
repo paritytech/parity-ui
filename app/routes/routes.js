@@ -18,7 +18,9 @@ const routerHistory = useRouterHistory(createHashHistory)({
 export default class Routes extends Component {
 
   render () {
-    const history = syncHistoryWithStore(routerHistory, this.props.store);
+    const { store } = this.props;
+    const { isConnected } = store.getState().ws;
+    const history = syncHistoryWithStore(routerHistory, store);
     return (
       <Router history={ history }>
         <Route component={ RootContainer }>
