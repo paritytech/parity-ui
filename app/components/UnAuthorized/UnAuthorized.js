@@ -36,7 +36,7 @@ export default class UnAuthorized extends Component {
     const { processing, token, showToken } = this.state;
     return (
       <div className={ styles.container }>
-        <h1>Not UnAuthorized</h1>
+        <h1>Not Authorized</h1>
         <p>Generate a token by runing parity signer new-token</p>
         <TextField
           name='token'
