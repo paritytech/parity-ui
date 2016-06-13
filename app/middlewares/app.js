@@ -21,7 +21,8 @@ export default class AppMiddleware {
   }
 
   onUpdateIsLoading (store, next, action) {
-    hashHistory.push('/');
+    const redirectTo = action.payload ? '/loading' : '/';
+    hashHistory.push(redirectTo);
     next(action);
   }
 

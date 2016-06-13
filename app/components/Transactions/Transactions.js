@@ -52,7 +52,17 @@ export default class Transactions extends Component {
 
   renderFinishedTransactions () {
     return this.props.transactions.finished.map(
-      t => <FinishedTransactions { ...t } key={ t.id } />
+      data => (
+        <FinishedTransactions
+          className={ styles.transaction }
+          txHash={ data.txHash }
+          key={ data.id }
+          id={ data.id }
+          from={ data.transaction.from }
+          to={ data.transaction.to }
+          value={ data.transaction.value }
+        />
+      )
     );
   }
 

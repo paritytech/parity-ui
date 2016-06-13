@@ -36,7 +36,7 @@ export default class TransactionsMiddleware {
       console.log('[APP] confirm transaction cb ', res);
       // todo [adgo] - detect errors better
       if (typeof res === 'string') {
-        transaction.hash = res;
+        transaction.txHash = res;
         store.dispatch(addFinishedTransaction(transaction));
       }
     });
