@@ -7,6 +7,7 @@ import { syncHistoryWithStore } from 'react-router-redux';
 
 import RootContainer from '../containers/Root';
 import LoadingPage from '../containers/LoadingPage';
+import OptionsPage from '../containers/OptionsPage';
 import TransactionsPage from '../containers/TransactionsPage';
 import UnAuthorizedPage from '../containers/UnAuthorizedPage';
 
@@ -26,6 +27,7 @@ export default class Routes extends Component {
           <Route path={ '/' } onEnter={ this.requireAuth }>
             <IndexRedirect to='transactions' />
             <Route path={ 'transactions' } component={ TransactionsPage } />
+            <Route path={ 'options' } component={ OptionsPage } />
           </Route>
         </Route>
       </Router>
