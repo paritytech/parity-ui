@@ -13,10 +13,6 @@ export default class Ws {
 
   init (token) {
     this.token = token;
-    if (!this.token) {
-      this.isConnected = false;
-      return console.log('[WS Base] no token');
-    }
 
     const hash = this.hash(this.token);
 

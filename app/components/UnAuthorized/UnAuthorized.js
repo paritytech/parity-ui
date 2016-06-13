@@ -64,7 +64,7 @@ export default class UnAuthorized extends Component {
   }
 
   renderToggleTokenVisibility () {
-    if (!this.token || !this.token.length) {
+    if (!this.state.token || !this.state.token.length) {
       return;
     }
     const { showToken } = this.state;
