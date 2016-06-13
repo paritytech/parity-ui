@@ -1,4 +1,4 @@
-import { addFinishedTransaction } from '../actions/transactions';
+import { addFinishedTransaction, errorTransaction } from '../actions/transactions';
 
 import WsBase from '../utils/wsBase';
 
@@ -34,6 +34,14 @@ export default class TransactionsMiddleware {
     const transaction = this.getTransaction(store, id); // needed for uccessful cb
     this.ws.send('personal_confirmTransaction', [ id, {}, password ], res => {
       console.log('[APP] confirm transaction cb ', res);
+
+      // transaction confirmation failed
+      if (res === false) {
+        const errMsg = `Failed to confirm transaction: ${id}, make sure the password is correct`;
+        store.dispatch(errorTransaction(errMsg));
+        return next(action);
+      }
+
       // todo [adgo] - detect errors better
       if (typeof res === 'string') {
         transaction.txHash = res;

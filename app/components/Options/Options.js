@@ -60,7 +60,6 @@ export default class UnAuthorized extends Component {
         <h2>WS Path</h2>
         <TextField
           name='path'
-          type='number'
           value={ path }
           onChange={ this.onPathChange }
           floatingLabelText='Path'

@@ -19,7 +19,6 @@ export default class Routes extends Component {
 
   render () {
     const { store } = this.props;
-    const { isConnected } = store.getState().ws;
     const history = syncHistoryWithStore(routerHistory, store);
     return (
       <Router history={ history }>

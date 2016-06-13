@@ -2,6 +2,8 @@ import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
+import ToastrContainer from '../../components/ToastrContainer';
+import { removeToast } from '../../actions/toastr';
 import Header from '../../components/Header';
 
 import styles from './Root.css';
@@ -10,7 +12,16 @@ import styles from './Root.css';
 export default class Root extends Component {
 
   static propTypes = {
-    children: PropTypes.node.isRequired
+    children: PropTypes.node.isRequired,
+    ws: PropTypes.shape({
+      isConnected: PropTypes.bool.isRequired
+    }).isRequired,
+    toastr: PropTypes.shape({
+      toasts: PropTypes.array.isRequired
+    }).isRequired,
+    actions: PropTypes.shape({
+      removeToast: PropTypes.func.isRequired
+    }).isRequired
   };
 
   render () {
@@ -20,6 +31,10 @@ export default class Root extends Component {
         <div className={ styles.mainContainer }>
           { this.props.children }
         </div>
+        <ToastrContainer
+          toasts={ this.props.toastr.toasts }
+          actions={ this.props.actions }
+        />
       </div>
     );
   }
@@ -31,7 +46,9 @@ function mapStateToProps (state) {
 }
 
 function mapDispatchToProps (dispatch) {
-  return {};
+  return {
+    actions: bindActionCreators({ removeToast }, dispatch)
+  };
 }
 
 export default connect(

@@ -73,9 +73,10 @@ export default class Ws {
   }
 
   errorOutCallbacks () {
-    this.callbacks.forEach(cb => {
-      cb('WS disconnected, cb cannot be called');
-    });
+    const { callbacks } = this;
+    for (const msgId in callbacks) {
+      callbacks[msgId]('WS disconnected, cb cannot be called');
+    }
     this.callbacks = {};
   }
 
