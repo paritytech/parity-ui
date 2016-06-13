@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { updateToken, updatePort } from '../../actions/ws';
+import { updateToken, updateWsPath } from '../../actions/ws';
 import { updateProxy } from '../../actions/proxy';
 
 import Options from '../../components/Options';
@@ -21,7 +21,7 @@ function mapStateToProps (state) {
 
 function mapDispatchToProps (dispatch) {
   return {
-    actions: bindActionCreators({ updateToken, updatePort, updateProxy }, dispatch)
+    actions: bindActionCreators({ updateToken, updateWsPath, updateProxy }, dispatch)
   };
 }
 

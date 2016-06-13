@@ -5,7 +5,7 @@ import app from './';
 const emitter = ee({});
 
 tokenGetter(initToken => {
-  app(initToken, tokenSetter, addTokenListener, initialState());
+  app(initToken, tokenSetter, addTokenListener, initialState(initToken), '127.0.0.1:8180');
 });
 
 function tokenGetter (cb) {
@@ -23,8 +23,11 @@ function addTokenListener (cb) {
   emitter.on('sysuiToken', cb);
 }
 
-function initialState () {
+function initialState (initToken) {
   return {
+    ws: {
+      token: initToken
+    },
     transactions: {
       finished: [
         {

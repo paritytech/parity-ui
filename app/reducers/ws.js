@@ -3,7 +3,7 @@ import { handleActions } from 'redux-actions';
 
 const initialState = {
   isConnected: false,
-  port: process.env.WS_PORT || 8180,
+  path: process.env.WS_PATH || '127.0.0.1:8180',
   token: ''
 };
 
@@ -23,10 +23,10 @@ export default handleActions({
     };
   },
 
-  'update port' (state, action) {
+  'update wsPath' (state, action) {
     return {
       ...state,
-      port: action.payload
+      path: action.payload
     };
   }
 

@@ -2,11 +2,10 @@ import { addFinishedTransaction } from '../actions/transactions';
 
 import WsBase from '../utils/wsBase';
 
-const ws = new WsBase();
-
 export default class TransactionsMiddleware {
 
-  constructor () {
+  constructor (wsPath) {
+    const ws = new WsBase(wsPath);
     this.ws = ws;
   }
 

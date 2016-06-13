@@ -4,7 +4,8 @@ import { keccak_256 } from 'js-sha3'; // eslint-disable-line camelcase
 
 export default class Ws {
 
-  constructor (token, addTokenListener) {
+  constructor (token, addTokenListener, wsPath) {
+    this.wsPath = wsPath;
     this.id = 1;
     this.callbacks = {};
     this.isWsConnected = false;
@@ -33,7 +34,7 @@ export default class Ws {
     // Initializing WebSocket with wrong hash will throw an error
     // So it's wrapped in try/ catch
     try {
-      this.ws = new WebSocket('ws://localhost:8180', hash);
+      this.ws = new WebSocket('ws://' + this.wsPath, hash);
     } catch (e) {
       console.warn('[Web3 WS Provider] error connecting to WS ', e);
       return this.onUnAuthorized();

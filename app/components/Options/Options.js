@@ -11,30 +11,30 @@ export default class UnAuthorized extends Component {
     proxy: PropTypes.string.isRequired,
     ws: PropTypes.shape({
       token: PropTypes.string.isRequired,
-      port: PropTypes.number.isRequired
+      path: PropTypes.number.isRequired
     }).isRequired,
     actions: PropTypes.shape({
       updateToken: PropTypes.func.isRequired,
-      updatePort: PropTypes.func.isRequired,
+      updateWsPath: PropTypes.func.isRequired,
       updateProxy: PropTypes.func.isRequired
     }).isRequired
   }
 
   state = {
     token: this.props.ws.token,
-    port: this.props.ws.port,
+    path: this.props.ws.path,
     proxy: this.props.proxy,
     showToken: false,
     tokenInvalid: null,
     processingToken: false,
-    processingPort: false,
+    processingPath: false,
     processingProxy: false
   };
 
   componentWillReceiveProps (nextProps) {
-    const { token, port } = nextProps.ws;
+    const { token, path } = nextProps.ws;
     const { proxy } = nextProps;
-    this.setState({ token, port, proxy });
+    this.setState({ token, path, proxy });
   }
 
   componentWillUnmount () {
@@ -44,7 +44,7 @@ export default class UnAuthorized extends Component {
   render () {
     return (
       <div className={ styles.container }>
-        { this.renderPortSection() }
+        { this.renderPathSection() }
         <hr />
         { this.renderProxySection() }
         <hr />
@@ -53,24 +53,24 @@ export default class UnAuthorized extends Component {
     );
   }
 
-  renderPortSection () {
-    const { port } = this.state;
+  renderPathSection () {
+    const { path } = this.state;
     return (
       <div>
-        <h2>Port</h2>
+        <h2>Path</h2>
         <TextField
-          name='port'
+          name='path'
           type='number'
-          value={ port }
-          onChange={ this.onPortChange }
-          floatingLabelText='Port'
+          value={ path }
+          onChange={ this.onPathChange }
+          floatingLabelText='Path'
         />
         <br />
         <RaisedButton
           primary
-          onClick={ this.onSubmitPort }
+          onClick={ this.onSubmitPath }
          >
-         Submit Port
+         Submit Path
         </RaisedButton>
       </div>
     );
@@ -131,9 +131,9 @@ export default class UnAuthorized extends Component {
     );
   }
 
-  onSubmitPort = () => {
-    const { port } = this.state;
-    this.props.actions.updatePort(port);
+  onSubmitPath = () => {
+    const { path } = this.state;
+    this.props.actions.updateWsPath(path);
   }
 
   onSubmitProxy = () => {
@@ -145,8 +145,8 @@ export default class UnAuthorized extends Component {
     this.setState({ token: evt.target.value });
   }
 
-  onPortChange = evt => {
-    this.setState({ port: evt.target.value });
+  onPathChange = evt => {
+    this.setState({ path: evt.target.value });
   }
 
   onProxyChange = evt => {

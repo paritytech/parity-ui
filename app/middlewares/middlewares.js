@@ -4,15 +4,15 @@ import Ws from './ws';
 import App from './app';
 import logger from './logger';
 
-export default function middlewares (tokenSetter) {
+export default function middlewares (tokenSetter, wsPath) {
   // Middleware instances
-  const transactions = new Transactions();
-  const auth = new Ws(tokenSetter);
+  const transactions = new Transactions(wsPath);
+  const ws = new Ws(tokenSetter);
   const app = new App();
 
   return [
     logger,
-    auth.toMiddleware(),
+    ws.toMiddleware(),
     app.toMiddleware(),
     transactions.toMiddleware()
   ];

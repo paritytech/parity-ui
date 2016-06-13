@@ -5,7 +5,8 @@ import { keccak_256 } from 'js-sha3'; // eslint-disable-line camelcase
 
 export default class Ws {
 
-  constructor () {
+  constructor (wsPath) {
+    this.wsPath = wsPath;
     this.id = 1;
     this.callbacks = {};
   }
@@ -20,7 +21,7 @@ export default class Ws {
     const hash = this.hash(this.token);
 
     try {
-      this.ws = new WebSocket('ws://localhost:8180', hash);
+      this.ws = new WebSocket('ws://' + this.wsPath, hash);
     } catch (err) {
       console.warn('cant connect to ws ', err);
     }

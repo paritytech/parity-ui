@@ -16,11 +16,11 @@ import middlewares from './middlewares';
 import createStore from './store/configureStore';
 import Routes from './routes';
 
-export default function app (initToken, tokenSetter, addTokenListener, initialState) {
-  const web3WebSocketProvider = new Web3WebSocketProvider(initToken, addTokenListener);
+export default function app (initToken, tokenSetter, addTokenListener, initialState, wsPath) {
+  const web3WebSocketProvider = new Web3WebSocketProvider(initToken, addTokenListener, wsPath);
   const web3 = new Web3(web3WebSocketProvider);
 
-  const store = createStore(middlewares(tokenSetter), initialState);
+  const store = createStore(middlewares(tokenSetter, wsPath), initialState);
   ReactDOM.render(
     <Provider store={ store }>
       <Web3Provider web3={ web3 }>
@@ -32,6 +32,8 @@ export default function app (initToken, tokenSetter, addTokenListener, initialSt
     document.querySelector('#root')
   );
 
-  const wsProvider = new WsProvider(store);
+  const wsProvider = new WsProvider(store, wsPath);
   wsProvider.init(initToken);
 }
+
+global.paritySysUiApp = app;

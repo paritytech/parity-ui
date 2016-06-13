@@ -6,14 +6,17 @@ import { updateIsLoading } from '../actions/app';
 
 export default class WsProvider extends wsBase {
 
-  constructor (store) {
-    super();
+  constructor (store, wsPath) {
+    super(wsPath);
     this.store = store;
   }
 
   init (token) {
     console.log('[WS Provider] init');
-    this.store.dispatch(updateToken(token));
+    const prevToken = this.store.getState().ws.token;
+    if (prevToken !== token) {
+      this.store.dispatch(updateToken(token));
+    }
     super.init(token);
   }
 
