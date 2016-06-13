@@ -48,9 +48,7 @@ export default class UnAuthorized extends Component {
         />
         <br />
         <div className={ styles.toggleToken }>
-          <a onClick={ this.onToggleToken }>
-            { showToken ? 'Hide' : 'Show' } token
-          </a>
+          { this.renderToggleTokenVisibility() }
         </div>
         <RaisedButton
           primary
@@ -62,6 +60,18 @@ export default class UnAuthorized extends Component {
         { this.renderProcessing() }
         { this.renderInvalidToken() }
       </div>
+    );
+  }
+
+  renderToggleTokenVisibility () {
+    if (!this.token || !this.token.length) {
+      return;
+    }
+    const { showToken } = this.state;
+    return (
+      <a onClick={ this.onToggleToken }>
+        { showToken ? 'Hide' : 'Show' } token
+      </a>
     );
   }
 
