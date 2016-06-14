@@ -20,7 +20,7 @@ export default function app (initToken, tokenSetter, addTokenListener, wsPath) {
   const web3WebSocketProvider = new Web3WebSocketProvider(initToken, addTokenListener, wsPath);
   const web3 = new Web3(web3WebSocketProvider);
 
-  const store = createStore(middlewares(tokenSetter, wsPath));
+  const store = createStore(middlewares(initToken, tokenSetter, wsPath));
   ReactDOM.render(
     <Provider store={ store }>
       <Web3Provider web3={ web3 }>
@@ -32,7 +32,8 @@ export default function app (initToken, tokenSetter, addTokenListener, wsPath) {
     document.querySelector('#root')
   );
 
-  const wsProvider = new WsProvider(store, wsPath);
+  const wsProvider = new WsProvider(store, wsPath, addTokenListener);
+
   wsProvider.init(initToken);
 }
 

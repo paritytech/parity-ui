@@ -4,8 +4,9 @@ import WsBase from '../utils/wsBase';
 
 export default class TransactionsMiddleware {
 
-  constructor (wsPath) {
+  constructor (initToken, wsPath) {
     const ws = new WsBase(wsPath);
+    ws.init(initToken);
     this.ws = ws;
   }
 
@@ -33,7 +34,7 @@ export default class TransactionsMiddleware {
     const { id, password } = action.payload;
     const transaction = this.getTransaction(store, id); // needed for uccessful cb
     this.ws.send('personal_confirmTransaction', [ id, {}, password ], res => {
-      console.log('[APP] confirm transaction cb ', res);
+      console.log('confirm transaction cb ', res);
 
       // transaction confirmation failed
       if (res === false) {
@@ -55,7 +56,7 @@ export default class TransactionsMiddleware {
     const id = action.payload;
     const transaction = this.getTransaction(store, id); // needed for uccessful cb
     this.ws.send('personal_rejectTransaction', [ id ], res => {
-      console.log('[APP] reject transaction cb ', res);
+      console.log('reject transaction cb ', res);
       if (res === true) {
         store.dispatch(addFinishedTransaction(transaction));
       }

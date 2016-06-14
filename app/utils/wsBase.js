@@ -9,6 +9,8 @@ export default class Ws {
     this.wsPath = wsPath;
     this.id = 1;
     this.callbacks = {};
+    this.isConnected = false;
+    this.queue = []; // hold calls until ws is connected on init or if disconnected
   }
 
   init (token) {
@@ -33,7 +35,7 @@ export default class Ws {
 
   onWsOpen () {
     console.log('[WS Base] connected');
-    this.ws.addEventListener('disconnect', ::this.onWsDisconnect);
+    this.ws.addEventListener('close', ::this.onWsClose);
     this.ws.addEventListener('message', ::this.onWsMsg);
     this.isConnected = true;
   }
@@ -43,16 +45,19 @@ export default class Ws {
     this.isConnected = false;
   }
 
-  onWsDisconnect () {
-    console.warn('[WS Base] disconnect!');
+  onWsClose () {
+    console.warn('[WS Base] closed!');
     this.errorOutCallbacks();
+    this.isConnected = false;
+    // try to reconnect
     this.init(this.token);
   }
 
   errorOutCallbacks () {
-    this.callbacks.forEach(cb => {
-      cb('WS disconnected, cb cannot be called');
-    });
+    const { callbacks } = this;
+    for (const msgId in callbacks) {
+      callbacks[msgId]('WS disconnected, cb cannot be called');
+    }
     this.callbacks = {};
   }
 
@@ -73,6 +78,10 @@ export default class Ws {
   }
 
   send (method, params, callback) {
+    if (!this.isConnected) {
+      this.queue.push({ method, params, callback });
+      return console.log('[WS Base]: incoming msg when not connected, adding to queue');
+    }
     const id = this.id;
     this.id++;
     const payload = JSON.stringify({
@@ -81,6 +90,14 @@ export default class Ws {
     });
     this.callbacks[id] = callback;
     this.ws.send(payload);
+  }
+
+  executeQueue () {
+    console.log('[WS Base] executing queue: ', this.queue);
+    this.queue.forEach(call => {
+      this.sendAsync(call.method, call.params, call.callback);
+    });
+    this.queue = [];
   }
 
 }

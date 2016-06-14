@@ -5,9 +5,9 @@ import App from './app';
 import Toastr from './toastr';
 import logger from './logger';
 
-export default function middlewares (tokenSetter, wsPath) {
+export default function middlewares (initToken, tokenSetter, wsPath) {
   // Middleware instances
-  const transactions = new Transactions(wsPath);
+  const transactions = new Transactions(initToken, wsPath);
   const ws = new Ws(tokenSetter);
   const app = new App();
   const toastr = new Toastr();

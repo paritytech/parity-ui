@@ -11,6 +11,7 @@ export default class Ws {
     this.isWsConnected = false;
     this.queue = []; // hold calls until ws is connected on init or if disconnected
     this.init(token);
+    // todo [adgo] - move logic to react
     addTokenListener(::this.onTokenChange);
   }
 
