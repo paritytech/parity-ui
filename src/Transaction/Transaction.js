@@ -113,9 +113,8 @@ export default class Transaction extends Web3Component {
           className={ styles.confirmButton }
           fullWidth
           primary
-          >
-          Confirm Transaction
-        </RaisedButton>
+          label='Confirm Transaction'
+        />
         <div className={ styles.reject }>
           <a onClick={ this.openReject }>Reject transaction</a>
         </div>
