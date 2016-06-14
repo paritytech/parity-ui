@@ -60,8 +60,11 @@
 }
 
 .confirmButton {
-  margin-bottom: 10px;
   display: block !important;
+  margin-bottom: 10px;
+  /* https://github.com/ethcore/dapps-react-ui/issues/17 */
+  background-color: #6691c2 !important;
+  color: #fff !important;
 }
 
 .confirmForm {
@@ -83,6 +86,9 @@
 .rejectButton {
   display: block !important;
   margin-bottom: 5px;
+  /* https://github.com/ethcore/dapps-react-ui/issues/17 */
+  background-color: #6691c2 !important;
+  color: #fff !important;
 }
 
 .rejectText {

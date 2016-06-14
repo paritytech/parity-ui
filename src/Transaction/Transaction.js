@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 
 import ReactTooltip from 'react-tooltip';
 import TextField from 'material-ui/TextField';
-import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
 import HourGlassIcon from 'material-ui/svg-icons/action/hourglass-empty';
 import DescriptionIcon from 'material-ui/svg-icons/action/description';
 import Slider from 'rc-slider';
@@ -108,7 +108,7 @@ export default class Transaction extends Web3Component {
           type='password'
           value={ password }
         />
-        <RaisedButton
+        <FlatButton
           onClick={ this.confirm }
           className={ styles.confirmButton }
           fullWidth
@@ -134,14 +134,16 @@ export default class Transaction extends Web3Component {
           Are you sure you want to reject transaction? <br />
           <strong>This cannot be undone</strong>
         </div>
-        <RaisedButton
+        <FlatButton
           onClick={ this.reject }
           className={ styles.rejectButton }
           disabled={ rejectCounter > 0 }
           fullWidth
+          label='Reject Transaction '
+          labelPosition='before'
           >
-          Reject Transaction { this.renderRejectButtonCounter(rejectCounter) }
-        </RaisedButton>
+          { this.renderRejectButtonCounter(rejectCounter) }
+        </FlatButton>
         <a className={ styles.closeRejectText } onClick={ this.resetReject }>
           I don't want to reject this transaction
         </a>
