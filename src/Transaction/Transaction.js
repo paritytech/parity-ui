@@ -24,6 +24,7 @@ export default class Transaction extends Web3Component {
     to: PropTypes.string, // undefined if it's a contract
     nonce: PropTypes.number,
     value: PropTypes.string.isRequired, // hex of wei
+    ethValue: PropTypes.number.isRequired,
     confirmTransaction: PropTypes.func.isRequired,
     rejectTransaction: PropTypes.func.isRequired
   };
@@ -35,19 +36,6 @@ export default class Transaction extends Web3Component {
     // for a few seconds to avoid accidential double clicks
     rejectCounterTime: 3
   };
-
-  state = {
-    numericEthValue: this.weiToEth(this.props.value)
-  }
-
-  componentWillReceiveProps (nextProps) {
-    const numericEthValue = this.weiToEth(nextProps.value);
-    this.setState({ numericEthValue });
-  }
-
-  weiToEth (wei) {
-    return Number(wei) / 1000000000000000000; 
-  }
 
   componentWillMount () {
     // set estimated mining time, total value, and initial fee state
@@ -338,7 +326,7 @@ export default class Transaction extends Web3Component {
   }
 
   renderValue () {
-    const { numericEthValue } = this.state;
+    const { ethValue } = this.props;
     return (
       <div>
         <div
@@ -346,7 +334,7 @@ export default class Transaction extends Web3Component {
           data-for='value'
           data-effect='solid'
           >
-          <strong>{ numericEthValue } </strong>
+          <strong>{ ethValue } </strong>
           <small>ETH</small>
         </div>
         <ReactTooltip id='value'>

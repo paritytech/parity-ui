@@ -8,7 +8,7 @@ export default class AccountLinkDocs extends Component {
     return (
       <div>
         <h1>Account Link</h1>
-        <AccountLink acc={ acc }>
+        <AccountLink acc={ acc } chain={ 'morden' }>
           This should link to { acc }.
         </AccountLink>
       </div>

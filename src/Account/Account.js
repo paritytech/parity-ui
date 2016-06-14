@@ -10,15 +10,16 @@ export default class Account extends Component {
   static propTypes = {
     className: PropTypes.string,
     address: PropTypes.string.isRequired,
+    chain: PropTypes.string.isRequired,
     balance: PropTypes.oneOfType([PropTypes.string, PropTypes.object, PropTypes.number]).isRequired,
     name: PropTypes.string
   };
 
   render () {
-    const { address, balance, name, className } = this.props;
+    const { address, balance, name, chain, className } = this.props;
     return (
       <div className={ `${styles.acc} ${className}` } title={ this.renderTitle(address) }>
-        <Identicon seed={ address } />
+        <Identicon seed={ address } chain={ chain } />
         { this.renderName(address, name) }
         { this.renderBalance(balance) }
       </div>
@@ -48,13 +49,13 @@ export default class Account extends Component {
   renderName (address, name) {
     if (!name) {
       return (
-        <AccountLink acc={ address }>
+        <AccountLink acc={ address } chain={ this.props.chain }>
           [{ this.shortAddress(address) }]
         </AccountLink>
       );
     }
     return (
-      <AccountLink acc={ address }>
+      <AccountLink acc={ address } chain={ this.props.chain } >
         <span>
           <span className={ styles.name }>{ name }</span>
           <span className={ styles.address }>[{ this.tinyAddress(address) }]</span>

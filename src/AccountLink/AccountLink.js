@@ -7,6 +7,7 @@ export default class AccountLink extends Component {
   static propTypes = {
     className: PropTypes.string,
     children: PropTypes.node,
+    chain: PropTypes.string.isRequired,
     acc: PropTypes.string.isRequired
   }
 
@@ -32,7 +33,10 @@ export default class AccountLink extends Component {
   }
 
   getLink (acc) {
-    return `https://etherchain.org/account/${acc}`;
+    const base = this.props.chain === 'morden' ?
+    'https://testnet.etherscan.io/address/' :
+    'https://etherscan.io/address/';
+    return base + acc;
   }
 
   updateLink = (acc) => {

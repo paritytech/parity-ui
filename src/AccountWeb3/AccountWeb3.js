@@ -12,10 +12,12 @@ export default class AccountWeb3 extends Web3Component {
   };
 
   state = {
-    balance: null
+    balance: null,
+    chain: 'homestead'
   };
 
   componentDidMount () {
+    this.fetchChain();
     this.fetchBalance(this.props.address);
   }
 
@@ -39,16 +41,30 @@ export default class AccountWeb3 extends Web3Component {
     });
   }
 
+  fetchChain () {
+    this.context.web3.ethcore.getNetChain((err, chain) => {
+      if (err) {
+        return console.warn('error fetching chain: ', err);
+      }
+      if (chain === this.state.chain) {
+        return;
+      }
+
+      this.setState({ chain });
+    });
+  }
+
   render () {
     let { address, name, className } = this.props;
-    // todo - move out of render
-    const balance = this.context.web3.fromWei(this.state.balance);
+    let { chain, balance } = this.state;
+    balance = this.context.web3.fromWei(balance);
     address = this.context.web3.toChecksumAddress(address);
     return (
       <Account
         className={ className }
         balance={ balance }
         address={ address }
+        chain={ chain }
         name={ name }
       />
     );

@@ -4,8 +4,13 @@ import ReactDOM from 'react-dom';
 
 import Web3Provider from '../Web3Provider';
 import Web3 from 'web3';
-const web3 = new Web3(new Web3.providers.HttpProvider(process.env.RPC_ADDRESS || '/rpc/'));
+import web3extensions from '../util/web3.extensions';
+
+const http = new Web3.providers.HttpProvider(process.env.RPC_ADDRESS || '/rpc/');
+const web3 = new Web3(http);
+web3._extend(web3extensions(web3));
 global.web3 = web3;
+
 import MuiThemeProvider from '../MuiThemeProvider';
 import AccountWeb3Docs from '../AccountWeb3/AccountWeb3.docs';
 import TransactionWeb3Docs from '../TransactionWeb3/TransactionWeb3.docs';

@@ -9,6 +9,7 @@ export default class Identicon extends Component {
 
   static propTypes = {
     className: PropTypes.string,
+    chain: PropTypes.string.isRequired,
     seed: PropTypes.string.isRequired
   };
 
@@ -40,10 +41,10 @@ export default class Identicon extends Component {
   }
 
   render () {
-    const { seed, className } = this.props;
+    const { seed, chain, className } = this.props;
 
     return (
-      <AccountLink acc={ seed } className={ className }>
+      <AccountLink acc={ seed } className={ className } chain={ chain }>
         <img src={ this.state.src } className={ styles.icon } />
       </AccountLink>
     );

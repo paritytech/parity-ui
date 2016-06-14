@@ -18,9 +18,20 @@ export default class TransactionWeb3 extends Web3Component {
     rejectTransaction: PropTypes.func.isRequired
   }
 
+  state = {
+    ethValue: +this.context.web3.fromWei(this.props.value)
+  }
+
+  componentWillReceiveProps (nextProps) {
+    if (nextProps.value !== this.props.value) {
+      const ethValue = +this.context.web3.fromWei(this.props.value);
+      this.setState({ ethValue })
+    }
+  }
+
   render () {
     return (
-      <Transaction { ...this.props } />
+      <Transaction { ...this.props } ethValue={ this.state.ethValue} />
     );
   }
 

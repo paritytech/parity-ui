@@ -8,7 +8,7 @@ export default class IdenticonDocs extends Component {
     return (
       <div>
         <h1>Identicon</h1>
-        <Identicon seed={ seed } />
+        <Identicon seed={ seed } chain={ 'morden' } />
       </div>
     );
   }
