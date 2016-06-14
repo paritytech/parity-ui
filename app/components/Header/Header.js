@@ -28,6 +28,7 @@ export default class Header extends Component {
   }
 
   renderMenu () {
+    return null; // until settings are tested and operational
     if (!this.props.isConnected) {
       return null;
     }
