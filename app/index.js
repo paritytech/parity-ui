@@ -2,8 +2,12 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import ReactDOM from 'react-dom';
 
+// Needed for onTouchTap
+// http://stackoverflow.com/a/34015469/988941
+import injectTapEventPlugin from 'react-tap-event-plugin';
+
 import Web3 from 'web3';
-import { Web3Provider, MuiThemeProvider } from 'dapps-react-ui';
+import { Web3Provider, MuiThemeProvider, web3Extension } from 'dapps-react-ui';
 
 import './index.html';
 import './index.css';
@@ -19,8 +23,12 @@ import Routes from './routes';
 export default function app (initToken, tokenSetter, addTokenListener, wsPath) {
   const web3WebSocketProvider = new Web3WebSocketProvider(initToken, addTokenListener, wsPath);
   const web3 = new Web3(web3WebSocketProvider);
+  web3._extend(web3Extension(web3));
+  global.web3 = global.web3 || web3;
 
   const store = createStore(middlewares(initToken, tokenSetter, wsPath));
+
+  injectTapEventPlugin();
   ReactDOM.render(
     <Provider store={ store }>
       <Web3Provider web3={ web3 }>
