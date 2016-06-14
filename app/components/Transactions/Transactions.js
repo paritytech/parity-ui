@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { TransactionWeb3 } from 'dapps-react-ui';
 import FinishedTransactions from '../FinishedTransactions';
-
 import styles from './Transactions.css';
 
 export default class Transactions extends Component {
@@ -42,6 +41,7 @@ export default class Transactions extends Component {
           confirmTransaction={ actions.confirmTransaction }
           key={ data.id }
           id={ data.id }
+          data={ data.transaction.data }
           from={ data.transaction.from }
           to={ data.transaction.to }
           value={ data.transaction.value }
