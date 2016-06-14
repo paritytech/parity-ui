@@ -13,15 +13,15 @@ export default class TransactionWeb3 extends Web3Component {
     gas: PropTypes.any,
     to: PropTypes.string,
     nonce: PropTypes.number,
-    value: PropTypes.any.isRequired,
+    value: PropTypes.string.isRequired, // wei
     confirmTransaction: PropTypes.func.isRequired,
     rejectTransaction: PropTypes.func.isRequired
   }
 
   render () {
-    const value = +this.context.web3.fromWei(this.props.value);
+    debugger
     return (
-      <Transaction { ...this.props } value={ value } />
+      <Transaction { ...this.props } />
     );
   }
 
