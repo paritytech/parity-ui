@@ -9,7 +9,7 @@ const transaction1 = {
   gas: 10,
   gasPrice: 20,
   nonce: 2,
-  value: "0",
+  value: '0',
   confirmTransaction: args => console.log('Transaction confirmed:', args),
   rejectTransaction: id => console.log('Transaction rejected: ', id)
 };
@@ -21,13 +21,11 @@ const transaction2 = {
   gas: 10,
   gasPrice: 20,
   nonce: 2,
-  data: "0x234lkjglfdkgj",
-  value: "0x9184e72a",
+  data: '0x234lkjglfdkgj',
+  value: '0x9184e72a',
   confirmTransaction: args => console.log('Transaction confirmed:', args),
   rejectTransaction: id => console.log('Transaction rejected: ', id)
 };
-
-
 
 const containerStyle = { width: 700 }; // mimic sysui chrome extension width
 

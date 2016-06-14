@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 
 import ReactTooltip from 'react-tooltip';
-import AccountWeb3 from '../AccountWeb3'
+import AccountWeb3 from '../AccountWeb3';
 import styles from './TransactionFinished.css';
 
 export default class TransactionFinished extends Component {
@@ -14,6 +14,7 @@ export default class TransactionFinished extends Component {
     chain: PropTypes.string.isRequired,
     to: PropTypes.string, // undefined if it's a contract
     txHash: PropTypes.string, // undefined if it's rejected
+    className: PropTypes.string,
     data: PropTypes.string
   };
 
@@ -82,9 +83,9 @@ export default class TransactionFinished extends Component {
   }
 
   getTxLink (txHash) {
-    const base = this.props.chain === 'morden' ?
-    'https://testnet.etherscan.io/tx/' :
-    'https://etherscan.io/tx/';
+    const base = this.props.chain === 'morden'
+    ? 'https://testnet.etherscan.io/tx/'
+    : 'https://etherscan.io/tx/';
     return base + txHash;
   }
 
