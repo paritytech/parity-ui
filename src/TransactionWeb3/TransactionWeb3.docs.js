@@ -9,14 +9,14 @@ const transaction = {
   gas: 10,
   gasPrice: 20,
   nonce: 2,
-  value: 2000,
+  value: "0x9184e72a",
   confirmTransaction: args => console.log('Transaction confirmed:', args),
   rejectTransaction: id => console.log('Transaction rejected: ', id)
 };
 
 const containerStyle = { width: 700 }; // mimic sysui chrome extension width
 
-export default class TransactionDocs extends Component {
+export default class TransactionWeb3Docs extends Component {
   render () {
     return (
       <div style={ containerStyle }>

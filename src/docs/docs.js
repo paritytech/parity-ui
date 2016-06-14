@@ -5,10 +5,10 @@ import ReactDOM from 'react-dom';
 import Web3Provider from '../Web3Provider';
 import Web3 from 'web3';
 const web3 = new Web3(new Web3.providers.HttpProvider(process.env.RPC_ADDRESS || '/rpc/'));
-
+global.web3 = web3;
 import MuiThemeProvider from '../MuiThemeProvider';
 import AccountWeb3Docs from '../AccountWeb3/AccountWeb3.docs';
-import TransactionDocs from '../Transaction/Transaction.docs';
+import TransactionWeb3Docs from '../TransactionWeb3/TransactionWeb3.docs';
 import TransactionFinishedDocs from '../TransactionFinished/TransactionFinished.docs';
 import AccountLinkDocs from '../AccountLink/AccountLink.docs';
 import IdenticonDocs from '../Identicon/Identicon.docs';
@@ -20,7 +20,7 @@ ReactDOM.render(
       <div>
         <TransactionFinishedDocs />
         <hr />
-        <TransactionDocs />
+        <TransactionWeb3Docs />
         <hr />
         <RpcAutoCompleteDocs />
         <hr />
