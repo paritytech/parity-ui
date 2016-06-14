@@ -2,7 +2,7 @@
   "name": "dapps-react-ui",
   "version": "0.0.67",
   "description": "React ui reusable components for dapps",
-  "main": "./index.js",
+  "main": "./build/index.js",
   "scripts": {
     "install": "napa alexvandesande/blockies",
     "start": "webpack-dev-server -d --history-api-fallback --hot --inline --progress --colors --port 3020",
@@ -17,7 +17,6 @@
     "testOnce": "mocha 'src/**/*.spec.js'",
     "prebuild": "npm run clean",
     "build": "NODE_ENV=production webpack --progress --colors",
-    "localPublish": "./scripts/local-publish.sh",
     "clean": "rm build -rf"
   },
   "repository": {
