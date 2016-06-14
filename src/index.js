@@ -10,3 +10,4 @@ export RpcAutoComplete from './RpcAutoComplete';
 export Web3Component from './Web3Component';
 export Web3Provider from './Web3Provider';
 export MuiThemeProvider from './MuiThemeProvider';
+export web3Extension from './util/web3.extensions';
