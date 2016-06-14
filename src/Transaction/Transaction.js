@@ -253,7 +253,7 @@ export default class Transaction extends Web3Component {
       return 'empty';
     }
 
-    return data.substr(0,3) + '...';
+    return data.substr(0, 3) + '...';
   }
 
   toggleDataExpanded = () => {

@@ -9,8 +9,8 @@ const transaction = {
   gas: 10,
   gasPrice: 20,
   nonce: 2,
-  data: "0xa",
-  value: "0x9184e72a",
+  data: '0xa',
+  value: '0x9184e72a',
   confirmTransaction: args => console.log('Transaction confirmed:', args),
   rejectTransaction: id => console.log('Transaction rejected: ', id)
 };

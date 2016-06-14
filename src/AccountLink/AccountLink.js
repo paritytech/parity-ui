@@ -33,9 +33,9 @@ export default class AccountLink extends Component {
   }
 
   getLink (acc) {
-    const base = this.props.chain === 'morden' ?
-    'https://testnet.etherscan.io/address/' :
-    'https://etherscan.io/address/';
+    const base = this.props.chain === 'morden'
+    ? 'https://testnet.etherscan.io/address/'
+    : 'https://etherscan.io/address/';
     return base + acc;
   }
 

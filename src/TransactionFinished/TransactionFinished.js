@@ -11,14 +11,20 @@ export default class TransactionFinished extends Component {
     from: PropTypes.string.isRequired,
     value: PropTypes.number.isRequired,
     fee: PropTypes.number.isRequired,
+    chain: PropTypes.string.isRequired,
     to: PropTypes.string, // undefined if it's a contract
     txHash: PropTypes.string, // undefined if it's rejected
     data: PropTypes.string
   };
 
   state = {
-    totalValue: this.props.value + this.props.fee
+    totalValue: this.props.value + this.props.fee,
+    txLink: this.getTxLink(this.props.txHash)
   };
+
+  componentWillReceiveProps (nextProps) {
+    this.updateTxLink(nextProps.txHash);
+  }
 
   render () {
     const { from, to, value, className } = this.props;
@@ -63,16 +69,29 @@ export default class TransactionFinished extends Component {
 
   renderTxHash () {
     const { txHash } = this.props;
+    const { txLink } = this.state;
     if (!txHash) {
       return null;
     }
 
     return (
       <div>
-        <a href={ 'https://testnet.etherscan.io/tx/' + txHash } target='_blank'>{ txHash }</a>
+        <a href={ txLink } target='_blank'>{ txHash }</a>
       </div>
     );
   }
+
+  getTxLink (txHash) {
+    const base = this.props.chain === 'morden' ?
+    'https://testnet.etherscan.io/tx/' :
+    'https://etherscan.io/tx/';
+    return base + txHash;
+  }
+
+  updateTxLink = (txHash) => {
+    const txLink = this.getTxLink(txHash);
+    this.setState({ txLink });
+  };
 
   renderValue (value) {
     return (

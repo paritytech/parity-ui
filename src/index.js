@@ -3,6 +3,7 @@ export AccountWeb3 from './AccountWeb3';
 export AccountLink from './AccountLink';
 export Identicon from './Identicon';
 export Transaction from './Transaction';
+export TransactionFinished from './TransactionFinished';
 export TransactionWeb3 from './TransactionWeb3';
 export Web3WebSocketProvider from './util/Web3WebSocketProvider';
 export RpcAutoComplete from './RpcAutoComplete';

@@ -25,13 +25,13 @@ export default class TransactionWeb3 extends Web3Component {
   componentWillReceiveProps (nextProps) {
     if (nextProps.value !== this.props.value) {
       const ethValue = +this.context.web3.fromWei(this.props.value);
-      this.setState({ ethValue })
+      this.setState({ ethValue });
     }
   }
 
   render () {
     return (
-      <Transaction { ...this.props } ethValue={ this.state.ethValue} />
+      <Transaction { ...this.props } ethValue={ this.state.ethValue } />
     );
   }
 
