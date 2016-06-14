@@ -124,6 +124,10 @@
   cursor: pointer;
 }
 
+.toggleData {
+  cursor: pointer;
+}
+
 .fee img {
   width: 20px;
   height: 20px;
@@ -139,4 +143,12 @@
 
 .confirmForm {
   margin-top: -40px;
+}
+
+.expandedData {
+  display: block;
+  padding: 15px;
+  background: gray;
+  clear: left;
+  color: #fff;
 }

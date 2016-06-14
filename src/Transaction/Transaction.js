@@ -79,6 +79,7 @@ export default class Transaction extends Web3Component {
           { this.renderFee() }
           { this.renderEstimatedMinimgTime() }
           { this.renderData() }
+          { this.renderDataExpanded() }
           { this.renderFeeCustomization() }
         </div>
       </div>
@@ -245,12 +246,42 @@ export default class Transaction extends Web3Component {
         data-for='data'
         data-effect='solid'
         >
-        <DescriptionIcon />
-        { data || 'empty' }
+        <a className={ styles.toggleData } onClick={ this.toggleDataExpanded }>
+          <DescriptionIcon />
+          { this.renderPreviewData() }
+        </a>
         <ReactTooltip id='data'>
-          Extra data to send along your transaction: { data || 'empty' }
+          Extra data to send along your transaction: { data || 'empty' }. <br />
+          <strong>Click to expand</strong>.
         </ReactTooltip>
       </div>
+    );
+  }
+
+  renderPreviewData () {
+    const { data } = this.props;
+
+    if (!data) {
+      return 'empty';
+    }
+
+    return data.substr(0,3) + '...';
+  }
+
+  toggleDataExpanded = () => {
+    const { dataExpanded } = this.state;
+    this.setState({ dataExpanded: !dataExpanded });
+  }
+
+  renderDataExpanded () {
+    const { dataExpanded } = this.state;
+    const { data } = this.props;
+    if (!dataExpanded) {
+      return;
+    }
+
+    return (
+      <pre className={ styles.expandedData }>{ data || 'empty' }</pre>
     );
   }
 

@@ -19,7 +19,6 @@ export default class TransactionWeb3 extends Web3Component {
   }
 
   render () {
-    debugger
     return (
       <Transaction { ...this.props } />
     );
