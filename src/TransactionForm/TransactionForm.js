@@ -11,7 +11,7 @@ export default class TransactionForm extends Component {
 
   static propTypes = {
     className: PropTypes.string,
-    rejectCounterTime: PropTypes.string,
+    rejectCounterTime: PropTypes.number,
     onConfirm: PropTypes.func.isRequired,
     onReject: PropTypes.func.isRequired
   };

@@ -10,7 +10,7 @@ export default class Identicon extends Component {
   static propTypes = {
     className: PropTypes.string,
     chain: PropTypes.string.isRequired,
-    seed: PropTypes.string.isRequired
+    address: PropTypes.string.isRequired
   };
 
   state = {
@@ -18,19 +18,19 @@ export default class Identicon extends Component {
   };
 
   componentDidMount () {
-    this.updateIcon(this.props.seed);
+    this.updateIcon(this.props.address);
   }
 
   componentWillReceiveProps (newProps) {
-    if (newProps.seed === this.props.seed) {
+    if (newProps.address === this.props.address) {
       return;
     }
-    this.updateIcon(newProps.seed);
+    this.updateIcon(newProps.address);
   }
 
-  updateIcon (seed) {
+  updateIcon (address) {
     const dataUrl = blockies.create({
-      seed: seed.toLowerCase(), // in case it's a checksummed address
+      address: address.toLowerCase(), // in case it's a checksummed address
       size: 8,
       scale: 8
     }).toDataURL();
@@ -41,10 +41,10 @@ export default class Identicon extends Component {
   }
 
   render () {
-    const { seed, chain, className } = this.props;
+    const { address, chain, className } = this.props;
 
     return (
-      <AccountLink acc={ seed } className={ className } chain={ chain }>
+      <AccountLink acc={ address } className={ className } chain={ chain }>
         <img src={ this.state.src } className={ styles.icon } />
       </AccountLink>
     );

@@ -19,7 +19,7 @@ export default class Account extends Component {
     const { address, balance, name, chain, className } = this.props;
     return (
       <div className={ `${styles.acc} ${className}` } title={ this.renderTitle(address) }>
-        <Identicon seed={ address } chain={ chain } />
+        <Identicon address={ address } chain={ chain } />
         { this.renderName(address, name) }
         { this.renderBalance(balance) }
       </div>
