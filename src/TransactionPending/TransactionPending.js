@@ -10,12 +10,12 @@ import 'rc-slider/assets/index.css';
 // todo [adgo] - replace to Account without Web3
 import AccountWeb3 from '../AccountWeb3';
 import Web3Component from '../Web3Component';
-import styles from './Transaction.css';
-import TransactionForm from '../TransactionForm';
+import styles from './TransactionPending.css';
+import TransactionPendingForm from '../TransactionPendingForm';
 
-import { getEstimatedMiningTime } from '../util/transaction';
+import * as tUtil from '../util/transaction';
 
-export default class Transaction extends Web3Component {
+export default class TransactionPending extends Web3Component {
 
   static propTypes = {
     className: PropTypes.string,
@@ -48,7 +48,7 @@ export default class Transaction extends Web3Component {
       <div className={ `${styles.container} ${className}` }>
         <div className={ styles.mainContainer }>
           { this.renderTransaction() }
-          <TransactionForm
+          <TransactionPendingForm
             onConfirm={ this.onConfirm }
             onReject={ this.onReject }
           />
@@ -181,23 +181,13 @@ export default class Transaction extends Web3Component {
         data-effect='solid'
       >
         <DescriptionIcon />
-        { this.renderShortData() }
+        tUtil.getShortData(data);
         <ReactTooltip id='data'>
           Extra data to send along your transaction: { data || 'empty' }. <br />
           <strong>Click to expand</strong>.
         </ReactTooltip>
       </div>
     );
-  }
-
-  renderShortData () {
-    const { data } = this.props;
-
-    if (!data) {
-      return 'empty';
-    }
-
-    return data.substr(0, 3) + '...';
   }
 
   renderGasPriceExpanded () {
@@ -257,9 +247,9 @@ export default class Transaction extends Web3Component {
   }
 
   modifyGasPrice = (gasPrice) => {
-    const fee = gasPrice * this.props.gas * 1000000000000000000 * 1000000000; // convert wei * Gewi to ETH
-    const totalValue = fee + this.props.ethValue;
-    const estimatedMiningTime = getEstimatedMiningTime(gasPrice);
+    const fee = tUtil.getFee(this.props.gas, gasPrice);
+    const totalValue = tUtil.getTotalValue(fee, this.props.ethValue);
+    const estimatedMiningTime = tUtil.getEstimatedMiningTime(gasPrice);
     this.setState({ gasPrice, fee, totalValue, estimatedMiningTime });
   }
 

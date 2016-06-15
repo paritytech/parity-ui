@@ -13,7 +13,7 @@ global.web3 = web3;
 
 import MuiThemeProvider from '../MuiThemeProvider';
 import AccountWeb3Docs from '../AccountWeb3/AccountWeb3.docs';
-import TransactionWeb3Docs from '../TransactionWeb3/TransactionWeb3.docs';
+import TransactionPendingWeb3Docs from '../TransactionPendingWeb3/TransactionPendingWeb3.docs';
 import TransactionFinishedDocs from '../TransactionFinished/TransactionFinished.docs';
 import AccountLinkDocs from '../AccountLink/AccountLink.docs';
 import IdenticonDocs from '../Identicon/Identicon.docs';
@@ -25,7 +25,7 @@ ReactDOM.render(
       <div>
         <TransactionFinishedDocs />
         <hr />
-        <TransactionWeb3Docs />
+        <TransactionPendingWeb3Docs />
         <hr />
         <RpcAutoCompleteDocs />
         <hr />

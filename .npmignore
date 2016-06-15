@@ -1,6 +1,7 @@
 src/
 scripts/
 test/
+docs/
 npm-debug.log
 .babelrc
 .editorconfig

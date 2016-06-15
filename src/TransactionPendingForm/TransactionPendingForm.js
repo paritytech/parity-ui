@@ -5,9 +5,9 @@ import RaisedButton from 'material-ui/RaisedButton';
 
 import { rejectCounterTime } from '../constants/constants';
 
-import styles from './TransactionForm.css';
+import styles from './TransactionPendingForm.css';
 
-export default class TransactionForm extends Component {
+export default class TransactionPendingForm extends Component {
 
   static propTypes = {
     className: PropTypes.string,

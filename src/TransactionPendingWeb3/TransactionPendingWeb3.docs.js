@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import TransactionWeb3 from './';
+import TransactionPendingWeb3 from './';
 
 const transaction1 = {
   id: '001x0',
@@ -29,13 +29,13 @@ const transaction2 = {
 
 const containerStyle = { width: 700 }; // mimic sysui chrome extension width
 
-export default class TransactionWeb3Docs extends Component {
+export default class TransactionWeb3PendingDocs extends Component {
   render () {
     return (
       <div style={ containerStyle }>
         <h1>Transaction</h1>
-        <TransactionWeb3 { ...transaction1 } />
-        <TransactionWeb3 { ...transaction2 } />
+        <TransactionPendingWeb3 { ...transaction1 } />
+        <TransactionPendingWeb3 { ...transaction2 } />
       </div>
     );
   }

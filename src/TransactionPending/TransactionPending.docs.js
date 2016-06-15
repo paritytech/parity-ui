@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import Transaction from './';
+import TransactionPending from './';
 
 const transaction = {
   id: '00x1',
@@ -22,7 +22,7 @@ export default class TransactionDocs extends Component {
     return (
       <div style={ containerStyle }>
         <h1>Transaction</h1>
-        <Transaction { ...transaction } />
+        <TransactionPending { ...transaction } />
       </div>
     );
   }

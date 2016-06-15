@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 
-import Transaction from '../Transaction';
+import TransactionPending from '../TransactionPending';
 import Web3Component from '../Web3Component';
 
 export default class TransactionWeb3 extends Web3Component {
@@ -31,7 +31,7 @@ export default class TransactionWeb3 extends Web3Component {
 
   render () {
     return (
-      <Transaction { ...this.props } ethValue={ this.state.ethValue } />
+      <TransactionPending { ...this.props } ethValue={ this.state.ethValue } />
     );
   }
 
