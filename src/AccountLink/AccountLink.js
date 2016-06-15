@@ -8,15 +8,15 @@ export default class AccountLink extends Component {
     className: PropTypes.string,
     children: PropTypes.node,
     chain: PropTypes.string.isRequired,
-    acc: PropTypes.string.isRequired
+    address: PropTypes.string.isRequired
   }
 
   state = {
-    link: this.getLink(this.props.acc)
+    link: this.getLink(this.props.address)
   };
 
   componentWillReceiveProps (nextProps) {
-    this.updateLink(nextProps.acc);
+    this.updateLink(nextProps.address);
   }
 
   render () {
@@ -32,15 +32,15 @@ export default class AccountLink extends Component {
     );
   }
 
-  getLink (acc) {
+  getLink (address) {
     const base = this.props.chain === 'morden'
     ? 'https://testnet.etherscan.io/address/'
     : 'https://etherscan.io/address/';
-    return base + acc;
+    return base + address;
   }
 
-  updateLink = (acc) => {
-    const link = this.getLink(acc);
+  updateLink = (address) => {
+    const link = this.getLink(address);
     this.setState({ link });
   };
 

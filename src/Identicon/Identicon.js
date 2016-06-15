@@ -44,7 +44,7 @@ export default class Identicon extends Component {
     const { address, chain, className } = this.props;
 
     return (
-      <AccountLink acc={ address } className={ className } chain={ chain }>
+      <AccountLink address={ address } className={ className } chain={ chain }>
         <img src={ this.state.src } className={ styles.icon } />
       </AccountLink>
     );

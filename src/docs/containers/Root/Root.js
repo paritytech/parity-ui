@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-
 import Toastr from '../../../Toastr';
+import AnimateChildren from '../../../components-compositors/Animated/children';
 import { removeToast } from '../../actions/toastr';
 import Header from '../../components/Header';
 
@@ -22,15 +22,16 @@ class Root extends Component {
   };
 
   render () {
+    const { location, children, toastr, actions } = this.props;
     return (
       <div className={ styles.container }>
         <Header />
-        <div className={ styles.mainContainer }>
-          { this.props.children }
-        </div>
+        <AnimateChildren absolute isView pathname={ location.pathname }>
+          { children }
+        </AnimateChildren>
         <Toastr
-          toasts={ this.props.toastr.toasts }
-          actions={ this.props.actions }
+          toasts={ toastr.toasts }
+          actions={ actions }
         />
       </div>
     );

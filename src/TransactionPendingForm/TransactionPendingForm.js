@@ -3,7 +3,7 @@ import React, { Component, PropTypes } from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 
-import { rejectCounterTime } from '../constants/constants';
+import { REJECT_COUNTER_TIME } from '../constants/constants';
 
 import styles from './TransactionPendingForm.css';
 
@@ -17,7 +17,7 @@ export default class TransactionPendingForm extends Component {
   };
 
   static defaultProps = {
-    rejectCounterTime
+    REJECT_COUNTER_TIME
   };
 
   state = {

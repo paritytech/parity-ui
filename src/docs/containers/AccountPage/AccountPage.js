@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 
 import Account from '../../../Account';
-import styles from './AccountPage';
+import styles from './AccountPage.css';
 
-import accountsData from './accounts.data';
+import accountPageData from './AccountPage.data';
 
 export default class AccountPage extends Component {
 
@@ -11,23 +11,31 @@ export default class AccountPage extends Component {
     return (
       <div>
         <h1>Account</h1>
-        <p>
-          Some explaining here ...
-        </p>
         { this.renderAccounts() }
       </div>
     );
   }
 
   renderAccounts () {
-    return accountsData.map(acc => {
+    return accountPageData.map(acc => {
       return (
-        <div className={ styles.account }>
-          <h3>{ acc._desc }</h3>
-          <Account { ...acc } key={ acc.address } />
+        <div className={ styles.accountContainer } key={ acc.address }>
+          <Account { ...acc } className={ styles.account }/>
+          { this.renderAccountInfo(acc) }
         </div>
-      )
+      );
     });
+  }
+
+  renderAccountInfo (acc) {
+    return (
+      <div className={ styles.accountInfo }>
+        <div>Chain: { acc.chain }</div>
+        <div>Address: { acc.address }</div>
+        <div>Balance: { acc.balance }</div>
+        <div>Name: { acc.name || 'empty' }</div>
+      </div>
+    );
   }
 
 }

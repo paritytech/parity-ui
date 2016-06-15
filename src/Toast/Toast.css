@@ -1,11 +1,4 @@
-.toastrContainer {
-  position: absolute;
-  top: 81px;
-  right: 10px;
-  width: 200px;
-}
-
-.toast {
+.container {
   padding: 10px;
   position: relative;
   font-size: 16px;

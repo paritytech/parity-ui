@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router';
 
 import componentsData from '../../components.data.js';
@@ -15,7 +15,7 @@ export default class Header extends Component {
           showMenuIconButton={ false }
         />
         <nav>
-          <Link to={ '/welcome' } activeClassName='active'>Welcome</Link>
+          <Link to={ '/welcome' } className={ styles.link } activeClassName='active'>Welcome</Link>
           { this.renderComponentsLinks() }
         </nav>
       </div>
@@ -26,10 +26,14 @@ export default class Header extends Component {
     return componentsData.map(c => {
       return (
         <span className={ styles.link } key={ c.name }>
-          <Link to={ '/' + c.name } activeClassName='active'>{ c.name }</Link>
+          <Link to={ this.getToLink(c.name) } activeClassName='active'>{ c.name }</Link>
         </span>
-      )
+      );
     });
+  }
+
+  getToLink (name) {
+    return '/' + name[0].toLowerCase() + name.substr(1);
   }
 
 }

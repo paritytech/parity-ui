@@ -49,13 +49,13 @@ export default class Account extends Component {
   renderName (address, name) {
     if (!name) {
       return (
-        <AccountLink acc={ address } chain={ this.props.chain }>
+        <AccountLink address={ address } chain={ this.props.chain }>
           [{ this.shortAddress(address) }]
         </AccountLink>
       );
     }
     return (
-      <AccountLink acc={ address } chain={ this.props.chain } >
+      <AccountLink address={ address } chain={ this.props.chain } >
         <span>
           <span className={ styles.name }>{ name }</span>
           <span className={ styles.address }>[{ this.tinyAddress(address) }]</span>
@@ -64,14 +64,14 @@ export default class Account extends Component {
     );
   }
 
-  tinyAddress (acc) {
-    const len = acc.length;
-    return acc.slice(2, 4) + '..' + acc.slice(len - 2);
+  tinyAddress (address) {
+    const len = address.length;
+    return address.slice(2, 4) + '..' + address.slice(len - 2);
   }
 
-  shortAddress (acc) {
-    const len = acc.length;
-    return acc.slice(2, 8) + '..' + acc.slice(len - 7);
+  shortAddress (address) {
+    const len = address.length;
+    return address.slice(2, 8) + '..' + address.slice(len - 7);
   }
 
 }
