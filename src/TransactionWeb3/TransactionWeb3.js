@@ -14,8 +14,8 @@ export default class TransactionWeb3 extends Web3Component {
     to: PropTypes.string,
     nonce: PropTypes.number,
     value: PropTypes.string.isRequired, // wei
-    confirmTransaction: PropTypes.func.isRequired,
-    rejectTransaction: PropTypes.func.isRequired
+    onConfirm: PropTypes.func.isRequired,
+    onReject: PropTypes.func.isRequired
   }
 
   state = {

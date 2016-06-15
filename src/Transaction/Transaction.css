@@ -8,16 +8,20 @@
   min-height: 110px;
 }
 
-.bottomContainer {
+.iconsContainer {
   display: inline-block;
   min-width: 180px;
   color: rgba(0, 0, 0, .3);
   font-size: .8em;
 }
 
-.bottomContainer > * {
+.iconsContainer > * {
   float: left;
   margin-right: 3px;
+}
+
+.iconsContainer:after {
+  clear: both;
 }
 
 .transaction {
@@ -59,96 +63,25 @@
   opacity: .5;
 }
 
-.confirmButton {
-  display: block !important;
-  margin-bottom: 10px;
-  /* https://github.com/ethcore/dapps-react-ui/issues/17 */
-  background-color: #6691c2 !important;
-  color: #fff !important;
-}
-
-.confirmForm {
-  margin-top: -40px;
-}
-
-/* the link that opens the rejection form */
-.reject {
-  opacity: .7;
-}
-
-.reject a {
-  cursor: pointer;
-  color: #00e;
-  opacity: .7;
-}
-
-/* the rejection button itself, once .reject has been pressed */
-.rejectButton {
-  display: block !important;
-  margin-bottom: 5px;
-  /* https://github.com/ethcore/dapps-react-ui/issues/17 */
-  background-color: #6691c2 !important;
-  color: #fff !important;
-}
-
-.rejectText {
-  margin-bottom: 10px;
-}
-
-.closeRejectText {
-  cursor: pointer;
-  display: block;
-  color: #00e;
-  opacity: .7;
-}
-
-.spinner {
-  width: 20px;
-  height: 20px;
-  display: inline-block;
-}
-
-.spinner img {
-  max-width: 100%;
-}
-
-.miningTime svg {
+.hasInfoIcon svg {
   width: 16px !important;
   height: 16px !important;
   position: relative;
   bottom: -3px;
 }
 
-.data svg {
-  width: 16px !important;
-  height: 16px !important;
-  position: relative;
-  bottom: -3px;
+.miningTime {
+  composes: hasInfoIcon;
 }
 
-.fee {
+.data  {
+  composes: hasInfoIcon;
   cursor: pointer;
 }
 
-.toggleData {
+.gasPrice {
+  composes: hasInfoIcon;
   cursor: pointer;
-}
-
-.fee img {
-  width: 20px;
-  height: 20px;
-  vertical-align: bottom;
-}
-
-.feeSlider {
-  float: none;
-  clear: both;
-  margin-top: 35px;
-  margin-bottom: 20px;
-}
-
-.confirmForm {
-  margin-top: -40px;
 }
 
 .expandedData {
@@ -157,4 +90,9 @@
   background: gray;
   clear: left;
   color: #fff;
+}
+
+.expandedContainer {
+  padding: 10px;
+  border-radius: 4px;
 }

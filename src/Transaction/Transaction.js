@@ -1,17 +1,19 @@
 import React, { PropTypes } from 'react';
 
 import ReactTooltip from 'react-tooltip';
-import TextField from 'material-ui/TextField';
-import FlatButton from 'material-ui/FlatButton';
+
 import HourGlassIcon from 'material-ui/svg-icons/action/hourglass-empty';
 import DescriptionIcon from 'material-ui/svg-icons/action/description';
+import GasIcon from 'material-ui/svg-icons/maps/local-gas-station';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 // todo [adgo] - replace to Account without Web3
 import AccountWeb3 from '../AccountWeb3';
-import feeImgSrc from '../assets/pickaxe.png';
 import Web3Component from '../Web3Component';
 import styles from './Transaction.css';
+import TransactionForm from '../TransactionForm';
+
+import { getEstimatedMiningTime } from '../util/transaction';
 
 export default class Transaction extends Web3Component {
 
@@ -19,69 +21,61 @@ export default class Transaction extends Web3Component {
     className: PropTypes.string,
     id: PropTypes.string.isRequired,
     from: PropTypes.string.isRequired,
-    gasPrice: PropTypes.any,
-    gas: PropTypes.any,
+    gasPrice: PropTypes.number.isRequired, // Gwei
+    gas: PropTypes.number.isRequired, // wei
     to: PropTypes.string, // undefined if it's a contract
     nonce: PropTypes.number,
     value: PropTypes.string.isRequired, // hex of wei
     ethValue: PropTypes.number.isRequired,
-    confirmTransaction: PropTypes.func.isRequired,
-    rejectTransaction: PropTypes.func.isRequired
-  };
-
-  static defaultProps = {
-    gasPrice: 20,
-    // after user clicks 'reject' for the first time,
-    // a second reject button is rendered and disabled
-    // for a few seconds to avoid accidential double clicks
-    rejectCounterTime: 3
+    onConfirm: PropTypes.func.isRequired,
+    onReject: PropTypes.func.isRequired
   };
 
   componentWillMount () {
     // set estimated mining time, total value, and initial fee state
-    this.modifyFee(this.props.gasPrice);
-  }
-
-  componentWillUnmount () {
-    // in case reject counter is active
-    this.resetReject();
+    this.modifyGasPrice(this.props.gasPrice);
   }
 
   state = {
-    password: '',
-    rejectCounter: this.props.rejectCounterTime
+    isDataExpanded: false,
+    isGasPriceExpanded: false,
+    isMiningTimeExpanded: false
   };
 
   render () {
-    const { from, to, value, className } = this.props;
+    const className = this.props.className || '';
     return (
-      <div className={ `${styles.container} ${className || ''}` }>
+      <div className={ `${styles.container} ${className}` }>
         <div className={ styles.mainContainer }>
-          { this.renderTransaction(from, to, value) }
-          <div className={ styles.forms }>
-            { this.renderConfirmForm() }
-            { this.renderRejectForm() }
-          </div>
+          { this.renderTransaction() }
+          <TransactionForm
+            onConfirm={ this.onConfirm }
+            onReject={ this.onReject }
+          />
         </div>
-        <div className={ styles.bottomContainer }>
-          { this.renderFee() }
+        <div className={ styles.iconsContainer }>
+          { this.renderGasPrice() }
           { this.renderEstimatedMinimgTime() }
           { this.renderData() }
+        </div>
+        <div className={ styles.expandedContainer }>
           { this.renderDataExpanded() }
-          { this.renderFeeCustomization() }
+          { this.renderMiningTimeExpanded() }
+          { this.renderGasPriceExpanded() }
         </div>
       </div>
     );
   }
 
-  renderTransaction (from, to, value) {
+  renderTransaction () {
+    const { from, to } = this.props;
     return (
       <div className={ styles.transaction }>
         <div className={ styles.from }>
           <AccountWeb3 address={ from } />
         </div>
         <div className={ styles.tx }>
-          { this.renderValue(value) }
+          { this.renderValue() }
           <div>&rArr;</div>
           { this.renderTotalValue() }
         </div>
@@ -90,240 +84,6 @@ export default class Transaction extends Web3Component {
         </div>
       </div>
     );
-  }
-
-  renderConfirmForm () {
-    const { password, rejectOpen } = this.state;
-    if (rejectOpen) {
-      return;
-    }
-
-    return (
-      <div className={ styles.confirmForm }>
-        <TextField
-          onChange={ this.modifyPassword }
-          name='password'
-          fullWidth
-          floatingLabelText='password'
-          type='password'
-          value={ password }
-        />
-        <FlatButton
-          onClick={ this.confirm }
-          className={ styles.confirmButton }
-          fullWidth
-          primary
-          label='Confirm Transaction'
-        />
-        <div className={ styles.reject }>
-          <a onClick={ this.openReject }>Reject transaction</a>
-        </div>
-      </div>
-    );
-  }
-
-  renderRejectForm () {
-    const { rejectOpen, rejectCounter } = this.state;
-    if (!rejectOpen) {
-      return;
-    }
-
-    return (
-      <div>
-        <div className={ styles.rejectText }>
-          Are you sure you want to reject transaction? <br />
-          <strong>This cannot be undone</strong>
-        </div>
-        <FlatButton
-          onClick={ this.reject }
-          className={ styles.rejectButton }
-          disabled={ rejectCounter > 0 }
-          fullWidth
-          label='Reject Transaction '
-          labelPosition='before'
-          >
-          { this.renderRejectButtonCounter(rejectCounter) }
-        </FlatButton>
-        <a className={ styles.closeRejectText } onClick={ this.resetReject }>
-          I don't want to reject this transaction
-        </a>
-      </div>
-    );
-  }
-
-  resetReject = () => {
-    clearInterval(this.rejectInterval);
-    this.setState({
-      rejectCounter: this.props.rejectCounterTime,
-      rejectOpen: false
-    });
-  }
-
-  renderRejectButtonCounter (counter) {
-    if (!counter) {
-      return;
-    }
-    return (
-      <span>{ `(${counter})` }</span>
-    );
-  }
-
-  openReject = () => {
-    this.setState({ rejectOpen: true });
-    this.rejectInterval = setInterval(() => {
-      let { rejectCounter } = this.state;
-      if (rejectCounter === 0) {
-        return clearInterval(this.rejectInterval);
-      }
-      this.setState({ rejectCounter: rejectCounter - 1 });
-    }, 1000);
-  }
-
-  renderFee () {
-    const { fee } = this.state;
-    return (
-      <div>
-        <span
-          className={ styles.fee }
-          onClick={ this.toggleFeeCustomization }
-          data-tip
-          data-place='right'
-          data-for='fee'
-          data-effect='solid'
-          >
-          <img src={ feeImgSrc } />
-          { fee }
-        </span>
-        <ReactTooltip id='fee'>
-          { fee } [ETH]: This is the most amount of money that might be used to process this transaction. <br />
-          You can increase it to lower mining time.
-          <strong>click to edit</strong>
-        </ReactTooltip>
-      </div>
-    );
-  }
-
-  renderEstimatedMinimgTime () {
-    const { estimatedMiningTime } = this.state;
-    return (
-      <div>
-        <span
-          className={ styles.miningTime }
-          data-tip
-          data-place='right'
-          data-for='miningTime'
-          data-effect='solid'
-          >
-          <HourGlassIcon />
-          { estimatedMiningTime }
-        </span>
-        <ReactTooltip id='miningTime'>
-          Your transaction will be mined probably <strong>within { estimatedMiningTime }</strong>. <br />
-          Increase fee to make it faster.
-        </ReactTooltip>
-      </div>
-    );
-  }
-
-  renderData () {
-    const { data } = this.props;
-    return (
-      <div
-        className={ styles.data }
-        data-tip
-        data-place='right'
-        data-for='data'
-        data-effect='solid'
-        >
-        <a className={ styles.toggleData } onClick={ this.toggleDataExpanded }>
-          <DescriptionIcon />
-          { this.renderPreviewData() }
-        </a>
-        <ReactTooltip id='data'>
-          Extra data to send along your transaction: { data || 'empty' }. <br />
-          <strong>Click to expand</strong>.
-        </ReactTooltip>
-      </div>
-    );
-  }
-
-  renderPreviewData () {
-    const { data } = this.props;
-
-    if (!data) {
-      return 'empty';
-    }
-
-    return data.substr(0, 3) + '...';
-  }
-
-  toggleDataExpanded = () => {
-    const { dataExpanded } = this.state;
-    this.setState({ dataExpanded: !dataExpanded });
-  }
-
-  renderDataExpanded () {
-    const { dataExpanded } = this.state;
-    const { data } = this.props;
-    if (!dataExpanded) {
-      return;
-    }
-
-    return (
-      <pre className={ styles.expandedData }>{ data || 'empty' }</pre>
-    );
-  }
-
-  renderFeeCustomization () {
-    const { fee } = this.state;
-
-    if (!this.state.feeCustomizationOpen) {
-      return;
-    }
-
-    // todo [adgo] - get real values
-    const [min, max] = [0, 100];
-    const marks = { [min]: 'Cheaper', [max]: 'Faster' };
-
-    return (
-      <div className={ styles.feeSlider }>
-        <Slider
-          onChange={ this.modifyFee }
-          min={ min }
-          max={ max }
-          marks={ marks }
-          value={ fee }
-        />
-        <a onClick={ this.closeFeeCustomization } />
-      </div>
-    );
-  }
-
-  toggleFeeCustomization = () => {
-    const { feeCustomizationOpen } = this.state;
-    this.setState({ feeCustomizationOpen: !feeCustomizationOpen });
-  }
-
-  modifyPassword = (evt) => {
-    this.setState({ password: evt.target.value });
-  }
-
-  modifyFee = (fee) => {
-    const totalValue = fee + this.props.value;
-    const estimatedMiningTime = this.getEstimatedMiningTime(fee);
-    this.setState({ fee, totalValue, estimatedMiningTime });
-  }
-
-  confirm = () => {
-    const { password, fee } = this.state;
-    this.props.confirmTransaction({
-      id: this.props.id,
-      password, fee
-    });
-  }
-
-  reject = () => {
-    this.props.rejectTransaction(this.props.id);
   }
 
   renderValue () {
@@ -363,10 +123,154 @@ export default class Transaction extends Web3Component {
     );
   }
 
-  getEstimatedMiningTime (fee) {
-    // format this
-    // this.props.getEstimatedMiningTime(fee);
-    return '20s';
+  renderGasPrice () {
+    const { gasPrice } = this.state;
+    return (
+      <div
+        data-tip
+        data-place='right'
+        data-for='gasPrice'
+        data-effect='solid'
+      >
+        <span
+          className={ styles.gasPrice }
+          onClick={ this.toggleGasPriceExpanded }
+          >
+          <GasIcon />
+          { gasPrice }
+        </span>
+        <ReactTooltip id='gasPrice'>
+          { gasPrice } [Gwei]: This is the maximum amount of Gwei you will pay for each unit of gas required to process this transaction. <br />
+          You can increase it to lower mining time.
+          <strong> click to customize</strong>
+        </ReactTooltip>
+      </div>
+    );
+  }
+
+  renderEstimatedMinimgTime () {
+    const { estimatedMiningTime } = this.state;
+    return (
+      <div
+        data-tip
+        data-place='right'
+        data-for='miningTime'
+        data-effect='solid'
+      >
+        <span className={ styles.miningTime }>
+          <HourGlassIcon />
+          { estimatedMiningTime }
+        </span>
+        <ReactTooltip id='miningTime'>
+          Your transaction will be mined probably <strong>within { estimatedMiningTime }</strong>. <br />
+          Increase fee to make it faster.
+        </ReactTooltip>
+      </div>
+    );
+  }
+
+  renderData () {
+    const { data } = this.props;
+    return (
+      <div
+        className={ styles.data }
+        onClick={ this.toggleDataExpanded }
+        data-tip
+        data-place='right'
+        data-for='data'
+        data-effect='solid'
+      >
+        <DescriptionIcon />
+        { this.renderShortData() }
+        <ReactTooltip id='data'>
+          Extra data to send along your transaction: { data || 'empty' }. <br />
+          <strong>Click to expand</strong>.
+        </ReactTooltip>
+      </div>
+    );
+  }
+
+  renderShortData () {
+    const { data } = this.props;
+
+    if (!data) {
+      return 'empty';
+    }
+
+    return data.substr(0, 3) + '...';
+  }
+
+  renderGasPriceExpanded () {
+    const { gasPriceExpanded } = this.state;
+    const { gasPrice } = this.props;
+
+    if (!gasPriceExpanded) {
+      return;
+    }
+
+    // todo [adgo] - get real values
+    const [min, max] = [gasPrice / 2, gasPrice * 1.5];
+    const marks = { [min]: 'Cheaper', [max]: 'Faster' };
+
+    return (
+      <div className={ styles.gasPriceSlider }>
+        <h3>Modify gas price</h3>
+        <Slider
+          onChange={ this.modifyGasPrice }
+          min={ min }
+          max={ max }
+          marks={ marks }
+          value={ this.state.gasPrice }
+        />
+        <a onClick={ this.closeFeeCustomization } />
+      </div>
+    );
+  }
+
+  renderMiningTimeExpanded () {
+    return null; // todo [adgo] - implement this
+  }
+
+  renderDataExpanded () {
+    const { isDataExpanded } = this.state;
+    const { data } = this.props;
+    if (!isDataExpanded) {
+      return;
+    }
+
+    return (
+      <div className={ styles.expandedHelper }>
+        <h3>Transcation's Data</h3>
+        <pre className={ styles.expandedData }>{ data || 'empty' }</pre>
+      </div>
+    );
+  }
+
+  onConfirm = (password) => {
+    const { gasPrice } = this.state;
+    const { id } = this.props;
+    this.props.onConfirm({ id, password, gasPrice });
+  }
+
+  onReject = () => {
+    this.props.onReject(this.props.id);
+  }
+
+  modifyGasPrice = (gasPrice) => {
+    const fee = gasPrice * this.props.gas * 1000000000000000000 * 1000000000; // convert wei * Gewi to ETH
+    const totalValue = fee + this.props.ethValue;
+    const estimatedMiningTime = getEstimatedMiningTime(gasPrice);
+    this.setState({ gasPrice, fee, totalValue, estimatedMiningTime });
+  }
+
+  toggleGasPriceExpanded = () => {
+    const { gasPriceExpanded } = this.state;
+    this.setState({ gasPriceExpanded: !gasPriceExpanded });
+  }
+
+  toggleDataExpanded = () => {
+    const { isDataExpanded } = this.state;
+    this.setState({ isDataExpanded: !isDataExpanded });
   }
 
 }

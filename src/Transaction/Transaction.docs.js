@@ -6,13 +6,13 @@ const transaction = {
   id: '00x1',
   from: '0x52D0BF77acE2d1fB2370267911Ff7Df9CdB4af2E',
   to: '0xe6378318641F99c2B6624700B3f342D1c6E84852',
-  gas: 10,
-  gasPrice: 20,
   nonce: 2,
+  gasPrice: 20,
+  gas: 2100,
   data: '0xa',
   value: '0x9184e72a',
-  confirmTransaction: args => console.log('Transaction confirmed:', args),
-  rejectTransaction: id => console.log('Transaction rejected: ', id)
+  onConfirm: args => console.log('Transaction confirmed:', args),
+  onReject: id => console.log('Transaction rejected: ', id)
 };
 
 const containerStyle = { width: 700 }; // mimic sysui chrome extension width
