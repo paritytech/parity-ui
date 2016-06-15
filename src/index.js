@@ -4,6 +4,7 @@ export AccountWeb3 from './AccountWeb3';
 export Identicon from './Identicon';
 export MuiThemeProvider from './MuiThemeProvider';
 export RpcAutoComplete from './RpcAutoComplete';
+export Toastr from './Toastr';
 export TransactionFinished from './TransactionFinished';
 export TransactionPending from './TransactionPending';
 export TransactionPendingForm from './TransactionPendingForm';

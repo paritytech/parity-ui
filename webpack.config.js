@@ -6,15 +6,20 @@ var WebpackErrorNotificationPlugin = require('webpack-error-notification');
 var ENV = process.env.NODE_ENV || 'development';
 var isProd = ENV === 'production';
 
+const entry = {
+  'index': './index.js'
+};
+
+if (!isProd) {
+  entry.docs = './docs/docs.js';
+}
+
 module.exports = {
   debug: !isProd,
   cache: !isProd,
   devtool: isProd ? '#source-map' : '#cheap-module-eval-source-map',
   context: path.join(__dirname, './src'),
-  entry: {
-    'index': './index.js',
-    'docs/docs': './docs/docs.js'
-  },
+  entry: entry,
   output: {
     library: 'dapps-react-ui',
     libraryTarget: 'umd',
@@ -109,7 +114,7 @@ module.exports = {
     return plugins;
   }()),
   devServer: {
-    contentBase: './src',
+    contentBase: './src/docs',
     hot: !isProd,
     proxy: {
       '/rpc*': {
