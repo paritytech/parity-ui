@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { TransactionWeb3, TransactionFinished } from 'dapps-react-ui';
+import { TransactionPendingWeb3, TransactionFinished } from 'dapps-react-ui';
 import styles from './Transactions.css';
 
 export default class Transactions extends Component {
@@ -34,12 +34,14 @@ export default class Transactions extends Component {
     const { actions, transactions } = this.props;
     return transactions.pending.map(
       data => (
-        <TransactionWeb3
+        <TransactionPendingWeb3
           className={ styles.transaction }
-          rejectTransaction={ actions.rejectTransaction }
-          confirmTransaction={ actions.confirmTransaction }
+          onConfirm={ actions.rejectTransaction }
+          onReject={ actions.confirmTransaction }
           key={ data.id }
           id={ data.id }
+          gasPrice={ data.transaction.gasPrice }
+          gas={ data.transaction.gas }
           data={ data.transaction.data }
           from={ data.transaction.from }
           to={ data.transaction.to }
@@ -68,7 +70,7 @@ export default class Transactions extends Component {
   renderNoTransactionsMsg () {
     return (
       <div className={ styles.noTransactionsMsg }>
-        <h1>No transactions pending</h1>
+        <h3>There are no transactions requiring your confirmation.</h3>
       </div>
     );
   }

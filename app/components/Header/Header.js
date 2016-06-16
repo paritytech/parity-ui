@@ -19,7 +19,7 @@ export default class Header extends Component {
     return (
       <div className={ styles.container }>
         <AppBar
-          title='Parity System UI'
+          title='Parity Signer UI'
           showMenuIconButton={ false }
           iconElementRight={ this.renderMenu() }
         />
