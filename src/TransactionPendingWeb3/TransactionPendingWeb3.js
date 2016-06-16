@@ -24,7 +24,8 @@ class TransactionPendingWeb3 extends Component {
   };
 
   state = {
-    fromBalance: null, // avoid required prop loading warning
+    chain: 'homestead',
+    fromBalance: 0, // avoid required prop loading warning
     toBalance: null // avoid required prop loading warning in case there's a to address
   }
 

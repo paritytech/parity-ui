@@ -30,6 +30,7 @@ module.exports = {
   externals: isProd ? [
     /^material-ui/,
     'react',
+    'react-dom',
     'react-addons-css-transition-group',
     'react-tap-event-plugin'
   ] : [],
