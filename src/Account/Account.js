@@ -5,51 +5,65 @@ import styles from './Account.css';
 import Identicon from '../Identicon';
 import AccountLink from '../AccountLink';
 
+import * as tUtil from '../util/transaction';
+
 export default class Account extends Component {
 
   static propTypes = {
     className: PropTypes.string,
     address: PropTypes.string.isRequired,
     chain: PropTypes.string.isRequired,
-    balance: PropTypes.oneOfType([PropTypes.string, PropTypes.object, PropTypes.number]).isRequired,
+    balance: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
     name: PropTypes.string
   };
 
+  state = {
+    balanceDisplay: '?'
+  };
+
+  componentWillMount () {
+    this.updateBalanceDisplay(this.props.balance)
+  }
+
+  componentWillReceiveProps (nextProps) {
+    this.updateBalanceDisplay(nextProps.balance)
+  }
+
+  updateBalanceDisplay (balance) {
+    this.setState({
+      balanceDisplay: balance ? tUtil.getEthFromWeiDisplay(balance) : '?'
+    });
+  }
+
   render () {
-    const { address, balance, name, chain, className } = this.props;
+    const { address, chain, className } = this.props;
     return (
-      <div className={ `${styles.acc} ${className}` } title={ this.renderTitle(address) }>
+      <div className={ `${styles.acc} ${className}` } title={ this.renderTitle() }>
         <Identicon address={ address } chain={ chain } />
-        { this.renderName(address, name) }
-        { this.renderBalance(balance) }
+        { this.renderName() }
+        { this.renderBalance() }
       </div>
     );
   }
 
-  renderTitle = address => {
-    if (this.props.name) {
-      return address + ' ' + this.props.name;
+  renderTitle () {
+    const { name, address } = this.props;
+    if (name) {
+      return address + ' ' + name;
     }
 
     return address;
   }
 
-  renderBalance (balance) {
-    if (balance === null) {
-      return (
-        <span> ? <small>ETH</small></span>
-      );
-    }
-    if (typeof balance !== 'string') {
-      balance = +balance;
-      balance = balance.toFixed(2);
-    }
+  renderBalance () {
+    const { balanceDisplay } = this.state;
     return (
-      <span> <strong>{ balance }</strong> <small>ETH</small></span>
+      <span> <strong>{ balanceDisplay }</strong> <small>ETH</small></span>
     );
   }
 
-  renderName (address, name) {
+  renderName () {
+    const { address, name } = this.props;
     if (!name) {
       return (
         <AccountLink address={ address } chain={ this.props.chain }>
@@ -67,12 +81,14 @@ export default class Account extends Component {
     );
   }
 
-  tinyAddress (address) {
+  tinyAddress () {
+    const { address } = this.props;
     const len = address.length;
     return address.slice(2, 4) + '..' + address.slice(len - 2);
   }
 
-  shortAddress (address) {
+  shortAddress () {
+    const { address } = this.props;
     const len = address.length;
     return address.slice(2, 8) + '..' + address.slice(len - 7);
   }

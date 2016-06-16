@@ -74,8 +74,8 @@ export default class TransactionPending extends Component {
   }
 
   renderGasPrice () {
-    const { gasPriceDisplay } = this.state;
     const { id } = this.props;
+    const { gasPriceDisplay, gasEthDisplay } = this.state;
     return (
       <div
         data-tip
@@ -92,7 +92,8 @@ export default class TransactionPending extends Component {
         </span>
         { /* dynamic id required in case there are multple transactions in page */ }
         <ReactTooltip id={ 'gasPrice' + id }>
-          { gasPriceDisplay }: This is the maximum amount you would pay for each unit of gas required to process this transaction. <br />
+          { gasPriceDisplay } [SZABO]: This is the maximum amount you would pay for each unit of gas required to process this transaction. <br />
+          { gasPriceDisplay } [SZABO] equals { gasEthDisplay } [ETH].
         </ReactTooltip>
       </div>
     );
@@ -204,7 +205,8 @@ export default class TransactionPending extends Component {
   }
 
   onModifyGasPrice = gasPrice => {
-    const gasPriceDisplay = tUtil.getGasPriceDisplay(gasPrice);
+    const gasPriceDisplay = tUtil.getGasPriceDisplay(gasPrice); // szabo string
+    const gasEthDisplay = tUtil.getEthFromWeiDisplay(gasPrice)
     const fee = tUtil.getFee(this.props.gas, gasPrice); // BigNumber object
     const totalValue = tUtil.getTotalValue(fee, this.props.value); // BigNumber object
     const estimatedMiningTime = tUtil.getEstimatedMiningTime(gasPrice);
