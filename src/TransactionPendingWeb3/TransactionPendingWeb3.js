@@ -24,18 +24,21 @@ class TransactionPendingWeb3 extends Component {
   };
 
   state = {
-    ethValue: +this.context.web3.fromWei(this.props.value),
+    ethValueNumber: +this.context.web3.fromWei(this.props.value),
+    ethValue: this.context.web3.toBigNumber(this.context.web3.fromWei(this.props.value)).toPrecision(5),
+    weiValue: this.context.web3.toBigNumber(this.props.value).toFormat(0),
     chain: 'homestead', // avoid required prop loading warning
-    fromBalance: 0, // avoid required prop loading warning
-    toBalance: this.props.to ? 0 : null // avoid required prop loading warning in case there's a to address
+    fromBalance: null, // avoid required prop loading warning
+    toBalance: null // avoid required prop loading warning in case there's a to address
   }
 
   render () {
-    const { fromBalance, toBalance, ethValue, chain } = this.state;
+    const { fromBalance, toBalance, ethValue, chain, weiValue } = this.state;
     return (
       <TransactionPending
         { ...this.props }
         ethValue={ ethValue }
+        weiValue={ weiValue }
         fromBalance={ fromBalance }
         chain={ chain }
         toBalance={ toBalance }
@@ -66,20 +69,21 @@ class TransactionPendingWeb3 extends Component {
       return;
     }
 
-    this.fetchBalance(to, 'to');
+    this.fetchBalance(to, 'to', next);
   }
 
   fetchBalance (address, owner, next) {
     this.context.web3.eth.getBalance(address, (err, balance) => {
+      next(err);
+
       if (err) {
         console.warn('err fetching balance for ', address, err);
-        return next && next();
+        return;
       }
-      this.setState({
-        [owner + 'Balance']: +this.context.web3.fromWei(balance)
-      });
 
-      next && next();
+      this.setState({
+        [owner + 'Balance']: Number(this.context.web3.fromWei(balance))
+      });
     });
   }
 

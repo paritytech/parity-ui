@@ -11,7 +11,7 @@ export default Wrapped => class Web3Compositor extends Component {
 
   render () {
     return (
-      <Wrapped { ...this.props } />
+      <Wrapped { ...this.props } ref={this.registerComponent}/>
     );
   }
 
@@ -29,13 +29,23 @@ export default Wrapped => class Web3Compositor extends Component {
       return;
     }
 
-    this.onTick(() => {
-      setTimeout(this.next, 500);
+    if (!this.wrapped || !this.wrapped.onTick) {
+      setTimeout(this.next, 5000);
+      return;
+    }
+
+    let nextCalled = false;
+    this.wrapped.onTick((error) => {
+      if (nextCalled) {
+        return;
+      }
+      nextCalled = true;
+      setTimeout(this.next, error ? 5000 : 500);
     });
   }
 
-  onTick (next) {
-    // can be overridden in subclases
+  registerComponent = component => {
+    this.wrapped = component;
   }
 
 };

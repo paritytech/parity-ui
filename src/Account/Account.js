@@ -37,12 +37,15 @@ export default class Account extends Component {
   renderBalance (balance) {
     if (balance === null) {
       return (
-        <span> (...)</span>
+        <span> ? <small>ETH</small></span>
       );
     }
-    balance = +balance;
+    if (typeof balance !== 'string') {
+      balance = +balance;
+      balance = balance.toFixed(2);
+    }
     return (
-      <span> { balance.toFixed(2) } Eth</span>
+      <span> <strong>{ balance }</strong> <small>ETH</small></span>
     );
   }
 

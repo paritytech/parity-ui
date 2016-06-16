@@ -19,10 +19,11 @@ function _getShortData (data) {
 }
 
 function _getFee (gas, gasPrice) {
-  return gasPrice * gas * 1000000000000000000 * 1000000000; // convert wei * Gewi to ETH
+  return gasPrice * gas / 1E9; // convert GWei to ETH
 }
 
 function _getTotalValue (fee, ethValue) {
+  // TODO [ToDr] 0.0001 + 100000..00.00 (double might not be enough)
   return fee + ethValue;
 }
 

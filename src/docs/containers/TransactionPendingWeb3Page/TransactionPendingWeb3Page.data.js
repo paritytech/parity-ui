@@ -2,7 +2,7 @@ export default [
   {
     id: '0x02',
     from: '0x8704f2c24439592822be3d71d4fca6e87285f673',
-    to: '0x9201f84c4a27ec41115f6fd1a140842e884c4b91',
+    to: '0xbb9bc244d798123fde783fcc1c72d3bb8c189413',
     value: '0xf4240', // 1000000
     ethValue: 1000000,
     gas: 2100,
@@ -23,7 +23,7 @@ export default [
   {
     id: '0x03',
     from: '0x8704f2c24439592822be3d71d4fca6e87285f673',
-    value: '0x0',
+    value: '0x01',
     ethValue: 0,
     gas: 2100,
     gasPrice: 0.00003,

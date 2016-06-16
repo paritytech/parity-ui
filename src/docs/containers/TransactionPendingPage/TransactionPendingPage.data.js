@@ -4,7 +4,7 @@ export default [
     id: '0x01',
     from: '0x8704f2c24439592822be3d71d4fca6e87285f673',
     fromBalance: 253,
-    to: '0x9201f84c4a27ec41115f6fd1a140842e884c4b91',
+    to: '0xbb9bc244d798123fde783fcc1c72d3bb8c189413',
     toBalance: 21,
     value: '7b', // 123
     ethValue: 123,
@@ -32,7 +32,7 @@ export default [
     id: '0x03',
     from: '0x8704f2c24439592822be3d71d4fca6e87285f673',
     fromBalance: 253,
-    value: '0',
+    value: '0x100',
     ethValue: 0,
     gas: 2100,
     gasPrice: 0.00003,

@@ -10,9 +10,10 @@ export default class TransactionMainDetails extends Component {
 
   static propTypes = {
     from: PropTypes.string.isRequired,
-    fromBalance: PropTypes.number.isRequired, // eth
+    fromBalance: PropTypes.number, // eth
     value: PropTypes.string.isRequired, // wei hex
     ethValue: PropTypes.number.isRequired,
+    weiValue: PropTypes.string.isRequired,
     totalEthValue: PropTypes.number.isRequired,
     chain: PropTypes.string.isRequired,
     to: PropTypes.string, // undefined if it's a contract
@@ -35,10 +36,14 @@ export default class TransactionMainDetails extends Component {
     if (!to) {
       return;
     }
+
+    const fromBalanceToDisplay = fromBalance || '?';
+    const toBalanceToDisplay = toBalance || '?';
+
     return (
       <div className={ styles.transaction }>
         <div className={ styles.from }>
-          <Account address={ from } balance={ fromBalance } chain={ chain } />
+          <Account address={ from } balance={ fromBalanceToDisplay } chain={ chain } />
         </div>
         <div className={ styles.tx }>
           { this.renderEthValue() }
@@ -46,7 +51,7 @@ export default class TransactionMainDetails extends Component {
           { this.renderEthTotalValue() }
         </div>
         <div className={ styles.to }>
-          <Account address={ to } balance={ toBalance } chain={ chain } />
+          <Account address={ to } balance={ toBalanceToDisplay } chain={ chain } />
         </div>
       </div>
     );
@@ -77,7 +82,7 @@ export default class TransactionMainDetails extends Component {
   }
 
   renderEthValue () {
-    const { ethValue, id } = this.props;
+    const { ethValue, id, weiValue } = this.props;
     return (
       <div>
         <div
@@ -89,7 +94,8 @@ export default class TransactionMainDetails extends Component {
           <small>ETH</small>
         </div>
         <ReactTooltip id={ 'ethValue' + id }>
-          The value of the transaction
+          The value of the transaction.<br />
+          <strong>{weiValue}</strong> <small>WEI</small>
         </ReactTooltip>
       </div>
     );
@@ -103,8 +109,9 @@ export default class TransactionMainDetails extends Component {
           data-tip
           data-for={ 'totalEthValue' + id }
           data-effect='solid'
+          data-place='bottom'
           className={ styles.total }>
-          { totalEthValue } ETH
+          { totalEthValue } <small>ETH</small>
         </div>
         <ReactTooltip id={ 'totalEthValue' + id }>
           The value of the transaction including the mining fee. <br />

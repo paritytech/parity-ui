@@ -18,9 +18,10 @@ export default class TransactionPending extends Component {
   static propTypes = {
     id: PropTypes.string.isRequired,
     from: PropTypes.string.isRequired,
-    fromBalance: PropTypes.number.isRequired, // eth
+    fromBalance: PropTypes.number, // eth
     value: PropTypes.string.isRequired, // wei hex
     ethValue: PropTypes.number.isRequired,
+    weiValue: PropTypes.string.isRequired,
     gasPrice: PropTypes.number.isRequired, // Gwei
     gas: PropTypes.number.isRequired, // wei
     to: PropTypes.string, // undefined if it's a contract
@@ -49,7 +50,10 @@ export default class TransactionPending extends Component {
     return (
       <div className={ `${styles.container} ${className}` }>
         <div className={ styles.mainContainer }>
-          <TransactionMainDetails { ...this.props } totalEthValue={ totalEthValue } />
+          <TransactionMainDetails
+            { ...this.props }
+            totalEthValue={ totalEthValue }
+            />
           <TransactionPendingForm
             onConfirm={ this.onConfirm }
             onReject={ this.onReject }
@@ -97,26 +101,28 @@ export default class TransactionPending extends Component {
   }
 
   renderEstimatedMinimgTime () {
-    const { estimatedMiningTime } = this.state;
-    const { id } = this.props;
-    return (
-      <div
-        data-tip
-        data-place='right'
-        data-for={ 'miningTime' + id }
-        data-effect='solid'
-      >
-        <span className={ styles.miningTime }>
-          <HourGlassIcon />
-          { estimatedMiningTime }
-        </span>
-        { /* id required in case there are multple transactions in page */ }
-        <ReactTooltip id={ 'miningTime' + id }>
-          Your transaction will be mined probably <strong>within { estimatedMiningTime }</strong>. <br />
-          Increase fee to make it faster.
-        </ReactTooltip>
-      </div>
-    );
+    return null;
+
+    // const { estimatedMiningTime } = this.state;
+    // const { id } = this.props;
+    // return (
+    //   <div
+    //     data-tip
+    //     data-place='right'
+    //     data-for={ 'miningTime' + id }
+    //     data-effect='solid'
+    //   >
+    //     <span className={ styles.miningTime }>
+    //       <HourGlassIcon />
+    //       { estimatedMiningTime }
+    //     </span>
+    //     { #<{(| id required in case there are multple transactions in page |)}># }
+    //     <ReactTooltip id={ 'miningTime' + id }>
+    //       Your transaction will be mined probably <strong>within { estimatedMiningTime }</strong>. <br />
+    //       Increase fee to make it faster.
+    //     </ReactTooltip>
+    //   </div>
+    // );
   }
 
   renderData () {
@@ -179,6 +185,7 @@ export default class TransactionPending extends Component {
   renderDataExpanded () {
     const { isDataExpanded } = this.state;
     const { data } = this.props;
+
     if (!isDataExpanded) {
       return;
     }
@@ -186,7 +193,7 @@ export default class TransactionPending extends Component {
     return (
       <div className={ styles.expandedHelper }>
         <h3>Transaction's Data</h3>
-        <code className={ styles.expandedData }>{ data || 'empty' }</code>
+        <code className={ styles.expandedData }>{ data }</code>
       </div>
     );
   }
@@ -199,13 +206,13 @@ export default class TransactionPending extends Component {
   }
 
   toggleGasPriceExpanded = () => {
-    const { isGasPriceExpanded, isDataExpanded } = this.state;
-    const stateToSet = { isGasPriceExpanded: !isGasPriceExpanded };
-    // close data in case it's it's expanded
-    if (isDataExpanded) {
-      stateToSet.isDataExpanded = false;
-    }
-    this.setState(stateToSet);
+    // const { isGasPriceExpanded, isDataExpanded } = this.state;
+    // const stateToSet = { isGasPriceExpanded: !isGasPriceExpanded };
+    // // close data in case it's it's expanded
+    // if (isDataExpanded) {
+    //   stateToSet.isDataExpanded = false;
+    // }
+    // this.setState(stateToSet);
   }
 
   toggleDataExpanded = () => {

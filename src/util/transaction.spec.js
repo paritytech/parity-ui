@@ -59,7 +59,7 @@ describe('util/transaction', () => {
       const res = getFee(gas, gasPrice);
 
       // then
-      expect(res).to.equal(4200000000000000);
+      expect(res).to.equal(0.000042);
     });
   });
 
@@ -76,4 +76,5 @@ describe('util/transaction', () => {
       expect(res).to.equal(0.0000000000256);
     });
   });
+
 });
