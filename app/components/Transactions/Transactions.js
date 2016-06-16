@@ -36,8 +36,8 @@ export default class Transactions extends Component {
       data => (
         <TransactionPendingWeb3
           className={ styles.transaction }
-          onConfirm={ actions.rejectTransaction }
-          onReject={ actions.confirmTransaction }
+          onConfirm={ actions.confirmTransaction }
+          onReject={ actions.rejectTransaction }
           key={ data.id }
           id={ data.id }
           gasPrice={ data.transaction.gasPrice }

@@ -72,12 +72,16 @@ module.exports = {
       }
     ],
     noParse: [
-      /node_modules\/sinon/
+      /node_modules\/sinon/,
+      /node_modules\/dapps-react-ui/
     ]
   },
   resolve: {
     extensions: ['', '.js', '.jsx'],
-    unsafeCache: true
+    unsafeCache: true,
+    alias: isProd ? {} : {
+      'dapps-react-ui': __dirname + '/index.js'
+    }
   },
   postcss: [
     rucksack({
@@ -96,7 +100,7 @@ module.exports = {
     ];
 
     if (isProd) {
-      plugins.push(new webpack.optimize.OccurrenceOrderPlugin(false));
+      plugins.push(new webpack.optimize.OccurrenceOrderPlugin());
       plugins.push(new webpack.optimize.DedupePlugin());
       plugins.push(new webpack.optimize.UglifyJsPlugin({
         screwIe8: true,

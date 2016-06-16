@@ -6,7 +6,6 @@ export default class Ws {
 
   constructor (token, addTokenListener, wsPath) {
     this.wsPath = wsPath;
-    this.id = 1;
     this.callbacks = {};
     this.isWsConnected = false;
     this.queue = []; // hold calls until ws is connected on init or if disconnected
@@ -102,8 +101,7 @@ export default class Ws {
       this.queue.push({ payload, cb });
       return console.log('WS: incoming msg when not connected, adding to queue');
     }
-    this.id++;
-    const { id } = this;
+    const id = payload.id;
     this.ws.send(JSON.stringify(payload));
     if (!cb) {
       return;
