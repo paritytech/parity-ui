@@ -86,7 +86,7 @@ export default class TransactionPending extends Component {
           <GasIcon />
           { gasPrice }
         </span>
-        { /* id required in case there are multple transcations in page */ }
+        { /* id required in case there are multple transactions in page */ }
         <ReactTooltip id={ 'gasPrice' + id }>
           { gasPrice } [Gwei]: This is the maximum amount of Gwei you will pay for each unit of gas required to process this transaction. <br />
           You can increase it to lower mining time.
@@ -110,7 +110,7 @@ export default class TransactionPending extends Component {
           <HourGlassIcon />
           { estimatedMiningTime }
         </span>
-        { /* id required in case there are multple transcations in page */ }
+        { /* id required in case there are multple transactions in page */ }
         <ReactTooltip id={ 'miningTime' + id }>
           Your transaction will be mined probably <strong>within { estimatedMiningTime }</strong>. <br />
           Increase fee to make it faster.
@@ -133,7 +133,7 @@ export default class TransactionPending extends Component {
       >
         <DescriptionIcon />
         { tUtil.getShortData(data) }
-        { /* id required in case there are multple transcations in page */ }
+        { /* id required in case there are multple transactions in page */ }
         <ReactTooltip id={ 'data' + id }>
           <strong>Extra data to send along your transaction: </strong>
           <br />
