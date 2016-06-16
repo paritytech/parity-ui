@@ -18,7 +18,6 @@ export default class UnAuthorized extends Component {
 
   state = {
     token: this.props.ws.token,
-    showToken: false,
     tokenInvalid: null,
     processing: false
   };
@@ -33,60 +32,44 @@ export default class UnAuthorized extends Component {
   }
 
   render () {
-    const { processing, token, showToken } = this.state;
+    const { processing, token } = this.state;
     return (
       <div className={ styles.container }>
         <h1>Not Authorized</h1>
-        <p>Generate a token by runing parity signer new-token</p>
+        <p>Connections used by Signer UI are secured. You need to authorize this app.</p>
+        <p>Please run <code className={styles.code}>$ parity signer new-token</code> to generate authorization token and paste the token below.</p>
         <TextField
           name='token'
-          type={ showToken ? 'text' : 'password' }
+          type='text'
           value={ token }
           disabled={ processing }
           onChange={ this.onTokenChange }
-          floatingLabelText='Token'
+          floatingLabelText='Authorization Token'
         />
         <br />
-        <div className={ styles.toggleToken }>
-          { this.renderToggleTokenVisibility() }
-        </div>
         <RaisedButton
           primary
           onClick={ this.onSubmit }
-          disabled={ processing }
+          disabled={ processing || !token }
          >
-         Submit
+         Authorize
         </RaisedButton>
-        { this.renderProcessing() }
         { this.renderInvalidToken() }
+        { this.renderProcessing() }
       </div>
     );
   }
 
-  renderToggleTokenVisibility () {
-    if (!this.state.token || !this.state.token.length) {
-      return;
-    }
-    const { showToken } = this.state;
-    return (
-      <a onClick={ this.onToggleToken }>
-        { showToken ? 'Hide' : 'Show' } token
-      </a>
-    );
-  }
-
   onTokenChange = evt => {
-    this.setState({ token: evt.target.value });
-  }
-
-  onToggleToken = () => {
-    const { showToken } = this.state;
-    this.setState({ showToken: !showToken });
+    this.setState({ token: evt.target.value, tokenInvalid: false });
   }
 
   onSubmit = () => {
     const token = this.state.token.replace(/\s*\-*/g, '');
-    this.setState({ processing: true });
+    this.setState({
+      processing: true,
+      tokenInvalid: false
+    });
     this.props.actions.updateToken(token);
 
     // todo [adgo] - listen to event instead of timeout
@@ -99,7 +82,7 @@ export default class UnAuthorized extends Component {
     }
 
     return (
-      <p>Processing ...</p>
+      <span> Processing ...</span>
     );
   }
 
@@ -108,7 +91,7 @@ export default class UnAuthorized extends Component {
       return null;
     }
 
-    return <p>This token is invalid</p>;
+    return <span> The token is invalid or your node is not running.</span>;
   }
 
   onTokenInvalid = () => {
