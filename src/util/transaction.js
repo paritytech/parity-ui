@@ -1,5 +1,7 @@
 import BigNumber from 'bignumber.js';
 
+const WEI_TO_ETH_MULTIPLIER = 0.000000000000000001;
+const WEI_TO_SZABU_MULTIPLIER = 0.000000000001;
 import { BASE_LINK_TX_MORDEN, BASE_LINK_TX_HOMESTEAD } from '../constants/constants';
 
 export const getEstimatedMiningTime = _getEstimatedMiningTime;
@@ -11,6 +13,7 @@ export const getTotalValue = _getTotalValue;
 export const getGasPriceDisplay = _getGasPriceDisplay;
 export const getValueDisplay = _getValueDisplay
 export const getTotalValueDisplay = _getTotalValueDisplay
+export const getEthFromWeiDisplay = _getEthFromWeiDisplay
 // links
 export const getTxLink = _getTxLink;
 
@@ -48,11 +51,11 @@ function _getTotalValue (fee, value) {
 
 /*
  * @param {wei hex string} gasPrice
- * @return {string} gas price with units i.e. 21,423 [wei]
+ * @return {string} szabo gas price with unit [szabo] i.e. 21,423 [szabo]
  */
 function _getGasPriceDisplay (gasPrice) {
   gasPrice = new BigNumber(gasPrice);
-  return gasPrice.toFixed(0);
+  return gasPrice.times(WEI_TO_SZABU_MULTIPLIER).toPrecision(5);
 }
 
 /*
@@ -61,7 +64,7 @@ function _getGasPriceDisplay (gasPrice) {
  */
 function _getValueDisplay (value) {
   value = new BigNumber(value);
-  return value.toFixed(2);
+  return value.times(WEI_TO_ETH_MULTIPLIER).toPrecision(5);
 }
 
 /*
@@ -70,15 +73,15 @@ function _getValueDisplay (value) {
  */
 function _getTotalValueDisplay (totalValue) {
   totalValue = new BigNumber(totalValue);
-  return totalValue.toFixed(2);
+  return totalValue.times(WEI_TO_ETH_MULTIPLIER).toPrecision(5);
+}
+
+function _getEthFromWeiDisplay (weiHexString) {
+  const value = new BigNumber(weiHexString);
+  return value.times(WEI_TO_ETH_MULTIPLIER).toPrecision(5);
 }
 
 function _getTxLink (txHash, chain) {
   const base = chain === 'morden' ? BASE_LINK_TX_MORDEN : BASE_LINK_TX_HOMESTEAD;
   return base + txHash;
-}
-
-// internal functions
-function _display (BigNumber) {
-  
 }

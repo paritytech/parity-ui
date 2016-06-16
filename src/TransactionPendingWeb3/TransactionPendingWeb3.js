@@ -13,7 +13,7 @@ class TransactionPendingWeb3 extends Component {
     id: PropTypes.string.isRequired,
     from: PropTypes.string.isRequired,
     value: PropTypes.string.isRequired, // wei hex
-    gasPrice: PropTypes.string.isRequired, // wei
+    gasPrice: PropTypes.string.isRequired, // wei hex
     gas: PropTypes.string.isRequired, // hex
     onConfirm: PropTypes.func.isRequired,
     onReject: PropTypes.func.isRequired,
