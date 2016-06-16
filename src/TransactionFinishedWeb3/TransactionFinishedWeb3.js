@@ -44,9 +44,8 @@ class TransactionFinishedWeb3 extends Component {
     });
   }
 
-  fetchChain (next) {
+  fetchChain () {
     this.context.web3.ethcore.getNetChain((err, chain) => {
-      next(err);
 
       if (err) {
         return console.warn('err fetching chain', err);
