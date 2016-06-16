@@ -43,8 +43,8 @@ class TransactionPendingWeb3 extends Component {
         from={ from }
         to={ to }
         fromBalance={ fromBalance }
-        chain={ chain }
         toBalance={ toBalance }
+        chain={ chain }
       />
     );
   }
