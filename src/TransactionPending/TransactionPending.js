@@ -17,6 +17,7 @@ export default class TransactionPending extends Component {
 
   static propTypes = {
     id: PropTypes.string.isRequired,
+    chain: PropTypes.string.isRequired,
     from: PropTypes.string.isRequired,
     fromBalance: PropTypes.string, // wei hex
     value: PropTypes.string.isRequired, // wei hex
