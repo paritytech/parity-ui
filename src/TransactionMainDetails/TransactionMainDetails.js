@@ -11,9 +11,10 @@ export default class TransactionMainDetails extends Component {
   static propTypes = {
     from: PropTypes.string.isRequired,
     fromBalance: PropTypes.number.isRequired, // eth
-    value: PropTypes.string.isRequired, // hex of wei
+    value: PropTypes.string.isRequired, // wei hex
     ethValue: PropTypes.number.isRequired,
     totalEthValue: PropTypes.number.isRequired,
+    chain: PropTypes.string.isRequired,
     to: PropTypes.string, // undefined if it's a contract
     toBalance: PropTypes.number, // eth - undefined if it's a contract
     className: PropTypes.string
@@ -30,14 +31,14 @@ export default class TransactionMainDetails extends Component {
   }
 
   renderTransfer () {
-    const { from, to } = this.props;
+    const { from, fromBalance, to, toBalance, chain } = this.props;
     if (!to) {
       return;
     }
     return (
       <div className={ styles.transaction }>
         <div className={ styles.from }>
-          <Account address={ from } />
+          <Account address={ from } balance={ fromBalance } chain={ chain } />
         </div>
         <div className={ styles.tx }>
           { this.renderEthValue() }
@@ -45,21 +46,21 @@ export default class TransactionMainDetails extends Component {
           { this.renderEthTotalValue() }
         </div>
         <div className={ styles.to }>
-          <Account address={ to } />
+          <Account address={ to } balance={ toBalance } chain={ chain } />
         </div>
       </div>
     );
   }
 
   renderContract () {
-    const { from, to } = this.props;
+    const { from, fromBalance, to, chain } = this.props;
     if (to) {
       return;
     }
     return (
       <div className={ styles.transaction }>
         <div className={ styles.from }>
-          <Account address={ from } />
+          <Account address={ from } balance={ fromBalance } chain={ chain } />
         </div>
         <div className={ styles.tx }>
           { this.renderEthValue() }
@@ -76,18 +77,18 @@ export default class TransactionMainDetails extends Component {
   }
 
   renderEthValue () {
-    const { ethValue } = this.props;
+    const { ethValue, id } = this.props;
     return (
       <div>
         <div
           data-tip
-          data-for='ethValue'
+          data-for={ 'ethValue' + id }
           data-effect='solid'
           >
           <strong>{ ethValue } </strong>
           <small>ETH</small>
         </div>
-        <ReactTooltip id='ethValue'>
+        <ReactTooltip id={ 'ethValue' + id }>
           The value of the transaction
         </ReactTooltip>
       </div>
@@ -95,17 +96,17 @@ export default class TransactionMainDetails extends Component {
   }
 
   renderEthTotalValue () {
-    const { totalEthValue } = this.props;
+    const { totalEthValue, id } = this.props;
     return (
       <div>
         <div
           data-tip
-          data-for='totalEthValue'
+          data-for={ 'totalEthValue' + id }
           data-effect='solid'
           className={ styles.total }>
           { totalEthValue } ETH
         </div>
-        <ReactTooltip id='totalEthValue'>
+        <ReactTooltip id={ 'totalEthValue' + id }>
           The value of the transaction including the mining fee. <br />
           This is the amount of ether you payed.
         </ReactTooltip>

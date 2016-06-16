@@ -3,8 +3,11 @@ export default [
     _desc: 'confirmed transaction on morden with no data',
     id: '0x01',
     from: '0x8704f2c24439592822be3d71d4fca6e87285f673',
+    fromBalance: 20,
     to: '0x9201f84c4a27ec41115f6fd1a140842e884c4b91',
-    value: '7b', // 123
+    toBalance: 0.003,
+    value: '0x7b', // 123
+    ethValue: 123,
     fee: 0.00000003,
     chain: 'morden',
     txHash: '0x8362d6c3aa335119fe9419ffbef341faac7e2eb612bb4dfbaf1d597658092070',
@@ -14,8 +17,11 @@ export default [
     _desc: 'rejected transaction on homestead with data',
     id: '0x02',
     from: '0x8704f2c24439592822be3d71d4fca6e87285f673',
+    fromBalance: 1.46,
     to: '0x9201f84c4a27ec41115f6fd1a140842e884c4b91',
-    value: 'f4240', // 1000000
+    toBalance: 12.46,
+    value: '0xf4240', // 1000000
+    ethValue: 1000000,
     fee: 0.00001230003,
     chain: 'homestead',
     data: '66726f6d206d7220617765736f6d6521' // from mr awesome!
@@ -24,7 +30,9 @@ export default [
     _desc: 'confirmed contract deployed on homestead',
     id: '0x03',
     from: '0x8704f2c24439592822be3d71d4fca6e87285f673',
-    value: '0',
+    fromBalance: 75,
+    value: '0x0',
+    ethValue: 0,
     fee: 0.00001230003,
     chain: 'homestead',
     txHash: '0x4bc74c26e59170e2cc556e55afa646f0248d269244f0f157bd5bf698fad0d812',
@@ -35,7 +43,9 @@ export default [
     _desc: 'rejected contract on homestead',
     id: '0x04',
     from: '0x8704f2c24439592822be3d71d4fca6e87285f673',
-    value: '0',
+    fromBalance: 75,
+    value: '0x0',
+    ethValue: 0,
     fee: 0.00001230003,
     chain: 'homestead',
     // greeter contract from https://www.ethereum.org/greeter

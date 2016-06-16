@@ -19,7 +19,7 @@ export default class TransactionPending extends Component {
     id: PropTypes.string.isRequired,
     from: PropTypes.string.isRequired,
     fromBalance: PropTypes.number.isRequired, // eth
-    value: PropTypes.string.isRequired, // hex of wei
+    value: PropTypes.string.isRequired, // wei hex
     ethValue: PropTypes.number.isRequired,
     gasPrice: PropTypes.number.isRequired, // Gwei
     gas: PropTypes.number.isRequired, // wei
@@ -45,10 +45,11 @@ export default class TransactionPending extends Component {
 
   render () {
     const className = this.props.className || '';
+    const { totalEthValue } = this.state;
     return (
       <div className={ `${styles.container} ${className}` }>
         <div className={ styles.mainContainer }>
-          <TransactionMainDetails { ...this.props } />
+          <TransactionMainDetails { ...this.props } totalEthValue={ totalEthValue } />
           <TransactionPendingForm
             onConfirm={ this.onConfirm }
             onReject={ this.onReject }
@@ -192,9 +193,9 @@ export default class TransactionPending extends Component {
 
   modifyGasPrice = gasPrice => {
     const fee = tUtil.getFee(this.props.gas, gasPrice);
-    const totalValue = tUtil.getTotalValue(fee, this.props.ethValue);
+    const totalEthValue = tUtil.getTotalValue(fee, this.props.ethValue);
     const estimatedMiningTime = tUtil.getEstimatedMiningTime(gasPrice);
-    this.setState({ gasPrice, fee, totalValue, estimatedMiningTime });
+    this.setState({ gasPrice, fee, totalEthValue, estimatedMiningTime });
   }
 
   toggleGasPriceExpanded = () => {
@@ -220,7 +221,7 @@ export default class TransactionPending extends Component {
   onConfirm = password => {
     const { gasPrice } = this.state;
     const { id } = this.props;
-    this.props.onConfirm({ id, password, gasPrice });
+    this.props.onConfirm(id, password, gasPrice);
   }
 
   onReject = () => {

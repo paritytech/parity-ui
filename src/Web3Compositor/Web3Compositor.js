@@ -1,28 +1,31 @@
 // no need for react since not using JSX
-import { Component, PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 
-export default class Web3Component extends Component {
+export default Wrapped => class Web3Compositor extends Component {
 
   static contextTypes = {
     web3: PropTypes.object.isRequired
   };
 
-  componentDidMount () {
-    this.setState({
-      tickActive: true
-    });
+  tickActive = false
 
+  render () {
+    return (
+      <Wrapped { ...this.props } />
+    );
+  }
+
+  componentDidMount () {
+    this.tickActive = true;
     setTimeout(this.next);
   }
 
   componentWillUnmount () {
-    this.setState({
-      tickActive: false
-    });
+    this.tickActive = false;
   }
 
   next = () => {
-    if (!this.state.tickActive) {
+    if (!this.tickActive) {
       return;
     }
 
@@ -35,4 +38,4 @@ export default class Web3Component extends Component {
     // can be overridden in subclases
   }
 
-}
+};

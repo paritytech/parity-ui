@@ -14,6 +14,7 @@ import RpcAutoCompletePage from '../containers/RpcAutoCompletePage';
 import ToastPage from '../containers/ToastPage';
 import TransactionFinishedPage from '../containers/TransactionFinishedPage';
 import TransactionPendingPage from '../containers/TransactionPendingPage';
+import TransactionPendingWeb3Page from '../containers/TransactionPendingWeb3Page';
 import TransactionPendingFormPage from '../containers/TransactionPendingFormPage';
 
 const routerHistory = useRouterHistory(createHashHistory)();
@@ -37,9 +38,10 @@ export default class Routes extends Component {
           <Route path={ 'identicon' } component={ IdenticonPage } />
           <Route path={ 'rpcAutoComplete' } component={ RpcAutoCompletePage } />
           <Route path={ 'toast' } component={ ToastPage } />
-          <Route path={ '/transactionFinished' } component={ TransactionFinishedPage } />
-          <Route path={ '/transactionPending' } component={ TransactionPendingPage } />
-          <Route path={ '/transactionPendingForm' } component={ TransactionPendingFormPage } />
+          <Route path={ 'transactionFinished' } component={ TransactionFinishedPage } />
+          <Route path={ 'transactionPending' } component={ TransactionPendingPage } />
+          <Route path={ 'transactionPendingWeb3' } component={ TransactionPendingWeb3Page } />
+          <Route path={ 'transactionPendingForm' } component={ TransactionPendingFormPage } />
         </Route>
       </Router>
     );

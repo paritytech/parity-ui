@@ -6,5 +6,6 @@ export default [
   { name: 'Toast' },
   { name: 'TransactionFinished' },
   { name: 'TransactionPending' },
+  { name: 'TransactionPendingWeb3' },
   { name: 'TransactionPendingForm' }
 ];

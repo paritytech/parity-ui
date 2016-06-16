@@ -10,7 +10,7 @@ export TransactionFinished from './TransactionFinished';
 export TransactionPending from './TransactionPending';
 export TransactionPendingForm from './TransactionPendingForm';
 export TransactionPendingWeb3 from './TransactionPendingWeb3';
-export Web3Component from './Web3Component';
+export Web3Compositor from './Web3Compositor';
 export Web3Provider from './Web3Provider';
 export web3Extension from './util/web3.extensions';
 export Web3WebSocketProvider from './util/Web3WebSocketProvider';

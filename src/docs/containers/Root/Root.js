@@ -8,7 +8,9 @@ export default class Root extends Component {
 
   static propTypes = {
     children: PropTypes.node.isRequired,
-    location: PropTypes.string.isRequired
+    location: PropTypes.shape({
+      pathname: PropTypes.string.isRequired
+    }).isRequired
   };
 
   render () {

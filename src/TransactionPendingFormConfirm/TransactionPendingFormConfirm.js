@@ -12,11 +12,12 @@ export default class TransactionPendingFormConfirm extends Component {
   }
 
   state = {
-    password: null
+    password: '',
+    isValid: true // todo [adgo] - change to false after implementing this.validate
   }
 
   render () {
-    const { password } = this.state;
+    const { password, isValid } = this.state;
 
     return (
       <div className={ styles.confirmForm }>
@@ -34,6 +35,7 @@ export default class TransactionPendingFormConfirm extends Component {
           className={ styles.confirmButton }
           fullWidth
           primary
+          disabled={ !isValid }
           label='Confirm Transaction'
         />
       </div>
@@ -41,7 +43,11 @@ export default class TransactionPendingFormConfirm extends Component {
   }
 
   onModifyPassword = evt => {
-    this.setState({ password: evt.target.value });
+    const password = evt.target.value;
+    this.setState({ 
+      password,
+      isValid: this.validate(password)
+    });
   }
 
   onConfirm = () => {
@@ -55,5 +61,10 @@ export default class TransactionPendingFormConfirm extends Component {
     }
 
     this.onConfirm();
+  }
+
+  // todo [adgo] - implement
+  validate (password) {
+    return true;
   }
 }

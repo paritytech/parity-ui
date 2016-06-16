@@ -10,12 +10,12 @@ export default class TransactionFinished extends Component {
     id: PropTypes.string.isRequired,
     from: PropTypes.string.isRequired,
     fromBalance: PropTypes.number.isRequired,
-    value: PropTypes.number.isRequired, // eth
+    value: PropTypes.string.isRequired, // wei hex
     ethValue: PropTypes.number.isRequired, // eth
     chain: PropTypes.string.isRequired,
     fee: PropTypes.number.isRequired,
     to: PropTypes.string, // undefined if it's a contract
-    toBalance: PropTypes.string, // undefined if it's a contract
+    toBalance: PropTypes.number, // undefined if it's a contract
     txHash: PropTypes.string, // undefined if transacation is rejected
     className: PropTypes.string,
     data: PropTypes.string

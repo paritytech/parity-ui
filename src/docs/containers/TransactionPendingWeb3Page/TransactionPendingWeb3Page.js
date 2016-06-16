@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 
-import TransactionPending from '../../../TransactionPending';
-import styles from './TransactionPendingPage.css';
+import TransactionPendingWeb3 from '../../../TransactionPendingWeb3';
+import styles from './TransactionPendingWeb3Page.css';
 
-import TransactionPendingPageData from './TransactionPendingPage.data';
+import TransactionPendingWeb3PageData from './TransactionPendingWeb3Page.data';
 
-export default class TransactionPendingPage extends Component {
+export default class TransactionPendingWeb3Page extends Component {
 
   state = {};
 
@@ -20,10 +20,10 @@ export default class TransactionPendingPage extends Component {
   }
 
   renderTransactionsPending () {
-    return TransactionPendingPageData.map(t => (
+    return TransactionPendingWeb3PageData.map(t => (
       <div className={ styles.componentContainer } key={ t.id }>
         <h4>{ t._desc }</h4>
-        <TransactionPending
+        <TransactionPendingWeb3
           { ...t }
           onConfirm={ this.onConfirm }
           onReject={ this.onReject }
