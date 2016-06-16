@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import TransactionPendingWeb3 from '../../../TransactionPendingWeb3';
 import styles from './TransactionPendingWeb3Page.css';
 
-import TransactionPendingWeb3PageData from './TransactionPendingWeb3Page.data';
+import transactionsData from '../../transactions.data';
 
 export default class TransactionPendingWeb3Page extends Component {
 
@@ -20,7 +20,7 @@ export default class TransactionPendingWeb3Page extends Component {
   }
 
   renderTransactionsPending () {
-    return TransactionPendingWeb3PageData.map(t => (
+    return transactionsData.map(t => (
       <div className={ styles.componentContainer } key={ t.id }>
         <h4>{ t._desc }</h4>
         <TransactionPendingWeb3

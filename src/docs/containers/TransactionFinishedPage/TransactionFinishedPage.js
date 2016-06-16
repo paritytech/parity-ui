@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import TransactionFinished from '../../../TransactionFinished';
 import styles from './TransactionFinishedPage.css';
 
-import TransactionFinishedPageData from './TransactionFinishedPage.data';
+import transactionsData from '../../transactions.data';
 
 export default class TransactionFinishedPage extends Component {
 
@@ -18,7 +18,7 @@ export default class TransactionFinishedPage extends Component {
   }
 
   renderTransactionsFinished () {
-    return TransactionFinishedPageData.map(t => (
+    return transactionsData.map(t => (
       <div className={ styles.componentContainer } key={ t.id }>
         <h4>{ t._desc }</h4>
         <TransactionFinished { ...t } />

@@ -10,10 +10,10 @@ export const getShortData = _getShortData;
 export const getFee = _getFee;
 export const getTotalValue = _getTotalValue;
 // displays
-export const getGasPriceDisplay = _getGasPriceDisplay;
-export const getValueDisplay = _getValueDisplay
-export const getTotalValueDisplay = _getTotalValueDisplay
-export const getEthFromWeiDisplay = _getEthFromWeiDisplay
+export const getSzaboFromWeiDisplay = _getSzaboFromWeiDisplay;
+export const getValueDisplay = _getValueDisplay;
+export const getTotalValueDisplay = _getTotalValueDisplay;
+export const getEthFromWeiDisplay = _getEthFromWeiDisplay;
 // links
 export const getTxLink = _getTxLink;
 
@@ -53,7 +53,7 @@ function _getTotalValue (fee, value) {
  * @param {wei hex string} gasPrice
  * @return {string} szabo gas price with unit [szabo] i.e. 21,423 [szabo]
  */
-function _getGasPriceDisplay (gasPrice) {
+function _getSzaboFromWeiDisplay (gasPrice) {
   gasPrice = new BigNumber(gasPrice);
   return gasPrice.times(WEI_TO_SZABU_MULTIPLIER).toPrecision(5);
 }

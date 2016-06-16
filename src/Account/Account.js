@@ -5,15 +5,13 @@ import styles from './Account.css';
 import Identicon from '../Identicon';
 import AccountLink from '../AccountLink';
 
-import * as tUtil from '../util/transaction';
-
 export default class Account extends Component {
 
   static propTypes = {
     className: PropTypes.string,
     address: PropTypes.string.isRequired,
     chain: PropTypes.string.isRequired,
-    balance: PropTypes.string, // wei hex, not required since it mght take time to fetch
+    balance: PropTypes.object, // eth BigNumber, not required since it mght take time to fetch
     name: PropTypes.string
   };
 
@@ -22,7 +20,7 @@ export default class Account extends Component {
   };
 
   componentWillMount () {
-    this.updateBalanceDisplay(this.props.balance)
+    this.updateBalanceDisplay(this.props.balance);
   }
 
   componentWillReceiveProps (nextProps) {
@@ -34,7 +32,7 @@ export default class Account extends Component {
 
   updateBalanceDisplay (balance) {
     this.setState({
-      balanceDisplay: balance ? tUtil.getEthFromWeiDisplay(balance) : '?'
+      balanceDisplay: balance ? balance.toPrecision(5) : '?'
     });
   }
 

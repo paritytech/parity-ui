@@ -10,23 +10,28 @@ import styles from './TransactionMainDetails.css';
 export default class TransactionMainDetails extends Component {
 
   static propTypes = {
+    id: PropTypes.string.isRequired,
     from: PropTypes.string.isRequired,
-    fromBalance: PropTypes.string, // wei hex, not required since it might take time to fetch
+    fromBalance: PropTypes.object, // eth BigNumber, not required since it might take time to fetch
     value: PropTypes.string.isRequired, // wei hex
-    totalValue: PropTypes.object.isRequired, // wei Big Number
+    totalValue: PropTypes.object.isRequired, // wei BigNumber
     chain: PropTypes.string.isRequired,
     to: PropTypes.string, // undefined if it's a contract
-    toBalance: PropTypes.string, // wei hex - undefined if it's a contract
+    toBalance: PropTypes.object, // eth BigNumber - undefined if it's a contract or until it's fetched
     className: PropTypes.string
   };
 
-  state = {
-    valueDisplay: tUtil.getValueDisplay(this.props.value),
-    totalValueDisplay: tUtil.getTotalValueDisplay(this.props.totalValue)
+  componentWillMount () {
+    const { value, totalValue } = this.props;
+    this.updateDisplayValues(value, totalValue);
   }
 
   componentWillReceiveProps (nextProps) {
     const { value, totalValue } = nextProps;
+    this.updateDisplayValues(value, totalValue);
+  }
+
+  updateDisplayValues (value, totalValue) {
     this.setState({
       valueDisplay: tUtil.getValueDisplay(value),
       totalValueDisplay: tUtil.getTotalValueDisplay(totalValue)

@@ -1,3 +1,4 @@
+import BigNumber from 'bignumber.js';
 import { getEstimatedMiningTime, getShortData, getFee, getTotalValue } from './transaction';
 
 describe('util/transaction', () => {
@@ -55,15 +56,14 @@ describe('util/transaction', () => {
   describe('getTotalValue', () => {
     it('should return total value', () => {
       // given
-      const fee = 0.000000000254; // eth
-      const ethValue = 0.000002; // eth
+      const fee = new BigNumber(0.000000000254); // wei
+      const value = 0.000002; // wei hex
 
       // when
-      const res = getTotalValue(fee, ethValue);
+      const res = getTotalValue(fee, value);
 
       // then
       expect(res).to.equal(0.0000000000256);
     });
   });
-
 });

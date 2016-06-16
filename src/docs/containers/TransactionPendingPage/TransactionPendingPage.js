@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import TransactionPending from '../../../TransactionPending';
 import styles from './TransactionPendingPage.css';
 
-import TransactionPendingPageData from './TransactionPendingPage.data';
+import transactionsData from '../../transactions.data';
 
 export default class TransactionPendingPage extends Component {
 
@@ -20,7 +20,7 @@ export default class TransactionPendingPage extends Component {
   }
 
   renderTransactionsPending () {
-    return TransactionPendingPageData.map(t => (
+    return transactionsData.map(t => (
       <div className={ styles.componentContainer } key={ t.id }>
         <h4>{ t._desc }</h4>
         <TransactionPending

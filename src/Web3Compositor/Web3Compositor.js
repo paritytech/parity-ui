@@ -11,7 +11,7 @@ export default Wrapped => class Web3Compositor extends Component {
 
   render () {
     return (
-      <Wrapped { ...this.props } ref={this.registerComponent}/>
+      <Wrapped { ...this.props } ref={ this.registerComponent } />
     );
   }
 
@@ -35,7 +35,7 @@ export default Wrapped => class Web3Compositor extends Component {
     }
 
     let nextCalled = false;
-    this.wrapped.onTick((error) => {
+    this.wrapped.onTick(error => {
       if (nextCalled) {
         return;
       }

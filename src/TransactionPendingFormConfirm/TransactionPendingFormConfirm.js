@@ -66,7 +66,7 @@ export default class TransactionPendingFormConfirm extends Component {
 
   onModifyPassword = evt => {
     const password = evt.target.value;
-    this.setState({ 
+    this.setState({
       password,
       isValid: this.validate(password)
     });

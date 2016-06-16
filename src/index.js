@@ -1,6 +1,5 @@
 export Account from './Account';
 export AccountLink from './AccountLink';
-export AccountWeb3 from './AccountWeb3';
 export AnimateChildren from './AnimateChildren';
 export Identicon from './Identicon';
 export MuiThemeProvider from './MuiThemeProvider';
@@ -8,7 +7,6 @@ export RpcAutoComplete from './RpcAutoComplete';
 export Toastr from './Toastr';
 export TransactionFinished from './TransactionFinished';
 export TransactionPending from './TransactionPending';
-export TransactionPendingForm from './TransactionPendingForm';
 export TransactionPendingWeb3 from './TransactionPendingWeb3';
 export Web3Compositor from './Web3Compositor';
 export Web3Provider from './Web3Provider';
