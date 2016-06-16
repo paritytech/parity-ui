@@ -25,6 +25,7 @@ export default class TransactionPending extends Component {
     gas: PropTypes.number.isRequired, // wei
     to: PropTypes.string, // undefined if it's a contract
     toBalance: PropTypes.number, // eth - undefined if it's a contract
+    data: PropTypes.string,
     nonce: PropTypes.number,
     onConfirm: PropTypes.func.isRequired,
     onReject: PropTypes.func.isRequired,
@@ -69,11 +70,12 @@ export default class TransactionPending extends Component {
 
   renderGasPrice () {
     const { gasPrice } = this.state;
+    const { id } = this.props;
     return (
       <div
         data-tip
         data-place='right'
-        data-for='gasPrice'
+        data-for={ 'gasPrice' + id }
         data-effect='solid'
       >
         <span
@@ -83,7 +85,8 @@ export default class TransactionPending extends Component {
           <GasIcon />
           { gasPrice }
         </span>
-        <ReactTooltip id='gasPrice'>
+        { /* id required in case there are multple transcations in page */ }
+        <ReactTooltip id={ 'gasPrice' + id }>
           { gasPrice } [Gwei]: This is the maximum amount of Gwei you will pay for each unit of gas required to process this transaction. <br />
           You can increase it to lower mining time.
           <strong> click to customize</strong>
@@ -94,18 +97,20 @@ export default class TransactionPending extends Component {
 
   renderEstimatedMinimgTime () {
     const { estimatedMiningTime } = this.state;
+    const { id } = this.props;
     return (
       <div
         data-tip
         data-place='right'
-        data-for='miningTime'
+        data-for={ 'miningTime' + id }
         data-effect='solid'
       >
         <span className={ styles.miningTime }>
           <HourGlassIcon />
           { estimatedMiningTime }
         </span>
-        <ReactTooltip id='miningTime'>
+        { /* id required in case there are multple transcations in page */ }
+        <ReactTooltip id={ 'miningTime' + id }>
           Your transaction will be mined probably <strong>within { estimatedMiningTime }</strong>. <br />
           Increase fee to make it faster.
         </ReactTooltip>
@@ -114,20 +119,25 @@ export default class TransactionPending extends Component {
   }
 
   renderData () {
-    const { data } = this.props;
+    const { data, id } = this.props;
     return (
       <div
         className={ styles.data }
         onClick={ this.toggleDataExpanded }
         data-tip
         data-place='right'
-        data-for='data'
+        data-for={ 'data' + id }
+        data-class={ styles.dataTooltip }
         data-effect='solid'
       >
         <DescriptionIcon />
-        tUtil.getShortData(data);
-        <ReactTooltip id='data'>
-          Extra data to send along your transaction: { data || 'empty' }. <br />
+        { tUtil.getShortData(data) }
+        { /* id required in case there are multple transcations in page */ }
+        <ReactTooltip id={ 'data' + id }>
+          <strong>Extra data to send along your transaction: </strong>
+          <br />
+          { data || 'empty' }.
+          <br />
           <strong>Click to expand</strong>.
         </ReactTooltip>
       </div>
@@ -135,10 +145,10 @@ export default class TransactionPending extends Component {
   }
 
   renderGasPriceExpanded () {
-    const { gasPriceExpanded } = this.state;
+    const { isGasPriceExpanded } = this.state;
     const { gasPrice } = this.props;
 
-    if (!gasPriceExpanded) {
+    if (!isGasPriceExpanded) {
       return;
     }
 
@@ -175,22 +185,12 @@ export default class TransactionPending extends Component {
     return (
       <div className={ styles.expandedHelper }>
         <h3>Transcation's Data</h3>
-        <pre className={ styles.expandedData }>{ data || 'empty' }</pre>
+        <code className={ styles.expandedData }>{ data || 'empty' }</code>
       </div>
     );
   }
 
-  onConfirm = (password) => {
-    const { gasPrice } = this.state;
-    const { id } = this.props;
-    this.props.onConfirm({ id, password, gasPrice });
-  }
-
-  onReject = () => {
-    this.props.onReject(this.props.id);
-  }
-
-  modifyGasPrice = (gasPrice) => {
+  modifyGasPrice = gasPrice => {
     const fee = tUtil.getFee(this.props.gas, gasPrice);
     const totalValue = tUtil.getTotalValue(fee, this.props.ethValue);
     const estimatedMiningTime = tUtil.getEstimatedMiningTime(gasPrice);
@@ -198,13 +198,33 @@ export default class TransactionPending extends Component {
   }
 
   toggleGasPriceExpanded = () => {
-    const { gasPriceExpanded } = this.state;
-    this.setState({ gasPriceExpanded: !gasPriceExpanded });
+    const { isGasPriceExpanded, isDataExpanded } = this.state;
+    const stateToSet = { isGasPriceExpanded: !isGasPriceExpanded };
+    // close data in case it's it's expanded
+    if (isDataExpanded) {
+      stateToSet.isDataExpanded = false;
+    }
+    this.setState(stateToSet);
   }
 
   toggleDataExpanded = () => {
-    const { isDataExpanded } = this.state;
-    this.setState({ isDataExpanded: !isDataExpanded });
+    const { isDataExpanded, isGasPriceExpanded } = this.state;
+    const stateToSet = { isDataExpanded: !isDataExpanded };
+    // close data in case it's it's expanded
+    if (isGasPriceExpanded) {
+      stateToSet.isGasPriceExpanded = false;
+    }
+    this.setState(stateToSet);
+  }
+
+  onConfirm = password => {
+    const { gasPrice } = this.state;
+    const { id } = this.props;
+    this.props.onConfirm({ id, password, gasPrice });
+  }
+
+  onReject = () => {
+    this.props.onReject(this.props.id);
   }
 
 }

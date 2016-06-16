@@ -18,7 +18,7 @@ export default class AccountLink extends Component {
 
   componentWillMount () {
     const { address, chain } = this.props;
-    this.updateLink(address, chain)
+    this.updateLink(address, chain);
   }
 
   componentWillReceiveProps (nextProps) {
@@ -42,6 +42,6 @@ export default class AccountLink extends Component {
   updateLink (address, chain) {
     const link = getAccountLink(address, chain);
     this.setState({ link });
-  };
+  }
 
 }

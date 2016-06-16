@@ -26,7 +26,7 @@ export default class Account extends Component {
     );
   }
 
-  renderTitle = (address) => {
+  renderTitle = address => {
     if (this.props.name) {
       return address + ' ' + this.props.name;
     }

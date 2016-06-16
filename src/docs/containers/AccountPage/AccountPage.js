@@ -20,7 +20,7 @@ export default class AccountPage extends Component {
     return accountPageData.map(acc => {
       return (
         <div className={ styles.accountContainer } key={ acc.address }>
-          <Account { ...acc } className={ styles.account }/>
+          <Account { ...acc } className={ styles.account } />
           { this.renderAccountInfo(acc) }
         </div>
       );

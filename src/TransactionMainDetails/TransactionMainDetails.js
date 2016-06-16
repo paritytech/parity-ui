@@ -55,7 +55,7 @@ export default class TransactionMainDetails extends Component {
     const { from, to } = this.props;
     if (to) {
       return;
-    }   
+    }
     return (
       <div className={ styles.transaction }>
         <div className={ styles.from }>

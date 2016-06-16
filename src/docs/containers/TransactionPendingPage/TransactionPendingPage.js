@@ -46,35 +46,35 @@ export default class TransactionPendingPage extends Component {
 
     return (
       <p>
-        You have { chosenAction } 
-        this pending transcation 
+        You have { chosenAction }
+        this pending transcation
         { this.renderWithPassword(id) }.
       </p>
     );
   }
 
+  // rejecting doens't require password
   renderWithPassword (id) {
     const { password } = this.state['chosenPassword_' + id];
     if (!password) {
       return;
     }
 
-    return 'with password ' + password;
+    return ' with password ' + password;
   }
 
-  onConfirm (id, password, gasPrice) {
+  onConfirm = (id, password, gasPrice) => {
     this.setState({
       ['chosenAction_' + id]: 'confirmed',
       ['chosenPassword_' + id]: password
     });
   }
 
-  onReject (id) {
-    this.setState({ 
+  onReject = id => {
+    this.setState({
       ['chosenAction_' + id]: 'rejected',
       ['chosenPassword_' + id]: null
     });
   }
-
 
 }

@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 
-import ReactTooltip from 'react-tooltip';
 import TransactionMainDetails from '../TransactionMainDetails';
 import TxHashLink from '../TxHashLink';
 import styles from './TransactionFinished.css';

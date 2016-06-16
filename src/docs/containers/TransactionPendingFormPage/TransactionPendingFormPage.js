@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 import TransactionPendingForm from '../../../TransactionPendingForm';
-import styles from './TransactionPendingFormPage.css';
 
 export default class TransactionPendingFormPage extends Component {
 
@@ -37,7 +36,7 @@ export default class TransactionPendingFormPage extends Component {
 
     return (
       <p>
-        You have 
+        You have
         <strong> { chosenAction } </strong>
         this pending transcation
         { this.renderWithPassword() }

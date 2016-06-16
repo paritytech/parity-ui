@@ -1,15 +1,14 @@
 import React, { Component, PropTypes } from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import AnimateChildren from '../../../components-compositors/Animated/children';
+import AnimateChildren from '../../../AnimateChildren';
 import Header from '../../components/Header';
 
 import styles from './Root.css';
 
-class Root extends Component {
+export default class Root extends Component {
 
   static propTypes = {
-    children: PropTypes.node.isRequired
+    children: PropTypes.node.isRequired,
+    location: PropTypes.string.isRequired
   };
 
   render () {
@@ -25,16 +24,3 @@ class Root extends Component {
   }
 
 }
-
-function mapStateToProps (state) {
-  return state;
-}
-
-function mapDispatchToProps (dispatch) {
-  return {};
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Root);

@@ -11,7 +11,9 @@ export default class ToastPage extends Component {
     return (
       <div>
         <h1>Toast</h1>
-        { this.renderToasts() }
+        <div className={ styles.toastsContainer }>
+          { this.renderToasts() }
+        </div>
       </div>
     );
   }
@@ -22,8 +24,8 @@ export default class ToastPage extends Component {
     ));
   }
 
-  onRemoveToast = (id) => {
-    alert('remove toast ' + id);
+  onRemoveToast = id => {
+    global.alert('remove toast ' + id);
   }
 
 }

@@ -32,11 +32,6 @@
   top: -15px; /* due to material ui weird styling */
 }
 
-.total {
-  font-size: 0.6em;
-  opacity: .5;
-}
-
 .hasInfoIcon svg {
   width: 16px !important;
   height: 16px !important;
@@ -58,11 +53,16 @@
   cursor: pointer;
 }
 
+.dataTooltip {
+  word-wrap: break-word;
+  max-width: 400px;
+}
+
 .expandedData {
   display: block;
   padding: 15px;
   background: gray;
-  clear: left;
+  word-wrap: break-word;
   color: #fff;
 }
 

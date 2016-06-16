@@ -29,9 +29,9 @@ export default class Toastr extends Component {
 
   renderToasts () {
     const { onRemoveToast } = this.props;
-    return this.props.toasts.map(t => {
-      return <Toast { ...t } onRemoveToast={ onRemoveToast }  key={ t.id } />
-    });
+    return this.props.toasts.map(t => (
+      <Toast { ...t } onRemoveToast={ onRemoveToast } key={ t.id } />
+    ));
   }
 
 }

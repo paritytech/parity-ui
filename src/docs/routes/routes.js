@@ -5,7 +5,6 @@ import { Router, Route, useRouterHistory, IndexRedirect } from 'react-router';
 import { createHashHistory } from 'history';
 import { syncHistoryWithStore } from 'react-router-redux';
 
-import componentsData from '../components.data';
 import RootContainer from '../containers/Root';
 import WelcomePage from '../containers/WelcomePage';
 import AccountPage from '../containers/AccountPage';

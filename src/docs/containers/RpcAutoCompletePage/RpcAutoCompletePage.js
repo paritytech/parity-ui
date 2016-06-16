@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 
 import RpcAutoComplete from '../../../RpcAutoComplete';
-import styles from './RpcAutoCompletePage.css';
-
-import rpcAutoCompleteData from './RpcAutoCompletePage.data';
 
 export default class RpcAutoCompletePage extends Component {
 
@@ -15,7 +12,7 @@ export default class RpcAutoCompletePage extends Component {
     return (
       <div>
         <h1>RpcAutoComplete</h1>
-        <RpcAutoComplete onNewRequest={ this.onNewRequest }/>
+        <RpcAutoComplete onNewRequest={ this.onNewRequest } />
         { this.renderSelected() }
       </div>
     );
@@ -24,17 +21,19 @@ export default class RpcAutoCompletePage extends Component {
   renderSelected () {
     const { selected } = this.state;
     if (!selected) {
-      return <h3>Select a method above</h3>
+      return (
+        <h3>Select a method above</h3>
+      );
     }
 
     return (
-      <h3>You have selected: 
+      <h3>You have selected:
         <strong> { selected }</strong>
       </h3>
     );
   }
 
-  onNewRequest = (selected) => {
+  onNewRequest = selected => {
     this.setState({ selected });
   }
 

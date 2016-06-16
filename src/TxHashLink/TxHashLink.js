@@ -17,12 +17,12 @@ export default class TxHashLink extends Component {
 
   componentWillMount () {
     const { txHash, chain } = this.props;
-    this.updateLink(txHash, chain)
+    this.updateLink(txHash, chain);
   }
 
   componentWillReceiveProps (nextProps) {
     const { txHash, chain } = nextProps;
-    this.updateLink(txHash, chain)
+    this.updateLink(txHash, chain);
   }
 
   render () {
@@ -42,6 +42,6 @@ export default class TxHashLink extends Component {
   updateLink (txHash, chain) {
     const link = getTxLink(txHash, chain);
     this.setState({ link });
-  };
+  }
 
 }

@@ -10,6 +10,7 @@
   },
   "rules": {
     "object-curly-spacing": ["error", "always"],
+    "arrow-parens": ["error", "as-needed"],
     "react/jsx-curly-spacing": ["error", "always"]
   }
 }

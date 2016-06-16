@@ -1,10 +1,18 @@
-
 import React, { Component, PropTypes } from 'react';
-import { isReactComponent } from '../../util/react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+
+import { isReactComponent } from '../util/react';
 import './AnimateChildren.css';
 
 export default class AnimateChildren extends Component {
+
+  static propTypes = {
+    children: PropTypes.node.isRequired,
+    pathname: PropTypes.string,
+    isView: PropTypes.bool,
+    absolute: PropTypes.bool
+  }
+
   render () {
     const className = this.props.absolute ? 'absoluteAnimationContainer' : '';
     return (
@@ -36,13 +44,6 @@ export default class AnimateChildren extends Component {
     }
 
     return children;
-  }
-
-  static propTypes = {
-    children: PropTypes.any.isRequired,
-    pathname: PropTypes.string,
-    isView: PropTypes.bool,
-    absolute: PropTypes.bool
   }
 
 }

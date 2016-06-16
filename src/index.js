@@ -1,6 +1,7 @@
 export Account from './Account';
 export AccountLink from './AccountLink';
 export AccountWeb3 from './AccountWeb3';
+export AnimateChildren from './AnimateChildren';
 export Identicon from './Identicon';
 export MuiThemeProvider from './MuiThemeProvider';
 export RpcAutoComplete from './RpcAutoComplete';
