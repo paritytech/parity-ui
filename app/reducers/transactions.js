@@ -16,8 +16,11 @@ export default handleActions({
   },
 
   'add finishedTransactions' (state, action) {
+    const pending = state.pending.filter(tx => tx.id !== action.payload.id);
+
     return {
       ...state,
+      pending,
       finished: [action.payload].concat(state.finished)
     };
   }
