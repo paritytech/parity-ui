@@ -1,46 +1,46 @@
 import React, { Component, PropTypes } from 'react';
 
+import { getAccountLink } from '../util/account';
 import styles from './AccountLink.css';
 
 export default class AccountLink extends Component {
 
   static propTypes = {
-    className: PropTypes.string,
-    children: PropTypes.node,
     chain: PropTypes.string.isRequired,
-    address: PropTypes.string.isRequired
+    address: PropTypes.string.isRequired,
+    className: PropTypes.string,
+    children: PropTypes.node
   }
 
   state = {
-    link: this.getLink(this.props.address)
+    link: null
   };
 
+  componentWillMount () {
+    const { address, chain } = this.props;
+    this.updateLink(address, chain)
+  }
+
   componentWillReceiveProps (nextProps) {
-    this.updateLink(nextProps.address);
+    const { address, chain } = nextProps;
+    this.updateLink(address, chain);
   }
 
   render () {
-    const { children, className } = this.props;
+    const { children, address, className } = this.props;
     return (
       <a
         href={ this.state.link }
         target='_blank'
         className={ `${styles.container} ${className}` }
         >
-        { children }
+        { children || address }
       </a>
     );
   }
 
-  getLink (address) {
-    const base = this.props.chain === 'morden'
-    ? 'https://testnet.etherscan.io/address/'
-    : 'https://etherscan.io/address/';
-    return base + address;
-  }
-
-  updateLink = (address) => {
-    const link = this.getLink(address);
+  updateLink (address, chain) {
+    const link = getAccountLink(address, chain);
     this.setState({ link });
   };
 

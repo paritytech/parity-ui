@@ -17,7 +17,7 @@ export default class TransactionPendingForm extends Component {
   };
 
   static defaultProps = {
-    REJECT_COUNTER_TIME
+    rejectCounterTime: REJECT_COUNTER_TIME
   };
 
   state = {
@@ -121,7 +121,7 @@ export default class TransactionPendingForm extends Component {
   }
 
   onOpenReject = () => {
-    this.setState({ rejectOpen: true });
+    this.setState({ isRejectOpen: true });
     this.rejectInterval = setInterval(() => {
       let { rejectCounter } = this.state;
       if (rejectCounter === 0) {
@@ -135,7 +135,7 @@ export default class TransactionPendingForm extends Component {
     clearInterval(this.rejectInterval);
     this.setState({
       rejectCounter: this.props.rejectCounterTime,
-      rejectOpen: false
+      isRejectOpen: false
     });
   }
 

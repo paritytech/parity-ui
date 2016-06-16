@@ -30,13 +30,12 @@ export default class Toast extends Component {
   }
 
   renderActions () {
-    const { onRemoveToast } = this.props;
-    if (!onRemoveToast) {
+    if (!this.props.onRemoveToast) {
       return;
     }
 
     return (
-      <IconButton className={ styles.remove } onClick={ onRemoveToast }>
+      <IconButton className={ styles.remove } onClick={ this.onRemoveToast }>
         <RemoveIcon />
       </IconButton>
     );
@@ -44,7 +43,7 @@ export default class Toast extends Component {
 
   onRemoveToast = () => {
     const { id } = this.props;
-    this.props.onRemoveToast(id)
+    this.props.onRemoveToast(id);
   }
 
 }

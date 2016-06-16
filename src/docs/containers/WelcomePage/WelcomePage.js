@@ -7,7 +7,7 @@ export default class WelcomePage extends Component {
       <div>
         <h1>Dapps React UI</h1>
         <p>
-          This is a demo of reusable dapps react ui.
+          This is a demo of reusable dapps react ui. <br />
           Select a component from the nav menu above.
         </p>
       </div>

@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 
 import ReactTooltip from 'react-tooltip';
 
@@ -7,28 +7,28 @@ import DescriptionIcon from 'material-ui/svg-icons/action/description';
 import GasIcon from 'material-ui/svg-icons/maps/local-gas-station';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
-// todo [adgo] - replace to Account without Web3
-import AccountWeb3 from '../AccountWeb3';
-import Web3Component from '../Web3Component';
+import TransactionMainDetails from '../TransactionMainDetails';
 import styles from './TransactionPending.css';
 import TransactionPendingForm from '../TransactionPendingForm';
 
 import * as tUtil from '../util/transaction';
 
-export default class TransactionPending extends Web3Component {
+export default class TransactionPending extends Component {
 
   static propTypes = {
-    className: PropTypes.string,
     id: PropTypes.string.isRequired,
     from: PropTypes.string.isRequired,
+    fromBalance: PropTypes.number.isRequired, // eth
+    value: PropTypes.string.isRequired, // hex of wei
+    ethValue: PropTypes.number.isRequired,
     gasPrice: PropTypes.number.isRequired, // Gwei
     gas: PropTypes.number.isRequired, // wei
     to: PropTypes.string, // undefined if it's a contract
+    toBalance: PropTypes.number, // eth - undefined if it's a contract
     nonce: PropTypes.number,
-    value: PropTypes.string.isRequired, // hex of wei
-    ethValue: PropTypes.number.isRequired,
     onConfirm: PropTypes.func.isRequired,
-    onReject: PropTypes.func.isRequired
+    onReject: PropTypes.func.isRequired,
+    className: PropTypes.string
   };
 
   componentWillMount () {
@@ -47,7 +47,7 @@ export default class TransactionPending extends Web3Component {
     return (
       <div className={ `${styles.container} ${className}` }>
         <div className={ styles.mainContainer }>
-          { this.renderTransaction() }
+          <TransactionMainDetails { ...this.props } />
           <TransactionPendingForm
             onConfirm={ this.onConfirm }
             onReject={ this.onReject }
@@ -63,62 +63,6 @@ export default class TransactionPending extends Web3Component {
           { this.renderMiningTimeExpanded() }
           { this.renderGasPriceExpanded() }
         </div>
-      </div>
-    );
-  }
-
-  renderTransaction () {
-    const { from, to } = this.props;
-    return (
-      <div className={ styles.transaction }>
-        <div className={ styles.from }>
-          <AccountWeb3 address={ from } />
-        </div>
-        <div className={ styles.tx }>
-          { this.renderValue() }
-          <div>&rArr;</div>
-          { this.renderTotalValue() }
-        </div>
-        <div className={ styles.to }>
-          <AccountWeb3 address={ to } />
-        </div>
-      </div>
-    );
-  }
-
-  renderValue () {
-    const { ethValue } = this.props;
-    return (
-      <div>
-        <div
-          data-tip
-          data-for='value'
-          data-effect='solid'
-          >
-          <strong>{ ethValue } </strong>
-          <small>ETH</small>
-        </div>
-        <ReactTooltip id='value'>
-          The value of the transaction
-        </ReactTooltip>
-      </div>
-    );
-  }
-
-  renderTotalValue () {
-    return (
-      <div>
-        <div
-          data-tip
-          data-for='totalValue'
-          data-effect='solid'
-          className={ styles.total }>
-          { this.state.totalValue } ETH
-        </div>
-        <ReactTooltip id='totalValue'>
-          The value of the transaction including the mining fee. <br />
-          This is the maximum amount of ether that you will pay.
-        </ReactTooltip>
       </div>
     );
   }

@@ -3,7 +3,7 @@ export default [
   { name: 'AccountLink' },
   { name: 'Identicon' },
   { name: 'RpcAutoComplete' },
-  { name: 'Toastr' },
+  { name: 'Toast' },
   { name: 'TransactionFinished' },
   { name: 'TransactionPending' },
   { name: 'TransactionPendingForm' }
