@@ -13,7 +13,7 @@ export default class Account extends Component {
     className: PropTypes.string,
     address: PropTypes.string.isRequired,
     chain: PropTypes.string.isRequired,
-    balance: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
+    balance: PropTypes.string, // wei hex, not required since it mght take time to fetch
     name: PropTypes.string
   };
 
@@ -26,7 +26,10 @@ export default class Account extends Component {
   }
 
   componentWillReceiveProps (nextProps) {
-    this.updateBalanceDisplay(nextProps.balance)
+    if (nextProps.balance === this.props.balance) {
+      return;
+    }
+    this.updateBalanceDisplay(nextProps.balance);
   }
 
   updateBalanceDisplay (balance) {

@@ -11,7 +11,7 @@ export default class TransactionMainDetails extends Component {
 
   static propTypes = {
     from: PropTypes.string.isRequired,
-    fromBalance: PropTypes.string.isRequired, // wei hex
+    fromBalance: PropTypes.string, // wei hex, not required since it might take time to fetch
     value: PropTypes.string.isRequired, // wei hex
     totalValue: PropTypes.object.isRequired, // wei Big Number
     chain: PropTypes.string.isRequired,

@@ -25,7 +25,7 @@ class TransactionPendingWeb3 extends Component {
 
   state = {
     chain: 'homestead',
-    fromBalance: 0, // avoid required prop loading warning
+    fromBalance: null, // avoid required prop loading warning
     toBalance: null // avoid required prop loading warning in case there's a to address
   }
 
@@ -77,7 +77,7 @@ class TransactionPendingWeb3 extends Component {
       }
 
       this.setState({
-        [owner + 'Balance']: Number(this.context.web3.fromWei(balance))
+        [owner + 'Balance']: balance
       });
     });
   }
