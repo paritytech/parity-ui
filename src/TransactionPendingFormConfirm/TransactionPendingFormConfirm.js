@@ -16,7 +16,7 @@ export default class TransactionPendingFormConfirm extends Component {
 
   state = {
     password: '',
-    isValid: true // todo [adgo] - change to false after implementing this.validate
+    isValid: false
   }
 
   render () {
@@ -33,18 +33,21 @@ export default class TransactionPendingFormConfirm extends Component {
           type='password'
           value={ password }
         />
-        <RaisedButton
-          onClick={ this.onConfirm }
-          className={ styles.confirmButton }
-          fullWidth
-          primary
-          disabled={ !isValid }
-          label='Confirm Transaction'
+        <div
           data-tip
           data-place='bottom'
           data-for={ 'transactionConfirmForm' + this.id }
           data-effect='solid'
-        />
+        >
+          <RaisedButton
+            onClick={ this.onConfirm }
+            className={ styles.confirmButton }
+            fullWidth
+            primary
+            disabled={ !isValid }
+            label='Confirm Transaction'
+          />
+        </div>
         { this.renderTooltip() }
       </div>
     );
@@ -54,7 +57,6 @@ export default class TransactionPendingFormConfirm extends Component {
     if (this.state.isValid) {
       return;
     }
-
     return (
       <ReactTooltip id={ 'transactionConfirmForm' + this.id }>
         Please provide a password for this account
