@@ -46,7 +46,7 @@ export default class TransactionPendingWeb3Page extends Component {
 
     return (
       <p>
-        You have { chosenAction } this pending transcation
+        You have { chosenAction } this pending transaction
         { this.renderWithPassword(id) }.
       </p>
     );

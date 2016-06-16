@@ -36,7 +36,7 @@ export default class TransactionPendingForm extends Component {
     let html;
 
     if (!isRejectOpen) {
-      html = <span>Reject transcation</span>;
+      html = <span>reject</span>;
     } else {
       html = <span><BackIcon />I've changed my mind</span>;
     }

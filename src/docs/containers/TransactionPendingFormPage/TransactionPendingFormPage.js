@@ -38,14 +38,14 @@ export default class TransactionPendingFormPage extends Component {
       <p>
         You have
         <strong> { chosenAction } </strong>
-        this pending transcation
+        this pending transaction
         { this.renderWithPassword() }
         .
       </p>
     );
   }
 
-  // rejecting transcation has no password
+  // rejecting transaction has no password
   renderWithPassword () {
     const { password } = this.state;
     if (!password) {

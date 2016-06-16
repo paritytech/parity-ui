@@ -46,7 +46,7 @@ export default class TransactionPendingPage extends Component {
 
     return (
       <p>
-        You have { chosenAction } this pending transcation
+        You have { chosenAction } this pending transaction
         { this.renderWithPassword(id) }.
       </p>
     );

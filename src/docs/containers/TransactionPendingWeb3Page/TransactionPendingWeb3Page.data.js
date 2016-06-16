@@ -13,9 +13,9 @@ export default [
     id: '0x01',
     from: '0x9201f84c4a27ec41115f6fd1a140842e884c4b91',
     to: '0x8704f2c24439592822be3d71d4fca6e87285f673',
-    value: '0x7b', // 123
-    ethValue: 123,
-    gas: 2100,
+    value: '0x666666667b', // 439804651131
+    ethValue: 439804651131,
+    gas: 21000000000000000000,
     gasPrice: 0.00003,
     txHash: '0x8362d6c3aa335119fe9419ffbef341faac7e2eb612bb4dfbaf1d597658092070',
     data: '0x'

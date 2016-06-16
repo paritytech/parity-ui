@@ -185,7 +185,7 @@ export default class TransactionPending extends Component {
 
     return (
       <div className={ styles.expandedHelper }>
-        <h3>Transcation's Data</h3>
+        <h3>Transaction's Data</h3>
         <code className={ styles.expandedData }>{ data || 'empty' }</code>
       </div>
     );
