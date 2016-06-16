@@ -39,7 +39,9 @@
     "react": "^15.0.0",
     "material-ui": "^0.15.0",
     "react-addons-css-transition-group": "^15.1.0",
-    "react-tap-event-plugin": "^1.0.0"
+    "react-tap-event-plugin": "^1.0.0",
+    "rc-slider": "^3.7.0",
+    "react-tooltip": "^2.0.3"
   },
   "devDependencies": {
     "babel-core": "^6.5.2",
@@ -105,9 +107,7 @@
     "classnames": "^2.2.3",
     "ethereum-rpc-json": "*",
     "lodash.isequal": "^4.2.0",
-    "napa": "^2.3.0",
-    "rc-slider": "^3.7.0",
-    "react-tooltip": "^2.0.3"
+    "napa": "^2.3.0"
   },
   "config": {
     "pre-git": {

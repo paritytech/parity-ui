@@ -31,6 +31,9 @@ module.exports = {
     /^material-ui/,
     'react',
     'react-dom',
+    'react-redux',
+    'react-tooltip',
+    'rc-slider',
     'react-addons-css-transition-group',
     'react-tap-event-plugin'
   ] : [],
