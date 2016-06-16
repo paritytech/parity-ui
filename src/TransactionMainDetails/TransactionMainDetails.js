@@ -3,6 +3,7 @@ import React, { Component, PropTypes } from 'react';
 import ContractIcon from 'material-ui/svg-icons/action/code';
 import ReactTooltip from 'react-tooltip';
 
+import * as tUtil from '../util/transaction';
 import Account from '../Account';
 import styles from './TransactionMainDetails.css';
 
@@ -10,16 +11,27 @@ export default class TransactionMainDetails extends Component {
 
   static propTypes = {
     from: PropTypes.string.isRequired,
-    fromBalance: PropTypes.number, // eth
+    fromBalance: PropTypes.string.isRequired, // wei hex
     value: PropTypes.string.isRequired, // wei hex
-    ethValue: PropTypes.number.isRequired,
-    weiValue: PropTypes.string.isRequired,
-    totalEthValue: PropTypes.number.isRequired,
+    totalValue: PropTypes.object.isRequired, // wei Big Number
     chain: PropTypes.string.isRequired,
     to: PropTypes.string, // undefined if it's a contract
-    toBalance: PropTypes.number, // eth - undefined if it's a contract
+    toBalance: PropTypes.string, // wei hex - undefined if it's a contract
     className: PropTypes.string
   };
+
+  state = {
+    valueDisplay: tUtil.getValueDisplay(this.props.value),
+    totalValueDisplay: tUtil.getTotalValueDisplay(this.props.totalValue)
+  }
+
+  componentWillReceiveProps (nextProps) {
+    const { value, totalValue } = nextProps;
+    this.setState({
+      valueDisplay: tUtil.getValueDisplay(value),
+      totalValueDisplay: tUtil.getTotalValueDisplay(totalValue)
+    });
+  }
 
   render () {
     const { className } = this.props;
@@ -37,21 +49,18 @@ export default class TransactionMainDetails extends Component {
       return;
     }
 
-    const fromBalanceToDisplay = fromBalance || '?';
-    const toBalanceToDisplay = toBalance || '?';
-
     return (
       <div className={ styles.transaction }>
         <div className={ styles.from }>
-          <Account address={ from } balance={ fromBalanceToDisplay } chain={ chain } />
+          <Account address={ from } balance={ fromBalance } chain={ chain } />
         </div>
         <div className={ styles.tx }>
-          { this.renderEthValue() }
+          { this.renderValue() }
           <div>&rArr;</div>
-          { this.renderEthTotalValue() }
+          { this.renderTotalValue() }
         </div>
         <div className={ styles.to }>
-          <Account address={ to } balance={ toBalanceToDisplay } chain={ chain } />
+          <Account address={ to } balance={ toBalance } chain={ chain } />
         </div>
       </div>
     );
@@ -68,9 +77,9 @@ export default class TransactionMainDetails extends Component {
           <Account address={ from } balance={ fromBalance } chain={ chain } />
         </div>
         <div className={ styles.tx }>
-          { this.renderEthValue() }
+          { this.renderValue() }
           <div>&rArr;</div>
-          { this.renderEthTotalValue() }
+          { this.renderTotalValue() }
         </div>
         <div className={ styles.contract }>
           <ContractIcon className={ styles.contractIcon } />
@@ -81,41 +90,44 @@ export default class TransactionMainDetails extends Component {
     );
   }
 
-  renderEthValue () {
-    const { ethValue, id, weiValue } = this.props;
+  renderValue () {
+    const { id } = this.props;
+    const { valueDisplay } = this.state;
     return (
       <div>
         <div
           data-tip
-          data-for={ 'ethValue' + id }
+          data-for={ 'value' + id }
           data-effect='solid'
           >
-          <strong>{ ethValue } </strong>
+          <strong>{ valueDisplay } </strong>
           <small>ETH</small>
         </div>
-        <ReactTooltip id={ 'ethValue' + id }>
+        <ReactTooltip id={ 'value' + id }>
+          <strong>{ valueDisplay }</strong>
           The value of the transaction.<br />
-          <strong>{weiValue}</strong> <small>WEI</small>
         </ReactTooltip>
       </div>
     );
   }
 
-  renderEthTotalValue () {
-    const { totalEthValue, id } = this.props;
+  renderTotalValue () {
+    const { id } = this.props;
+    const { totalValueDisplay } = this.state;
     return (
       <div>
         <div
           data-tip
-          data-for={ 'totalEthValue' + id }
+          data-for={ 'totalValue' + id }
           data-effect='solid'
           data-place='bottom'
           className={ styles.total }>
-          { totalEthValue } <small>ETH</small>
+          { totalValueDisplay } <small>ETH</small>
         </div>
-        <ReactTooltip id={ 'totalEthValue' + id }>
+        <ReactTooltip id={ 'totalValue' + id }>
+          <strong>{ totalValueDisplay }</strong>:
           The value of the transaction including the mining fee. <br />
-          This is the amount of ether you payed.
+          This is the maximum amount of ether you could pay.
         </ReactTooltip>
       </div>
     );

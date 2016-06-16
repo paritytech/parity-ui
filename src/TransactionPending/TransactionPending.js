@@ -18,15 +18,13 @@ export default class TransactionPending extends Component {
   static propTypes = {
     id: PropTypes.string.isRequired,
     from: PropTypes.string.isRequired,
-    fromBalance: PropTypes.number, // eth
+    fromBalance: PropTypes.string, // wei hex
     value: PropTypes.string.isRequired, // wei hex
-    ethValue: PropTypes.number.isRequired,
-    weiValue: PropTypes.string.isRequired,
-    gasPrice: PropTypes.number.isRequired, // Gwei
-    gas: PropTypes.number.isRequired, // wei
+    gasPrice: PropTypes.string.isRequired, // wei hex
+    gas: PropTypes.string.isRequired, // hex
     to: PropTypes.string, // undefined if it's a contract
-    toBalance: PropTypes.number, // eth - undefined if it's a contract
-    data: PropTypes.string,
+    toBalance: PropTypes.string, // wei hex - undefined if it's a contract
+    data: PropTypes.string, // hex
     nonce: PropTypes.number,
     onConfirm: PropTypes.func.isRequired,
     onReject: PropTypes.func.isRequired,
@@ -35,10 +33,12 @@ export default class TransactionPending extends Component {
 
   componentWillMount () {
     // set estimated mining time, total value, and initial fee state
-    this.modifyGasPrice(this.props.gasPrice);
+    this.onModifyGasPrice(this.props.gasPrice);
   }
 
   state = {
+    totalValue: null, // string to be displayed along measuring unit i.e. 12.3 [ETH],
+    fee: null, // string to be displayed along measuring unit i.e. 200,024 [WEI]
     isDataExpanded: false,
     isGasPriceExpanded: false,
     isMiningTimeExpanded: false
@@ -46,13 +46,13 @@ export default class TransactionPending extends Component {
 
   render () {
     const className = this.props.className || '';
-    const { totalEthValue } = this.state;
+    const { totalValue } = this.state;
     return (
       <div className={ `${styles.container} ${className}` }>
         <div className={ styles.mainContainer }>
           <TransactionMainDetails
             { ...this.props }
-            totalEthValue={ totalEthValue }
+            totalValue={ totalValue }
             />
           <TransactionPendingForm
             onConfirm={ this.onConfirm }
@@ -74,7 +74,7 @@ export default class TransactionPending extends Component {
   }
 
   renderGasPrice () {
-    const { gasPrice } = this.state;
+    const { gasPriceDisplay } = this.state;
     const { id } = this.props;
     return (
       <div
@@ -88,48 +88,22 @@ export default class TransactionPending extends Component {
           onClick={ this.toggleGasPriceExpanded }
           >
           <GasIcon />
-          { gasPrice }
+          { gasPriceDisplay }
         </span>
-        { /* id required in case there are multple transactions in page */ }
+        { /* dynamic id required in case there are multple transactions in page */ }
         <ReactTooltip id={ 'gasPrice' + id }>
-          { gasPrice } [Gwei]: This is the maximum amount of Gwei you will pay for each unit of gas required to process this transaction. <br />
-          You can increase it to lower mining time.
-          <strong> click to customize</strong>
+          { gasPriceDisplay }: This is the maximum amount you would pay for each unit of gas required to process this transaction. <br />
         </ReactTooltip>
       </div>
     );
   }
 
-  renderEstimatedMinimgTime () {
-    return null;
-
-    // const { estimatedMiningTime } = this.state;
-    // const { id } = this.props;
-    // return (
-    //   <div
-    //     data-tip
-    //     data-place='right'
-    //     data-for={ 'miningTime' + id }
-    //     data-effect='solid'
-    //   >
-    //     <span className={ styles.miningTime }>
-    //       <HourGlassIcon />
-    //       { estimatedMiningTime }
-    //     </span>
-    //     { #<{(| id required in case there are multple transactions in page |)}># }
-    //     <ReactTooltip id={ 'miningTime' + id }>
-    //       Your transaction will be mined probably <strong>within { estimatedMiningTime }</strong>. <br />
-    //       Increase fee to make it faster.
-    //     </ReactTooltip>
-    //   </div>
-    // );
-  }
-
   renderData () {
     const { data, id } = this.props;
+    const noDataClass = this.noData() ? styles.noData : '';
     return (
       <div
-        className={ styles.data }
+        className={ `${styles.data} ${noDataClass}`}
         onClick={ this.toggleDataExpanded }
         data-tip
         data-place='right'
@@ -139,47 +113,16 @@ export default class TransactionPending extends Component {
       >
         <DescriptionIcon />
         { tUtil.getShortData(data) }
-        { /* id required in case there are multple transactions in page */ }
+        { /* dynamic id required in case there are multple transactions in page */ }
         <ReactTooltip id={ 'data' + id }>
           <strong>Extra data to send along your transaction: </strong>
           <br />
-          { data || 'empty' }.
+          { data }.
           <br />
-          <strong>Click to expand</strong>.
+          { this.noData() ? '' : <strong>Click to expand.</strong> }
         </ReactTooltip>
       </div>
     );
-  }
-
-  renderGasPriceExpanded () {
-    const { isGasPriceExpanded } = this.state;
-    const { gasPrice } = this.props;
-
-    if (!isGasPriceExpanded) {
-      return;
-    }
-
-    // todo [adgo] - get real values
-    const [min, max] = [gasPrice / 2, gasPrice * 1.5];
-    const marks = { [min]: 'Cheaper', [max]: 'Faster' };
-
-    return (
-      <div className={ styles.gasPriceSlider }>
-        <h3>Modify gas price</h3>
-        <Slider
-          onChange={ this.modifyGasPrice }
-          min={ min }
-          max={ max }
-          marks={ marks }
-          value={ this.state.gasPrice }
-        />
-        <a onClick={ this.closeFeeCustomization } />
-      </div>
-    );
-  }
-
-  renderMiningTimeExpanded () {
-    return null; // todo [adgo] - implement this
   }
 
   renderDataExpanded () {
@@ -198,24 +141,14 @@ export default class TransactionPending extends Component {
     );
   }
 
-  modifyGasPrice = gasPrice => {
-    const fee = tUtil.getFee(this.props.gas, gasPrice);
-    const totalEthValue = tUtil.getTotalValue(fee, this.props.ethValue);
-    const estimatedMiningTime = tUtil.getEstimatedMiningTime(gasPrice);
-    this.setState({ gasPrice, fee, totalEthValue, estimatedMiningTime });
-  }
-
-  toggleGasPriceExpanded = () => {
-    // const { isGasPriceExpanded, isDataExpanded } = this.state;
-    // const stateToSet = { isGasPriceExpanded: !isGasPriceExpanded };
-    // // close data in case it's it's expanded
-    // if (isDataExpanded) {
-    //   stateToSet.isDataExpanded = false;
-    // }
-    // this.setState(stateToSet);
+  noData () {
+    return this.props.data === '0x';
   }
 
   toggleDataExpanded = () => {
+    if (this.noData()) {
+      return;
+    }
     const { isDataExpanded, isGasPriceExpanded } = this.state;
     const stateToSet = { isDataExpanded: !isDataExpanded };
     // close data in case it's it's expanded
@@ -234,5 +167,81 @@ export default class TransactionPending extends Component {
   onReject = () => {
     this.props.onReject(this.props.id);
   }
+
+  toggleGasPriceExpanded = () => {
+    // const { isGasPriceExpanded, isDataExpanded } = this.state;
+    // const stateToSet = { isGasPriceExpanded: !isGasPriceExpanded };
+    // // close data in case it's it's expanded
+    // if (isDataExpanded) {
+    //   stateToSet.isDataExpanded = false;
+    // }
+    // this.setState(stateToSet);
+  }
+
+ renderEstimatedMinimgTime () {
+    return null;
+
+    // const { estimatedMiningTime } = this.state;
+    // const { id } = this.props;
+    // return (
+    //   <div
+    //     data-tip
+    //     data-place='right'
+    //     data-for={ 'miningTime' + id }
+    //     data-effect='solid'
+    //   >
+    //     <span className={ styles.miningTime }>
+    //       <HourGlassIcon />
+    //       { estimatedMiningTime }
+    //     </span>
+    //     { #<{(| dynamic id required in case there are multple transactions in page |)}># }
+    //     <ReactTooltip id={ 'miningTime' + id }>
+    //       Your transaction will be mined probably <strong>within { estimatedMiningTime }</strong>. <br />
+    //       Increase fee to make it faster.
+    //     </ReactTooltip>
+    //   </div>
+    // );
+  }
+
+  onModifyGasPrice = gasPrice => {
+    const gasPriceDisplay = tUtil.getGasPriceDisplay(gasPrice);
+    const fee = tUtil.getFee(this.props.gas, gasPrice); // BigNumber object
+    const totalValue = tUtil.getTotalValue(fee, this.props.value); // BigNumber object
+    const estimatedMiningTime = tUtil.getEstimatedMiningTime(gasPrice);
+    this.setState({ gasPrice, gasPriceDisplay, fee, totalValue, estimatedMiningTime });
+  }
+
+  renderGasPriceExpanded () {
+    return null;
+    const { isGasPriceExpanded } = this.state;
+    const { gasPrice } = this.props;
+
+    if (!isGasPriceExpanded) {
+      return;
+    }
+
+    // todo [adgo] - get real values
+    const [min, max] = [gasPrice / 2, gasPrice * 1.5];
+    const marks = { [min]: 'Cheaper', [max]: 'Faster' };
+
+    return (
+      <div className={ styles.gasPriceSlider }>
+        <h3>Modify gas price</h3>
+        <Slider
+          onChange={ this.onModifyGasPrice }
+          min={ min }
+          max={ max }
+          marks={ marks }
+          value={ this.state.gasPrice }
+        />
+        <a onClick={ this.closeFeeCustomization } />
+      </div>
+    );
+  }
+
+  renderMiningTimeExpanded () {
+    return null; // todo [adgo] - implement this
+  }
+
 
 }

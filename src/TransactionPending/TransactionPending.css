@@ -48,9 +48,12 @@
   cursor: pointer;
 }
 
+.data.noData {
+  cursor: text;
+}
+
 .gasPrice {
   composes: hasInfoIcon;
-  cursor: pointer;
 }
 
 .dataTooltip {

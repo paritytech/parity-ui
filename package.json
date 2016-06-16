@@ -101,6 +101,7 @@
     "webpack-hot-middleware": "^2.7.1"
   },
   "dependencies": {
+    "bignumber.js": "^2.3.0",
     "classnames": "^2.2.3",
     "ethereum-rpc-json": "*",
     "lodash.isequal": "^4.2.0",

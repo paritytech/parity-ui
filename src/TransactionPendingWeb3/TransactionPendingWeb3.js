@@ -13,32 +13,26 @@ class TransactionPendingWeb3 extends Component {
     id: PropTypes.string.isRequired,
     from: PropTypes.string.isRequired,
     value: PropTypes.string.isRequired, // wei hex
-    gasPrice: PropTypes.number.isRequired, // Gwei
-    gas: PropTypes.number.isRequired, // wei
+    gasPrice: PropTypes.string.isRequired, // wei
+    gas: PropTypes.string.isRequired, // hex
     onConfirm: PropTypes.func.isRequired,
     onReject: PropTypes.func.isRequired,
     to: PropTypes.string, // undefined if it's a contract
-    data: PropTypes.string,
+    data: PropTypes.string, // hex
     nonce: PropTypes.number,
     className: PropTypes.string
   };
 
   state = {
-    ethValueNumber: +this.context.web3.fromWei(this.props.value),
-    ethValue: this.context.web3.toBigNumber(this.context.web3.fromWei(this.props.value)).toPrecision(5),
-    weiValue: this.context.web3.toBigNumber(this.props.value).toFormat(0),
-    chain: 'homestead', // avoid required prop loading warning
     fromBalance: null, // avoid required prop loading warning
     toBalance: null // avoid required prop loading warning in case there's a to address
   }
 
   render () {
-    const { fromBalance, toBalance, ethValue, chain, weiValue } = this.state;
+    const { fromBalance, toBalance, chain } = this.state;
     return (
       <TransactionPending
         { ...this.props }
-        ethValue={ ethValue }
-        weiValue={ weiValue }
         fromBalance={ fromBalance }
         chain={ chain }
         toBalance={ toBalance }

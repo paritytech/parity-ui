@@ -26,26 +26,15 @@ describe('util/transaction', () => {
       expect(res).to.equal('0xh...');
     });
 
-    it('should return empty', () => {
+    it('should return 0x', () => {
       // given
-      const data = '';
+      const data = '0x';
 
       // when
       const res = getShortData(data);
 
       // then
-      expect(res).to.equal('empty');
-    });
-
-    it('should return empty', () => {
-      // given
-      const data = null;
-
-      // when
-      const res = getShortData(data);
-
-      // then
-      expect(res).to.equal('empty');
+      expect(res).to.equal('0x');
     });
   });
 

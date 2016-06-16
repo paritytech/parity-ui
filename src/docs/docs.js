@@ -2,6 +2,8 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import ReactDOM from 'react-dom';
 
+import BigNumber from 'bignumber.js';
+
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941
 import injectTapEventPlugin from 'react-tap-event-plugin';
@@ -18,7 +20,6 @@ import createStore from './store';
 const http = new Web3.providers.HttpProvider(process.env.RPC_ADDRESS || '/rpc/');
 const web3 = new Web3(http);
 web3._extend(web3extensions(web3));
-global.web3 = web3;
 
 const store = createStore(middlewares());
 
@@ -34,3 +35,6 @@ ReactDOM.render(
   </Provider>,
   document.querySelector('#root')
 );
+
+global.web3 = web3;
+global.BigNumber = BigNumber;

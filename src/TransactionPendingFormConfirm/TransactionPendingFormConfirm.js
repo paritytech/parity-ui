@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
+import ReactTooltip from 'react-tooltip';
 
 import styles from './TransactionPendingFormConfirm.css';
 
@@ -10,6 +11,8 @@ export default class TransactionPendingFormConfirm extends Component {
   static propTypes = {
     onConfirm: PropTypes.func.isRequired
   }
+
+  id = Math.random(); // for tooltip
 
   state = {
     password: '',
@@ -37,8 +40,25 @@ export default class TransactionPendingFormConfirm extends Component {
           primary
           disabled={ !isValid }
           label='Confirm Transaction'
+          data-tip
+          data-place='bottom'
+          data-for={ 'transactionConfirmForm' + this.id }
+          data-effect='solid'
         />
+        { this.renderTooltip() }
       </div>
+    );
+  }
+
+  renderTooltip () {
+    if (this.state.isValid) {
+      return;
+    }
+
+    return (
+      <ReactTooltip id={ 'transactionConfirmForm' + this.id }>
+        Please provide a password for this account
+      </ReactTooltip>
     );
   }
 
@@ -63,8 +83,7 @@ export default class TransactionPendingFormConfirm extends Component {
     this.onConfirm();
   }
 
-  // todo [adgo] - implement
   validate (password) {
-    return true;
+    return password.length > 0;
   }
 }
