@@ -34,7 +34,9 @@ export default class TransactionMainDetails extends Component {
   updateDisplayValues (value, totalValue) {
     this.setState({
       valueDisplay: tUtil.getValueDisplay(value),
-      totalValueDisplay: tUtil.getTotalValueDisplay(totalValue)
+      valueDisplayWei: tUtil.getValueDisplayWei(value),
+      totalValueDisplay: tUtil.getTotalValueDisplay(totalValue),
+      totalValueDisplayWei: tUtil.getTotalValueDisplayWei(totalValue)
     });
   }
 
@@ -97,7 +99,7 @@ export default class TransactionMainDetails extends Component {
 
   renderValue () {
     const { id } = this.props;
-    const { valueDisplay } = this.state;
+    const { valueDisplay, valueDisplayWei } = this.state;
     return (
       <div>
         <div
@@ -109,8 +111,8 @@ export default class TransactionMainDetails extends Component {
           <small>ETH</small>
         </div>
         <ReactTooltip id={ 'value' + id }>
-          <strong>{ valueDisplay }</strong>
           The value of the transaction.<br />
+          <strong>{ valueDisplayWei }</strong> <small>WEI</small>
         </ReactTooltip>
       </div>
     );
@@ -118,7 +120,7 @@ export default class TransactionMainDetails extends Component {
 
   renderTotalValue () {
     const { id } = this.props;
-    const { totalValueDisplay } = this.state;
+    const { totalValueDisplay, totalValueDisplayWei } = this.state;
     return (
       <div>
         <div
@@ -130,9 +132,9 @@ export default class TransactionMainDetails extends Component {
           { totalValueDisplay } <small>ETH</small>
         </div>
         <ReactTooltip id={ 'totalValue' + id }>
-          <strong>{ totalValueDisplay }</strong>:
           The value of the transaction including the mining fee. <br />
-          This is the maximum amount of ether you could pay.
+          This is the maximum amount of ether you will pay. <br />
+          <strong>{ totalValueDisplayWei }</strong> <small>WEI</small>
         </ReactTooltip>
       </div>
     );

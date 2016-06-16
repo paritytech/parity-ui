@@ -30,10 +30,18 @@ class TransactionPendingWeb3 extends Component {
   }
 
   render () {
+    const { web3 } = this.context;
     const { fromBalance, toBalance, chain } = this.state;
+    let { from, to } = this.props;
+
+    from = web3.toChecksumAddress(from);
+    to = to ? web3.toChecksumAddress(to) : to;
+
     return (
       <TransactionPending
         { ...this.props }
+        from={ from }
+        to={ to }
         fromBalance={ fromBalance }
         chain={ chain }
         toBalance={ toBalance }

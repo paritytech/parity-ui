@@ -12,7 +12,9 @@ export const getTotalValue = _getTotalValue;
 // displays
 export const getSzaboFromWeiDisplay = _getSzaboFromWeiDisplay;
 export const getValueDisplay = _getValueDisplay;
+export const getValueDisplayWei = _getValueDisplayWei;
 export const getTotalValueDisplay = _getTotalValueDisplay;
+export const getTotalValueDisplayWei = _getTotalValueDisplayWei;
 export const getEthFromWeiDisplay = _getEthFromWeiDisplay;
 // links
 export const getTxLink = _getTxLink;
@@ -60,11 +62,16 @@ function _getSzaboFromWeiDisplay (gasPrice) {
 
 /*
  * @param {wei hex string} value
- * @return {string} value with units i.e. 1.3 [eth]
+ * @return {string} value in WEI nicely formatted
  */
 function _getValueDisplay (value) {
   value = new BigNumber(value);
   return value.times(WEI_TO_ETH_MULTIPLIER).toPrecision(5);
+}
+
+function _getValueDisplayWei (value) {
+  value = new BigNumber(value);
+  return value.toFormat(0);
 }
 
 /*
@@ -76,12 +83,18 @@ function _getTotalValueDisplay (totalValue) {
   return totalValue.times(WEI_TO_ETH_MULTIPLIER).toPrecision(5);
 }
 
+function _getTotalValueDisplayWei (totalValue) {
+  totalValue = new BigNumber(totalValue);
+  return totalValue.toFormat(0);
+}
+
+
 function _getEthFromWeiDisplay (weiHexString) {
   const value = new BigNumber(weiHexString);
   return value.times(WEI_TO_ETH_MULTIPLIER).toPrecision(5);
 }
 
 function _getTxLink (txHash, chain) {
-  const base = chain === 'morden' ? BASE_LINK_TX_MORDEN : BASE_LINK_TX_HOMESTEAD;
+  const base = chain === 'morden' || chain === 'testnet' ? BASE_LINK_TX_MORDEN : BASE_LINK_TX_HOMESTEAD;
   return base + txHash;
 }

@@ -31,10 +31,17 @@ class TransactionFinishedWeb3 extends Component {
 
   render () {
     const { chain } = this.state;
+    const { web3 } = this.context;
+
+    let { from, to } = this.props;
+    from = web3.toChecksumAddress(from);
+    to = to ? web3.toChecksumAddress(to) : to;
 
     return (
       <TransactionFinished
         { ...this.props }
+        from={ from }
+        to={ to }
         chain={ chain }
         />
     );
