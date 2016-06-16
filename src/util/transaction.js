@@ -8,6 +8,7 @@ export const getEstimatedMiningTime = _getEstimatedMiningTime;
 export const getShortData = _getShortData;
 // calculations
 export const getFee = _getFee;
+export const calcFeeInEth = _calcFeeInEth;
 export const getTotalValue = _getTotalValue;
 // displays
 export const getSzaboFromWeiDisplay = _getSzaboFromWeiDisplay;
@@ -41,6 +42,12 @@ function _getFee (gas, gasPrice) {
   return gasPrice.times(gas);
 }
 
+function _calcFeeInEth (totalValue, value) {
+  let fee = new BigNumber(totalValue).sub(new BigNumber(value));
+  return fee.times(WEI_TO_ETH_MULTIPLIER).toFormat(7);
+}
+
+
 /*
  * @param {wei BigNumber} fee
  * @param {wei hex string} value
@@ -66,7 +73,7 @@ function _getSzaboFromWeiDisplay (gasPrice) {
  */
 function _getValueDisplay (value) {
   value = new BigNumber(value);
-  return value.times(WEI_TO_ETH_MULTIPLIER).toPrecision(5);
+  return value.times(WEI_TO_ETH_MULTIPLIER).toFormat(5);
 }
 
 function _getValueDisplayWei (value) {
@@ -80,7 +87,7 @@ function _getValueDisplayWei (value) {
  */
 function _getTotalValueDisplay (totalValue) {
   totalValue = new BigNumber(totalValue);
-  return totalValue.times(WEI_TO_ETH_MULTIPLIER).toPrecision(5);
+  return totalValue.times(WEI_TO_ETH_MULTIPLIER).toFormat(5);
 }
 
 function _getTotalValueDisplayWei (totalValue) {
@@ -91,7 +98,7 @@ function _getTotalValueDisplayWei (totalValue) {
 
 function _getEthFromWeiDisplay (weiHexString) {
   const value = new BigNumber(weiHexString);
-  return value.times(WEI_TO_ETH_MULTIPLIER).toPrecision(5);
+  return value.times(WEI_TO_ETH_MULTIPLIER).toFormat(5);
 }
 
 function _getTxLink (txHash, chain) {

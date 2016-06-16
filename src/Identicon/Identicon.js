@@ -33,7 +33,6 @@ export default class Identicon extends Component {
   }
 
   updateIcon (address) {
-    console.log(address);
     const dataUrl = blockies.create({
       seed: address.toLowerCase(), // in case it's a checksummed address
       size: 8,

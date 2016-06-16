@@ -33,6 +33,7 @@ export default class TransactionMainDetails extends Component {
 
   updateDisplayValues (value, totalValue) {
     this.setState({
+      feeEth: tUtil.calcFeeInEth(totalValue, value),
       valueDisplay: tUtil.getValueDisplay(value),
       valueDisplayWei: tUtil.getValueDisplayWei(value),
       totalValueDisplay: tUtil.getTotalValueDisplay(totalValue),
@@ -120,7 +121,7 @@ export default class TransactionMainDetails extends Component {
 
   renderTotalValue () {
     const { id } = this.props;
-    const { totalValueDisplay, totalValueDisplayWei } = this.state;
+    const { totalValueDisplay, totalValueDisplayWei, feeEth } = this.state;
     return (
       <div>
         <div
@@ -132,8 +133,7 @@ export default class TransactionMainDetails extends Component {
           { totalValueDisplay } <small>ETH</small>
         </div>
         <ReactTooltip id={ 'totalValue' + id }>
-          The value of the transaction including the mining fee. <br />
-          This is the maximum amount of ether you will pay. <br />
+          The value of the transaction including the mining fee: <strong>{ feeEth }</strong> <small>ETH</small>. <br />
           <strong>{ totalValueDisplayWei }</strong> <small>WEI</small>
         </ReactTooltip>
       </div>
