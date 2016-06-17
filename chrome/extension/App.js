@@ -1,5 +1,5 @@
 import './App.css';
-import app from '../../app/app';
+import app from 'parity-sysui-app';
 
 tokenGetter (initToken => {
   app(initToken, tokenSetter, tokenListener)
