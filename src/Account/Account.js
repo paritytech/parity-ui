@@ -32,7 +32,7 @@ export default class Account extends Component {
 
   updateBalanceDisplay (balance) {
     this.setState({
-      balanceDisplay: balance ? balance.toPrecision(5) : '?'
+      balanceDisplay: balance ? balance.div(1e18).toFormat(3) : '?'
     });
   }
 

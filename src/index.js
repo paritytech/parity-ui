@@ -6,6 +6,7 @@ export MuiThemeProvider from './MuiThemeProvider';
 export RpcAutoComplete from './RpcAutoComplete';
 export Toastr from './Toastr';
 export TransactionFinished from './TransactionFinished';
+export TransactionFinishedWeb3 from './TransactionFinishedWeb3';
 export TransactionPending from './TransactionPending';
 export TransactionPendingWeb3 from './TransactionPendingWeb3';
 export Web3Compositor from './Web3Compositor';

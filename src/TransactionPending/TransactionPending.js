@@ -37,9 +37,9 @@ export default class TransactionPending extends Component {
     const { gas, gasPrice, value } = this.props;
     const fee = tUtil.getFee(gas, gasPrice); // BigNumber object
     const totalValue = tUtil.getTotalValue(fee, value);
-    const gasPriceSzaboDisplay = tUtil.getSzaboFromWeiDisplay(gasPrice); // szabo string
-    const gasPriceEthDisplay = tUtil.getEthFromWeiDisplay(gasPrice);
-    this.setState({ gasPriceSzaboDisplay, gasPriceEthDisplay, totalValue });
+    const gasPriceEthkDisplay = tUtil.getEthFromWeiDisplay(gasPrice);
+    const gasToDisplay = tUtil.getGasDisplay(gas);
+    this.setState({ gasPriceEthkDisplay, totalValue, gasToDisplay });
   }
 
   render () {
@@ -50,6 +50,7 @@ export default class TransactionPending extends Component {
         <div className={ styles.mainContainer }>
           <TransactionMainDetails
             { ...this.props }
+            className={ styles.transactionDetails }
             totalValue={ totalValue }
           />
           <TransactionPendingForm
@@ -70,7 +71,7 @@ export default class TransactionPending extends Component {
 
   renderGasPrice () {
     const { id } = this.props;
-    const { gasPriceSzaboDisplay, gasPriceEthDisplay } = this.state;
+    const { gasPriceEthkDisplay, gasToDisplay } = this.state;
     return (
       <div
         data-tip
@@ -80,12 +81,11 @@ export default class TransactionPending extends Component {
       >
         <span className={ styles.gasPrice }>
           <GasIcon />
-          { gasPriceSzaboDisplay }
+          { gasPriceEthkDisplay } <small>ETH/kGAS</small>
         </span>
         { /* dynamic id required in case there are multple transactions in page */ }
         <ReactTooltip id={ 'gasPrice' + id }>
-          { gasPriceSzaboDisplay } [SZABO]: This is the maximum amount you would pay for each unit of gas required to process this transaction. <br />
-          { gasPriceSzaboDisplay } [SZABO] equals { gasPriceEthDisplay } [ETH].
+          Cost of 1,000 units of gas. This transaction will use up to <strong>{ gasToDisplay }</strong> <small>kGAS</small>.
         </ReactTooltip>
       </div>
     );
@@ -93,6 +93,7 @@ export default class TransactionPending extends Component {
 
   renderData () {
     const { data, id } = this.props;
+    let dataToDisplay = this.noData() ? 'no data' : tUtil.getShortData(data);
     const noDataClass = this.noData() ? styles.noData : '';
     return (
       <div
@@ -105,12 +106,12 @@ export default class TransactionPending extends Component {
         data-effect='solid'
       >
         <DescriptionIcon />
-        { tUtil.getShortData(data) }
+        { dataToDisplay }
         { /* dynamic id required in case there are multple transactions in page */ }
         <ReactTooltip id={ 'data' + id }>
-          <strong>Extra data to send along your transaction: </strong>
+          <strong>Extra data for the transaction: </strong>
           <br />
-          { data }.
+          { dataToDisplay }.
           <br />
           { this.noData() ? '' : <strong>Click to expand.</strong> }
         </ReactTooltip>
@@ -149,7 +150,7 @@ export default class TransactionPending extends Component {
 
   onConfirm = password => {
     const { id, gasPrice } = this.props;
-    this.props.onConfirm(id, password, gasPrice);
+    this.props.onConfirm({ id, password, gasPrice });
   }
 
   onReject = () => {

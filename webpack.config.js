@@ -112,8 +112,8 @@ module.exports = {
     ];
 
     if (isProd) {
-      plugins.push(new webpack.optimize.OccurrenceOrderPlugin());
       plugins.push(new webpack.optimize.DedupePlugin());
+      plugins.push(new webpack.optimize.OccurrenceOrderPlugin());
     }
 
     return plugins;

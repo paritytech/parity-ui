@@ -13,6 +13,10 @@ export default class Identicon extends Component {
     className: PropTypes.string
   };
 
+  static defaultProps = {
+    className: ''
+  };
+
   state = {
     src: ''
   };
@@ -30,7 +34,7 @@ export default class Identicon extends Component {
 
   updateIcon (address) {
     const dataUrl = blockies.create({
-      address: address.toLowerCase(), // in case it's a checksummed address
+      seed: address.toLowerCase(), // in case it's a checksummed address
       size: 8,
       scale: 8
     }).toDataURL();
