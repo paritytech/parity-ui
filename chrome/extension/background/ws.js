@@ -17,8 +17,8 @@ class Ws {
     this.id = 1;
     this.callbacks = {};
     chrome.storage.onChanged.addListener(this.onSysuiTokenChange);
-    chrome.runtime.onMessage.addListener(this.onChromeMsg);
-    
+    this.queue = []; // hold calls until ws is connected on init or if disconnected
+    this.isConnected = false;
     this.reset();
     this.init();
   }
@@ -45,7 +45,7 @@ class Ws {
   }
 
   reset () {
-    chrome.storage.local.set({ isConnected: JSON.stringify(false) });
+    // todo [adgo]- remove transactions from LS
     chrome.storage.local.set({ pendingTransactions: JSON.stringify([]) });
     this.setBadgeText('!');
   }
@@ -67,10 +67,12 @@ class Ws {
   }
 
   onWsOpen = () => {
+    console.log('[BG WS] connected');
+    this.isConnected = true;
+    this.executeQueue();
     this.setBadgeText('c'); // connected, will b replaced after fetching transactions for the first time
-    chrome.storage.local.set({ isConnected: JSON.stringify(true) });
     chrome.storage.local.set({ pendingTransactions: JSON.stringify([]) });
-    this.ws.addEventListener('disconnect', this.onWsDisconnect);
+    this.ws.addEventListener('close', this.onWsClose);
     this.ws.addEventListener('message', this.onWsMsg);
     this.fetchTransactions();
   }
@@ -78,10 +80,13 @@ class Ws {
   onWsError = (err) => {
     console.warn('[BG WS] error ', err);
     this.reset();
+    setTimeout(() => this.init(), 5000);
   }
 
-  onWsDisconnect = () => {
-    console.warn('[BG WS] disconnect!');
+  onWsClose = () => {
+    console.warn('[BG WS] closed!');
+    this.errorOutCallbacks();
+    this.isConnected = false;
     this.reset();
     this.init();
   }
@@ -129,6 +134,11 @@ class Ws {
   }
 
   send (method, params, callback) {
+    if (!this.isConnected) {
+      this.queue.push({ method, params, callback });
+      console.log('[BG WS] incoming msg when not connected, adding to queue');
+      return;
+    }
     const id = this.id;
     this.id++;
     const payload = JSON.stringify({
@@ -141,17 +151,26 @@ class Ws {
 
   setBadgeText (text) {
     text = String(text);
+    if (text === '0') {
+      text = '';
+    }
     chrome.browserAction.setBadgeText({ text });
   }
 
-  onChromeMsg = (request, sender, cb) => {
-    console.log('[BG WS] incoming chrome msg', request);
-    if (!request.type === 'ws') {
-      return;
+  executeQueue () {
+    console.log('[BG WS] executing queue: ', this.queue);
+    this.queue.forEach(call => {
+      this.send(call.method, call.params, call.callback);
+    });
+    this.queue = [];
+  }
+
+  errorOutCallbacks () {
+    console.log('[BG WS] erroring out callbacks: ', this.callbacks);
+    for (const msgId in this.callbacks) {
+      callbacks[msgId]('WS disconnected, cb cannot be called');
     }
-    const { method, params } = request;
-    this.send(method, params, cb);
-    return true; // needed for chrome async messaging cb, more info on: https://developer.chrome.com/extensions/runtime#event-onMessage
+    this.callbacks = {};
   }
 
 }
