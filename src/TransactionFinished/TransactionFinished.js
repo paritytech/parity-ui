@@ -1,132 +1,61 @@
 import React, { Component, PropTypes } from 'react';
 
-import ReactTooltip from 'react-tooltip';
-import AccountWeb3 from '../AccountWeb3';
+import TransactionMainDetails from '../TransactionMainDetails';
+import TxHashLink from '../TxHashLink';
 import styles from './TransactionFinished.css';
+
+import * as tUtil from '../util/transaction';
 
 export default class TransactionFinished extends Component {
 
   static propTypes = {
     id: PropTypes.string.isRequired,
     from: PropTypes.string.isRequired,
-    value: PropTypes.number.isRequired,
-    fee: PropTypes.number.isRequired,
+    fromBalance: PropTypes.object, // eth BigNumber, not required since it mght take time to fetch
+    value: PropTypes.string.isRequired, // wei hex
     chain: PropTypes.string.isRequired,
+    gasPrice: PropTypes.string.isRequired, // wei hex
+    gas: PropTypes.string.isRequired, // hex
     to: PropTypes.string, // undefined if it's a contract
-    txHash: PropTypes.string, // undefined if it's rejected
+    toBalance: PropTypes.object, // eth BigNumber - undefined if it's a contract or until it's fetched
+    txHash: PropTypes.string, // undefined if transacation is rejected
     className: PropTypes.string,
     data: PropTypes.string
   };
 
-  state = {
-    totalValue: this.props.value + this.props.fee,
-    txLink: this.getTxLink(this.props.txHash)
-  };
-
-  componentWillReceiveProps (nextProps) {
-    this.updateTxLink(nextProps.txHash);
+  componentWillMount () {
+    const { gas, gasPrice, value } = this.props;
+    const fee = tUtil.getFee(gas, gasPrice); // BigNumber object
+    const totalValue = tUtil.getTotalValue(fee, value);
+    this.setState({ totalValue });
   }
 
   render () {
-    const { from, to, value, className } = this.props;
+    const { chain, txHash, className } = this.props;
+    const { totalValue } = this.state;
+    const TxHash = txHash ? <TxHashLink chain={ chain } txHash={ txHash } /> : '';
     return (
       <div className={ `${styles.container} ${className || ''}` }>
         <div className={ styles.mainContainer }>
-          { this.renderTransaction(from, to, value) }
+          <TransactionMainDetails
+            { ...this.props }
+            totalValue={ totalValue }
+          />
           <div className={ styles.status }>
             { this.renderStatus() }
-            { this.renderTxHash() }
+            { TxHash }
           </div>
         </div>
       </div>
     );
   }
 
-  renderTransaction (from, to, value) {
-    return (
-      <div className={ styles.transaction }>
-        <div className={ styles.from }>
-          <AccountWeb3 address={ from } />
-        </div>
-        <div className={ styles.tx }>
-          { this.renderValue(value) }
-          <div>&rArr;</div>
-          { this.renderTotalValue() }
-        </div>
-        <div className={ styles.to }>
-          <AccountWeb3 address={ to } />
-        </div>
-      </div>
-    );
-  }
-
   renderStatus () {
-    const status = this.props.txHash ? 'Confirmed' : 'Rejected';
-    const klass = this.props.txHash ? styles.isConfirmed : styles.isRejected;
-    return (
-      <div className={ klass }>{ status } </div>
-    );
-  }
-
-  renderTxHash () {
     const { txHash } = this.props;
-    const { txLink } = this.state;
-    if (!txHash) {
-      return null;
-    }
-
+    const status = txHash ? 'Confirmed' : 'Rejected';
+    const className = txHash ? styles.isConfirmed : styles.isRejected;
     return (
-      <div>
-        <a href={ txLink } target='_blank'>{ txHash }</a>
-      </div>
-    );
-  }
-
-  getTxLink (txHash) {
-    const base = this.props.chain === 'morden'
-    ? 'https://testnet.etherscan.io/tx/'
-    : 'https://etherscan.io/tx/';
-    return base + txHash;
-  }
-
-  updateTxLink = (txHash) => {
-    const txLink = this.getTxLink(txHash);
-    this.setState({ txLink });
-  };
-
-  renderValue (value) {
-    return (
-      <div>
-        <div
-          data-tip
-          data-for='value'
-          data-effect='solid'
-          >
-          <strong>{ value } </strong>
-          <small>ETH</small>
-        </div>
-        <ReactTooltip id='value'>
-          The value of the transaction
-        </ReactTooltip>
-      </div>
-    );
-  }
-
-  renderTotalValue () {
-    return (
-      <div>
-        <div
-          data-tip
-          data-for='totalValue'
-          data-effect='solid'
-          className={ styles.total }>
-          { this.state.totalValue } ETH
-        </div>
-        <ReactTooltip id='totalValue'>
-          The value of the transaction including the mining fee. <br />
-          This is the amount of ether you payed.
-        </ReactTooltip>
-      </div>
+      <div className={ className }>{ status } </div>
     );
   }
 

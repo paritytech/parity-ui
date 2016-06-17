@@ -7,7 +7,14 @@ export default function web3extensions (web3) {
       new Method({
         name: 'getNetChain',
         call: 'ethcore_netChain',
-        params: 0
+        params: 0,
+        outputFormatter: x => x
+      }),
+      new Method({
+        name: 'gasPriceStatistics',
+        call: 'ethcore_gasPriceStatistics',
+        params: 0,
+        outputFormatter: a => a.map(web3.toBigNumber)
       })
     ],
     properties: []

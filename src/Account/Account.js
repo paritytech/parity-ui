@@ -11,51 +11,69 @@ export default class Account extends Component {
     className: PropTypes.string,
     address: PropTypes.string.isRequired,
     chain: PropTypes.string.isRequired,
-    balance: PropTypes.oneOfType([PropTypes.string, PropTypes.object, PropTypes.number]).isRequired,
+    balance: PropTypes.object, // eth BigNumber, not required since it mght take time to fetch
     name: PropTypes.string
   };
 
+  state = {
+    balanceDisplay: '?'
+  };
+
+  componentWillMount () {
+    this.updateBalanceDisplay(this.props.balance);
+  }
+
+  componentWillReceiveProps (nextProps) {
+    if (nextProps.balance === this.props.balance) {
+      return;
+    }
+    this.updateBalanceDisplay(nextProps.balance);
+  }
+
+  updateBalanceDisplay (balance) {
+    this.setState({
+      balanceDisplay: balance ? balance.div(1e18).toFormat(3) : '?'
+    });
+  }
+
   render () {
-    const { address, balance, name, chain, className } = this.props;
+    const { address, chain, className } = this.props;
     return (
-      <div className={ `${styles.acc} ${className}` } title={ this.renderTitle(address) }>
+      <div className={ `${styles.acc} ${className}` } title={ this.renderTitle() }>
         <Identicon address={ address } chain={ chain } />
-        { this.renderName(address, name) }
-        { this.renderBalance(balance) }
+        { this.renderName() }
+        { this.renderBalance() }
       </div>
     );
   }
 
-  renderTitle = (address) => {
-    if (this.props.name) {
-      return address + ' ' + this.props.name;
+  renderTitle () {
+    const { name, address } = this.props;
+    if (name) {
+      return address + ' ' + name;
     }
 
     return address;
   }
 
-  renderBalance (balance) {
-    if (balance === null) {
-      return (
-        <span> (...)</span>
-      );
-    }
-    balance = +balance;
+  renderBalance () {
+    const { balanceDisplay } = this.state;
     return (
-      <span> { balance.toFixed(2) } Eth</span>
+      <span> <strong>{ balanceDisplay }</strong> <small>ETH</small></span>
     );
   }
 
-  renderName (address, name) {
+  renderName () {
+    const { address, name } = this.props;
     if (!name) {
       return (
-        <AccountLink acc={ address } chain={ this.props.chain }>
+        <AccountLink address={ address } chain={ this.props.chain }>
           [{ this.shortAddress(address) }]
         </AccountLink>
       );
     }
     return (
-      <AccountLink acc={ address } chain={ this.props.chain } >
+      <AccountLink address={ address } chain={ this.props.chain } >
         <span>
           <span className={ styles.name }>{ name }</span>
           <span className={ styles.address }>[{ this.tinyAddress(address) }]</span>
@@ -64,14 +82,16 @@ export default class Account extends Component {
     );
   }
 
-  tinyAddress (acc) {
-    const len = acc.length;
-    return acc.slice(2, 4) + '..' + acc.slice(len - 2);
+  tinyAddress () {
+    const { address } = this.props;
+    const len = address.length;
+    return address.slice(2, 4) + '..' + address.slice(len - 2);
   }
 
-  shortAddress (acc) {
-    const len = acc.length;
-    return acc.slice(2, 8) + '..' + acc.slice(len - 7);
+  shortAddress () {
+    const { address } = this.props;
+    const len = address.length;
+    return address.slice(2, 8) + '..' + address.slice(len - 7);
   }
 
 }

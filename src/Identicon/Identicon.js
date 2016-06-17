@@ -8,9 +8,13 @@ import * as blockies from 'blockies/blockies';
 export default class Identicon extends Component {
 
   static propTypes = {
-    className: PropTypes.string,
     chain: PropTypes.string.isRequired,
-    address: PropTypes.string.isRequired
+    address: PropTypes.string.isRequired,
+    className: PropTypes.string
+  };
+
+  static defaultProps = {
+    className: ''
   };
 
   state = {
@@ -30,7 +34,7 @@ export default class Identicon extends Component {
 
   updateIcon (address) {
     const dataUrl = blockies.create({
-      address: address.toLowerCase(), // in case it's a checksummed address
+      seed: address.toLowerCase(), // in case it's a checksummed address
       size: 8,
       scale: 8
     }).toDataURL();
@@ -44,7 +48,7 @@ export default class Identicon extends Component {
     const { address, chain, className } = this.props;
 
     return (
-      <AccountLink acc={ address } className={ className } chain={ chain }>
+      <AccountLink address={ address } className={ className } chain={ chain }>
         <img src={ this.state.src } className={ styles.icon } />
       </AccountLink>
     );

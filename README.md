@@ -20,15 +20,19 @@ DRY
 
 ### Install
 ```bash
-git clone git@github.com:ethcore/dapps-react-ui.git
-cd dapps-react-ui
-npm i
+npm i --save dapps-react-ui
 ```
 
 ### Usage
-gif goes here ...
+```bash
+import { ComponentName, ComponentName2 } from 'dapps-react-ui';
+```
+
+### Relevant Links
+[Units used](UNITS.md)
 
 ### Development
 ```bash
-npm start # starts webpack devserver at port 3000
+git clone git@github.com:ethcore/dapps-react-ui.git
+npm start # starts webpack devserver at port 3020
 ```

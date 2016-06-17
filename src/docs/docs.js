@@ -1,43 +1,40 @@
-import '../index.html';
 import React from 'react';
+import { Provider } from 'react-redux';
 import ReactDOM from 'react-dom';
 
+import BigNumber from 'bignumber.js';
+
+// Needed for onTouchTap
+// http://stackoverflow.com/a/34015469/988941
+import injectTapEventPlugin from 'react-tap-event-plugin';
+
+import MuiThemeProvider from '../MuiThemeProvider';
 import Web3Provider from '../Web3Provider';
 import Web3 from 'web3';
 import web3extensions from '../util/web3.extensions';
 
+import Routes from './routes';
+import middlewares from './middlewares';
+import createStore from './store';
+
 const http = new Web3.providers.HttpProvider(process.env.RPC_ADDRESS || '/rpc/');
 const web3 = new Web3(http);
 web3._extend(web3extensions(web3));
-global.web3 = web3;
 
-import MuiThemeProvider from '../MuiThemeProvider';
-import AccountWeb3Docs from '../AccountWeb3/AccountWeb3.docs';
-import TransactionWeb3Docs from '../TransactionWeb3/TransactionWeb3.docs';
-import TransactionFinishedDocs from '../TransactionFinished/TransactionFinished.docs';
-import AccountLinkDocs from '../AccountLink/AccountLink.docs';
-import IdenticonDocs from '../Identicon/Identicon.docs';
-import RpcAutoCompleteDocs from '../RpcAutoComplete/RpcAutoComplete.docs';
+const store = createStore(middlewares());
+
+injectTapEventPlugin();
 
 ReactDOM.render(
-  <MuiThemeProvider>
+  <Provider store={ store }>
     <Web3Provider web3={ web3 }>
-      <div>
-        <TransactionFinishedDocs />
-        <hr />
-        <TransactionWeb3Docs />
-        <hr />
-        <RpcAutoCompleteDocs />
-        <hr />
-        <AccountLinkDocs />
-        <hr />
-        <IdenticonDocs />
-        <hr />
-        <AccountWeb3Docs />
-        <hr />
-      </div>
+      <MuiThemeProvider>
+        <Routes store={ store } />
+      </MuiThemeProvider>
     </Web3Provider>
-  </MuiThemeProvider>,
-  document.getElementById('root')
+  </Provider>,
+  document.querySelector('#root')
 );
 
+global.web3 = web3;
+global.BigNumber = BigNumber;
