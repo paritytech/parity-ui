@@ -4,7 +4,6 @@ const WEI_TO_ETH_MULTIPLIER = 0.000000000000000001;
 const WEI_TO_SZABU_MULTIPLIER = 0.000000000001;
 import { BASE_LINK_TX_MORDEN, BASE_LINK_TX_HOMESTEAD } from '../constants/constants';
 
-export const getEstimatedMiningTime = _getEstimatedMiningTime;
 export const getShortData = _getShortData;
 // calculations
 export const getFee = _getFee;
@@ -17,12 +16,9 @@ export const getEthFromWeiDisplay = _getEthFromWeiDisplay;
 // links
 export const getTxLink = _getTxLink;
 
-function _getEstimatedMiningTime (gasPrice, miningStatistics) {
-  return '20s';
-}
 
 function _getShortData (data) {
-  if (data === '0x') {
+  if (data.length <= 3) {
     return data;
   }
   return data.substr(0, 3) + '...';

@@ -1,17 +1,9 @@
 import BigNumber from 'bignumber.js';
-import { getEstimatedMiningTime, getShortData, getFee, getTotalValue } from './transaction';
+import { getShortData, getFee, getTotalValue } from './transaction';
 
 describe('util/transaction', () => {
   describe('getEstimatedMiningTime', () => {
     it('should return estimated mining time', () => {
-      // given
-      const gasPrice = 21000;
-
-      // when
-      const res = getEstimatedMiningTime(gasPrice);
-
-      // then
-      expect(res).to.equal('20s');
     });
   });
 
@@ -27,43 +19,45 @@ describe('util/transaction', () => {
       expect(res).to.equal('0xh...');
     });
 
-    it('should return 0x', () => {
+    it('should return data as is', () => {
       // given
-      const data = '0x';
+      const data = '0x0';
 
       // when
-      const res = getShortData(data);
+      const shortData = getShortData(data);
 
       // then
-      expect(res).to.equal('0x');
+      expect(shortData).to.equal('0x0');
     });
   });
 
   describe('getFee', () => {
-    it('should return fee', () => {
+    it('should return wei BigNumber object equals to gas * gasPrice', () => {
       // given
-      const gas = 2100; // wei
-      const gasPrice = 20; // Gwei
+      const gas = "0x76c0"; // 30400
+      const gasPrice = "0x9184e72a000"; // 10000000000000 wei
 
       // when
-      const res = getFee(gas, gasPrice);
+      const fee = getFee(gas, gasPrice);
 
       // then
-      expect(res).to.equal(0.000042);
+      expect(fee).to.be.an.instanceOf(BigNumber);
+      expect(fee.toString()).to.be.equal('304000000000000000'); // converting to string due to https://github.com/MikeMcl/bignumber.js/issues/11
     });
   });
 
   describe('getTotalValue', () => {
-    it('should return total value', () => {
+    it('should return wei BigNumber totalValue equals to value + fee', () => {
       // given
-      const fee = new BigNumber(0.000000000254); // wei
-      const value = 0.000002; // wei hex
+      const fee = new BigNumber(304000000000000000); // wei
+      const value = "0x9184e72a"; // 2441406250 wei
 
       // when
-      const res = getTotalValue(fee, value);
+      const totalValue = getTotalValue(fee, value);
 
       // then
-      expect(res).to.equal(0.0000000000256);
+      expect(totalValue).to.be.an.instanceOf(BigNumber);
+      expect(totalValue.toString()).to.be.equal('304000002441406250'); // converting to string due to https://github.com/MikeMcl/bignumber.js/issues/11
     });
   });
 });
