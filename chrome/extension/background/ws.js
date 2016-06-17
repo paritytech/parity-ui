@@ -35,7 +35,7 @@ class Ws {
       const hash = this.hash(sysuiToken);
 
       try {
-        this.ws = new WebSocket('ws://localhost:8180', hash);
+        this.ws = new WebSocket('ws://127.0.0.1:8180', hash);
       } catch (err) {
         console.warn('cant connect to ws ', err);
       }

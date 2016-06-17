@@ -2,8 +2,8 @@ import './App.css';
 import app from 'parity-sysui-app';
 
 tokenGetter (initToken => {
-  app(initToken, tokenSetter, tokenListener)
-})
+  app(initToken, tokenSetter, tokenListener, '127.0.0.1:8180');
+});
 
 function tokenGetter (cb) {
   chrome.storage.local.get('sysuiToken', obj => {

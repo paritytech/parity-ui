@@ -12,5 +12,5 @@
     "page": "background.html"
   },
   "permissions": [ "storage", "proxy" ],
-  "content_security_policy": "default-src 'self'; script-src 'self' http://localhost:3030 https://localhost:3030 'unsafe-eval'; connect-src ws://localhost:8180 http://localhost:3030 https://localhost:3030; style-src * 'unsafe-inline' 'self' blob:; img-src 'self' data:;"
+  "content_security_policy": "default-src 'self'; script-src 'self' http://localhost:3030 https://localhost:3030 'unsafe-eval'; connect-src ws://127.0.0.1:* http://localhost:3030 https://localhost:3030; style-src * 'unsafe-inline' 'self' blob:; img-src 'self' data:;"
 }
