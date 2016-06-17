@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 
 import formatNumber from 'format-number';
-import EditableValue from '../EditableValue';
+import Value from '../Value';
 import { numberFromString } from './numberFromString';
 import { decodeExtraData } from './decodeExtraData';
 
@@ -35,7 +35,7 @@ export default class MiningSettings extends Component {
       <div {...this._testInherit()}>
         <h1><span>Mining</span> settings</h1>
         <h3>Author</h3>
-        <EditableValue
+        <Value
           value={mining.author}
           autocomplete
           dataSource={this.props.accounts}
@@ -43,20 +43,20 @@ export default class MiningSettings extends Component {
           {...this._test('author')}
           />
         <h3>Extradata</h3>
-        <EditableValue
+        <Value
           value={decodeExtraData(mining.extraData)}
           onSubmit={onExtraDataChange}
           defaultValue={decodeExtraData(mining.defaultExtraData)}
           {...this._test('extra-data')}
           />
         <h3>Minimal Gas Price</h3>
-        <EditableValue
+        <Value
           value={toNiceNumber(mining.minGasPrice)}
           onSubmit={onMinGasPriceChange}
           {...this._test('min-gas-price')}
           />
         <h3>Gas floor target</h3>
-        <EditableValue
+        <Value
           value={toNiceNumber(mining.gasFloorTarget)}
           onSubmit={onGasFloorTargetChange}
           {...this._test('gas-floor-target')}
