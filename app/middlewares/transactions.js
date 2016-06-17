@@ -1,3 +1,4 @@
+import logger from '../utils/logger';
 import { addFinishedTransaction, errorTransaction } from '../actions/transactions';
 
 import WsBase from '../utils/wsBase';
@@ -34,7 +35,7 @@ export default class TransactionsMiddleware {
     const { id, password } = action.payload;
     const transaction = this.getTransaction(store, id); // needed for uccessful cb
     this.ws.send('personal_confirmTransaction', [ id, {}, password ], res => {
-      console.log('confirm transaction cb ', res);
+      logger.log('confirm transaction cb ', res);
 
       // transaction confirmation failed
       if (res === false) {
@@ -56,7 +57,7 @@ export default class TransactionsMiddleware {
     const id = action.payload;
     const transaction = this.getTransaction(store, id); // needed for uccessful cb
     this.ws.send('personal_rejectTransaction', [ id ], res => {
-      console.log('reject transaction cb ', res);
+      logger.log('reject transaction cb ', res);
       if (res === true) {
         store.dispatch(addFinishedTransaction(transaction));
       }

@@ -12,7 +12,7 @@ module.exports = {
   devtool: isProd ? '#source-map' : '#cheap-module-eval-source-map',
   context: path.join(__dirname, './app'),
   entry: {
-    index: isProd ? './index.js' : './index.dev.js'
+    index: './index.dev.js'
   },
   output: {
     path: path.join(__dirname, './build'),

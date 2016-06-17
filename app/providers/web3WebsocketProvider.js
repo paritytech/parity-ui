@@ -1,6 +1,6 @@
 /* global WebSocket */
-
 import { keccak_256 } from 'js-sha3'; // eslint-disable-line camelcase
+import logger from '../utils/logger';
 
 export default class Ws {
 
@@ -36,7 +36,7 @@ export default class Ws {
     try {
       this.ws = new WebSocket('ws://' + this.wsPath, hash);
     } catch (e) {
-      console.warn('[Web3 WS Provider] error connecting to WS ', e);
+      logger.warn('[Web3 WS Provider] error connecting to WS ', e);
       return this.onUnAuthorized();
     }
 
@@ -55,7 +55,7 @@ export default class Ws {
   }
 
   onWsOpen () {
-    console.log('[Web3 WS Provider] connected');
+    logger.log('[Web3 WS Provider] connected');
     this.isWsConnected = true;
     this.executeQueue();
     this.ws.addEventListener('close', ::this.onWsClose);
@@ -63,11 +63,11 @@ export default class Ws {
   }
 
   onWsError (err) {
-    console.warn('[Web3 WS Provider] error ', err);
+    logger.warn('[Web3 WS Provider] error ', err);
   }
 
   onWsClose () {
-    console.warn('[Web3 WS Provider] closed!');
+    logger.warn('[Web3 WS Provider] closed!');
     this.errorOutCallbacks();
     this.init();
   }
@@ -84,7 +84,7 @@ export default class Ws {
     try {
       msg = JSON.parse(msg.data);
     } catch (err) {
-      return console.warn('[Web3 WS Provider] unknown msg from server: ', msg, err);
+      return logger.warn('[Web3 WS Provider] unknown msg from server: ', msg, err);
     }
     const cb = this.callbacks[msg.id];
     delete this.callbacks[msg.id];
@@ -99,7 +99,7 @@ export default class Ws {
   sendAsync (payload, cb) {
     if (!this.isWsConnected) {
       this.queue.push({ payload, cb });
-      return console.log('WS: incoming msg when not connected, adding to queue');
+      return logger.log('WS: incoming msg when not connected, adding to queue');
     }
     const id = payload.id;
     this.ws.send(JSON.stringify(payload));
@@ -111,7 +111,7 @@ export default class Ws {
   }
 
   executeQueue () {
-    console.log('[Web3 WS Provider] executing queue: ', this.queue);
+    logger.log('[Web3 WS Provider] executing queue: ', this.queue);
     this.queue.forEach(call => {
       this.sendAsync(call.payload, call.cb);
     });

@@ -1,7 +1,6 @@
-
 /* global WebSocket */
-
 import { keccak_256 } from 'js-sha3'; // eslint-disable-line camelcase
+import logger from './logger';
 
 export default class Ws {
 
@@ -21,7 +20,7 @@ export default class Ws {
     try {
       this.ws = new WebSocket('ws://' + this.wsPath, hash);
     } catch (err) {
-      console.warn('cant connect to ws ', err);
+      logger.warn('cant connect to ws ', err);
     }
     this.ws.addEventListener('error', ::this.onWsError);
     this.ws.addEventListener('open', ::this.onWsOpen);
@@ -34,19 +33,19 @@ export default class Ws {
   }
 
   onWsOpen () {
-    console.log('[WS Base] connected');
+    logger.log('[WS Base] connected');
     this.ws.addEventListener('close', ::this.onWsClose);
     this.ws.addEventListener('message', ::this.onWsMsg);
     this.isConnected = true;
   }
 
   onWsError (err) {
-    console.warn('[WS Base] error ', err);
+    logger.warn('[WS Base] error ', err);
     this.isConnected = false;
   }
 
   onWsClose () {
-    console.warn('[WS Base] closed!');
+    logger.warn('[WS Base] closed!');
     this.errorOutCallbacks();
     this.isConnected = false;
     // try to reconnect
@@ -65,7 +64,7 @@ export default class Ws {
     try {
       msg = JSON.parse(msg.data);
     } catch (err) {
-      return console.warn('[WS Base] unknown msg from server: ', msg, err);
+      return logger.warn('[WS Base] unknown msg from server: ', msg, err);
     }
     const cb = this.callbacks[msg.id];
     delete this.callbacks[msg.id];
@@ -80,7 +79,7 @@ export default class Ws {
   send (method, params, callback) {
     if (!this.isConnected) {
       this.queue.push({ method, params, callback });
-      return console.log('[WS Base]: incoming msg when not connected, adding to queue');
+      return logger.log('[WS Base]: incoming msg when not connected, adding to queue');
     }
     const id = this.id;
     this.id++;
@@ -93,7 +92,7 @@ export default class Ws {
   }
 
   executeQueue () {
-    console.log('[WS Base] executing queue: ', this.queue);
+    logger.log('[WS Base] executing queue: ', this.queue);
     this.queue.forEach(call => {
       this.sendAsync(call.method, call.params, call.callback);
     });

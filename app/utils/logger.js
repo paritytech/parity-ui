@@ -1,12 +1,22 @@
 const isProd = process.env.NODE_ENV === 'production';
 
-const prodConsole = {
-  log: noop,
-  info: noop,
-  error: noop,
-  warn: noop
-};
+export default logger();
 
-global.console = isProd ? prodConsole : console;
+function logger () {
+  return isProd ? prodLogger() : devLogger();
+}
+
+function prodLogger () {
+  return {
+    log: noop,
+    info: noop,
+    error: noop,
+    warn: noop
+  };
+}
+
+function devLogger () {
+  return console;
+}
 
 function noop () {}

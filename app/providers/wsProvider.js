@@ -1,5 +1,6 @@
 import isEqual from 'lodash.isequal';
 import wsBase from '../utils/wsBase';
+import logger from '../utils/logger';
 import { updatePendingTransactions } from '../actions/transactions';
 import { updateIsConnected } from '../actions/ws';
 import { updateIsLoading } from '../actions/app';
@@ -22,7 +23,7 @@ export default class WsProvider extends wsBase {
   }
 
   onWsOpen () {
-    console.log('[WS Provider] connected');
+    logger.log('[WS Provider] connected');
     super.onWsOpen();
     this.store.dispatch(updateIsConnected(true));
     this.store.dispatch(updateIsLoading(false));
@@ -48,7 +49,7 @@ export default class WsProvider extends wsBase {
         return this.timeoutFetchTransactions();
       }
 
-      console.log('[WS Provider] transactions changed ', txsWs);
+      logger.log('[WS Provider] transactions changed ', txsWs);
       this.store.dispatch(updatePendingTransactions(txsWs));
       this.timeoutFetchTransactions();
     });
