@@ -10,6 +10,8 @@ import styles from './StatusLine.css';
 const DEFAULT_NETWORK = 'homestead';
 
 export default class StatusLine extends Web3Component {
+  // IE9 - contextTypes are not inherited
+  static contextTypes = Web3Component.contextTypes;
 
   state = {
     isReady: false,

@@ -53,6 +53,7 @@
     "webpack-hot-middleware": "^2.7.1"
   },
   "dependencies": {
+    "babel-polyfill": "^6.9.1",
     "bignumber.js": "2.3.0",
     "classnames": "^2.2.3",
     "exports-loader": "^0.6.3",

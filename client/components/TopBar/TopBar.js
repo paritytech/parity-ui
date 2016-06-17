@@ -25,6 +25,9 @@ import styles from './TopBar.css';
 
 export default class TopBar extends Web3Component {
 
+  // IE9 - contextTypes are not inherited
+  static contextTypes = Web3Component.contextTypes;
+
   static propTypes = {
     interceptor: React.PropTypes.object.isRequired,
     web3: React.PropTypes.object.isRequired,

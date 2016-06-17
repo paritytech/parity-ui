@@ -11,6 +11,8 @@ import Storage from '../Storage';
 import styles from './AccountChooser.css';
 
 export default class AccountChooser extends Web3Component {
+  // IE9 - contextTypes are not inherited
+  static contextTypes = Web3Component.contextTypes;
 
   state = {
     defaultAccountIdx: 0

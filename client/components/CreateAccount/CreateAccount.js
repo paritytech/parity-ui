@@ -14,6 +14,8 @@ import styles from './CreateAccount.css';
 import Web3Component from '../Web3Component/Web3Component';
 
 export default class CreateAccount extends Web3Component {
+  // IE9 - contextTypes are not inherited
+  static contextTypes = Web3Component.contextTypes;
 
   state = {
     createdAccount: false,

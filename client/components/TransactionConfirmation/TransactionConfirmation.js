@@ -14,6 +14,9 @@ import styles from './TransactionConfirmation.css';
 
 export default class TransactionConfirmation extends Web3Component {
 
+  // IE9 - contextTypes are not inherited
+  static contextTypes = Web3Component.contextTypes;
+
   state = {
     sending: false,
     password: '',

@@ -13,6 +13,9 @@ import styles from './AccountsDetails.css';
 
 export default class AccountDetails extends Web3Component {
 
+  // IE9 - contextTypes are not inherited
+  static contextTypes = Web3Component.contextTypes;
+
   state = {};
 
   componentDidMount () {

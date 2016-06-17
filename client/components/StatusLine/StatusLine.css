@@ -13,7 +13,7 @@
 
 .info li {
   padding: 0 5px;
-  flex: 1;
+  flex: 1 1 auto;
   border-right: 1px solid #daa;
   border-left: 1px solid #eee;
   white-space: nowrap;

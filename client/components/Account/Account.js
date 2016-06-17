@@ -6,6 +6,8 @@ import Web3Component from '../Web3Component';
 import Identicon from '../Identicon';
 
 export default class Account extends Web3Component {
+  // IE9 - contextTypes are not inherited
+  static contextTypes = Web3Component.contextTypes;
 
   state = {
     balance: null
