@@ -25,7 +25,6 @@ export default function app (initToken, tokenSetter, addTokenListener, wsPath) {
   const web3WebSocketProvider = new Web3WebSocketProvider(initToken, addTokenListener, wsPath);
   const web3 = new Web3(web3WebSocketProvider);
   web3._extend(web3Extension(web3));
-  global.web3 = global.web3 || web3;
 
   const store = createStore(middlewares(initToken, tokenSetter, wsPath));
 
@@ -45,5 +44,3 @@ export default function app (initToken, tokenSetter, addTokenListener, wsPath) {
 
   wsProvider.init(initToken);
 }
-
-global.paritySysUiApp = app;

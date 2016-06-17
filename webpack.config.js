@@ -15,6 +15,9 @@ module.exports = {
     index: isProd ? './index.js' : './index.dev.js'
   },
   output: {
+    library: 'parity-sysui-app',
+    libraryTarget: 'umd',
+    umdNamedDefine: true,
     path: path.join(__dirname, './build'),
     filename: '[name].js'
   },

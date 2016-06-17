@@ -1,8 +1,8 @@
 {
   "name": "parity-sysui-app",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "reusable app for Parity's system UIs",
-  "main": "build/index.js",
+  "main": "./build/index.js",
   "scripts": {
     "start": "webpack-dev-server -d --history-api-fallback --hot --inline --progress --colors --port 3001",
     "test": "npm run testOnce -- -w",

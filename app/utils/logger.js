@@ -1,3 +1,5 @@
+// this module disable logging on prod
+
 const isProd = process.env.NODE_ENV === 'production';
 
 export default logger();
