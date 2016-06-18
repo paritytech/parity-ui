@@ -1,6 +1,6 @@
 {
   "name": "parity-sysui-app",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "description": "reusable app for Parity's system UIs",
   "main": "./build/index.js",
   "scripts": {
@@ -122,6 +122,7 @@
     "redux": "^3.2.1",
     "redux-actions": "0.9.1",
     "redux-thunk": "^2.0.1",
+    "reset-css": "^2.0.2011012603",
     "web3": "0.16.0"
   },
   "config": {

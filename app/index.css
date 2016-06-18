@@ -1,3 +1,15 @@
 :global a {
   cursor: pointer;
 }
+
+:global h1 {
+  font-weight: bold;
+  font-size: 2em;
+  margin-top: .67em;
+  margin-bottom: .67em;
+}
+
+:global p {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}

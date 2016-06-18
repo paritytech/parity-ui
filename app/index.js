@@ -11,6 +11,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import Web3 from 'web3';
 import { Web3Provider, MuiThemeProvider, web3Extension } from 'dapps-react-ui';
 
+import 'reset-css/reset.css';
 import './index.css';
 import './utils/logger';
 
