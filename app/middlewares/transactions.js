@@ -48,7 +48,7 @@ export default class TransactionsMiddleware {
       // todo [adgo] - replace with better errors msgs once parity returns them
       if (res === undefined) {
         transaction.status = 'rejected';
-        transaction.error = 'true';
+        transaction.error = true;
         transaction.msg = 'Sender account has insufficient funds to complete transcation';
         store.dispatch(addErrorTransaction(transaction));
         return next(action);
