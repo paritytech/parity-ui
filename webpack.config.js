@@ -66,12 +66,14 @@ module.exports = {
         loader: 'file-loader'
       },
       {
+        // Match woff2 in addition to patterns like .woff?v=1.1.1.
         test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: 'url-loader?limit=10000&mimetype=application/font-woff'
-      },
-      {
-        test: /\.(woff(2)|ttf|eot|svg|otf)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: 'file-loader'
+        loader: 'url',
+        query: {
+          limit: 50000,
+          mimetype: 'application/font-woff',
+          name: 'assets/fonts/[hash].[ext]'
+        }
       }
     ],
     noParse: [
