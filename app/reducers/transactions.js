@@ -25,6 +25,16 @@ export default handleActions({
     };
   },
 
+  'add errorTransaction' (state, action) {
+    const pending = state.pending.filter(tx => tx.id !== action.payload.id);
+
+    return {
+      ...state,
+      pending,
+      finished: [action.payload].concat(state.finished)
+    };
+  },
+
   'add rejectedTransaction' (state, action) {
     const pending = state.pending.filter(tx => tx.id !== action.payload.id);
 

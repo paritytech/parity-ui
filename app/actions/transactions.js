@@ -8,3 +8,4 @@ export const rejectTransaction = createAction('reject transaction');
 export const updatePendingTransactions = createAction('update pendingTransactions');
 export const addRejectedTransaction = createAction('add rejectedTransaction');
 export const addConfirmedTransaction = createAction('add confirmedTransaction');
+export const addErrorTransaction = createAction('add errorTransaction');

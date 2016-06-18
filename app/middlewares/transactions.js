@@ -1,5 +1,5 @@
 import logger from '../utils/logger';
-import { addRejectedTransaction, addConfirmedTransaction, errorTransaction } from '../actions/transactions';
+import { addRejectedTransaction, addConfirmedTransaction, addErrorTransaction, errorTransaction } from '../actions/transactions';
 
 import WsBase from '../utils/wsBase';
 
@@ -37,16 +37,28 @@ export default class TransactionsMiddleware {
     this.ws.send('personal_confirmTransaction', [ id, {}, password ], res => {
       logger.log('confirm transaction cb ', res);
 
-      // transaction confirmation failed
+      // wrong password
       if (res === false) {
-        const errMsg = `Failed to confirm transaction: ${id}, make sure the password is correct`;
+        const errMsg = 'Failed to confirm transaction. make sure the password is correct';
         store.dispatch(errorTransaction(errMsg));
+        return next(action);
+      }
+
+      // transaction confirmation failed (probably not enough funds)
+      // todo [adgo] - replace with better errors msgs once parity returns them
+      if (res === undefined) {
+        transaction.status = 'rejected';
+        transaction.error = 'true';
+        transaction.msg = 'Sender account has insufficient funds to complete transcation';
+        store.dispatch(addErrorTransaction(transaction));
         return next(action);
       }
 
       // todo [adgo] - detect errors better
       if (typeof res === 'string') {
+        transaction.status = 'confirmed';
         transaction.txHash = res;
+        transaction.msg = 'Confirmed';
         store.dispatch(addConfirmedTransaction(transaction));
       }
     });
@@ -59,6 +71,8 @@ export default class TransactionsMiddleware {
     this.ws.send('personal_rejectTransaction', [ id ], res => {
       logger.log('reject transaction cb ', res);
       if (res === true) {
+        transaction.status = 'rejected';
+        transaction.msg = 'Rejected';
         store.dispatch(addRejectedTransaction(transaction));
       }
     });
