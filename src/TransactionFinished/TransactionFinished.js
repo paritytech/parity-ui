@@ -1,5 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 
+import ErrorIcon from 'material-ui/svg-icons/alert/error';
+
 import TransactionMainDetails from '../TransactionMainDetails';
 import TxHashLink from '../TxHashLink';
 import styles from './TransactionFinished.css';
@@ -16,6 +18,8 @@ export default class TransactionFinished extends Component {
     chain: PropTypes.string.isRequired,
     gasPrice: PropTypes.string.isRequired, // wei hex
     gas: PropTypes.string.isRequired, // hex
+    status: PropTypes.string.isRequired, // rejected, confirmed
+    msg: PropTypes.string.isRequired,
     to: PropTypes.string, // undefined if it's a contract
     toBalance: PropTypes.object, // eth BigNumber - undefined if it's a contract or until it's fetched
     txHash: PropTypes.string, // undefined if transacation is rejected
@@ -31,19 +35,19 @@ export default class TransactionFinished extends Component {
   }
 
   render () {
-    const { chain, txHash, className } = this.props;
+    const { chain, className } = this.props;
     const { totalValue } = this.state;
-    const TxHash = txHash ? <TxHashLink chain={ chain } txHash={ txHash } /> : '';
+    
     return (
       <div className={ `${styles.container} ${className || ''}` }>
         <div className={ styles.mainContainer }>
           <TransactionMainDetails
             { ...this.props }
             totalValue={ totalValue }
+            className={ styles.transactionDetails }
           />
-          <div className={ styles.status }>
+          <div className={ styles.statusContainer }>
             { this.renderStatus() }
-            { TxHash }
           </div>
         </div>
       </div>
@@ -51,11 +55,41 @@ export default class TransactionFinished extends Component {
   }
 
   renderStatus () {
-    const { txHash } = this.props;
-    const status = txHash ? 'Confirmed' : 'Rejected';
-    const className = txHash ? styles.isConfirmed : styles.isRejected;
+    const { status, msg } = this.props;
+    const msgClassName = status === 'confirmed' ? styles.isConfirmed : styles.isRejected;
     return (
-      <div className={ className }>{ status } </div>
+      <div>
+        { this.renderError() }
+        <span className={ msgClassName }>{ msg }</span>
+        { this.renderTxHash() }
+      </div>
+    );
+  }
+
+  renderTxHash () {
+    const { txHash, chain } = this.props;
+    if (!txHash) {
+      return;
+    }
+
+    return (
+      <div>
+        Transaction hash: <br />
+        <TxHashLink chain={ chain } txHash={ txHash } className={ styles.txHash } />
+      </div>
+    )
+  }
+
+  renderError () {
+    if (!this.props.error) {
+      return;
+    }
+
+    return (
+      <div className={ styles.error }>
+        <ErrorIcon className={ styles.error } />
+        <span>Error processing transaction!</span>
+      </div>
     );
   }
 

@@ -8,6 +8,7 @@ import BigNumber from 'bignumber.js';
 // http://stackoverflow.com/a/34015469/988941
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
+import './chromeExtension.css';
 import MuiThemeProvider from '../MuiThemeProvider';
 import Web3Provider from '../Web3Provider';
 import Web3 from 'web3';
