@@ -20,6 +20,7 @@ export default class TransactionFinished extends Component {
     gas: PropTypes.string.isRequired, // hex
     status: PropTypes.string.isRequired, // rejected, confirmed
     msg: PropTypes.string.isRequired,
+    error: PropTypes.bool,
     to: PropTypes.string, // undefined if it's a contract
     toBalance: PropTypes.object, // eth BigNumber - undefined if it's a contract or until it's fetched
     txHash: PropTypes.string, // undefined if transacation is rejected
@@ -35,9 +36,9 @@ export default class TransactionFinished extends Component {
   }
 
   render () {
-    const { chain, className } = this.props;
+    const { className } = this.props;
     const { totalValue } = this.state;
-    
+
     return (
       <div className={ `${styles.container} ${className || ''}` }>
         <div className={ styles.mainContainer }>
@@ -77,7 +78,7 @@ export default class TransactionFinished extends Component {
         Transaction hash: <br />
         <TxHashLink chain={ chain } txHash={ txHash } className={ styles.txHash } />
       </div>
-    )
+    );
   }
 
   renderError () {
