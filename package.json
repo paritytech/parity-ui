@@ -88,6 +88,7 @@
     "react-router": "^2.4.1",
     "react-router-redux": "^4.0.5",
     "react-tap-event-plugin": "^1.0.0",
+    "react-tooltip": "^3.0.4",
     "redux": "^3.5.2",
     "redux-actions": "^0.10.0",
     "rucksack-css": "^0.8.5",
