@@ -1,10 +1,10 @@
 {
   "version": "0.0.0",
-  "name": "parity-sys-ui",
+  "name": "Parity Signer UI [dev]",
   "manifest_version": 2,
-  "description": "Parity system ui",
+  "description": "Parity Signer UI [dev]",
   "browser_action": {
-    "default_title": "Parity system ui",
+    "default_title": "Parity Signer UI [dev]",
     "default_popup": "popup.html",
     "default_icon": "img/icon-16.png"
   },
