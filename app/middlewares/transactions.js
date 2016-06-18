@@ -1,5 +1,5 @@
 import logger from '../utils/logger';
-import { addFinishedTransaction, errorTransaction } from '../actions/transactions';
+import { addRejectedTransaction, addConfirmedTransaction, errorTransaction } from '../actions/transactions';
 
 import WsBase from '../utils/wsBase';
 
@@ -47,7 +47,7 @@ export default class TransactionsMiddleware {
       // todo [adgo] - detect errors better
       if (typeof res === 'string') {
         transaction.txHash = res;
-        store.dispatch(addFinishedTransaction(transaction));
+        store.dispatch(addConfirmedTransaction(transaction));
       }
     });
     return next(action);
@@ -59,7 +59,7 @@ export default class TransactionsMiddleware {
     this.ws.send('personal_rejectTransaction', [ id ], res => {
       logger.log('reject transaction cb ', res);
       if (res === true) {
-        store.dispatch(addFinishedTransaction(transaction));
+        store.dispatch(addRejectedTransaction(transaction));
       }
     });
     return next(action);

@@ -6,10 +6,5 @@ export const errorTransaction = createAction('error transaction', identity, with
 export const confirmTransaction = createAction('confirm transaction');
 export const rejectTransaction = createAction('reject transaction');
 export const updatePendingTransactions = createAction('update pendingTransactions');
-export const addFinishedTransaction = createAction('add finishedTransactions', identity, withToastr(addFinishedToastr));
-
-function addFinishedToastr (transaction) {
-  const { id } = transaction;
-  const verb = transaction.txHash ? 'confirming' : 'rejecting';
-  return `Success ${verb} transaction: ${id}`;
-}
+export const addRejectedTransaction = createAction('add rejectedTransaction');
+export const addConfirmedTransaction = createAction('add confirmedTransaction');
