@@ -64,6 +64,9 @@ export default class Transactions extends Component {
           from={ data.transaction.from }
           to={ data.transaction.to }
           value={ data.transaction.value }
+          msg={ data.msg }
+          status={ data.status }
+          error={ data.error }
         />
       )
     );
