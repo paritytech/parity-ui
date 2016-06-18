@@ -63,7 +63,6 @@ class Ws {
     logger.log('[BG WS] connected');
     this.isConnected = true;
     this.executeQueue();
-    this.setBadgeText('c'); // connected, will b replaced after fetching transactions for the first time
     chrome.storage.local.set({ pendingTransactions: JSON.stringify([]) });
     this.ws.addEventListener('close', this.onWsClose);
     this.ws.addEventListener('message', this.onWsMsg);
