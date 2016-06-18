@@ -2,6 +2,7 @@
 import isEqual from 'lodash.isequal';
 import { keccak_256 } from 'js-sha3';
 import logger from '../../utils/logger';
+import { SIGNER_META_TITLE, POPUP_URL } from '../../constants/constants';
 
 class Ws {
 
@@ -181,9 +182,19 @@ class Ws {
 
   onNotificationclick = notificationId => {
     chrome.notifications.clear(notificationId);
-    // todo [adgo] - check if the popup is open in any window/tab
-    // and focus on it instead of opening
-    chrome.tabs.create({ url: "popup.html" });
+    this.getActiveSignerTab(tab => {
+      if (tab) {
+        chrome.tabs.update(tab.id, { active: true });
+      } else {
+        chrome.tabs.create({ url: POPUP_URL });
+      }
+    })
+  }
+
+  getActiveSignerTab (cb) {
+    chrome.tabs.query({ title: SIGNER_META_TITLE }, tabs => {
+      cb(tabs[0]);
+    });
   }
 
 }

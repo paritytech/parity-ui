@@ -11,6 +11,6 @@
   "background": {
     "page": "background.html"
   },
-  "permissions": [ "storage", "proxy", "notifications" ],
+  "permissions": [ "storage", "proxy", "notifications", "tabs" ],
   "content_security_policy": "default-src 'self'; font-src 'self' data:; connect-src ws://127.0.0.1:*; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:;"
 }
