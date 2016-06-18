@@ -1,24 +1,18 @@
 /* global chrome */
 import isEqual from 'lodash.isequal';
 import { keccak_256 } from 'js-sha3';
-
-// init: set listener for LS token change
-// init: fetch token from LS
-
-// try to connect with token
-// if correct, start polling transactions, set badge text to number, set transactions to LS
-// not correct, display set badge to !
-// on disconnect reconnect from LS 
-// (think about what to do on disconnect due to token change)
+import logger from '../../utils/logger';
 
 class Ws {
 
   constructor () {
     this.id = 1;
     this.callbacks = {};
-    chrome.storage.onChanged.addListener(this.onSysuiTokenChange);
     this.queue = []; // hold calls until ws is connected on init or if disconnected
     this.isConnected = false;
+    chrome.storage.onChanged.addListener(this.onSysuiTokenChange);
+    chrome.notifications.onClicked.addListener(this.onNotificationclick);
+    chrome.browserAction.setBadgeBackgroundColor({ color: '#f00'});
     this.reset();
     this.init();
   }
@@ -28,7 +22,7 @@ class Ws {
       let { sysuiToken } = obj;
 
       if (!sysuiToken) {
-        return console.log('[BG WS] no sysuiToken in LS');
+        return logger.log('[BG WS] no sysuiToken in LS');
       }
 
       sysuiToken = JSON.parse(sysuiToken)
@@ -37,7 +31,7 @@ class Ws {
       try {
         this.ws = new WebSocket('ws://127.0.0.1:8180', hash);
       } catch (err) {
-        console.warn('cant connect to ws ', err);
+        logger.warn('cant connect to ws ', err);
       }
       this.ws.addEventListener('error', this.onWsError);
       this.ws.addEventListener('open', this.onWsOpen);
@@ -47,7 +41,6 @@ class Ws {
   reset () {
     // todo [adgo]- remove transactions from LS
     chrome.storage.local.set({ pendingTransactions: JSON.stringify([]) });
-    this.setBadgeText('!');
   }
 
   // when token changes in chrome LS
@@ -56,7 +49,7 @@ class Ws {
       return;
     }
     const newSysuiToken = JSON.parse(changes.sysuiToken.newValue);
-    console.log('[BG WS] sysuiToken changed! ', newSysuiToken);
+    logger.log('[BG WS] sysuiToken changed! ', newSysuiToken);
     this.init();
   }
 
@@ -67,7 +60,7 @@ class Ws {
   }
 
   onWsOpen = () => {
-    console.log('[BG WS] connected');
+    logger.log('[BG WS] connected');
     this.isConnected = true;
     this.executeQueue();
     this.setBadgeText('c'); // connected, will b replaced after fetching transactions for the first time
@@ -78,13 +71,13 @@ class Ws {
   }
 
   onWsError = (err) => {
-    console.warn('[BG WS] error ', err);
+    logger.warn('[BG WS] error ', err);
     this.reset();
     setTimeout(() => this.init(), 5000);
   }
 
   onWsClose = () => {
-    console.warn('[BG WS] closed!');
+    logger.warn('[BG WS] closed!');
     this.errorOutCallbacks();
     this.isConnected = false;
     this.reset();
@@ -95,7 +88,7 @@ class Ws {
     try {
       msg = JSON.parse(msg.data);
     } catch (err) {
-      return console.warn('[BG WS] unknown msg from server: ', msg, err);
+      return logger.warn('[BG WS] unknown msg from server: ', msg, err);
     }
     const cb = this.callbacks[msg.id];
     delete this.callbacks[msg.id];
@@ -120,12 +113,17 @@ class Ws {
           if (isEqual(txsWs, transactionsLs)) {
             return;
           }
-          console.log('[BG WS] transactions changed')
-          console.log('[BG WS] previous (LS): ', transactionsLs)
-          console.log('[BG WS] current (WS): ', txsWs)
+          logger.log('[BG WS] transactions changed');
+          logger.log('[BG WS] previous (LS): ', transactionsLs);
+          logger.log('[BG WS] current (WS): ', txsWs);
+
+          if (txsWs.length > transactionsLs.length) {
+            this.createNotification();
+          }
+
           chrome.storage.local.set({ pendingTransactions: JSON.stringify(txsWs) });
         } catch (err) {
-          console.warn('[BG WS] bad data from extension local storage! object should contain transactions ', obj);
+          logger.warn('[BG WS] bad data from extension local storage! object should contain transactions ', obj, err);
         } finally {
           this.timeoutFetchTransactions()
         }
@@ -136,7 +134,7 @@ class Ws {
   send (method, params, callback) {
     if (!this.isConnected) {
       this.queue.push({ method, params, callback });
-      console.log('[BG WS] incoming msg when not connected, adding to queue');
+      logger.log('[BG WS] incoming msg when not connected, adding to queue');
       return;
     }
     const id = this.id;
@@ -158,7 +156,7 @@ class Ws {
   }
 
   executeQueue () {
-    console.log('[BG WS] executing queue: ', this.queue);
+    logger.log('[BG WS] executing queue: ', this.queue);
     this.queue.forEach(call => {
       this.send(call.method, call.params, call.callback);
     });
@@ -166,11 +164,27 @@ class Ws {
   }
 
   errorOutCallbacks () {
-    console.log('[BG WS] erroring out callbacks: ', this.callbacks);
+    logger.log('[BG WS] erroring out callbacks: ', this.callbacks);
     for (const msgId in this.callbacks) {
       callbacks[msgId]('WS disconnected, cb cannot be called');
     }
     this.callbacks = {};
+  }
+
+  createNotification () {
+    chrome.notifications.create({
+      type: 'basic',
+      iconUrl: 'img/icon-16.png',
+      title: 'New pending transcation',
+      message: 'New pending transcation'
+    });
+  }
+
+  onNotificationclick = notificationId => {
+    chrome.notifications.clear(notificationId);
+    // todo [adgo] - check if the popup is open in any window/tab
+    // and focus on it instead of opening
+    chrome.tabs.create({ url: "popup.html" });
   }
 
 }

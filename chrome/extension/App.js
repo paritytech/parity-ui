@@ -1,9 +1,15 @@
+import 'reset-css/reset.css';
 import './App.css';
+import logger from '../utils/logger';
 import app from 'parity-sysui-app';
 
-tokenGetter (initToken => {
-  app(initToken, tokenSetter, tokenListener, '127.0.0.1:8180');
-});
+initApp();
+
+function initApp () {
+  tokenGetter (initToken => {
+    app(initToken, tokenSetter, tokenListener, '127.0.0.1:8180');
+  });
+}
 
 function tokenGetter (cb) {
   chrome.storage.local.get('sysuiToken', obj => {
@@ -16,7 +22,7 @@ function tokenGetter (cb) {
     try {
       sysuiToken = JSON.parse(sysuiToken)
     } catch (err) {
-      return console.warn('error parsing sysui token: ', sysuiToken, err);
+      return logger.warn('[APP] error parsing sysui token: ', sysuiToken, err);
     }
 
     cb(sysuiToken);
@@ -36,7 +42,7 @@ function tokenListener (cb) {
     try {
       token = JSON.parse(changes.sysuiToken.newValue);
     } catch (err) {
-      return console.warn('error parsing token ', token, err)
+      return logger.warn('[APP] error parsing token ', token, err)
     }
     cb(token);
   });

@@ -5,7 +5,7 @@
   "scripts": {
     "install": "napa alexvandesande/blockies",
     "start": "node scripts/dev",
-    "build": "node scripts/build",
+    "build": "NODE_ENV=production node scripts/build",
     "compress": "node scripts/compress",
     "genZip": "npm run build && npm run compress",
     "compress-keygen": "crx keygen",
@@ -84,6 +84,7 @@
     "redux": "^3.2.1",
     "redux-actions": "0.9.1",
     "redux-thunk": "^2.0.1",
+    "reset-css": "^2.0.2011012603",
     "web3": "0.16.0"
   }
 }
