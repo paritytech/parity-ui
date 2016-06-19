@@ -6,7 +6,7 @@
   "browser_action": {
     "default_title": "Parity Signer UI [dev]",
     "default_popup": "popup.html",
-    "default_icon": "img/icon-16.png"
+    "default_icon": "img/icon-dev-276.png"
   },
   "background": {
     "page": "background.html"

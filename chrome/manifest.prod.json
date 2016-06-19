@@ -1,12 +1,22 @@
 {
   "version": "0.0.1",
   "name": "Parity Signer UI",
+  "short_name": "ParitySigner",
   "manifest_version": 2,
   "description": "Parity Signer UI",
+  "author": "Ethcore Team",
   "browser_action": {
     "default_title": "Parity Signer UI",
-    "default_popup": "popup.html",
-    "default_icon": "img/icon-16.png"
+    "default_popup": "popup.html"
+  },
+  "icons": { 
+    "16": "img/icon-16.png",
+    "19": "img/icon-19.png",
+    "32": "img/icon-32.png",
+    "38": "img/icon-76.png",
+    "48": "img/icon-48.png",
+    "128": "img/icon-128.png",
+    "256": "img/icon-256.png"
   },
   "background": {
     "page": "background.html"
