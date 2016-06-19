@@ -9,34 +9,17 @@
 
 ## Features
  - Sign / reject transactions
- - Manage proxy settings
-
-## Installation
-
-```bash
-git clone https://github.com/jhen0409/react-chrome-extension-boilerplate.git
-npm i
-```
 
 ## Development
 ```bash
-# build files to './dev'
-# start webpack development server
-npm run dev
+$ git clone git@github.com:ethcore/parity-sysui-chrome-extension.git
+$ npm i
+$ npm run dev # build files to './dev', start webpack dev server
 ```
 * [Load unpacked extensions](https://developer.chrome.com/extensions/getstarted#unpacked) with `./dev` folder.
 
 ## Build
-
 ```bash
-npm run build # build files to './build'
+npm run build 
+$ npm run genZip # build files to './build', pack to zip file
 ```
-
-## Generate zip
-
-```bash
-# compress build folder to parity-sys-ui.zip
-npm run build
-npm run compress # packs ./build to .zip
-```
-
