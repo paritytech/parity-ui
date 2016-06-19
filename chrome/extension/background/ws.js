@@ -3,6 +3,7 @@ import isEqual from 'lodash.isequal';
 import { keccak_256 } from 'js-sha3';
 import logger from '../../utils/logger';
 import { SIGNER_META_TITLE, POPUP_URL } from '../../constants/constants';
+import { weiHexToEthString } from '../../utils/formatters';
 
 class Ws {
 
@@ -118,7 +119,7 @@ class Ws {
           logger.log('[BG WS] current (WS): ', txsWs);
 
           if (txsWs.length > transactionsLs.length) {
-            this.createNotification();
+            this.createNotification(txsWs);
           }
 
           chrome.storage.local.set({ pendingTransactions: JSON.stringify(txsWs) });
@@ -171,12 +172,29 @@ class Ws {
     this.callbacks = {};
   }
 
-  createNotification () {
+  // todo [adgo] - handle multiple new pending transactions
+  createNotification (wsTxs) {
+    const transaction = wsTxs[wsTxs.length - 1];
+    let { value, from, to } = transaction.transaction;
+    to = to || 'Deploy Contract';
+    value = weiHexToEthString(value);
     chrome.notifications.create({
-      type: 'basic',
-      iconUrl: 'img/icon-16.png',
+      type: 'list',
+      iconUrl: 'img/icon-48.png',
       title: 'New pending transcation',
-      message: 'New pending transcation'
+      message: '', // doesn't affect anything, chrome will throw error without it
+      contextMessage: value + ' [ETH]',
+      priority: 2,
+      items: [
+        {
+          title: 'From',
+          message: from
+        },
+        {
+          title: 'To',
+          message: to
+        }
+      ]
     });
   }
 
