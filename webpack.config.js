@@ -2,6 +2,7 @@ var rucksack = require('rucksack-css');
 var webpack = require('webpack');
 var path = require('path');
 var WebpackErrorNotificationPlugin = require('webpack-error-notification');
+var webpackBuildToSignerPlugin = require('./webpackBuildToSignerPlugin');
 
 var ENV = process.env.NODE_ENV || 'development';
 var isProd = ENV === 'production';
@@ -104,6 +105,10 @@ module.exports = {
       new WebpackErrorNotificationPlugin(/* strategy, options */)
     ];
 
+    if (isSigner()) {
+      plugins.push(new webpackBuildToSignerPlugin());
+    }
+
     if (isProd) {
       plugins.push(new webpack.optimize.OccurrenceOrderPlugin());
       plugins.push(new webpack.optimize.DedupePlugin());
@@ -125,3 +130,7 @@ module.exports = {
     hot: !isProd
   }
 };
+
+function isSigner () {
+  return !!process.argv.find(arg => arg === '--signer');
+}

@@ -17,6 +17,7 @@
     "nightwatchCI": "npm run nightwatch  -- -e saucelabs",
     "prebuild": "npm run clean",
     "build": "NODE_ENV=production webpack --progress --colors",
+    "buildForParitySigner": "npm run build -- --signer --watch",
     "clean": "rm build -rf || true",
     "commit": "commit-wizard"
   },
@@ -93,6 +94,7 @@
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
     "webpack": "^1.13.1",
+    "webpack-bundle-update-hook-plugin": "^1.0.2",
     "webpack-dev-server": "^1.14.1",
     "webpack-error-notification": "^0.1.6",
     "webpack-hot-middleware": "^2.10.0",
