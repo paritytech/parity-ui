@@ -32,43 +32,68 @@ export default class Transactions extends Component {
 
   renderPendingTransactions () {
     const { actions, transactions } = this.props;
-    return transactions.pending.map(
-      data => (
-        <TransactionPendingWeb3
-          className={ styles.transaction }
-          onConfirm={ actions.confirmTransaction }
-          onReject={ actions.rejectTransaction }
-          key={ data.id }
-          id={ data.id }
-          gasPrice={ data.transaction.gasPrice }
-          gas={ data.transaction.gas }
-          data={ data.transaction.data }
-          from={ data.transaction.from }
-          to={ data.transaction.to }
-          value={ data.transaction.value }
-        />
-      )
+    if (!transactions.pending.length) {
+      return;
+    }
+    return (
+      <div>
+        <h2>Pending Transactions</h2>
+        <div>
+          {
+            transactions.pending.map(
+              data => (
+                <TransactionPendingWeb3
+                  className={ styles.transaction }
+                  onConfirm={ actions.confirmTransaction }
+                  onReject={ actions.rejectTransaction }
+                  key={ data.id }
+                  id={ data.id }
+                  gasPrice={ data.transaction.gasPrice }
+                  gas={ data.transaction.gas }
+                  data={ data.transaction.data }
+                  from={ data.transaction.from }
+                  to={ data.transaction.to }
+                  value={ data.transaction.value }
+                />
+              )
+            )
+          }
+        </div>
+      </div>
     );
   }
 
   renderFinishedTransactions () {
-    return this.props.transactions.finished.map(
-      data => (
-        <TransactionFinishedWeb3
-          className={ styles.transaction }
-          txHash={ data.txHash }
-          key={ data.id }
-          id={ data.id }
-          gasPrice={ data.transaction.gasPrice }
-          gas={ data.transaction.gas }
-          from={ data.transaction.from }
-          to={ data.transaction.to }
-          value={ data.transaction.value }
-          msg={ data.msg }
-          status={ data.status }
-          error={ data.error }
-        />
-      )
+    const { finished } = this.props.transactions;
+    if (!finished.length) {
+      return;
+    }
+    return (
+      <div>
+        <h2>Finished Transactions</h2>
+        <div>
+          {
+            finished.map(
+              data => (
+                <TransactionFinishedWeb3
+                  className={ styles.transaction }
+                  txHash={ data.txHash }
+                  key={ data.id }
+                  id={ data.id }
+                  gasPrice={ data.transaction.gasPrice }
+                  gas={ data.transaction.gas }
+                  from={ data.transaction.from }
+                  to={ data.transaction.to }
+                  value={ data.transaction.value }
+                  msg={ data.msg }
+                  status={ data.status }
+                  error={ data.error }
+                />
+              )
+            )
+          }
+        </div>
+      </div>
     );
   }
 

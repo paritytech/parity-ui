@@ -104,7 +104,7 @@
   },
   "dependencies": {
     "babel-polyfill": "^6.9.1",
-    "dapps-react-ui": "0.0.678",
+    "dapps-react-ui": "0.0.680",
     "event-emitter": "^0.3.4",
     "exports-loader": "0.6.3",
     "history": "^2.1.1",

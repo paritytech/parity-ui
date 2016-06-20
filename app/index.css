@@ -16,6 +16,12 @@ h1 {
   margin-bottom: .67em;
 }
 
+h2 {
+  font-size: 1.5em;
+  margin-top: .67em;
+  margin-bottom: .67em;
+}
+
 h1, h2, h3, h4 {
   font-family: 'Source Sans Pro Light', 'Source Sans Pro';
 }
