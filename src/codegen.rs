@@ -19,7 +19,7 @@ extern crate glob;
 extern crate mime_guess;
 
 use self::mime_guess::guess_mime_type;
-use std::path::{Path, PathBuf};
+use std::path::{self, Path, PathBuf};
 use std::ops::Deref;
 
 use syntax::ast::{MetaItem, Item};
@@ -84,15 +84,21 @@ fn implement_webapp(cx: &ExtCtxt, builder: &aster::AstBuilder, item: &Item, push
       let filename = path.file_name().and_then(|s| s.to_str()).expect("Only UTF8 paths.");
       let mime_type = guess_mime_type(filename).to_string();
       let file_path = path.strip_prefix(&static_files).ok().and_then(|s| s.to_str()).expect("Only UTF8 paths.");
-      let file_path_in_source = path.strip_prefix(&src).ok().and_then(|s| s.to_str()).expect("Only UTF8 paths.");
+      let file_path_in_source = path.to_str().expect("Only UTF8 paths.");
 
       let path_lit = builder.expr().str(file_path);
       let mime_lit = builder.expr().str(mime_type.as_str());
       let web_path_lit = builder.expr().str(file_path_in_source);
+      let separator_lit = builder.expr().str(path::MAIN_SEPARATOR.to_string().as_str());
+      let concat_id = builder.id("concat!");
+      let env_id = builder.id("env!");
       let macro_id = builder.id("include_bytes!");
 
+      let content = quote_expr!(cx,
+                                $macro_id($concat_id($env_id("CARGO_MANIFEST_DIR"), $separator_lit, $web_path_lit))
+                                );
       quote_stmt!(cx, 
-                  files.insert($path_lit, File { path: $path_lit, content_type: $mime_lit, content: $macro_id($web_path_lit) });
+                  files.insert($path_lit, File { path: $path_lit, content_type: $mime_lit, content: $content });
                  ).expect("The statement is always ok, because it just uses literals.")
     }).collect::<Vec<ast::Stmt>>();
 
