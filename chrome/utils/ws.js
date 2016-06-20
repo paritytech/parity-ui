@@ -5,7 +5,7 @@ export default class Ws {
 
   constructor (opts) {
     this.path = opts.path || '127.0.0.1';
-    this.port = opts.port || '8080';
+    this.port = opts.port || '8180';
     this.reconnectTimeout = opts.reconnectTimeout || 5000;
     this.openCb = opts.openCb || noop;
     this.errorCb = opts.errorCb || noop;
@@ -42,7 +42,7 @@ export default class Ws {
     logger.warn('[WS] closed');
     this.executeCbsWithError();
     this.isConnected = false;
-    this.openCb();
+    this.closeCb();
     this.init(this.token);
   }
 
@@ -52,7 +52,7 @@ export default class Ws {
     this.initTimeout = setTimeout(() => this.init(this.token), this.reconnectTimeout);
   }
 
-  onWsMsg = msg => {
+  onMsg = msg => {
     try {
       msg = JSON.parse(msg.data);
     } catch (err) {
@@ -75,11 +75,11 @@ export default class Ws {
       return;
     }
     const { id } = this;
-    this.id++;
     payload.id = id;
     payload = JSON.stringify(payload);
     this.callbacks[id] = callback;
     this.ws.send(payload);
+    this.id++;
   }
 
   executeQueue () {
@@ -91,7 +91,7 @@ export default class Ws {
   }
 
   executeCbsWithError () {
-    logger.log('[WS] erroring out callbacks: ', this.callbacks);
+    logger.log('[WS] executing callbacks with error: ', this.callbacks);
     for (const msgId in this.callbacks) {
       callbacks[msgId]('[WS] disconnected, cb cannot be called');
     }

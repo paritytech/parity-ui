@@ -44,7 +44,7 @@ class BgWs {
       }
       logger.log('[BG WS] transactions changed', txsWs);
       this.setBadgeText(txsWs.length);
-      if (txsWs.length > transactionsLs.length) {
+      if (txsWs.length > this.transactions.length) {
         this.createNotification(txsWs);
       }
       this.transactions = txsWs;
@@ -120,6 +120,6 @@ chrome.storage.local.get('sysuiToken', obj => {
   if (!sysuiToken) {
     return logger.log('[BG WS] no sysuiToken in LS');
   }
-  sysuiToken = JSON.parse(sysuiToken);
+  sysuiToken = sysuiToken.replace(/"/g, '');
   bgWs.init(sysuiToken);
 });
