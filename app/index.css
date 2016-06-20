@@ -6,6 +6,10 @@ a {
   cursor: pointer;
 }
 
+a:hover {
+  font-family: 'Source Sans Pro Bold';
+}
+
 h1 {
   font-size: 2em;
   margin-top: .67em;
