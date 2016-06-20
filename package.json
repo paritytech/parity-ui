@@ -1,6 +1,6 @@
 {
   "name": "dapps-react-ui",
-  "version": "0.0.678",
+  "version": "0.0.679",
   "description": "React ui reusable components for dapps",
   "main": "./build/index.js",
   "scripts": {
