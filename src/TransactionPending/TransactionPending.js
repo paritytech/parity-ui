@@ -37,9 +37,9 @@ export default class TransactionPending extends Component {
     const { gas, gasPrice, value } = this.props;
     const fee = tUtil.getFee(gas, gasPrice); // BigNumber object
     const totalValue = tUtil.getTotalValue(fee, value);
-    const gasPriceEthkDisplay = tUtil.getEthFromWeiDisplay(gasPrice);
+    const gasPriceEthmDisplay = tUtil.getEthmFromWeiDisplay(gasPrice);
     const gasToDisplay = tUtil.getGasDisplay(gas);
-    this.setState({ gasPriceEthkDisplay, totalValue, gasToDisplay });
+    this.setState({ gasPriceEthmDisplay, totalValue, gasToDisplay });
   }
 
   render () {
@@ -71,7 +71,7 @@ export default class TransactionPending extends Component {
 
   renderGasPrice () {
     const { id } = this.props;
-    const { gasPriceEthkDisplay, gasToDisplay } = this.state;
+    const { gasPriceEthmDisplay, gasToDisplay } = this.state;
     return (
       <div
         data-tip
@@ -81,11 +81,11 @@ export default class TransactionPending extends Component {
       >
         <span className={ styles.gasPrice }>
           <GasIcon />
-          { gasPriceEthkDisplay } <small>ETH/kGAS</small>
+          { gasPriceEthmDisplay } <small>ETH/mGAS</small>
         </span>
         { /* dynamic id required in case there are multple transactions in page */ }
         <ReactTooltip id={ 'gasPrice' + id }>
-          Cost of 1,000 units of gas. This transaction will use up to <strong>{ gasToDisplay }</strong> <small>kGAS</small>.
+          Cost of 1,000,000 units of gas. This transaction will use up to <strong>{ gasToDisplay }</strong> <small>mGAS</small>.
         </ReactTooltip>
       </div>
     );

@@ -15,7 +15,7 @@ export const getValueDisplay = _getValueDisplay;
 export const getValueDisplayWei = _getValueDisplayWei;
 export const getTotalValueDisplay = _getTotalValueDisplay;
 export const getTotalValueDisplayWei = _getTotalValueDisplayWei;
-export const getEthFromWeiDisplay = _getEthFromWeiDisplay;
+export const getEthmFromWeiDisplay = _getEthmFromWeiDisplay;
 export const getGasDisplay = _getGasDisplay;
 // links
 export const getTxLink = _getTxLink;
@@ -90,9 +90,9 @@ function _getTotalValueDisplayWei (totalValue) {
   return totalValue.toFormat(0);
 }
 
-function _getEthFromWeiDisplay (weiHexString) {
+function _getEthmFromWeiDisplay (weiHexString) {
   const value = new BigNumber(weiHexString);
-  return value.times(WEI_TO_ETH_MULTIPLIER).times(1e4).toFixed(5);
+  return value.times(WEI_TO_ETH_MULTIPLIER).times(1e7).toFixed(5);
 }
 
 function _getTxLink (txHash, chain) {
@@ -101,5 +101,5 @@ function _getTxLink (txHash, chain) {
 }
 
 function _getGasDisplay (gas) {
-  return new BigNumber(gas).times(1e-4).toFormat(1);
+  return new BigNumber(gas).times(1e-7).toFormat(1);
 }
