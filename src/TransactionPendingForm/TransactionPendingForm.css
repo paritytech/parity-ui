@@ -6,6 +6,12 @@
   cursor: pointer;
   color: #00e;
   opacity: .7;
+  transition: opacity .5s;
+}
+
+.rejectToggle:hover {
+  opacity: 1;
+  text-decoration: underline;
 }
 
 .rejectToggle svg {
