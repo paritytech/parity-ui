@@ -6,16 +6,21 @@ export default class ExtensionLink extends Component {
   isChrome = !!window.chrome && !!window.chrome.webstore;
 
   state = {
-    isInstalled: true
+    loading: true,
+    isInstalled: false
   }
 
   componentWillMount () {
     this.updateIsInstalled();
   }
 
+  componentWillUnmount () {
+    clearTimeout(this.isInstalledTimeout);
+  }
+
   render () {
-    const { isInstalled } = this.state;
-    if (!this.isChrome || isInstalled) {
+    const { isInstalled, loading } = this.state;
+    if (!this.isChrome || isInstalled || loading) {
       return null;
     }
 
@@ -28,15 +33,20 @@ export default class ExtensionLink extends Component {
     );
   }
 
-  updateIsInstalled () {
+  updateIsInstalled = () => {
+    if (!this.isChrome || this.state.isInstalled) {
+      return;
+    }
     window.chrome.runtime.sendMessage(
       CHROME_EXT_ID,
       'version',
       reply => {
         if (!reply) {
-          this.setState({ isInstalled: false });
+          this.setState({ isInstalled: false, loading: false });
+          this.isInstalledTimeout = setTimeout(this.updateIsInstalled, 10000);
           return;
         }
+        this.setState({ isInstalled: true, loading: false });
       }
     );
   }
