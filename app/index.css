@@ -4,6 +4,7 @@ html * {
 
 a {
   cursor: pointer;
+  text-decoration: none;
 }
 
 a:hover {
