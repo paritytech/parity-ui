@@ -2,8 +2,7 @@
 import isEqual from 'lodash.isequal';
 import { keccak_256 } from 'js-sha3';
 import logger from '../../utils/logger';
-import { SIGNER_META_TITLE, POPUP_URL } from '../../constants/constants';
-import { weiHexToEthString } from '../../utils/formatters';
+import BadgeTextAnimator from './BadgeTextAnimator';
 
 class Ws {
 
@@ -13,7 +12,6 @@ class Ws {
     this.queue = []; // hold calls until ws is connected on init or if disconnected
     this.isConnected = false;
     chrome.storage.onChanged.addListener(this.onSysuiTokenChange);
-    chrome.notifications.onClicked.addListener(this.onNotificationclick);
     chrome.browserAction.setBadgeBackgroundColor({ color: '#f00'});
     this.reset();
     this.init();
@@ -106,6 +104,10 @@ class Ws {
   }
 
   fetchTransactions () {
+    if (this.isAnimatingIcon) {
+      this.timeoutFetchTransactions();
+      return;
+    }
     this.send('personal_transactionsToConfirm', [], txsWs => {
       this.setBadgeText(txsWs.length)
       chrome.storage.local.get('pendingTransactions', obj => {
@@ -119,7 +121,7 @@ class Ws {
           logger.log('[BG WS] current (WS): ', txsWs);
 
           if (txsWs.length > transactionsLs.length) {
-            this.createNotification(txsWs);
+            this.animateIcon(txsWs.length);
           }
 
           chrome.storage.local.set({ pendingTransactions: JSON.stringify(txsWs) });
@@ -172,47 +174,22 @@ class Ws {
     this.callbacks = {};
   }
 
-  // todo [adgo] - handle multiple new pending transactions
-  createNotification (wsTxs) {
-    const transaction = wsTxs[wsTxs.length - 1];
-    let { value, from, to } = transaction.transaction;
-    to = to || 'Deploy Contract';
-    value = weiHexToEthString(value);
-    chrome.notifications.create({
-      type: 'list',
-      iconUrl: 'img/icon-48.png',
-      title: 'New pending transcation',
-      message: '', // doesn't affect anything, chrome will throw error without it
-      contextMessage: value + ' [ETH]',
-      priority: 2,
-      items: [
-        {
-          title: 'From',
-          message: from
-        },
-        {
-          title: 'To',
-          message: to
-        }
-      ]
+  animateIcon (txsLength) {
+    this.isAnimatingIcon = true;
+    // all parameters, apart from `text`, are optional
+    const animator = new BadgeTextAnimator({
+        text: 'New transaction pending',
+        interval: 100, // the "speed" of the scrolling
+        repeat: false,
+        size: 6, // size of the badge
+        cb: () => this.onAnimateIconEnd(txsLength)
     });
+    animator.animate();
   }
 
-  onNotificationclick = notificationId => {
-    chrome.notifications.clear(notificationId);
-    this.getActiveSignerTab(tab => {
-      if (tab) {
-        chrome.tabs.update(tab.id, { active: true });
-      } else {
-        chrome.tabs.create({ url: POPUP_URL });
-      }
-    })
-  }
-
-  getActiveSignerTab (cb) {
-    chrome.tabs.query({ title: SIGNER_META_TITLE }, tabs => {
-      cb(tabs[0]);
-    });
+  onAnimateIconEnd (txsLength) {
+    this.setBadgeText(txsLength);
+    this.isAnimatingIcon = false;
   }
 
 }
