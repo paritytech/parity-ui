@@ -17,6 +17,7 @@
       "http://localhost/*",
       "http://home.parity/",
       "http://parity.parity/",
+      "http://status.parity/",
       "http://wallet.parity/"
     ]
   },
