@@ -2,7 +2,7 @@
 export default function web3extensions (web3) {
   const {Method, formatters} = web3._extend;
 
-  return {
+  return [{
     property: 'personal',
     methods: [
       new Method({
@@ -19,5 +19,16 @@ export default function web3extensions (web3) {
       })
     ],
     properties: []
-  };
+  }, {
+    property: 'ethcore',
+    methods: [
+      new Method({
+        name: 'unsignedTransactionsCount',
+        call: 'ethcore_unsignedTransactionsCount',
+        params: 0,
+        inputFormatter: []
+      })
+    ],
+    properties: []
+  }];
 }
