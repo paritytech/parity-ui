@@ -13,6 +13,7 @@
   },
   "externally_connectable": {
     "matches": [
+      "http://127.0.0.1/*",
       "http://localhost/*",
       "http://home.parity/",
       "http://parity.parity/",
