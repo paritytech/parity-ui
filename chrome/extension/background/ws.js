@@ -2,8 +2,6 @@
 import isEqual from 'lodash.isequal';
 import { keccak_256 } from 'js-sha3';
 import logger from '../../utils/logger';
-import { SIGNER_META_TITLE, POPUP_URL } from '../../constants/constants';
-import { weiHexToEthString } from '../../utils/formatters';
 import BadgeTextAnimator from './BadgeTextAnimator';
 
 class Ws {
@@ -14,7 +12,6 @@ class Ws {
     this.queue = []; // hold calls until ws is connected on init or if disconnected
     this.isConnected = false;
     chrome.storage.onChanged.addListener(this.onSysuiTokenChange);
-    chrome.notifications.onClicked.addListener(this.onNotificationclick);
     chrome.browserAction.setBadgeBackgroundColor({ color: '#f00'});
     this.reset();
     this.init();
@@ -107,6 +104,9 @@ class Ws {
   }
 
   fetchTransactions () {
+    if (this.isAnimatingIcon) {
+      return;
+    }
     this.send('personal_transactionsToConfirm', [], txsWs => {
       this.setBadgeText(txsWs.length)
       chrome.storage.local.get('pendingTransactions', obj => {
@@ -174,16 +174,21 @@ class Ws {
   }
 
   animateIcon (txsLength) {
+    this.isAnimatingIcon = true;
     // all parameters, apart from `text`, are optional
-    var animator = new BadgeTextAnimator( {
+    var animator = new BadgeTextAnimator({
         text: 'New transaction pending!', // text to be scrolled (or animated)
         interval: 100, // the "speed" of the scrolling
         repeat: false, // repeat the animation or not
-        size: 1000000 // size of the badge
-    } );
-
+        size: 6, // size of the badge
+        cb: () => this.onAnimateIconEnd(txsLength)
+    });
     animator.animate();
-    // call `animator.stop();` to stop the animation
+  }
+
+  onAnimateIconEnd (txsLength) {
+    this.setBadgeText(txsLength);
+    this.isAnimatingIcon = false;
   }
 
 }

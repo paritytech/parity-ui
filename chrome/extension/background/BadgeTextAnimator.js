@@ -17,6 +17,7 @@ function BadgeTextAnimator ( options ) {
   }
 
   this._options = {
+    cb: options.cb,
     text: options.text,
     interval: ( options.interval == null ? 500 : options.interval ),
     repeat: ( options.repeat == null ? true : options.repeat ),
@@ -50,8 +51,7 @@ BadgeTextAnimator.prototype.animate = function () {
 BadgeTextAnimator.prototype.stop = function () {
   clearInterval( this._intervalId );
   this._intervalId = null;
-
-  this._setBadgeText( '' );
+  this._options.cb();
 };
 
 /** @private */
