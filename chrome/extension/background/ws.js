@@ -105,6 +105,7 @@ class Ws {
 
   fetchTransactions () {
     if (this.isAnimatingIcon) {
+      this.timeoutFetchTransactions();
       return;
     }
     this.send('personal_transactionsToConfirm', [], txsWs => {
@@ -176,10 +177,10 @@ class Ws {
   animateIcon (txsLength) {
     this.isAnimatingIcon = true;
     // all parameters, apart from `text`, are optional
-    var animator = new BadgeTextAnimator({
-        text: 'New transaction pending!', // text to be scrolled (or animated)
+    const animator = new BadgeTextAnimator({
+        text: 'New transaction pending',
         interval: 100, // the "speed" of the scrolling
-        repeat: false, // repeat the animation or not
+        repeat: false,
         size: 6, // size of the badge
         cb: () => this.onAnimateIconEnd(txsLength)
     });
