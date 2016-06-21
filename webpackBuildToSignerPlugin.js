@@ -17,10 +17,9 @@ buildToSignerPlugin.prototype.puts = function (err, stdout, stderr) {
     console.log('[SIGNER PLUGIN] ', stdout);
   }
   console.log('****************************\n');
-}
+};
 
 buildToSignerPlugin.prototype.apply = function (compiler) {
-  console.log('buildToSignerPlugin APPLY')
   compiler.plugin('done', this.onDone.bind(this));
 };
 
@@ -31,6 +30,6 @@ buildToSignerPlugin.prototype.onDone = function (/* params */) {
   // copy build index.js to destination
   const cpJs = `cp ${this.src} ${this.target}`;
   exec(cpJs, this.puts.bind(this));
-}
+};
 
 module.exports = buildToSignerPlugin;

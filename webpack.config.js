@@ -147,5 +147,5 @@ function signerPluginOpts () {
 function isDappSigner () {
   return process.argv
               .find(arg => arg.indexOf('--signer=') > -1)
-              .indexOf('dapp') > -1
+              .indexOf('dapp') > -1;
 }
