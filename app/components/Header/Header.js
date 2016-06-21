@@ -15,15 +15,16 @@ export default class Header extends Component {
     isConnected: PropTypes.bool.isRequired
   }
 
+  title = this.isExtension() ? 'Parity Signer UI (EXT)' : 'Parity Signer UI (DAPP)';
+
   render () {
     return (
-      <div className={ styles.container }>
-        <AppBar
-          title='Parity Signer UI'
-          showMenuIconButton={ false }
-          iconElementRight={ this.renderMenu() }
-        />
-      </div>
+      <AppBar
+        title={ this.title }
+        className={ styles.bar }
+        showMenuIconButton={ false }
+        iconElementRight={ this.renderMenu() }
+      />
     );
   }
 
@@ -49,6 +50,10 @@ export default class Header extends Component {
     //     </Link>
     //   </IconMenu>
     // );
+  }
+
+  isExtension () {
+    return window.location.protocol.indexOf('chrome-extension') > -1;
   }
 
 }
