@@ -12,6 +12,7 @@ class Ws {
     this.callbacks = {};
     this.queue = []; // hold calls until ws is connected on init or if disconnected
     this.isConnected = false;
+    chrome.runtime.onMessageExternal.addListener(this.onWebsiteMsg)
     chrome.storage.onChanged.addListener(this.onSysuiTokenChange);
     chrome.notifications.onClicked.addListener(this.onNotificationclick);
     chrome.browserAction.setBadgeBackgroundColor({ color: '#f00'});
@@ -213,6 +214,14 @@ class Ws {
     chrome.tabs.query({ title: SIGNER_META_TITLE }, tabs => {
       cb(tabs[0]);
     });
+  }
+
+  onWebsiteMsg (msg, sender, sendResponse) {
+    if (msg !== 'version') {
+      return;
+    }
+    const { version } = chrome.runtime.getManifest();
+    sendResponse({ version });
   }
 
 }

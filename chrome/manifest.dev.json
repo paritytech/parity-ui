@@ -11,6 +11,14 @@
   "background": {
     "page": "background.html"
   },
+  "externally_connectable": {
+    "matches": [
+      "http://localhost/*",
+      "http://home.parity/",
+      "http://parity.parity/",
+      "http://wallet.parity/"
+    ]
+  },
   "permissions": [ "storage", "proxy", "notifications", "tabs" ],
   "content_security_policy": "default-src 'self'; font-src 'self' data:; script-src 'self' http://localhost:3030 https://localhost:3030 'unsafe-eval'; connect-src ws://127.0.0.1:* http://localhost:3030 https://localhost:3030; style-src * 'unsafe-inline' 'self' blob:; img-src 'self' data:;"
 }
