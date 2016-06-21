@@ -101,5 +101,5 @@ function _getTxLink (txHash, chain) {
 }
 
 function _getGasDisplay (gas) {
-  return new BigNumber(gas).times(1e-7).toFormat(1);
+  return new BigNumber(gas).times(1e-7).toFormat(4);
 }

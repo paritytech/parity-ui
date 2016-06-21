@@ -81,11 +81,11 @@ export default class TransactionPending extends Component {
       >
         <span className={ styles.gasPrice }>
           <GasIcon />
-          { gasPriceEthmDisplay } <small>ETH/mGAS</small>
+          { gasPriceEthmDisplay } <small>ETH/MGAS</small>
         </span>
         { /* dynamic id required in case there are multple transactions in page */ }
         <ReactTooltip id={ 'gasPrice' + id }>
-          Cost of 1,000,000 units of gas. This transaction will use up to <strong>{ gasToDisplay }</strong> <small>mGAS</small>.
+          Cost of 1,000,000 units of gas. This transaction will use up to <strong>{ gasToDisplay }</strong> <small>MGAS</small>.
         </ReactTooltip>
       </div>
     );
