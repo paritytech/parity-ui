@@ -4,6 +4,7 @@ import { keccak_256 } from 'js-sha3';
 import logger from '../../utils/logger';
 import { SIGNER_META_TITLE, POPUP_URL } from '../../constants/constants';
 import { weiHexToEthString } from '../../utils/formatters';
+import BadgeTextAnimator from './BadgeTextAnimator';
 
 class Ws {
 
@@ -119,7 +120,7 @@ class Ws {
           logger.log('[BG WS] current (WS): ', txsWs);
 
           if (txsWs.length > transactionsLs.length) {
-            this.createNotification(txsWs);
+            this.animateIcon(txsWs.length);
           }
 
           chrome.storage.local.set({ pendingTransactions: JSON.stringify(txsWs) });
@@ -172,47 +173,17 @@ class Ws {
     this.callbacks = {};
   }
 
-  // todo [adgo] - handle multiple new pending transactions
-  createNotification (wsTxs) {
-    const transaction = wsTxs[wsTxs.length - 1];
-    let { value, from, to } = transaction.transaction;
-    to = to || 'Deploy Contract';
-    value = weiHexToEthString(value);
-    chrome.notifications.create({
-      type: 'list',
-      iconUrl: 'img/icon-48.png',
-      title: 'New pending transcation',
-      message: '', // doesn't affect anything, chrome will throw error without it
-      contextMessage: value + ' [ETH]',
-      priority: 2,
-      items: [
-        {
-          title: 'From',
-          message: from
-        },
-        {
-          title: 'To',
-          message: to
-        }
-      ]
-    });
-  }
+  animateIcon (txsLength) {
+    // all parameters, apart from `text`, are optional
+    var animator = new BadgeTextAnimator( {
+        text: 'New transaction pending!', // text to be scrolled (or animated)
+        interval: 100, // the "speed" of the scrolling
+        repeat: false, // repeat the animation or not
+        size: 1000000 // size of the badge
+    } );
 
-  onNotificationclick = notificationId => {
-    chrome.notifications.clear(notificationId);
-    this.getActiveSignerTab(tab => {
-      if (tab) {
-        chrome.tabs.update(tab.id, { active: true });
-      } else {
-        chrome.tabs.create({ url: POPUP_URL });
-      }
-    })
-  }
-
-  getActiveSignerTab (cb) {
-    chrome.tabs.query({ title: SIGNER_META_TITLE }, tabs => {
-      cb(tabs[0]);
-    });
+    animator.animate();
+    // call `animator.stop();` to stop the animation
   }
 
 }
