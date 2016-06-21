@@ -17,7 +17,8 @@
     "nightwatchCI": "npm run nightwatch  -- -e saucelabs",
     "prebuild": "npm run clean",
     "build": "NODE_ENV=production webpack --progress --colors",
-    "buildForParitySigner": "npm run build -- --signer --watch",
+    "buildForSignerDapp": "npm run build -- --signer=dapp --watch",
+    "buildForSignerExt": "npm run build -- --signer=ext --watch",
     "clean": "rm build -rf || true",
     "commit": "commit-wizard"
   },

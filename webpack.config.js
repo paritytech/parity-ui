@@ -106,7 +106,7 @@ module.exports = {
     ];
 
     if (isSigner()) {
-      plugins.push(new WebpackBuildToSignerPlugin());
+      plugins.push(new WebpackBuildToSignerPlugin(signerPluginOpts()));
     }
 
     if (isProd && !isSigner()) {
@@ -132,5 +132,20 @@ module.exports = {
 };
 
 function isSigner () {
-  return !!process.argv.find(arg => arg === '--signer');
+  return !!process.argv.find(arg => arg.indexOf('--signer=') > -1);
+}
+
+function signerPluginOpts () {
+  const dappTarget = '../parity-dapps-minimal-sysui-rs/src/web/app.js';
+  const extTarget = '../parity-sysui-chrome-extension/node_modules/parity-sysui-app/build/index.js';
+  const target = isDappSigner() ? dappTarget : extTarget;
+  return {
+    target: target
+  };
+}
+
+function isDappSigner () {
+  return process.argv
+              .find(arg => arg.indexOf('--signer=') > -1)
+              .indexOf('dapp') > -1
 }
