@@ -11,6 +11,7 @@ class Ws {
     this.callbacks = {};
     this.queue = []; // hold calls until ws is connected on init or if disconnected
     this.isConnected = false;
+    chrome.runtime.onMessageExternal.addListener(this.onWebsiteMsg)
     chrome.storage.onChanged.addListener(this.onSysuiTokenChange);
     chrome.browserAction.setBadgeBackgroundColor({ color: '#f00'});
     this.reset();
@@ -190,6 +191,14 @@ class Ws {
   onAnimateIconEnd (txsLength) {
     this.setBadgeText(txsLength);
     this.isAnimatingIcon = false;
+  }
+
+  onWebsiteMsg (msg, sender, sendResponse) {
+    if (msg !== 'version') {
+      return;
+    }
+    const { version } = chrome.runtime.getManifest();
+    sendResponse({ version });
   }
 
 }

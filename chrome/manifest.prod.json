@@ -9,6 +9,16 @@
     "default_title": "Parity Signer UI",
     "default_popup": "popup.html"
   },
+  "externally_connectable": {
+    "matches": [
+      "http://127.0.0.1/*",
+      "http://localhost/*",
+      "http://home.parity/",
+      "http://status.parity/",
+      "http://parity.parity/",
+      "http://wallet.parity/"
+    ]
+  },
   "icons": { 
     "16": "img/icon-16.png",
     "19": "img/icon-19.png",
