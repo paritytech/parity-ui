@@ -25,7 +25,7 @@ export default class Header extends Component {
       <AppBar
         title={ this.title }
         className={ styles.bar }
-        styles={ this.styles }
+        style={ this.styles }
         showMenuIconButton={ false }
         iconElementRight={ this.renderMenu() }
       />
