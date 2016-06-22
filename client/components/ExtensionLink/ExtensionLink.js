@@ -25,9 +25,10 @@ export default class ExtensionLink extends Component {
     }
 
     return (
-      <div>
+      <div styles={{lineHeight: '26px'}}>
+        &nbsp;
         <a href={ CHROME_EXT_LINK } target='_blank'>
-          Get chrome extension
+          Get Chrome Extension
         </a>
       </div>
     );
