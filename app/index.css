@@ -4,6 +4,7 @@ html * {
 
 a {
   cursor: pointer;
+  text-decoration: none;
 }
 
 a:hover {
@@ -12,6 +13,12 @@ a:hover {
 
 h1 {
   font-size: 2em;
+  margin-top: .67em;
+  margin-bottom: .67em;
+}
+
+h2 {
+  font-size: 1.5em;
   margin-top: .67em;
   margin-bottom: .67em;
 }

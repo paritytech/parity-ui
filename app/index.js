@@ -45,3 +45,6 @@ export default function app (initToken, tokenSetter, addTokenListener, wsPath) {
 
   wsProvider.init(initToken);
 }
+
+// expose globally for parity builtin sysui dapp
+global.paritySysuiApp = app;

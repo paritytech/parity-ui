@@ -2,6 +2,7 @@ var rucksack = require('rucksack-css');
 var webpack = require('webpack');
 var path = require('path');
 var WebpackErrorNotificationPlugin = require('webpack-error-notification');
+var WebpackBuildToSignerPlugin = require('./webpackBuildToSignerPlugin');
 
 var ENV = process.env.NODE_ENV || 'development';
 var isProd = ENV === 'production';
@@ -104,7 +105,11 @@ module.exports = {
       new WebpackErrorNotificationPlugin(/* strategy, options */)
     ];
 
-    if (isProd) {
+    if (isSigner()) {
+      plugins.push(new WebpackBuildToSignerPlugin(signerPluginOpts()));
+    }
+
+    if (isProd && !isSigner()) {
       plugins.push(new webpack.optimize.OccurrenceOrderPlugin());
       plugins.push(new webpack.optimize.DedupePlugin());
       plugins.push(new webpack.optimize.UglifyJsPlugin({
@@ -125,3 +130,22 @@ module.exports = {
     hot: !isProd
   }
 };
+
+function isSigner () {
+  return !!process.argv.find(arg => arg.indexOf('--signer=') > -1);
+}
+
+function signerPluginOpts () {
+  const dappTarget = '../parity-dapps-minimal-sysui-rs/src/web/app.js';
+  const extTarget = '../parity-sysui-chrome-extension/node_modules/parity-sysui-app/build/index.js';
+  const target = isDappSigner() ? dappTarget : extTarget;
+  return {
+    target: target
+  };
+}
+
+function isDappSigner () {
+  return process.argv
+              .find(arg => arg.indexOf('--signer=') > -1)
+              .indexOf('dapp') > -1;
+}
