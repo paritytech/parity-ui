@@ -21,7 +21,8 @@ const http = new Web3.providers.HttpProvider('/rpc/');
 const interceptor = new Interceptor(http);
 const web3 = new Web3(interceptor);
 const rawWeb3 = new Web3(http);
-rawWeb3._extend(web3extensions(rawWeb3));
+web3extensions(rawWeb3)
+  .map(extension => rawWeb3._extend(extension));
 
 // expose global web3
 global.web3 = web3;

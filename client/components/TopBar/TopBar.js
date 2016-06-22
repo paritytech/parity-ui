@@ -46,7 +46,8 @@ export default class TopBar extends Web3Component {
     sendingTransaction: false,
     createAccountOpen: false,
     accountsDetails: false,
-    isSignerEnabled: false
+    isSignerEnabled: false,
+    unsignedTransactionsCount: 0
   };
 
   listeners = [];
@@ -146,14 +147,27 @@ export default class TopBar extends Web3Component {
       return;
     }
 
-    const port = isSignerEnabled === true ? 8180 : isSignerEnabled;
+    const { unsignedTransactionsCount } = this.state;
 
+    if (!unsignedTransactionsCount) {
+      return (
+        <div className={styles.signerCount}></div>
+      );
+    }
+
+    const port = isSignerEnabled;
     return (
-      <iframe
-        className={styles.unconfirmedTx}
-        src={`http://127.0.0.1:${port}/count.html`}
-        seamless
-      />
+      <div className={styles.signerCount}>
+        <a
+          target={'_signer'}
+          href={`http://127.0.0.1:${port}/index.html`}
+          title={`There are ${unsignedTransactionsCount} transactions awaiting your confirmation.`}
+        >
+          <span>
+            {unsignedTransactionsCount}
+          </span>
+        </a>
+      </div>
     );
   }
 
@@ -203,6 +217,15 @@ export default class TopBar extends Web3Component {
       }
 
       this.setState({ isSignerEnabled });
+
+      if (isSignerEnabled) {
+        this.context.web3.ethcore.unsignedTransactionsCount((err, unsignedTransactionsCount) => {
+          if (err) {
+            return;
+          }
+          this.setState({ unsignedTransactionsCount });
+        });
+      }
     });
     this.context.web3.eth.getAccounts((err, allAccounts) => {
       this.handleFirstRun(allAccounts);
