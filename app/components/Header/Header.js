@@ -15,7 +15,7 @@ export default class Header extends Component {
     isConnected: PropTypes.bool.isRequired
   }
 
-  title = this.isExtension() ? 'Parity Signer UI (EXT)' : 'Parity Signer UI (DAPP)';
+  title = this.isExtension() ? 'Parity Signer UI' : 'Parity Signer UI (DAPP)';
 
   render () {
     return (
