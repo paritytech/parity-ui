@@ -15,7 +15,7 @@ html,body {
 .header {
   margin-top: 15px;
   display: flex;
-  flex: 1 0 auto;
+  flex: 1 1 auto;
 }
 .dialog {
   margin-left: 10px;
@@ -41,7 +41,7 @@ html,body {
 .statusVisible {
   animation: showStatus 1s linear 0s 1 normal forwards;
 }
-@media (max-width: 800px) {
+@media (max-width: 900px) {
   .statusVisible { display: none; }
 }
 
@@ -115,6 +115,7 @@ html,body {
   font-family: sans-serif;
   font-weight: bold;
   text-shadow: 1px 1px 2px #000;
+  text-decoration: none;
 }
 .signerCount a:hover {
   text-decoration: none;
