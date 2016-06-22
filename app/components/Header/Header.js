@@ -16,12 +16,16 @@ export default class Header extends Component {
   }
 
   title = this.isExtension() ? 'Parity Signer UI' : 'Parity Signer UI (DAPP)';
+  styles = {
+    backgroundColor: this.isExtension() ? '#6691C2' : '#FF5722'
+  };
 
   render () {
     return (
       <AppBar
         title={ this.title }
         className={ styles.bar }
+        style={ this.styles }
         showMenuIconButton={ false }
         iconElementRight={ this.renderMenu() }
       />
