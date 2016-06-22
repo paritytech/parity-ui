@@ -17,6 +17,7 @@ import SubdomainDialog from '../SubdomainDialog';
 import CreateAccount from '../CreateAccount';
 import StatusLine from '../StatusLine';
 import DappNav from '../DappNav';
+import ExtensionLink from '../ExtensionLink';
 
 import Storage from '../Storage';
 import {appLink} from '../appLink';
@@ -113,6 +114,9 @@ export default class TopBar extends Web3Component {
               <DappNav onSearchActive={this.onSearchActive}/>
               <div className={this.state.searchActive ? styles.statusHidden : styles.statusVisible }>
                 <StatusLine />
+              </div>
+              <div className={ styles.extension }>
+                <ExtensionLink />
               </div>
             </div>
             {this.renderManageAccounts()}
