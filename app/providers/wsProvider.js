@@ -3,7 +3,8 @@ import wsBase from '../utils/wsBase';
 import logger from '../utils/logger';
 import { updatePendingTransactions } from '../actions/transactions';
 import { updateIsConnected } from '../actions/ws';
-import { updateIsLoading } from '../actions/app';
+import { updateAppState } from '../actions/app';
+import { isParityRunning } from '../utils/parity';
 
 export default class WsProvider extends wsBase {
 
@@ -26,20 +27,17 @@ export default class WsProvider extends wsBase {
     logger.log('[WS Provider] connected');
     super.onWsOpen();
     this.store.dispatch(updateIsConnected(true));
-    this.store.dispatch(updateIsLoading(false));
+    this.store.dispatch(updateAppState({ isParityRunning: true, isLoading: false }));
     this.pollTransactions();
   }
 
   onWsError (err) {
     super.onWsError(err);
     this.store.dispatch(updateIsConnected(false));
-    const { isLoading } = this.store.getState().app;
-
-    // handle loading of app
-    // todo [adgo] - find a better place to manage app loading state
-    if (isLoading) {
-      this.store.dispatch(updateIsLoading(false));
-    }
+    isParityRunning(this.wsPath)
+      .then(isRunning => {
+        this.store.dispatch(updateAppState({ isParityRunning: isRunning, isLoading: false }));
+      });
   }
 
   pollTransactions () {
