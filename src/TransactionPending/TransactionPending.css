@@ -42,7 +42,7 @@
   height: 16px !important;
   position: relative;
   bottom: -3px;
-  fill: rgba(0,0,0, 0.35);
+  fill: rgba(0,0,0, 0.35) !important;
 }
 
 .miningTime {
