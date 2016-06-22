@@ -115,6 +115,7 @@ export default class TopBar extends Web3Component {
               <div className={this.state.searchActive ? styles.statusHidden : styles.statusVisible }>
                 <StatusLine />
               </div>
+              <div className={ styles.separator } />
               <div className={ styles.extension }>
                 <ExtensionLink />
               </div>

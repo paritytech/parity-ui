@@ -13,9 +13,9 @@ html,body {
 }
 
 .header {
-  float: left;
   margin-top: 15px;
   display: flex;
+  flex: 1 0 auto;
 }
 .dialog {
   margin-left: 10px;
@@ -35,6 +35,7 @@ html,body {
   background: #dfd6d3;
   box-shadow: 0 -3px 2px -3px rgba(119, 102, 102, 0.75);
   z-index: 0;
+  display: flex;
 }
 
 .statusVisible {
@@ -121,5 +122,8 @@ html,body {
 .signerCount a::before, .signerCount a::after {
   display: block;
   content: ' ';
+  flex: 1 0 auto;
+}
+.separator {
   flex: 1 0 auto;
 }

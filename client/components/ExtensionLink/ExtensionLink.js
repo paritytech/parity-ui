@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { CHROME_EXT_ID, CHROME_EXT_LINK } from '../../constants/constants';
 
+import styles from './styles.css';
+
 export default class ExtensionLink extends Component {
 
   isChrome = !!window.chrome && !!window.chrome.webstore;
@@ -25,7 +27,7 @@ export default class ExtensionLink extends Component {
     }
 
     return (
-      <div styles={{lineHeight: '26px'}}>
+      <div className={styles.link}>
         &nbsp;
         <a href={ CHROME_EXT_LINK } target='_blank'>
           Get Chrome Extension

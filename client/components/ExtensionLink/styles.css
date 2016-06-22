@@ -1,0 +1,11 @@
+.link {
+  line-height: 26px;
+}
+.link a, .link a:visited {
+  text-decoration: none;
+  color: #2196F3;
+}
+.link a:hover, .link a:active {
+  text-decoration: underline;
+  color: #2C78B5;
+}
