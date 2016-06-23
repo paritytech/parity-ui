@@ -21,9 +21,8 @@ export default class ParityNotRunning extends Component {
 
   pollIsParityRunning = () => {
     isParityRunning(this.props.parityPath).then(isRunning => {
-      console.log('[PARITY NOT RUNNING] isRunning', isRunning);
       if (isRunning) {
-        this.props.updateAppState({ isLoading: false, isParityRunning: true });
+        window.location.reload();
         return;
       }
       this.pollTimeout = setTimeout(this.pollIsParityRunning, 2000);
