@@ -105,6 +105,10 @@ class Ws {
   }
 
   fetchTransactions () {
+    if (this.isAnimatingIcon) {
+      return;
+    }
+
     this.send('personal_transactionsToConfirm', [], txsWs => {
       this.setBadgeText(txsWs.length)
       chrome.storage.local.get('pendingTransactions', obj => {
@@ -185,6 +189,7 @@ class Ws {
   onAnimateIconEnd (txsLength) {
     this.setBadgeText(txsLength);
     this.isAnimatingIcon = false;
+    this.fetchTransactions(); // in case there were new transactions while the con was animated
   }
 
   onWebsiteMsg (msg, sender, sendResponse) {
