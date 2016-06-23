@@ -33,7 +33,7 @@ impl WebApp for App {
     Info {
       name: "Ethereum Wallet",
       version: env!("CARGO_PKG_VERSION"),
-      author: "Alexander Van de Sande <alex.vandesande@ethdev.com>, Fabian Vogelsteller <fabian.vogelsteller@gmail.com>",
+      author: "Alexander Van de Sande, Fabian Vogelsteller",
       description: "Ethereum Wallet Ðapp for Parity",
       icon_url: "icon.png",
     }
