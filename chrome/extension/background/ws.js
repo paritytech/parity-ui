@@ -11,10 +11,10 @@ class Ws {
     this.callbacks = {};
     this.queue = []; // hold calls until ws is connected on init or if disconnected
     this.isConnected = false;
+    this.pendingTransactions = []
     chrome.runtime.onMessageExternal.addListener(this.onWebsiteMsg)
     chrome.storage.onChanged.addListener(this.onSysuiTokenChange);
     chrome.browserAction.setBadgeBackgroundColor({ color: '#f00'});
-    this.reset();
     this.init();
   }
 
@@ -40,8 +40,8 @@ class Ws {
   }
 
   reset () {
-    // todo [adgo]- remove transactions from LS
-    chrome.storage.local.set({ pendingTransactions: JSON.stringify([]) });
+    this.pendingTransactions = []
+    this.setBadgeText('');
   }
 
   // when token changes in chrome LS
@@ -64,7 +64,6 @@ class Ws {
     logger.log('[BG WS] connected');
     this.isConnected = true;
     this.executeQueue();
-    chrome.storage.local.set({ pendingTransactions: JSON.stringify([]) });
     this.ws.addEventListener('close', this.onWsClose);
     this.ws.addEventListener('message', this.onWsMsg);
     this.fetchTransactions();
@@ -110,26 +109,15 @@ class Ws {
     }
 
     this.send('personal_transactionsToConfirm', [], txsWs => {
-      this.setBadgeText(txsWs.length)
-      chrome.storage.local.get('pendingTransactions', obj => {
-        try {
-          const transactionsLs = JSON.parse(obj.pendingTransactions);
-          if (isEqual(txsWs, transactionsLs)) {
-            return;
-          }
-          logger.log('[BG WS] transactions changed');
-          logger.log('[BG WS] previous (LS): ', transactionsLs);
-          logger.log('[BG WS] current (WS): ', txsWs);
-
-          if (txsWs.length > transactionsLs.length) {
-            this.animateIcon(txsWs.length);
-          }
-
-          chrome.storage.local.set({ pendingTransactions: JSON.stringify(txsWs) });
-        } catch (err) {
-          logger.warn('[BG WS] bad data from extension local storage! object should contain transactions ', obj, err);
-        }
-      });
+      if (isEqual(txsWs, this.pendingTransactions)) {
+        return;
+      }
+      logger.log('[BG WS] new pending transactions: ', txsWs);
+      this.setBadgeText(txsWs.length);
+      if (txsWs.length > this.pendingTransactions.length) {
+        this.animateIcon(txsWs.length);
+      }
+      this.pendingTransactions = txsWs;
     });
   }
 
