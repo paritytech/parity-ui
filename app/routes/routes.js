@@ -10,6 +10,7 @@ import LoadingPage from '../containers/LoadingPage';
 import OptionsPage from '../containers/OptionsPage';
 import TransactionsPage from '../containers/TransactionsPage';
 import UnAuthorizedPage from '../containers/UnAuthorizedPage';
+import ParityNotRunningPage from '../containers/ParityNotRunningPage';
 
 const routerHistory = useRouterHistory(createHashHistory)({
   queryKey: false
@@ -25,6 +26,7 @@ export default class Routes extends Component {
         <Route component={ RootContainer }>
           <Route path={ '/loading' } component={ LoadingPage } />
           <Route path={ '/unAuthorized' } component={ UnAuthorizedPage } />
+          <Route path={ '/parityNotRunning' } component={ ParityNotRunningPage } />
           <Route path={ '/' } onEnter={ this.requireAuth }>
             <IndexRedirect to='transactions' />
             <Route path={ 'transactions' } component={ TransactionsPage } />
@@ -42,11 +44,18 @@ export default class Routes extends Component {
   requireAuth = (nextState, replace) => {
     const { app, ws } = this.props.store.getState();
     if (app.isLoading) {
-      return replace('/loading');
+      replace('/loading');
+      return;
+    }
+
+    if (!app.isParityRunning) {
+      replace('/parityNotRunning');
+      return;
     }
 
     if (!ws.isConnected) {
-      return replace('/unAuthorized');
+      replace('/unAuthorized');
+      return;
     }
   };
 

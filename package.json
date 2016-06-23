@@ -104,6 +104,7 @@
     "xhr-interceptor": "^1.3.0"
   },
   "dependencies": {
+    "axios": "^0.12.0",
     "babel-polyfill": "^6.9.1",
     "dapps-react-ui": "0.0.682",
     "event-emitter": "^0.3.4",

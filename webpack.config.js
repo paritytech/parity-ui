@@ -7,6 +7,8 @@ var WebpackBuildToSignerPlugin = require('./webpackBuildToSignerPlugin');
 var ENV = process.env.NODE_ENV || 'development';
 var isProd = ENV === 'production';
 
+process.env.LOGGING = !isProd || isSigner();
+
 module.exports = {
   debug: !isProd,
   cache: !isProd,
