@@ -25,7 +25,7 @@ export default class ParityNotRunning extends Component {
         window.location.reload();
         return;
       }
-      this.pollTimeout = setTimeout(this.pollIsParityRunning, 2000);
+      this.pollTimeout = setTimeout(this.pollIsParityRunning, 5000);
     });
   }
 
