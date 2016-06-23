@@ -27,7 +27,7 @@ export default class WsProvider extends wsBase {
     super.onWsOpen();
     this.store.dispatch(updateIsConnected(true));
     this.store.dispatch(updateIsLoading(false));
-    this.pollTransactions();
+    this.fetchPendingTransactions();
   }
 
   onWsError (err) {
@@ -42,21 +42,24 @@ export default class WsProvider extends wsBase {
     }
   }
 
-  pollTransactions () {
+  onWsMsg (msg) {
+    super.onWsMsg(msg);
+    if (msg.data !== 'new_message') {
+      return;
+    }
+    this.fetchPendingTransactions();
+  }
+
+  fetchPendingTransactions () {
     this.send('personal_transactionsToConfirm', [], txsWs => {
       const txsStored = this.store.getState().transactions.pending;
       if (isEqual(txsWs, txsStored)) {
-        return this.timeoutFetchTransactions();
+        return;
       }
 
       logger.log('[WS Provider] transactions changed ', txsWs);
       this.store.dispatch(updatePendingTransactions(txsWs));
-      this.timeoutFetchTransactions();
     });
-  }
-
-  timeoutFetchTransactions = () => {
-    setTimeout(::this.pollTransactions, 2000);
   }
 
 }
