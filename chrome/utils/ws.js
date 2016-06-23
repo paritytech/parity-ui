@@ -7,9 +7,9 @@ export default class Ws {
     this.path = opts.path || '127.0.0.1';
     this.port = opts.port || '8180';
     this.reconnectTimeout = opts.reconnectTimeout || 5000;
-    this.openCb = opts.openCb || noop;
-    this.errorCb = opts.errorCb || noop;
-    this.closeCb = opts.closeCb || noop;
+    this.onOpen = opts.onOpen || noop;
+    this.onError = opts.onError || noop;
+    this.onClose = opts.onClose || noop;
     this.isConnected = false;
     this.callbacks = {};
     this.queue = [];
@@ -35,20 +35,20 @@ export default class Ws {
     this.ws.addEventListener('message', this.onMsg);
     this.isConnected = true;
     this.executeQueue();
-    this.openCb();
+    this.onOpen();
   }
 
   onClose = () => {
     logger.warn('[WS] closed');
     this.executeCbsWithError();
     this.isConnected = false;
-    this.closeCb();
+    this.onClose();
     this.init(this.token);
   }
 
   onError = err => {
     logger.warn('[WS] error', err);
-    this.closeCb();
+    this.onError();
     this.initTimeout = setTimeout(() => this.init(this.token), this.reconnectTimeout);
   }
 
