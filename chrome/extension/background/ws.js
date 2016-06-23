@@ -85,6 +85,10 @@ class Ws {
   }
 
   onWsMsg = msg => {
+    if (msg.data === 'new_message') {
+      this.fetchTransactions();
+      return;
+    }
     try {
       msg = JSON.parse(msg.data);
     } catch (err) {
@@ -100,15 +104,7 @@ class Ws {
     cb(msg.result);
   }
 
-  timeoutFetchTransactions = () => {
-    setTimeout(::this.fetchTransactions, 2000);
-  }
-
   fetchTransactions () {
-    if (this.isAnimatingIcon) {
-      this.timeoutFetchTransactions();
-      return;
-    }
     this.send('personal_transactionsToConfirm', [], txsWs => {
       this.setBadgeText(txsWs.length)
       chrome.storage.local.get('pendingTransactions', obj => {
@@ -128,8 +124,6 @@ class Ws {
           chrome.storage.local.set({ pendingTransactions: JSON.stringify(txsWs) });
         } catch (err) {
           logger.warn('[BG WS] bad data from extension local storage! object should contain transactions ', obj, err);
-        } finally {
-          this.timeoutFetchTransactions()
         }
       });
     });
