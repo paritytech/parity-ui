@@ -2,7 +2,7 @@
 import isEqual from 'lodash.isequal';
 import { keccak_256 } from 'js-sha3';
 import logger from '../../utils/logger';
-import BadgeTextAnimator from './BadgeTextAnimator';
+import BadgeTextAnimator from 'chrome-badge-animator';
 
 class Ws {
 
