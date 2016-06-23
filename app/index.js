@@ -22,12 +22,12 @@ import middlewares from './middlewares';
 import createStore from './store/configureStore';
 import Routes from './routes';
 
-export default function app (initToken, tokenSetter, addTokenListener, wsPath) {
-  const web3WebSocketProvider = new Web3WebSocketProvider(initToken, addTokenListener, wsPath);
+export default function app (initToken, tokenSetter, addTokenListener, parityPath) {
+  const web3WebSocketProvider = new Web3WebSocketProvider(initToken, addTokenListener, parityPath);
   const web3 = new Web3(web3WebSocketProvider);
   web3._extend(web3Extension(web3));
 
-  const store = createStore(middlewares(initToken, tokenSetter, wsPath));
+  const store = createStore(middlewares(initToken, tokenSetter, parityPath), parityPath);
 
   injectTapEventPlugin();
   ReactDOM.render(
@@ -41,7 +41,7 @@ export default function app (initToken, tokenSetter, addTokenListener, wsPath) {
     document.querySelector('#root')
   );
 
-  const wsProvider = new WsProvider(store, wsPath, addTokenListener);
+  const wsProvider = new WsProvider(store, parityPath, addTokenListener);
 
   wsProvider.init(initToken);
 }

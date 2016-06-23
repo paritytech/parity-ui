@@ -2,14 +2,16 @@
 import { handleActions } from 'redux-actions';
 
 const initialState = {
-  isLoading: true
+  isLoading: true,
+  isParityRunning: false
 };
 
 export default handleActions({
 
-  'update isLoading' (state, action) {
+  'update appState' (state, action) {
     return {
-      isLoading: action.payload
+      isLoading: action.payload.isLoading,
+      isParityRunning: action.payload.isParityRunning
     };
   }
 
