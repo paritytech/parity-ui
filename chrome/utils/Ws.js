@@ -6,10 +6,10 @@ export default class Ws {
   constructor (opts) {
     this.path = opts.path || window.location.host;
     this.reconnectTimeout = opts.reconnectTimeout || 5000;
-    this.onMsg = opts.onMsg || noop;
-    this.onOpen = opts.onOpen || noop;
-    this.onError = opts.onError || noop;
-    this.onClose = opts.onClose || noop;
+    this.onMsg = opts.onMsg || this._noop;
+    this.onOpen = opts.onOpen || this._noop;
+    this.onError = opts.onError || this._noop;
+    this.onClose = opts.onClose || this._noop;
     this._isConnected = false;
     this._callbacks = {};
     this._queue = [];
@@ -17,6 +17,7 @@ export default class Ws {
   }
 
   init = token => {
+    this._token = token
     clearTimeout(this._initTimeout);
     try {
       const hash = this._hash(token);
@@ -48,8 +49,12 @@ export default class Ws {
 
   _onError = err => {
     logger.warn('[WS] error', err);
-    this.onError();
-    this._initTimeout = setTimeout(() => this.init(this._token), this._reconnectTimeout);
+    this.onError(err);
+    this._initTimeout = this._initWithTimeout();
+  }
+
+  _initWithTimeout () {
+    return setTimeout(() => this.init(this._token), this._reconnectTimeout);
   }
 
   _onMsg = msg => {
@@ -105,6 +110,6 @@ export default class Ws {
     return keccak_256(token + ':' + time) + '_' + time;
   }
 
-}
+  _noop () {}
 
-function noop () {}
+}
