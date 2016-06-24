@@ -14,7 +14,7 @@ export default class Transactions {
       onClose: ::this.reset,
       onError: ::this.reset
     });
-    this.pendingTransactions = [];1
+    this.pendingTransactions = [];
     chrome.storage.onChanged.addListener(this.onSysuiTokenChange);
     chrome.browserAction.setBadgeBackgroundColor({ color: '#f00' });
     chrome.runtime.onMessageExternal.addListener(this.onWebsiteMsg)
@@ -75,12 +75,11 @@ export default class Transactions {
 
   animateBadge (txsLength) {
     this.isBadgeAnimated = true;
-    // all parameters, apart from `text`, are optional
     const animator = new BadgeTextAnimator({
         text: 'New transaction pending',
         interval: 100, // the "speed" of the scrolling
         repeat: false,
-        size: 6, // size of the badge
+        size: 6,
         cb: () => this.onBadgeIconEnd(txsLength)
     });
     animator.animate();
