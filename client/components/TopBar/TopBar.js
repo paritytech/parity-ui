@@ -181,9 +181,11 @@ export default class TopBar extends Web3Component {
 
     if (!allAccounts.length) {
       return (
-        <a onClick={this.onOpenCreateAccount} className={styles.createAccount}>
-          Create account
-        </a>
+        <div className={styles.link}>
+          <a onClick={this.onOpenCreateAccount}>
+            Create Account
+          </a>
+        </div>
       );
     }
 
