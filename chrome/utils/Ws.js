@@ -4,16 +4,23 @@ import logger from './logger';
 export default class Ws {
 
   constructor (opts) {
+    this._assignOpts(opts);
+    this._isConnected = false;
+    this._callbacks = {};
+    this._queue = [];
+    this._id = 1;
+  }
+
+  _assignOpts (opts = {}) {
+    if (!opts.path && !window) {
+      throw '[WS] must pass path when no window object';
+    }
     this.path = opts.path || window.location.host;
     this.reconnectTimeout = opts.reconnectTimeout || 5000;
     this.onMsg = opts.onMsg || this._noop;
     this.onOpen = opts.onOpen || this._noop;
     this.onError = opts.onError || this._noop;
     this.onClose = opts.onClose || this._noop;
-    this._isConnected = false;
-    this._callbacks = {};
-    this._queue = [];
-    this._id = 1;
   }
 
   init = token => {

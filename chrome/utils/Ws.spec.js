@@ -23,19 +23,21 @@ describe('Ws', () => {
     it('should assign properties', () => {
       expect(cut.path).to.equal(path);
       expect(cut.reconnectTimeout).to.equal(reconnectTimeout);
-      expect(cut.onMsg).to.equal(sinon.spy());
-      expect(cut.onOpen).to.equal(sinon.spy());
-      expect(cut.onError).to.equal(sinon.spy());
-      expect(cut.onClose).to.equal(sinon.spy());
+      expect(cut.onMsg).to.be.a('function');
+      expect(cut.onOpen).to.be.a('function');
+      expect(cut.onError).to.be.a('function');
+      expect(cut.onClose).to.be.a('function');
       expect(cut._isConnected).to.be.false;
       expect(cut._callbacks).to.eql({});
-      expect(cut._queue).to.eql({});
+      expect(cut._queue).to.eql([]);
       expect(cut._id).to.eql(1);
       expect(cut._initTimeout).to.be.undefined;
-      expect(cut._ws).to.not.undefined;
+      expect(cut._ws).to.be.undefined;
+      expect(cut._token).to.be.undefined;
     });
 
     it('should assign default properties', () => {
+      global.window = { location: { host: 'mockHost' } };
       cut = new Ws();
       expect(cut.path).to.equal(window.location.host);
       expect(cut.reconnectTimeout).to.equal(5000);
@@ -43,12 +45,19 @@ describe('Ws', () => {
       expect(cut.onOpen).to.equal(cut._noop);
       expect(cut.onError).to.equal(cut._noop);
       expect(cut.onClose).to.equal(cut._noop);
+      expect(cut._isConnected).to.be.false;
+      expect(cut._callbacks).to.eql({});
+      expect(cut._queue).to.eql([]);
+      expect(cut._id).to.eql(1);
+      expect(cut._initTimeout).to.be.undefined;
+      expect(cut._ws).to.be.undefined;
+      expect(cut._token).to.be.undefined;
     });
   });
 
   describe('init', () => {
     let mockedHashedToken = 'foo';
-    before('mock global WebSocket and hash', () => {
+    beforeEach('mock global WebSocket and hash', () => {
       global.WebSocket = sinon.stub().returns({
         addEventListener: sinon.spy(),
         send: sinon.spy()
@@ -59,7 +68,6 @@ describe('Ws', () => {
 
     after('restore global WebSocket', () => {
       global.WebSocket = originalWebSocket;
-      cut._hash.restore();
     });
 
     it('should clear _initTimeout', (done) => {
@@ -90,7 +98,7 @@ describe('Ws', () => {
       cut.init(token);
 
       // then
-      expect(global.WebSocket).to.have.been.calledWithNew();
+      expect(global.WebSocket).to.have.been.calledWithNew;
       expect(global.WebSocket).to.have.been.calledWith(fullPath, mockedHashedToken);
       expect(cut._ws.addEventListener).to.have.been.calledWith('open', cut._onOpen);
       expect(cut._ws.addEventListener).to.have.been.calledWith('error', cut._onError);
@@ -99,7 +107,10 @@ describe('Ws', () => {
 
   describe('_onOpen', () => {
     beforeEach('mock ws instance', () => {
-      cut._ws = sinon.spy();
+      cut._ws = {
+        addEventListener: sinon.spy()
+      };
+      cut._executeQueue = sinon.spy();
     });
 
     it('should add event listeners to ws instance', () => {
@@ -107,8 +118,8 @@ describe('Ws', () => {
       cut._onOpen();
 
       //then
-      expect(cut._ws).to.have.been.calledWith('close', cut._onClose);
-      expect(cut._ws).to.have.been.calledWith('message', cut._onMsg);
+      expect(cut._ws.addEventListener).to.have.been.calledWith('close', cut._onClose);
+      expect(cut._ws.addEventListener).to.have.been.calledWith('message', cut._onMsg);
     });
 
     it('should set _isConnected to true', () => {
@@ -128,7 +139,7 @@ describe('Ws', () => {
 
       //then
       expect(cut._executeQueue).to.have.been.called;
-      expect(cut._onOpen).to.have.been.called;
+      expect(cut.onOpen).to.have.been.called;
     });
   });
 
@@ -139,13 +150,16 @@ describe('Ws', () => {
     });
 
     it('should call [_executeCbsWithError, onClose, init]', () => {
+      // given
+      cut._token = 'mockToken';
+
       // when
       cut._onClose();
 
       //then
       expect(cut._executeCbsWithError).to.have.been.called;
       expect(cut.onClose).to.have.been.called;
-      expect(cut.init).to.have.been.calledWith(token);
+      expect(cut.init).to.have.been.calledWith(cut._token);
     });
 
     it('should set _isConnected to false', () => {
@@ -174,7 +188,7 @@ describe('Ws', () => {
 
     it('should call _initWithTimeout and define _initTimeout', () => {
       // given
-      cut._initWithTimeout = sinon.spy();
+      cut._initWithTimeout = sinon.stub().returns('mock');
 
       // when
       cut._onError();
@@ -185,8 +199,24 @@ describe('Ws', () => {
     });
   });
 
-  describe('_initWithTimeout', done => {
-    
+  describe('_initWithTimeout', () => {
+    beforeEach('mock methods', () => {
+      cut.init = sinon.spy();
+    });
+
+    it('should call init with token, after reconnectTimeout passed', done => {
+      // given
+      cut._token = 'mockToken';
+
+      // when
+      cut._initWithTimeout();
+
+      // then
+      setTimeout(() => {
+        expect(cut.init).to.have.been.calledWith(cut._token);
+        done();
+      }, cut._reconnectTimeout);
+    });
   });
 
 
