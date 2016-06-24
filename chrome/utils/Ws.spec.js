@@ -72,7 +72,7 @@ describe('Ws', () => {
 
       // then
       setTimeout(() => {
-        expect(spy.called).to.be.false;
+        expect(spy).to.not.have.been.called;
         done();
       }, 50);
     });
@@ -82,7 +82,7 @@ describe('Ws', () => {
       cut.init(token);
 
       // then
-      expect(cut._hash.calledWith(token)).to.be.true;
+      expect(cut._hash).to.have.been.calledWith(token);
     });
 
     it('should create ws instance and add [open, close] event listeners', () => {
@@ -90,15 +90,10 @@ describe('Ws', () => {
       cut.init(token);
 
       // then
-      expect(global.WebSocket.calledWithNew()).to.be.true;
-      expect(global.WebSocket.calledWith(fullPath), mockedHashedToken).to.be.true;
-      expect(cut._ws.addEventListener.calledWith(
-        'open', cut._onOpen
-      )).to.be.true;
-
-      expect(cut._ws.addEventListener.calledWith(
-        'error', cut._onError
-      )).to.be.true;
+      expect(global.WebSocket).to.have.been.calledWithNew();
+      expect(global.WebSocket).to.have.been.calledWith(fullPath, mockedHashedToken);
+      expect(cut._ws.addEventListener).to.have.been.calledWith('open', cut._onOpen);
+      expect(cut._ws.addEventListener).to.have.been.calledWith('error', cut._onError);
     });
   });
 
@@ -112,8 +107,8 @@ describe('Ws', () => {
       cut._onOpen();
 
       //then
-      expect(cut._ws.calledWith('close', cut._onClose)).to.be.true;
-      expect(cut._ws.calledWith('message', cut._onMsg)).to.be.true;
+      expect(cut._ws).to.have.been.calledWith('close', cut._onClose);
+      expect(cut._ws).to.have.been.calledWith('message', cut._onMsg);
     });
 
     it('should set _isConnected to true', () => {
@@ -132,8 +127,8 @@ describe('Ws', () => {
       cut._onOpen();
 
       //then
-      expect(cut._executeQueue.called).to.be.true;
-      expect(cut._onOpen.called).to.be.true;
+      expect(cut._executeQueue).to.have.been.called;
+      expect(cut._onOpen).to.have.been.called;
     });
   });
 
@@ -148,9 +143,9 @@ describe('Ws', () => {
       cut._onClose();
 
       //then
-      expect(cut._executeCbsWithError.called.to.be.true;
-      expect(cut.onClose.called.to.be.true;
-      expect(cut.init.calledWith(token).to.be.true;
+      expect(cut._executeCbsWithError).to.have.been.called;
+      expect(cut.onClose).to.have.been.called;
+      expect(cut.init).to.have.been.calledWith(token);
     });
 
     it('should set _isConnected to false', () => {
