@@ -96,6 +96,7 @@
     "url-loader": "^0.5.7",
     "webpack": "^1.13.1",
     "webpack-bundle-update-hook-plugin": "^1.0.2",
+    "webpack-copy-on-done-plugin": "0.0.0",
     "webpack-dev-server": "^1.14.1",
     "webpack-error-notification": "^0.1.6",
     "webpack-hot-middleware": "^2.10.0",

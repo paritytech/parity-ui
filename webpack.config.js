@@ -2,7 +2,7 @@ var rucksack = require('rucksack-css');
 var webpack = require('webpack');
 var path = require('path');
 var WebpackErrorNotificationPlugin = require('webpack-error-notification');
-var WebpackBuildToSignerPlugin = require('./webpackBuildToSignerPlugin');
+var WebpackCopyOnDonePlugin = require('webpack-copy-on-done-plugin');
 
 var ENV = process.env.NODE_ENV || 'development';
 var isProd = ENV === 'production';
@@ -108,7 +108,7 @@ module.exports = {
     ];
 
     if (isSigner()) {
-      plugins.push(new WebpackBuildToSignerPlugin(signerPluginOpts()));
+      plugins.push(new WebpackCopyOnDonePlugin(signerPluginOpts()));
     }
 
     if (isProd && !isSigner()) {
