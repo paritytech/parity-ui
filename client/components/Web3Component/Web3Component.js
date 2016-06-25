@@ -17,14 +17,14 @@ export default class Web3Component extends React.Component {
     });
   }
 
-  next (mod) {
+  next () {
     if (!this.state.tickActive) {
       return;
     }
 
-    mod = mod || 1;
-    this.onTick(() => {
-      setTimeout(::this.next, 1250 * mod);
+    this.onTick((mod) => {
+      mod = mod || 1;
+      setTimeout(::this.next, 1000 * mod);
     });
   }
 
