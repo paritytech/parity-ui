@@ -24,10 +24,11 @@ export default class AppMiddleware {
     // call next first to update state
     next(action);
     // then redirect wit updated state, so routes->requireAuth would behave as expected
-    const { isLoading, isParityRunning } = action.payload;
+    // const { isLoading, isParityRunning } = action.payload;
+    const { isLoading } = action.payload;
     // if (!isParityRunning) {
-      // hashHistory.push('/parityNotRunning');
-    // } else 
+    // hashHistory.push('/parityNotRunning');
+    // } else
     if (isLoading) {
       hashHistory.push('/loading');
     } else {
