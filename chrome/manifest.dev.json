@@ -1,10 +1,10 @@
 {
   "version": "1.0.1",
-  "name": "Parity Signer UI [dev]",
+  "name": "Parity Signer UI [DEV]",
   "manifest_version": 2,
-  "description": "Parity Signer UI [dev]",
+  "description": "Integrate the Parity Ethereum client with the Chrome browser [DEV]",
   "browser_action": {
-    "default_title": "Parity Signer UI [dev]",
+    "default_title": "Parity Signer UI [DEV]",
     "default_popup": "popup.html",
     "default_icon": "img/icon-16-dev.png"
   },

@@ -3,7 +3,7 @@
   "name": "Parity Signer UI",
   "short_name": "ParitySigner",
   "manifest_version": 2,
-  "description": "Parity Signer UI",
+  "description": "Integrate the Parity Ethereum client with the Chrome browser",
   "author": "Ethcore Team",
   "browser_action": {
     "default_title": "Parity Signer UI",
