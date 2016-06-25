@@ -1,3 +1,5 @@
+import './transfer.html';
+
 const web3 = window.web3;
 
 if (!web3) {

@@ -12,9 +12,9 @@ module.exports = {
   devtool: isProd ? '#source-map' : '#cheap-module-eval-source-map',
   context: path.join(__dirname, './client'),
   entry: {
-    'index.app': ['whatwg-fetch', './index.app.js'],
+    'transfer': ['whatwg-fetch', './transfer.js'],
     'inject': ['whatwg-fetch', './inject.js'],
-    'home': ['whatwg-fetch', './home.js'],
+    'index': ['whatwg-fetch', './index.js'],
     'home/cols.frame': './cols.frame'
   },
   output: {

@@ -1,5 +1,4 @@
 import 'babel-polyfill';
-import './index.html';
 import styles from './reset.css';
 
 import ReactDOM from 'react-dom';
