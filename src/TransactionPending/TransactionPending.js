@@ -29,6 +29,11 @@ export default class TransactionPending extends Component {
     className: PropTypes.string
   };
 
+  static defaultProps = {
+    value: '0x0' // todo [adgo] - remove after resolving https://github.com/ethcore/parity/issues/1458
+  };
+
+
   state = {
     isDataExpanded: false
   };
