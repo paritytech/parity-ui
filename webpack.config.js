@@ -33,7 +33,6 @@ module.exports = {
     'react-dom',
     'react-redux',
     'react-tooltip',
-    'rc-slider',
     'react-addons-css-transition-group',
     'react-tap-event-plugin'
   ] : [],
