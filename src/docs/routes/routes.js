@@ -1,8 +1,7 @@
 
 import React, { Component, PropTypes } from 'react';
 
-import { Router, Route, useRouterHistory, IndexRedirect } from 'react-router';
-import { createHashHistory } from 'history';
+import { Router, Route, IndexRedirect, hashHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 
 import RootContainer from '../containers/Root';
@@ -17,8 +16,6 @@ import TransactionPendingPage from '../containers/TransactionPendingPage';
 import TransactionPendingWeb3Page from '../containers/TransactionPendingWeb3Page';
 import TransactionPendingFormPage from '../containers/TransactionPendingFormPage';
 
-const routerHistory = useRouterHistory(createHashHistory)();
-
 export default class Routes extends Component {
 
   static propTypes = {
@@ -27,7 +24,7 @@ export default class Routes extends Component {
 
   render () {
     const { store } = this.props;
-    const history = syncHistoryWithStore(routerHistory, store);
+    const history = syncHistoryWithStore(hashHistory, store)
     return (
       <Router history={ history }>
         <Route path={ '/' } component={ RootContainer }>
