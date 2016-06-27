@@ -53,7 +53,7 @@ export default class Transactions extends Component {
                   data={ data.transaction.data }
                   from={ data.transaction.from }
                   to={ data.transaction.to }
-                  value={ data.transaction.value }
+                  value={ data.transaction.value || '0x0' }
                 />
               )
             )
@@ -84,7 +84,7 @@ export default class Transactions extends Component {
                   gas={ data.transaction.gas }
                   from={ data.transaction.from }
                   to={ data.transaction.to }
-                  value={ data.transaction.value }
+                  value={ data.transaction.value || '0x0' }
                   msg={ data.msg }
                   status={ data.status }
                   error={ data.error }
