@@ -33,7 +33,6 @@ export default class TransactionPending extends Component {
     value: '0x0' // todo [adgo] - remove after resolving https://github.com/ethcore/parity/issues/1458
   };
 
-
   state = {
     isDataExpanded: false
   };

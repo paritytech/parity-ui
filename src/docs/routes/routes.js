@@ -24,7 +24,7 @@ export default class Routes extends Component {
 
   render () {
     const { store } = this.props;
-    const history = syncHistoryWithStore(hashHistory, store)
+    const history = syncHistoryWithStore(hashHistory, store);
     return (
       <Router history={ history }>
         <Route path={ '/' } component={ RootContainer }>

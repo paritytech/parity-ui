@@ -133,8 +133,8 @@ export default class TransactionMainDetails extends Component {
           { totalValueDisplay } <small>ETH</small>
         </div>
         <ReactTooltip id={ 'totalValue' + id }>
-          The value of the transaction including the mining fee: <strong>{ feeEth }</strong> <small>ETH</small>. <br />
-          <strong>{ totalValueDisplayWei }</strong> <small>WEI</small>
+          The value of the transaction including the mining fee is <strong>{ totalValueDisplayWei }</strong> <small>WEI</small>. <br />
+          (This includes a mining fee of <strong>{ feeEth }</strong> <small>ETH</small>)
         </ReactTooltip>
       </div>
     );

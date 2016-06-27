@@ -32,7 +32,6 @@ export default class TransactionFinished extends Component {
     value: '0x0' // todo [adgo] - remove after resolving https://github.com/ethcore/parity/issues/1458
   };
 
-
   componentWillMount () {
     const { gas, gasPrice, value } = this.props;
     const fee = tUtil.getFee(gas, gasPrice); // BigNumber object
