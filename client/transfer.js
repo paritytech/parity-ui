@@ -23,6 +23,7 @@ setInterval(() => {
 
 const $amount = el('#value');
 const $recipient = el('#address');
+const $data = el('#data');
 
 handleForm();
 
@@ -31,6 +32,7 @@ function handleForm () {
 
   $amount.addEventListener('input', redrawSummary);
   $recipient.addEventListener('input', redrawSummary);
+  $data.addEventListener('input', redrawSummary);
   $form.addEventListener('submit', submitTransaction);
 
   redrawSummary();
@@ -41,6 +43,7 @@ function submitTransaction (ev) {
 
   const from = web3.defaultAccount;
   const to = $recipient.value;
+  const data = $data.value;
   const value = web3.toWei($amount.value);
 
   const $btn = el('#form button');
@@ -53,19 +56,24 @@ function submitTransaction (ev) {
     $btn.innerHTML = val;
   }
 
+  const params = { from, value, data };
+
+  if (to) {
+    params.to = to;
+  }
   try {
-    web3.eth.sendTransaction({
-      from, to, value
-    }, (err, tx) => {
+    web3.eth.sendTransaction(params, (err, tx) => {
       revertButton();
 
       if (err) {
+        console.warn('err sending transaction', params, err);
         return;
       }
       window.alert('Transaction has been sent. Hash: ' + tx);
     });
   } catch (e) {
     revertButton();
+    console.warn('err sending transaction', params, e);
     window.alert(e);
   }
 }
@@ -74,19 +82,21 @@ function redrawSummary () {
   const $summary = el('#summary');
   const $btn = el('#form button');
   const from = web3.defaultAccount;
-  const to = $recipient.value;
-  const value = $amount.value;
-  if (!value || !to || !from) {
+  const to = $recipient.value || 'Deploy contract';
+  const amount = $amount.value;
+  const data = $data.value || '0x';
+  if (!from || amount === '') {
     $btn.disabled = true;
-    $summary.innerHTML = 'Fill out all fields.';
+    $summary.innerHTML = 'Fill out amount.';
     return;
   }
 
   $btn.disabled = false;
   $summary.innerHTML = `
-  You will transfer <strong>${$amount.value} ETH</strong>
+  You will transfer <strong>${amount} ETH</strong>
   from <strong>${web3.defaultAccount}</strong>
-  to <strong>${$recipient.value}</strong>.
+  to <strong>${to}</strong>.
+  data <strong>${data}</strong>.
   `;
 }
 

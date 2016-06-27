@@ -30,3 +30,18 @@
   text-align: left;
   flex: 2 1 auto;
 }
+
+.contractIcon {
+  background: #eee;
+  width: 50px !important;
+  height: 50px !important;
+  box-sizing: border-box;
+  border-radius: 50%;
+  padding: 13px;
+  margin: 5px 5px 0;
+}
+
+.contractText {
+  font-family: monospace;
+  margin: 0 3px;
+}
