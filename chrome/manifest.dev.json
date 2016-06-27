@@ -1,5 +1,5 @@
 {
-  "version": "1.0.3",
+  "version": "1.0.4",
   "name": "Parity Ethereum Integration [DEV]",
   "manifest_version": 2,
   "description": "Integrate the Parity Ethereum client with the Chrome browser [DEV]",
