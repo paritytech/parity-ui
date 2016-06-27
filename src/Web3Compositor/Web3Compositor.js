@@ -40,7 +40,7 @@ export default Wrapped => class Web3Compositor extends Component {
         return;
       }
       nextCalled = true;
-      setTimeout(this.next, error ? 5000 : 500);
+      setTimeout(this.next, error ? 10000 : 2000);
     });
   }
 
