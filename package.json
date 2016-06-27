@@ -1,6 +1,6 @@
 {
   "name": "parity-sysui-app",
-  "version": "0.0.24",
+  "version": "0.0.25",
   "description": "reusable app for Parity's system UIs",
   "main": "./build/index.js",
   "scripts": {
@@ -19,6 +19,7 @@
     "build": "NODE_ENV=production webpack --progress --colors",
     "buildForSignerDapp": "npm run build -- --signer=dapp --watch",
     "buildForSignerExt": "npm run build -- --signer=ext --watch",
+    "localPublish": "npm run build && npm publish",
     "clean": "rm build -rf || true",
     "commit": "commit-wizard"
   },
@@ -107,7 +108,7 @@
   "dependencies": {
     "axios": "^0.12.0",
     "babel-polyfill": "^6.9.1",
-    "dapps-react-ui": "0.0.683",
+    "dapps-react-ui": "0.0.684",
     "event-emitter": "^0.3.4",
     "exports-loader": "0.6.3",
     "history": "^2.1.1",
