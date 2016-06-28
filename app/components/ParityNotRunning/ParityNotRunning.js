@@ -31,27 +31,27 @@ export default class ParityNotRunning extends Component {
   }
 
   render () {
-    const { parityPath } = this.props;
     return (
       <div className={ styles.container }>
-        <p>To function correctly, this { isExtension() ? 'extension' : 'app' } needs you to run the Parity
-          Ethereum client.</p>
+        <p>
+          To function correctly, this
+          { isExtension() ? ' extension ' : ' app ' }
+          needs you to run the Parity Ethereum client.
+        </p>
         { this.renderInstallLink() }
       </div>
     );
   }
 
-renderInstallLink () {
-  if (!isExtension()) {
-    return;
+  renderInstallLink () {
+    if (!isExtension()) {
+      return;
+    }
+    return (
+      <p className={ styles.install }>
+        If you don't have Parity installed, get it <a href='https://github.com/ethcore/parity/releases' target='_blank'>here</a>.
+      </p>
+    );
   }
-
-  return (
-    <p className={ styles.install }>
-      If you don't have Parity installed, get it <a href='https://github.com/ethcore/parity/releases' target='_blank'>here</a>.
-    </p>
-  );
-
-}
 
 }
