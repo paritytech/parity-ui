@@ -6,6 +6,7 @@ import AppBar from 'material-ui/AppBar';
 // import IconMenu from 'material-ui/IconMenu';
 // import MenuItem from 'material-ui/MenuItem';
 // import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+import { isExtension } from '../../utils/extension';
 
 import styles from './Header.css';
 
@@ -15,9 +16,9 @@ export default class Header extends Component {
     isConnected: PropTypes.bool.isRequired
   }
 
-  title = this.isExtension() ? 'Parity Signer UI' : 'Parity Signer UI (DAPP)';
+  title = isExtension() ? 'Parity Signer UI' : 'Parity Signer UI (DAPP)';
   styles = {
-    backgroundColor: this.isExtension() ? '#6691C2' : '#FF5722'
+    backgroundColor: isExtension() ? '#6691C2' : '#FF5722'
   };
 
   render () {
@@ -54,10 +55,6 @@ export default class Header extends Component {
     //     </Link>
     //   </IconMenu>
     // );
-  }
-
-  isExtension () {
-    return window.location.protocol.indexOf('chrome-extension') > -1;
   }
 
 }

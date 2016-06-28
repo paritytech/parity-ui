@@ -3,6 +3,7 @@ import React, { Component, PropTypes } from 'react';
 import styles from './ParityNotRunning.css';
 
 import { isParityRunning } from '../../utils/parity';
+import { isExtension } from '../../utils/extension';
 
 export default class ParityNotRunning extends Component {
 
@@ -33,9 +34,24 @@ export default class ParityNotRunning extends Component {
     const { parityPath } = this.props;
     return (
       <div className={ styles.container }>
-        <h1>Please make sure your parity node is running on { parityPath }</h1>
+        <p>To function correctly, this { isExtension() ? 'extension' : 'app' } needs you to run the Parity
+          Ethereum client.</p>
+        { this.renderInstallLink() }
       </div>
     );
   }
+
+renderInstallLink () {
+  if (!isExtension()) {
+    return;
+  }
+
+  return (
+    <p className={ styles.install }>
+      If you don't have Parity installed, get it <a href='https://github.com/ethcore/parity/releases' target='_blank'>here</a>.
+    </p>
+  );
+
+}
 
 }
