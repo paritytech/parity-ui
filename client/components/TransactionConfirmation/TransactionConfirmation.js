@@ -2,6 +2,7 @@ import React from 'react';
 
 import isEqual from 'lodash.isequal';
 
+import ContractIcon from 'material-ui/svg-icons/action/code';
 import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
 import Dialog from 'material-ui/Dialog';
@@ -60,7 +61,7 @@ export default class TransactionConfirmation extends Web3Component {
       return;
     }
 
-    const { from, to, value } = transaction.params[0];
+    const { from, value } = transaction.params[0];
 
     return (
       <div>
@@ -74,12 +75,26 @@ export default class TransactionConfirmation extends Web3Component {
             {this.renderValue(value)}
           </div>
           <div className={styles.to}>
-            <Account address={to} />
+            { this.renderTo() }
           </div>
         </div>
         {this.renderPassword(from)}
       </div>
     );
+  }
+
+  renderTo () {
+    const { to } = this.props.transaction.params[0];
+    if (!to) {
+      return (
+        <div>
+          <ContractIcon className={ styles.contractIcon } />
+          <span className={ styles.contractText }>Contract</span>
+        </div>
+      );
+    }
+
+    return <Account address={ to } />;
   }
 
   renderPassword (from) {
