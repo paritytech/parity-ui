@@ -1,6 +1,5 @@
 import 'babel-polyfill';
-import styles from './reset.css';
-
+import stylesReset from './reset.css';
 import ReactDOM from 'react-dom';
 import React from 'react';
 import injectTapEventPlugin from 'react-tap-event-plugin';
@@ -15,6 +14,7 @@ import Web3Provider from './components/Web3Provider';
 import TopBar from './components/TopBar';
 import Interceptor from './components/TopBar/Interceptor';
 import readInjectOptions from './utils/readInjectOptions';
+import styles from './inject.css';
 
 const http = new Web3.providers.HttpProvider('/rpc/');
 const interceptor = new Interceptor(http);
@@ -30,11 +30,12 @@ const options = readInjectOptions();
 
 // Render account chooser
 const el = document.createElement('div');
+el.className = styles.wrapper;
 document.querySelector('html').appendChild(el);
 
 ReactDOM.render(
   // wrapping id used to resest css, see inject.css
-  <div className={styles.reset}>
+  <div className={stylesReset.reset}>
     <Web3Provider web3={rawWeb3}>
       <TopBar
         interceptor={interceptor}
