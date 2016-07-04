@@ -45,8 +45,8 @@ export default class TopBar extends Web3Component {
   toastId = 0;
 
   state = {
-    loadingExtensionInstalled: true,
-    extensionInstalled: false,
+    isLoadingExtensionInstalled: true,
+    isExtenstionInstalled: false,
     toasts: [],
     waiting: 0,
     accounts: [],
@@ -82,7 +82,7 @@ export default class TopBar extends Web3Component {
     super.componentWillUnmount();
     this.storageListener();
     this.listeners.map((off) => off());
-    clearTimeout(this.extensionInstalledTimeout);
+    clearTimeout(this.isExtenstionInstalledTimeout);
   }
 
   render () {
@@ -103,7 +103,7 @@ export default class TopBar extends Web3Component {
       );
     }
 
-    const { allAccounts, accountsNames, accountsDetails, createAccountOpen, loadingExtensionInstalled, extensionInstalled } = this.state;
+    const { allAccounts, accountsNames, accountsDetails, createAccountOpen, isLoadingExtensionInstalled, isExtenstionInstalled } = this.state;
 
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
@@ -129,8 +129,8 @@ export default class TopBar extends Web3Component {
               <div className={ styles.separator } />
               <div className={ styles.extension }>
                 <ExtensionLink
-                  loading={ loadingExtensionInstalled }
-                  installed={ extensionInstalled }
+                  isLoading={ isLoadingExtensionInstalled }
+                  isInstalled={ isExtenstionInstalled }
                 />
               </div>
             </div>
@@ -297,9 +297,9 @@ export default class TopBar extends Web3Component {
 
   onEthSendTransaction = (payload, cb, next) => {
     // Don't intercept sendTransaction if we are running with signer module.
-    const { isSignerEnabled, extensionInstalled } = this.state;
+    const { isSignerEnabled, isExtenstionInstalled } = this.state;
     if (isSignerEnabled) {
-      if (!extensionInstalled) {
+      if (!isExtenstionInstalled) {
         this.notifyNewTransaction();
       }
       return next();
@@ -440,7 +440,7 @@ export default class TopBar extends Web3Component {
   }
 
   updateIsExtensionInstalled = () => {
-    if (!this.isChrome || this.state.extensionInstalled) {
+    if (!this.isChrome || this.state.isExtenstionInstalled) {
       return;
     }
     window.chrome.runtime.sendMessage(
@@ -448,11 +448,11 @@ export default class TopBar extends Web3Component {
       'version',
       reply => {
         if (!reply) {
-          this.setState({ extensionInstalled: false, loadingExtensionInstalled: false });
-          this.extensionInstalledTimeout = setTimeout(this.updateIsExtensionInstalled, 10000);
+          this.setState({ isExtenstionInstalled: false, isLoadingExtensionInstalled: false });
+          this.isExtenstionInstalledTimeout = setTimeout(this.updateIsExtensionInstalled, 10000);
           return;
         }
-        this.setState({ extensionInstalled: true, loadingExtensionInstalled: false });
+        this.setState({ isExtenstionInstalled: true, isLoadingExtensionInstalled: false });
       }
     );
   }
