@@ -83,10 +83,10 @@ fn implement_webapp(cx: &ExtCtxt, builder: &aster::AstBuilder, item: &Item, push
       let path = path_buf.as_path();
       let filename = path.file_name().and_then(|s| s.to_str()).expect("Only UTF8 paths.");
       let mime_type = guess_mime_type(filename).to_string();
-      let file_path = path.strip_prefix(&static_files).ok().and_then(|s| s.to_str()).expect("Only UTF8 paths.");
+      let file_path = as_uri(path.strip_prefix(&static_files).ok().expect("Prefix is always there, cause it's absolute path;qed"));
       let file_path_in_source = path.to_str().expect("Only UTF8 paths.");
 
-      let path_lit = builder.expr().str(file_path);
+      let path_lit = builder.expr().str(file_path.as_str());
       let mime_lit = builder.expr().str(mime_type.as_str());
       let web_path_lit = builder.expr().str(file_path_in_source);
       let separator_lit = builder.expr().str(path::MAIN_SEPARATOR.to_string().as_str());
@@ -165,3 +165,30 @@ fn webapp_meta_items(attr: &ast::Attribute) -> Option<&[P<ast::MetaItem>]> {
   }
 }
 
+fn as_uri(path: &Path) -> String {
+  let mut s = String::new();
+  for component in path.iter() {
+    s.push_str(component.to_str().expect("Only UTF-8 filenames are supported."));
+    s.push('/');
+  }
+  s[0..s.len()-1].into()
+}
+
+
+#[test]
+fn should_convert_path_separators_on_all_platforms() {
+  // given
+  let p = {
+    let mut p = PathBuf::new();
+    p.push("web");
+    p.push("src");
+    p.push("index.html");
+    p
+  };
+
+  // when
+  let path = as_uri(&p);
+
+  // then
+  assert_eq!(path, "web/src/index.html".to_owned());
+}
