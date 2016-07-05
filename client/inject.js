@@ -14,7 +14,6 @@ import Web3Provider from './components/Web3Provider';
 import TopBar from './components/TopBar';
 import Interceptor from './components/TopBar/Interceptor';
 import readInjectOptions from './utils/readInjectOptions';
-import styles from './inject.css';
 
 const http = new Web3.providers.HttpProvider('/rpc/');
 const interceptor = new Interceptor(http);
@@ -30,7 +29,6 @@ const options = readInjectOptions();
 
 // Render account chooser
 const el = document.createElement('div');
-el.className = styles.wrapper;
 document.querySelector('html').appendChild(el);
 
 ReactDOM.render(

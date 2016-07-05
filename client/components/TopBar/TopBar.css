@@ -24,12 +24,18 @@ html,body {
 .dialog svg {
   fill: #F57F17 !important;
 }
+
 .topbar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
   text-align: right;
   padding: 0 30px 5px;
   border-bottom: 1px solid #d3cbc8;
   background: #dfd6d3;
   box-shadow: 0 -3px 2px -3px rgba(119, 102, 102, 0.75);
+  z-index: 0;
   display: flex;
 }
 
@@ -136,9 +142,9 @@ html,body {
 }
 
 .toasts {
-  float: right;
+  position: fixed;
+  top: 30px;
+  right: 30px;
+  z-index: 100000;
   width: 200px;
-  margin-top: 10px;
-  margin-right: 10px;
 }
-
