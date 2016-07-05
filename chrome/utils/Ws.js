@@ -30,7 +30,7 @@ export default class Ws {
       const hash = this._hash(token);
       this._ws = new WebSocket(`ws://${this.path}`, hash);
     } catch (err) {
-      logger.warn('[WS] error connecting to ws', err); // this will never get triggered, not sure why
+      logger.warn('[WS] error connecting to ws', err); // throws when port is blocked, not when hash is incorrect
     }
 
     this._ws.addEventListener('open', this._onOpen);
