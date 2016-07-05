@@ -24,13 +24,13 @@ export default class Ws {
   }
 
   init = token => {
-    this._token = token
+    this._token = token // store token for _onClose reconnect attemps
     clearTimeout(this._initTimeout);
     try {
       const hash = this._hash(token);
       this._ws = new WebSocket(`ws://${this.path}`, hash);
     } catch (err) {
-      logger.warn('[WS] error connecting to ws', err);
+      logger.warn('[WS] error connecting to ws', err); // this will never get triggered, not sure why
     }
 
     this._ws.addEventListener('open', this._onOpen);
