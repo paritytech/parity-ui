@@ -14,6 +14,7 @@ module.exports = {
   entry: {
     'transfer': ['whatwg-fetch', './transfer.js'],
     'inject': ['whatwg-fetch', './inject.js'],
+    'parity-utils/inject': ['whatwg-fetch', './inject.js'],
     'index': ['whatwg-fetch', './index.js'],
     'home/cols.frame': './cols.frame'
   },
@@ -110,11 +111,17 @@ module.exports = {
     contentBase: './client',
     hot: !isProd,
     proxy: {
-      '/rpc*': {
-        target: 'http://localhost:8080'
+      '/rpc/*': {
+        target: 'http://localhost:8080',
+        changeOrigin: true
       },
       '/api*': {
-        target: 'http://localhost:8080'
+        target: 'http://localhost:8080',
+        changeOrigin: true
+      },
+      '/wallet/*': {
+        target: 'http://localhost:8080',
+        changeOrigin: true
       }
     }
   }
