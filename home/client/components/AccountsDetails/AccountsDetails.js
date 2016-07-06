@@ -19,11 +19,18 @@ export default class AccountDetails extends Web3Component {
   state = {};
 
   componentDidMount () {
-    this.componentWillReceiveProps(this.props);
+    this.copyToState(this.props.accountsNames);
   }
 
   componentWillReceiveProps (newProps) {
-    this.state = Object.assign({}, newProps.accountsNames);
+    if (newProps.accountsNames === this.props.accountsNames) {
+      return;
+    }
+    this.copyToState(newProps.accountsNames);
+  }
+
+  copyToState (accountsNames) {
+    this.state = Object.assign({}, accountsNames);
   }
 
   render () {
@@ -107,7 +114,7 @@ export default class AccountDetails extends Web3Component {
   }
 
   onCancel () {
-    this.componentWillReceiveProps(this.props);
+    this.copyToState(this.props.accountsNames);
     this.props.onClose(this.state);
   }
 
