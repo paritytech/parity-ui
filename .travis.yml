@@ -7,6 +7,8 @@ matrix:
   env:
     - PROJECT=status
     - PROJECT=home
+    - PROJECT=components
+    - PROJECT=signer
     - SCRIPT=lint
     - SCRIPT=testOnce
     - SCRIPT=coveralls
@@ -16,6 +18,7 @@ cache:
     - status/node_modules
     - home/node_modules
     - components/node_modules
+    - signer/node_modules
 
 script:
   - cd $PROJECT
@@ -37,3 +40,4 @@ after_success:
 #   on:
 #     tags: true
 #     repo: ethcore/dapps-react-ui
+

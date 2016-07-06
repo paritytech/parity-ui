@@ -1,0 +1,22 @@
+{
+  "rpc": [
+    { "name": "eth_coinbase", "response":  "0x0037a6b811ffeb6e072da21179d11b1406371c63" },
+    { "name": "ethcore_extraData", "response":  "0xd783010000867061726974798b312e302e302d6265746132", "formattedResponse": "parity/1.0.0/1.0.0-beta2" },
+    { "name": "ethcore_setExtraData", "response":  true },
+    { "name": "ethcore_minGasPrice", "response":  2000, "formattedResponse": "2,000" },
+    { "name": "ethcore_gasFloorTarget", "response":  3000, "formattedResponse": "3,000" },
+
+    { "name": "eth_hashrate", "response":  3000000 },
+    { "name": "eth_blockNumber", "response":  1234, "formattedResponse": "1,234" },
+
+    { "name": "net_peerCount", "response":  15 },
+    { "name": "web3_clientVersion", "response": "Parity//19.0.0 "},
+    { "name": "ethcore_netChain", "response": "homestead" },
+    { "name": "ethcore_devLogs", "response": [] },
+    { "name": "ethcore_devLogsLevels", "response": "a" },
+    { "name": "ethcore_netPort", "response": 30303 },
+    { "name": "ethcore_netMaxPeers", "response": 25 },
+    { "name": "ethcore_rpcSettings", "response": { "enabled": true, "interface": "all", "port": 3098 } },
+    { "name": "ethcore_nodeName", "response": "My awesome node"}
+  ]
+}
