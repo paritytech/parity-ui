@@ -9,9 +9,6 @@ env:
   - PROJECT=home
   - PROJECT=components
   - PROJECT=signer
-  - SCRIPT=lint
-  - SCRIPT=testOnce
-  - SCRIPT=coveralls
 
 cache:
   directories:
@@ -23,6 +20,9 @@ cache:
 script:
   - cd $PROJECT
   - npm install
+  - npm run lint
+  - npm run testOnce
+  # TODO add coverals for projects?
   - if [ "$SCRIPT" ]; then npm run $SCRIPT; fi
   # - if [ "$E2E" ] && [ "$SAUCE_ACCESS_KEY" ]; then npm run startTest & sleep 25 && npm run $E2E; fi
 
