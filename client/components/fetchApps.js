@@ -1,6 +1,8 @@
 
 export default function fetchApps () {
-  return window.fetch('/api/apps')
+  return window.fetch('/api/apps', {
+    credentials: 'same-origin'
+  })
     .then(res => res.json())
     .then(apps => filterApps(apps));
 }
