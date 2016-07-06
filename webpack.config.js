@@ -15,7 +15,7 @@ module.exports = {
   devtool: isProd ? '#source-map' : '#cheap-module-eval-source-map',
   context: path.join(__dirname, './app'),
   entry: {
-    index: isProd ? './index.js' : './index.dev.js'
+    index: './index.js'
   },
   output: {
     library: 'parity-sysui-app',

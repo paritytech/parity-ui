@@ -7,7 +7,7 @@ const initialState = {
 
 export default handleActions({
 
-  'update parityPath' (state, action) {
+  'update paritySysuiPath' (state, action) {
     return {
       ...state,
       path: action.payload

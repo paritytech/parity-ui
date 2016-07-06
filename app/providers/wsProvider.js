@@ -1,38 +1,29 @@
 import isEqual from 'lodash.isequal';
-import wsBase from '../utils/wsBase';
 import logger from '../utils/logger';
 import { updatePendingTransactions } from '../actions/transactions';
 import { updateIsConnected } from '../actions/ws';
 import { updateAppState } from '../actions/app';
 import { isParityRunning } from '../utils/parity';
 
-export default class WsProvider extends wsBase {
+export default class WsProvider {
 
-  constructor (store, wsPath, addTokenListener) {
-    super(wsPath);
+  constructor (store, wsPath, ws) {
+    this.wsPath = wsPath;
     this.store = store;
-    // todo [adgo] - move logic to react
-    addTokenListener(::this.onTokenChange);
-  }
-
-  onTokenChange (token) {
-    // token did not change
-    if (token === false) {
-      return;
-    }
-    this.init(token);
+    this.ws = ws;
+    this.ws.onOpen.push(::this.onWsOpen);
+    this.ws.onError.push(::this.onWsError);
+    this.ws.onMsg.push(::this.onWsMsg);
   }
 
   onWsOpen () {
     logger.log('[WS Provider] connected');
-    super.onWsOpen();
     this.store.dispatch(updateIsConnected(true));
     this.store.dispatch(updateAppState({ isParityRunning: true, isLoading: false }));
     this.fetchPendingTransactions();
   }
 
-  onWsError (err) {
-    super.onWsError(err);
+  onWsError () {
     this.store.dispatch(updateIsConnected(false));
     isParityRunning(this.wsPath)
       .then(isRunning => {
@@ -41,7 +32,6 @@ export default class WsProvider extends wsBase {
   }
 
   onWsMsg (msg) {
-    super.onWsMsg(msg);
     if (msg.data !== 'new_message') {
       return;
     }
@@ -58,6 +48,14 @@ export default class WsProvider extends wsBase {
       logger.log('[WS Provider] transactions changed ', txsWs);
       this.store.dispatch(updatePendingTransactions(txsWs));
     });
+  }
+
+  send (method, params, callback) {
+    const payload = {
+      jsonrpc: '2.0',
+      method, params
+    };
+    this.ws.send(payload, callback);
   }
 
 }
