@@ -4,8 +4,8 @@ import { getToken, onTokenChange } from '../utils/token';
 
 const proxyManager = new ProxyManager();
 const transactions = new Transactions();
+onTokenChange(token => transactions.init(token));
 
 proxyManager.init();
 
-getToken(transactions.init);
-onTokenChange(transactions.init);
+getToken(token => transactions.init(token));
