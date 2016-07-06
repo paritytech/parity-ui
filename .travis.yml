@@ -12,10 +12,10 @@ env:
 
 cache:
   directories:
-    - status/node_modules
-    - home/node_modules
-    - components/node_modules
-    - signer/node_modules
+    - $TRAVIS_BUILD_DIR/status/node_modules
+    - $TRAVIS_BUILD_DIR/home/node_modules
+    - $TRAVIS_BUILD_DIR/components/node_modules
+    - $TRAVIS_BUILD_DIR/signer/node_modules
 
 script:
   - cd $PROJECT
