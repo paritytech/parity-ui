@@ -18,6 +18,7 @@ import Ws from './utils/Ws';
 
 import Web3WebSocketProvider from './providers/web3WebsocketProvider';
 import WsProvider from './providers/wsProvider';
+import AppProvider from './providers/appProvider';
 
 import middlewares from './middlewares';
 import createStore from './store/configureStore';
@@ -43,7 +44,9 @@ export default function app (token, tokenSetter, paritySysuiPath) {
     document.querySelector('#root')
   );
 
-  WsProvider(store, paritySysuiPath, ws); // manages loading/connected state and fetches transactions
+  new WsProvider(store, paritySysuiPath, ws); // eslint-disable-line no-new
+  new AppProvider(store, paritySysuiPath, ws); // eslint-disable-line no-new
+
   ws.init(token);
 }
 

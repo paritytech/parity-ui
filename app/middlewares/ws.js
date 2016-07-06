@@ -51,7 +51,7 @@ export default class LocalstorageMiddleware {
       if (res === undefined) {
         transaction.status = 'rejected';
         transaction.error = true;
-        transaction.msg = 'Sender account has insufficient funds to complete transcation';
+        transaction.msg = 'Not enough funds.';
         store.dispatch(addErrorTransaction(transaction));
         return next(action);
       }

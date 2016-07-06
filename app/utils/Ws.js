@@ -1,6 +1,5 @@
 import { keccak_256 } from 'js-sha3'; // eslint-disable-line camelcase
 import logger from './logger';
-import { capitalize } from 'lodash';
 
 export default class Ws {
 
@@ -51,11 +50,11 @@ export default class Ws {
     this._ws.addEventListener('message', this._onMsg);
     this._isConnected = true;
     this._executeQueue();
-    this._executeOn('open');
+    this._triggerEvent(this.onOpen);
   }
 
   _onMsg = msg => {
-    this._executeOn('msg', msg);
+    this._triggerEvent(this.onMsg, msg);
     try {
       msg = JSON.parse(msg.data);
     } catch (err) {
@@ -75,19 +74,18 @@ export default class Ws {
     logger.warn('[WS] closed');
     this._executeCbsWithError();
     this._isConnected = false;
-    this._executeOn('close');
+    this._triggerEvent(this.onClose);
     this.init(this._token);
   }
 
   _onError = err => {
     logger.warn('[WS] error', err);
-    this._executeOn('error', err);
+    this._triggerEvent(this.onError, err);
     this._initTimeout = this._initWithTimeout();
   }
 
-  _executeOn (evtName, arg) {
-    const method = 'on' + capitalize(evtName);
-    this[method].forEach(fn => fn(arg));
+  _triggerEvent (evts, arg) {
+    evts.forEach(fn => fn(arg));
   }
 
   _initWithTimeout () {

@@ -5,7 +5,7 @@ export default class Web3WsProvider {
   }
 
   send (payload) {
-    throw Error('[Web3 WS] sync mthods are not supported, please use async');
+    throw Error('[Web3 WS] sync methods are not supported, please use async');
   }
 
   sendAsync (payload, cb) {

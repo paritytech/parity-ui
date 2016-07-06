@@ -13,7 +13,7 @@ import styles from './Header.css';
 export default class Header extends Component {
 
   static propTypes = {
-    isConnected: PropTypes.bool.isRequired
+    isWsConnected: PropTypes.bool.isRequired
   }
 
   title = isExtension() ? 'Parity Signer UI' : 'Parity Signer UI (DAPP)';
@@ -35,7 +35,7 @@ export default class Header extends Component {
 
   renderMenu () {
     return null; // until settings are tested and operational
-    // if (!this.props.isConnected) {
+    // if (!this.props.isWsConnected) {
     //   return null;
     // }
 
