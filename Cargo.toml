@@ -1,0 +1,18 @@
+[package]
+description = "Status Page for Parity"
+name = "parity-dapps-status"
+version = "0.5.1"
+license = "GPL-3.0"
+authors = ["Ethcore <admin@ethcore.io>"]
+build = "build.rs"
+
+[features]
+default = ["with-syntex"]
+with-syntex = ["parity-dapps/with-syntex"]
+
+[build-dependencies]
+parity-dapps = { git = "https://github.com/ethcore/parity-dapps-rs.git", version = "0.3" }
+
+[dependencies]
+parity-dapps = { git = "https://github.com/ethcore/parity-dapps-rs.git", version = "0.3" }
+

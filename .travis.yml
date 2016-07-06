@@ -11,8 +11,10 @@ matrix:
   env:
     - PROJECT=home
     - PROJECT=wallet
+    - PROJECT=status
 
 script:
   - cd $PROJECT
   - cargo build
   - cargo test --release
+
