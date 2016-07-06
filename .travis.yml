@@ -9,9 +9,10 @@ matrix:
   allow_failures:
     - rust: nightly
   env:
-    - PROJECT=parity-dapps-builtins
+    - PROJECT=home
+    - PROJECT=wallet
 
 script:
-  - cargo build -p $PROJECT
-  - cargo test --release -p $PROJECT
-
+  - cd $PROJECT
+  - cargo build
+  - cargo test --release
