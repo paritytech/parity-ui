@@ -12,7 +12,7 @@
     "clean": "rimraf build/ dev/ *.zip *.crx",
     "lint": "eslint app chrome test scripts",
     "test-e2e": "cross-env NODE_ENV=test mocha test/e2e",
-    "test": "cross-env NODE_ENV=test mocha -r ./test/setup-app test/app"
+    "testOnce": "cross-env NODE_ENV=test mocha -r ./test/setup-app test/app"
   },
   "repository": {
     "type": "git",

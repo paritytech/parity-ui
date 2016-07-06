@@ -1,27 +1,28 @@
 sudo: false
 language: node_js
+
 node_js:
   - '5'
 
-matrix:
-  env:
-    - PROJECT=status
-    - PROJECT=home
-    - PROJECT=components
-    - PROJECT=signer
-    - SCRIPT=lint
-    - SCRIPT=testOnce
-    - SCRIPT=coveralls
+env:
+  - PROJECT=status
+  - PROJECT=home
+  - PROJECT=components
+  - PROJECT=signer
 
 cache:
   directories:
-    - status/node_modules
-    - home/node_modules
-    - components/node_modules
-    - signer/node_modules
+    - $TRAVIS_BUILD_DIR/status/node_modules
+    - $TRAVIS_BUILD_DIR/home/node_modules
+    - $TRAVIS_BUILD_DIR/components/node_modules
+    - $TRAVIS_BUILD_DIR/signer/node_modules
 
 script:
   - cd $PROJECT
+  - npm install
+  - npm run lint
+  - npm run testOnce
+  # TODO add coverals for projects?
   - if [ "$SCRIPT" ]; then npm run $SCRIPT; fi
   # - if [ "$E2E" ] && [ "$SAUCE_ACCESS_KEY" ]; then npm run startTest & sleep 25 && npm run $E2E; fi
 
