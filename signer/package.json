@@ -10,7 +10,7 @@
     "startTest": "NODE_ENV=tests npm start",
     "webpack": "webpack --progress --colors",
     "coveralls": "npm run testCoverage && coveralls < coverage/lcov.info",
-    "lint": "eslint --ignore-path .gitignore .",
+    "lint": "eslint --ignore-path ../.gitignore .",
     "testCoverage": "istanbul cover _mocha -- 'app/**/*.spec.js'",
     "testOnce": "mocha 'app/**/*.spec.js'",
     "nightwatch": "NODE_ENV=tests nightwatch",

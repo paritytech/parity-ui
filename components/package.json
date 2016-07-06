@@ -11,7 +11,7 @@
     "webpack": "webpack",
     "commit": "commit-wizard",
     "coveralls": "npm run testCoverage && coveralls < coverage/lcov.info",
-    "lint": "eslint --ignore-path .gitignore .",
+    "lint": "eslint --ignore-path ../.gitignore .",
     "test": "npm run testOnce -- -w",
     "testCoverage": "istanbul cover _mocha -- 'src/**/*.spec.js'",
     "testOnce": "mocha 'src/**/*.spec.js'",

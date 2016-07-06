@@ -117,7 +117,7 @@ export default class RpcCalls extends Component {
         <RpcAutoComplete
           style={{ marginTop: 0 }}
           onNewRequest={this.handleMethodChange}
-          { ...this._test('rpcAutoComplete')}
+          {...this._test('rpcAutoComplete')}
         />
         <div>
           <Markdown val={desc} />
