@@ -3,33 +3,22 @@ language: node_js
 node_js:
   - '5'
 
-env:
-  global:
-    - CXX=g++-4.8
-    - REPO_SLUG=ethcore/eth-node-status-page
-    # SAUCE_USERNAME (required by sauce-connect and nightwatch)
-    - secure: aoMJxkSNvND6fkBk3R+Ay7yiOkPvmi8dhkOATNBszZ3k1gJdhLjbT4vFSSmQdK3fy99CSzZenne+MZUi4sG5xchtAo+NJluLUnpZ5Zly4bN/vM81yqTgq4SnMXQhHK9uiBD36Dbw9lGqT22QxYzevN0x/4Z5NfpZvxIszqUkhrD0PP24LL5mAVwMW5t4gttUJ1T7jaEsSEjf+nrw6H97jSQEDAGvTSkb8xzj7ctNP6kbpAuoeG7d+HenfnkEji64Ajv9fuFDywzwKLFisM4+ODp21RonCpR1MVDMtTt3VOpZchMgVF9IwFj8wMrE5pqk8ieKeR48e9QO/YxcVOUcT1KKNc4BuB8AqGX7v5pkktFC8Pox7qXOiLvfklnhEyYNjFA4UWZUxRYvRIgQpwWssiulWm8XL86QF/4pnyoG653PV+jN1XQrERdXcSuahiYDGeggRJGaRuqWs+xK1XuW1Qsr5EZSOEBuoy+TsWJ3pE1xewoAU+PD7L4n3QOspOBSwVAZk8qZzl/KYnJ2oujjNOaonxovFEecll4RIkN9rovMADZsKRHNPsM3Uw87gcWyWM9zg8Mb6uR8PqBGUsHTy/qE7LUBYi7RVspJHVQ5NODS8snK53miC3Ysyv880YxhRouLT1NJ2n3CHNB3BITLt4Q3aexIMMPFW4E0jPlPeYQ=
-    # SAUCE_ACCESS_KEY (required by sauce-connect and nightwatch)
-    - secure: N+6v6zQLaLukclH4IrNESyHl6B5E98hY/DHhGNf255ChR4N+T/rCRNlgXU4CFS9xHoQNMlOaMU0nFJrVK1aYMpuzXtCtTY6LwmANVPE7XmpyVQfID2D2fbjWOnsDGAFnc7pmFkSkG6HONGYQit/cgUCG8Nsi1tnJHev9WRVaHZmpvwWh3ILf7iUyUtee4ZkWnEpdOCI/H+JFxAPffUK0beiMjUkdnhOrPcDZg8aYOqkF023sbhWRYkmJfUug4qjo1WgxF85B3/VhcRWouZ/dzzQyuv/Iua7E3lGTNiQi+cOA+g081cyZi+j4X9WOSBIZbYOycZ79W/NKWWKx4XTTAKkbUNIEjWC3wvwj7Qagk++fSS6mysYM15MaKoGhh6BbGV/640JZiO9loPWa1ezIhlMQqbRiS56HmJfled0RCZ5gXDQ1QLj+o0ION2XNVC+KOx1OmMi19Cx7GAL1KiAq0PWGjzD/+QP4AbPvAGp47y2tiAlrsnQ7Cwg4jlSt9Oycd7qgUa3P3pzUgqd0lQR5KeBSR/GXyRs6Ig4p8hBE/JgO3RAxuqEaSqMURsW7QedO2pHdJxAiVeqU54bdSRQ/X0gMbT0Ce3XfHkHRyYVN+ZE5p+ckrjEw1OGQIiN4wj8uXP/R1+IvuN+8UoIEC4vmkheXu+hWDxwt4YJxjnLm/+A=
-    # GITHUB_TOKEN with public repo access
-    - secure: dZW1Auq9n4L4pw/BJO1/IU1MO9CCMk3xzm/UIqatVX+R6W51lHBysxGW7vfHntyBbaOJxcX/RA/SE6+JeSujqkXad137bJBhwsWv4GrjeCrSwF/1hd0/uk0KtFJ5uEmOWckBRE9qw5VeRm7RrwH4tw/q+juJjZTjWLXQIYm3QXDtDFDQQ0/Pe1YaCya/CeTOOfJ+Sk/cSdFmNPqTP+RXt3oi8bUlrkXk5/oIbl+rrMZWHVv75zEQZQbdRg3YniCunGQk0gpshpkvcf0N6A9s7f7wz12wCQoErOSap6kvoUyVNO+27OrSOsLAZAe9z8IXNvthnef8/6kEdyzMUQAMg32tkw0Dtuo3ZLcYouLKQsiwO7zRgOGIaZreEfcA90XV3Sv7PKxURJRR/pfqDHNwpi3OmlcJVASWc+FrH1rauo2E31OVvP2XSeRhT2yxUXpfhBB983W9JF6WsAFUKhwVYg+be7yaokfBUEb7uJd1BafLsIOa+qm/NpxhgkzHM/cB+z8CbUEDdSz6+ZxEv0QT2jt7QnLgD6L1aRRfV8B74DA5D2SP6dE2YMWkxCDMTUZkhDcaijNdN5HoilW3sdW4Zk9MSGzlU7j5amvQ+B3YFcFwFiNHq0ZlwJ/Yi6/ijSZCXN0u0N/GFpBiht1ixL3mhQmVRgOrrQlKXs0QK2nkdoI=
-
 matrix:
-  include:
-  - env: SCRIPT=lint
-  - env: SCRIPT=coveralls
-  - env: E2E=nightwatchCI
-    addons:
-      sauce_connect: true
+  env:
+    - PROJECT=status
+    - PROJECT=home
+    - SCRIPT=lint
+    - SCRIPT=testOnce
+    - SCRIPT=coveralls
 
 cache:
   directories:
     - node_modules
 
 script:
-  - cd status
+  - cd $PROJECT
   - if [ "$SCRIPT" ]; then npm run $SCRIPT; fi
-  - if [ "$E2E" ] && [ "$SAUCE_ACCESS_KEY" ]; then npm run startTest & sleep 25 && npm run $E2E; fi
+  # - if [ "$E2E" ] && [ "$SAUCE_ACCESS_KEY" ]; then npm run startTest & sleep 25 && npm run $E2E; fi
 
 after_success:
-  # - ./status/scripts/deploy-to-gh-pages.sh
+  # - ./scripts/deploy-to-gh-pages.sh

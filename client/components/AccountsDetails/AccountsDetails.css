@@ -1,0 +1,20 @@
+.acc {
+  display: flex;
+  align-items: center;
+}
+
+.acc img {
+  width: 48px;
+  height: 48px;
+  margin: 20px 8px 5px;
+  vertical-align: middle;
+}
+
+.inputs {
+  flex: 1 1 auto;
+}
+
+.newAccount svg {
+  vertical-align: -7px;
+  opacity: 0.4;
+}

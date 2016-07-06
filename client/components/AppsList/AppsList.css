@@ -1,0 +1,17 @@
+.author, .version {
+  font-size: 10px;
+  color: #bbb;
+}
+.container {
+  padding: 2em;
+  margin: auto;
+  max-width: 1000px;
+}
+.image {
+  box-sizing: border-box;
+  width: 100%;
+  height: calc(100% - 70px);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+}

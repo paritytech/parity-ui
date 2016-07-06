@@ -1,0 +1,33 @@
+.dialog hr {
+  background: none;
+  border-top: 1px solid #aaa;
+  max-width: 50%;
+  margin-left: 0;
+}
+
+.dialog code {
+  color: #b44;
+  padding: 2px;
+}
+.dialog pre {
+  background: #eee;
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+.copiedToClipboardMsg.hidden {
+  opacity: 1;
+}
+
+.copiedToClipboardMsg {
+  opacity: 0;
+  transition: 0.5s opacity;
+}
+
+.copyToClipboardIcon {
+  height: 20px !important;
+  width: 20px !important;
+  margin-right: 4px;
+  margin-bottom: -5px;
+  cursor: pointer;
+}
