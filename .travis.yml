@@ -9,6 +9,13 @@ env:
   - PROJECT=wallet
   - PROJECT=status
 
+cache:
+  directories:
+    - $HOME/.cargo
+    - $TRAVIS_BUILD_DIR/home/target
+    - $TRAVIS_BUILD_DIR/wallet/target
+    - $TRAVIS_BUILD_DIR/status/target
+
 matrix:
   fast_finish: true
   allow_failures:
