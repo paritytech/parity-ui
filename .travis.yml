@@ -1,17 +1,18 @@
 language: rust
+
 rust:
   - stable
   - beta
   - nightly
+env:
+  - PROJECT=home
+  - PROJECT=wallet
+  - PROJECT=status
 
 matrix:
   fast_finish: true
   allow_failures:
     - rust: nightly
-  env:
-    - PROJECT=home
-    - PROJECT=wallet
-    - PROJECT=status
 
 script:
   - cd $PROJECT
