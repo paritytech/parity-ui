@@ -1,4 +1,4 @@
-import { keccak_256 } from 'js-sha3';
+import { keccak_256 } from 'js-sha3'; // eslint-disable-line camelcase
 import logger from './logger';
 
 export default class Ws {
@@ -13,7 +13,7 @@ export default class Ws {
 
   _assignOpts (opts = {}) {
     if (!opts.path && !window) {
-      throw '[WS] must pass path when no window object';
+      throw Error('[WS] must pass path when no window object');
     }
     this.path = opts.path || window.location.host;
     this.reconnectTimeout = opts.reconnectTimeout || 5000;
@@ -24,11 +24,11 @@ export default class Ws {
   }
 
   init = token => {
-    this._token = token // store token for _onClose reconnect attemps
+    this._token = token; // store token for _onClose reconnect attemps
     clearTimeout(this._initTimeout);
     try {
       const hash = this._hash(token);
-      this._ws = new WebSocket(`ws://${this.path}`, hash);
+      this._ws = new global.WebSocket(`ws://${this.path}`, hash);
     } catch (err) {
       logger.warn('[WS] error connecting to ws', err); // throws when port is blocked, not when hash is incorrect
     }
@@ -105,10 +105,7 @@ export default class Ws {
 
   _executeCbsWithError () {
     logger.log('[WS] executing callbacks with error: ', this._callbacks);
-    for (const msgId in this._callbacks) {
-      const cb = callbacks[msgId];
-      ('[WS] disconnected, cb cannot be called');
-    }
+    this._callbacks.forEach(cb => cb('[WS] disconnected, cb cannot be called'));
     this._callbacks = {};
   }
 

@@ -1,4 +1,3 @@
-/* global chrome */
 import logger from '../../utils/logger';
 
 // get proxy settings

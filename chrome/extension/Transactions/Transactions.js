@@ -1,4 +1,3 @@
-/* global chrome */
 import isEqual from 'lodash.isequal';
 import logger from '../../utils/logger';
 import Ws from '../../utils/Ws';
@@ -10,15 +9,15 @@ export default class Transactions {
     this.ws = new Ws({
       path: '127.0.0.1:8180',
       onMsg: ::this.onWsMsg,
-      onOpen: ::this.fetchPendingTransactions, 
+      onOpen: ::this.fetchPendingTransactions,
       onClose: ::this.reset,
       onError: ::this.reset
     });
     this.pendingTransactions = [];
     chrome.storage.onChanged.addListener(this.onSysuiTokenChange);
     chrome.browserAction.setBadgeBackgroundColor({ color: '#f00' });
-    chrome.runtime.onMessageExternal.addListener(this.onWebsiteMsg)
-    chrome.browserAction.setBadgeBackgroundColor({ color: '#f00'});
+    chrome.runtime.onMessageExternal.addListener(this.onWebsiteMsg);
+    chrome.browserAction.setBadgeBackgroundColor({ color: '#f00' });
   }
 
   init (token) {
@@ -26,7 +25,7 @@ export default class Transactions {
   }
 
   reset = () => {
-    this.pendingTransactions = []
+    this.pendingTransactions = [];
     this.setBadgeText('');
   }
 
@@ -76,11 +75,11 @@ export default class Transactions {
   animateBadge (txsLength) {
     this.isBadgeAnimated = true;
     const animator = new BadgeTextAnimator({
-        text: 'New transaction pending',
-        interval: 100, // the "speed" of the scrolling
-        repeat: false,
-        size: 6,
-        cb: () => this.onBadgeIconEnd(txsLength)
+      text: 'New transaction pending',
+      interval: 100, // the "speed" of the scrolling
+      repeat: false,
+      size: 6,
+      cb: () => this.onBadgeIconEnd(txsLength)
     });
     animator.animate();
   }

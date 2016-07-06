@@ -1,3 +1,5 @@
+/* global sinon */
+
 import Ws from './Ws';
 
 describe('Ws', () => {
@@ -117,7 +119,7 @@ describe('Ws', () => {
       // when
       cut._onOpen();
 
-      //then
+      // then
       expect(cut._ws.addEventListener).to.have.been.calledWith('close', cut._onClose);
       expect(cut._ws.addEventListener).to.have.been.calledWith('message', cut._onMsg);
     });
@@ -129,7 +131,7 @@ describe('Ws', () => {
       // when
       cut._onOpen();
 
-      //then
+      // then
       expect(cut._isConnected).to.be.true;
     });
 
@@ -137,7 +139,7 @@ describe('Ws', () => {
       // when
       cut._onOpen();
 
-      //then
+      // then
       expect(cut._executeQueue).to.have.been.called;
       expect(cut.onOpen).to.have.been.called;
     });
@@ -156,7 +158,7 @@ describe('Ws', () => {
       // when
       cut._onClose();
 
-      //then
+      // then
       expect(cut._executeCbsWithError).to.have.been.called;
       expect(cut.onClose).to.have.been.called;
       expect(cut.init).to.have.been.calledWith(cut._token);
@@ -169,7 +171,7 @@ describe('Ws', () => {
       // when
       cut._onClose();
 
-      //then
+      // then
       expect(cut._isConnected).to.be.false;
     });
   });
@@ -218,6 +220,4 @@ describe('Ws', () => {
       }, cut._reconnectTimeout);
     });
   });
-
-
 });
