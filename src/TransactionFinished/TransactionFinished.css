@@ -1,0 +1,43 @@
+.container {
+  padding: 25px 8px;
+}
+
+.mainContainer > * {
+  display: inline-block;
+  vertical-align: middle;
+  min-height: 110px;
+}
+
+.statusContainer {
+  width: 300px;
+}
+
+.transactionDetails {
+  border-right: 1px solid #eee;
+  margin-right: 2rem;
+}
+
+.isConfirmed {
+  color: green;
+}
+
+.isRejected {
+  opacity: 0.7;
+}
+
+.error svg {
+  fill: red !important; /* shameon material-ui using inline styles */
+}
+
+.error > span {
+  color: red;
+}
+
+.error > * {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.txHash {
+  word-break: break-all;
+}

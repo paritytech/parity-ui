@@ -1,5 +1,16 @@
-.DS_STORE
 node_modules
 .module-cache
 *.log*
 *.swp
+
+# IDE project folders
+.idea
+*.sublime-project
+*.sublime-workspace
+jsconfig.json
+
+# OS files
+.DS_STORE
+
+# Logs
+*.log*
