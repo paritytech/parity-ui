@@ -1,9 +1,9 @@
 {
-  "version": "0.0.1",
-  "name": "Parity Signer UI",
+  "version": "1.0.4",
+  "name": "Parity Ethereum Integration",
   "short_name": "ParitySigner",
   "manifest_version": 2,
-  "description": "Parity Signer UI",
+  "description": "Integrate the Parity Ethereum client with the Chrome browser",
   "author": "Ethcore Team",
   "browser_action": {
     "default_title": "Parity Signer UI",
@@ -31,6 +31,11 @@
   "background": {
     "page": "background.html"
   },
-  "permissions": [ "storage", "proxy" ],
-  "content_security_policy": "default-src 'self'; font-src 'self' data:; connect-src ws://127.0.0.1:*; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:;"
+  "permissions": [
+    "storage",
+    "proxy",
+    "*://*.parity/*",
+    "*://127.0.0.1/*"
+  ],
+  "content_security_policy": "default-src 'self'; font-src 'self' data:; connect-src http://*.parity http://127.0.0.1:* ws://127.0.0.1:*; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:;"
 }

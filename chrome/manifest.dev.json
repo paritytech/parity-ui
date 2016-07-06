@@ -1,10 +1,10 @@
 {
-  "version": "0.0.0",
-  "name": "Parity Signer UI [dev]",
+  "version": "1.0.4",
+  "name": "Parity Ethereum Integration [DEV]",
   "manifest_version": 2,
-  "description": "Parity Signer UI [dev]",
+  "description": "Integrate the Parity Ethereum client with the Chrome browser [DEV]",
   "browser_action": {
-    "default_title": "Parity Signer UI [dev]",
+    "default_title": "Parity Signer UI [DEV]",
     "default_popup": "popup.html",
     "default_icon": "img/icon-16-dev.png"
   },
@@ -21,6 +21,11 @@
       "http://wallet.parity/"
     ]
   },
-  "permissions": [ "storage", "proxy" ],
-  "content_security_policy": "default-src 'self'; font-src 'self' data:; script-src 'self' http://localhost:3030 https://localhost:3030 'unsafe-eval'; connect-src ws://127.0.0.1:* http://localhost:3030 https://localhost:3030; style-src * 'unsafe-inline' 'self' blob:; img-src 'self' data:;"
+  "permissions": [
+    "storage",
+    "proxy",
+    "*://*.parity/*",
+    "*://127.0.0.1/*"
+  ],
+  "content_security_policy": "default-src 'self'; font-src 'self' data:; script-src 'self' http://localhost:3030 https://localhost:3030 'unsafe-eval'; connect-src http://*.parity http://127.0.0.1:* ws://127.0.0.1:* http://localhost:3030 https://localhost:3030; style-src * 'unsafe-inline' 'self' blob:; img-src 'self' data:;"
 }
