@@ -1,10 +1,10 @@
 {
-  "name": "parity-sysui-app",
+  "name": "parity-signer",
   "version": "0.0.27",
   "description": "reusable app for Parity's system UIs",
   "main": "./build/index.js",
   "scripts": {
-    "start": "webpack-dev-server -d --history-api-fallback --hot --inline --progress --colors --port 3001",
+    "start": "webpack-dev-server -d --history-api-fallback --open --hot --inline --progress --colors --port 3001",
     "startTest": "NODE_ENV=tests npm start",
     "webpack": "webpack --progress --colors",
     "coveralls": "npm run testCoverage && coveralls < coverage/lcov.info",
@@ -109,7 +109,6 @@
     "lodash.assign": "^4.0.9",
     "lodash.isequal": "4.2.0",
     "material-ui": "^0.15.0",
-    "napa": "2.3.0",
     "rc-slider": "^3.7.1",
     "react": "^15.0.2",
     "react-addons-css-transition-group": "^15.0.2",

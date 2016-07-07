@@ -3,7 +3,6 @@
   "version": "0.0.0",
   "description": "Parity system ui - chrome extension",
   "scripts": {
-    "install": "napa alexvandesande/blockies",
     "start": "node scripts/dev",
     "build": "NODE_ENV=production node scripts/build",
     "compress": "node scripts/compress",
@@ -74,7 +73,6 @@
     "lodash.assign": "^4.0.9",
     "lodash.isequal": "4.2.0",
     "material-ui": "^0.15.0",
-    "napa": "2.3.0",
     "parity-sysui-app": "0.0.26",
     "react": "^15.0.2",
     "react-dock": "^0.2.3",

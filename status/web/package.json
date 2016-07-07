@@ -1,10 +1,10 @@
 {
-  "name": "eth-node-status-page",
+  "name": "parity-status",
   "version": "0.1.0",
   "description": "Ethereum Node Status page",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server -d --history-api-fallback --hot --inline --progress --colors --port 3000",
+    "start": "webpack-dev-server -d --history-api-fallback --open --hot --inline --progress --colors --port 3000",
     "startPerf": "NODE_ENV=perf-debug npm start",
     "startTest": "NODE_ENV=tests npm start",
     "webpack": "webpack",

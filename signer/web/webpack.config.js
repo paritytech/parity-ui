@@ -81,15 +81,11 @@ module.exports = {
     ],
     noParse: [
       /node_modules\/sinon/
-      // /node_modules\/dapps-react-ui/
     ]
   },
   resolve: {
     extensions: ['', '.js', '.jsx'],
     unsafeCache: true
-    // alias: isProd ? {} : {
-    //   'dapps-react-ui': __dirname + '/index.js'
-    // }
   },
   postcss: [
     rucksack({

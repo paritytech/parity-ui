@@ -1,11 +1,10 @@
 {
-  "name": "parity-dapps-home",
+  "name": "parity-home",
   "version": "0.1.0",
   "description": "Parity Home Page & TopBar",
   "main": "client/index.js",
   "scripts": {
-    "install": "napa alexvandesande/blockies",
-    "start": "webpack-dev-server -d --history-api-fallback --hot --inline --progress --colors --port 3010",
+    "start": "webpack-dev-server -d --history-api-fallback --open --hot --inline --progress --colors --port 3010",
     "webpack": "webpack",
     "commit": "commit-wizard",
     "lint": "semistandard",
@@ -30,7 +29,6 @@
     "json-loader": "^0.5.4",
     "mocha": "^2.4.5",
     "mock-local-storage": "1.0.2",
-    "napa": "^2.3.0",
     "nightwatch": "0.8.18",
     "postcss-loader": "^0.8.1",
     "react": "^15.0.0",
@@ -51,6 +49,7 @@
   "dependencies": {
     "babel-polyfill": "^6.9.1",
     "bignumber.js": "2.3.0",
+    "blockies": "github:tomusdrw/blockies",
     "classnames": "^2.2.3",
     "exports-loader": "^0.6.3",
     "lodash.every": "4.4.0",
