@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "Parity Web Extension",
   "scripts": {
+    "postinstall": "npm link ../signer/web",
     "start": "node scripts/dev",
     "build": "NODE_ENV=production node scripts/build",
     "compress": "node scripts/compress",
@@ -73,7 +74,7 @@
     "lodash.assign": "^4.0.9",
     "lodash.isequal": "4.2.0",
     "material-ui": "^0.15.0",
-    "parity-signer": "../signer/web",
+    "parity-signer": "../signer/web/",
     "react": "^15.0.2",
     "react-dock": "^0.2.3",
     "react-dom": "^15.0.2",

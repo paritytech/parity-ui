@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const common = require('./common.config');
 
 const host = 'localhost';
 const port = 3030;
@@ -41,19 +42,11 @@ const baseDevConfig = () => ({
     extensions: ['', '.js']
   },
   module: {
-    loaders: [
+    loaders: common.loaders.concat([
       {
         test: /\.js$/,
         loader: 'babel',
         exclude: /node_modules/,
-        query: {
-          presets: ['react-hmre']
-        }
-      },
-      {
-        test: /\.(js|jsx)$/,
-        include: /node_modules\/parity-signer/,
-        loader: 'babel',
         query: {
           presets: ['react-hmre']
         }
@@ -70,7 +63,7 @@ const baseDevConfig = () => ({
         test: /\.json$/,
         loaders: ['json']
       }
-    ]
+    ])
   }
 });
 

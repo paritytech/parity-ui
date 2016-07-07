@@ -1,6 +1,6 @@
 {
   "name": "parity-signer",
-  "version": "0.0.27",
+  "version": "0.0.28",
   "description": "reusable app for Parity's system UIs",
   "main": "./src/app.js",
   "scripts": {

@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const common = require('./common.config');
 
 module.exports = {
   entry: {
@@ -32,19 +33,11 @@ module.exports = {
     extensions: ['', '.js']
   },
   module: {
-    loaders: [
+    loaders: common.loaders.concat([
       {
         test: /\.js$/,
         loader: 'babel',
         exclude: /node_modules/
-      },
-      {
-        test: /\.(js|jsx)$/,
-        include: /node_modules\/parity-signer/,
-        loader: 'babel',
-        query: {
-          presets: ['react-hmre']
-        }
       },
       {
         test: /\.css$/,
@@ -58,6 +51,6 @@ module.exports = {
         test: /\.json$/,
         loaders: ['json']
       }
-    ]
+    ])
   }
 };
