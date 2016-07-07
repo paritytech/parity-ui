@@ -1,0 +1,30 @@
+.account {
+  white-space: nowrap;
+}
+
+.account img {
+  width: 28px;
+  height: 28px;
+  vertical-align: middle;
+  margin-right: 3px;
+}
+
+.name, .balance, .address {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 110px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.address {
+  font-family: monospace;
+  margin: 0 3px;
+}
+
+@media (max-width: 480px) {
+  .address {
+    display: none;
+  }
+}

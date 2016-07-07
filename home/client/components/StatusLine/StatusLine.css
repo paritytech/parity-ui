@@ -1,0 +1,38 @@
+.status {
+  display: flex;
+  font-family: 'Roboto', sans-serif;
+  line-height: 26px;
+}
+
+.info {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+.info li {
+  padding: 0 5px;
+  flex: 1 1 auto;
+  border-right: 1px solid #daa;
+  border-left: 1px solid #eee;
+  white-space: nowrap;
+}
+
+.info li:first-child {
+  border-left: none;
+}
+
+.info li:last-child {
+  border-right: none;
+}
+
+.info a, .info a:visited {
+  text-decoration: none;
+  color: #2196F3;
+}
+.info a:hover, .info a:active {
+  text-decoration: underline;
+  color: #2C78B5;
+}
+

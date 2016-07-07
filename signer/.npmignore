@@ -1,0 +1,13 @@
+app/
+scripts/
+test/
+npm-debug.log
+.babelrc
+.editorconfig
+.eslintrc.json
+.gitignore
+.istanbul.yml
+.npmignore
+.travis.yml
+webpack.config.js
+*.sublime-project

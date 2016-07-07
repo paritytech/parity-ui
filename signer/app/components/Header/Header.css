@@ -1,0 +1,4 @@
+.bar {
+  padding-right: calc((100% - 800px) / 2) !important;
+  padding-left: calc((100% - 800px) / 2) !important;
+}

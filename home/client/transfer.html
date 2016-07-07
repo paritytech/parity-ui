@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Injectable dapp</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <style>
+      label {
+        display: block;
+      }
+    </style>
+    <script src="./inject.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Welcome to transfer dapp</h1>
+      <div class="row">
+      <div class="col-sm-6 col-sm-push-6">
+        <h4>
+          Your account
+        </h4>
+        <pre id="accounts">...</pre>
+      </div>
+      <div class="col-sm-6 col-sm-pull-6">
+        <h4>
+          Transfer
+        </h4>
+        <form action id="form">
+          <div class="form-group">
+            <label class="form-label">
+              Amount [ETH] (max: <span id="balance">?</span>)
+              <input
+                class="form-control"
+                placeholder="0.1"
+                type="text"
+                id="value"
+                />
+            </label>
+          </div>
+          <div class="form-group">
+            <label class="form-label">
+            Recipient [Address]
+              <input
+                class="form-control"
+                placeholder="0x..."
+                type="text"
+                id="address"
+                />
+            </label>
+          </div>
+          <div class="form-group">
+            <label class="form-label">
+            Data
+              <input
+                class="form-control"
+                placeholder="0x..."
+                type="text"
+                id="data"
+                />
+            </label>
+          </div>
+          <pre id="summary">
+You will transfer <strong>0.1ETH</strong>
+from <strong>0x...</strong>
+to <strong>0x...</strong>.
+          </pre>
+          <button type="submit" class="btn btn-primary">
+            Send Transaction
+          </button>
+        </form>
+      </div>
+    </div>
+    <script src="./transfer.js"></script>
+  </body>
+</html>

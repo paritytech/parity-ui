@@ -1,0 +1,17 @@
+.newAccount {
+  margin-top: 15px;
+}
+
+.newAccount img {
+  width: 32px;
+  height: 32px;
+  margin-right: 5px;
+}
+
+.noAccount {
+  margin-top: 15px;
+}
+
+.submit {
+  margin-top: 10px;
+}
