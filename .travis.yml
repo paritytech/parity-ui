@@ -69,4 +69,3 @@ script:
 #   on:
 #     tags: true
 #     repo: ethcore/dapps-react-ui
-
