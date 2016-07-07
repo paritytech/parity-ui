@@ -16,7 +16,7 @@
     "nightwatch": "NODE_ENV=tests nightwatch",
     "nightwatchCI": "npm run nightwatch  -- -e saucelabs",
     "prebuild": "npm run clean",
-    "build": "NODE_ENV=production webpack --bail --progress --colors",
+    "build": "webpack --bail --progress --colors",
     "clean": "rm static -rf || true",
     "prezip": "npm run build",
     "zip": "cd static && zip ../status.zip * -r",

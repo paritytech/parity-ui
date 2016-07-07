@@ -40,3 +40,8 @@ impl WebApp for App {
 		}
 	}
 }
+
+#[test]
+fn test_js() {
+	::parity_dapps::js::test(concat!(env!("CARGO_MANIFEST_DIR"), "/web"))
+}

@@ -5,7 +5,6 @@
   "main": "./build/index.js",
   "scripts": {
     "start": "webpack-dev-server -d --history-api-fallback --hot --inline --progress --colors --port 3001",
-    "startPerf": "NODE_ENV=perf-debug npm start",
     "startTest": "NODE_ENV=tests npm start",
     "webpack": "webpack --progress --colors",
     "coveralls": "npm run testCoverage && coveralls < coverage/lcov.info",
@@ -15,7 +14,7 @@
     "nightwatch": "NODE_ENV=tests nightwatch",
     "nightwatchCI": "npm run nightwatch  -- -e saucelabs",
     "prebuild": "npm run clean",
-    "build": "NODE_ENV=production webpack --progress --colors",
+    "build": "webpack --progress --colors --bail",
     "clean": "rm build -rf || true",
     "commit": "commit-wizard"
   },

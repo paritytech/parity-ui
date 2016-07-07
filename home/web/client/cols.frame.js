@@ -1,4 +1,4 @@
-import '!file?name=home/[name].html!./cols.frame.html';
+import './cols.frame.html';
 import {NAMESPACE, PREFIX} from './components/Storage/cols.data';
 import localStorage from './components/Storage/safeLocalStorage';
 

@@ -1,7 +1,7 @@
 {
-  "name": "parity-web-ui",
+  "name": "parity-dapps-home",
   "version": "0.1.0",
-  "description": "System UI for Parity dapp browser",
+  "description": "Parity Home Page & TopBar",
   "main": "client/index.js",
   "scripts": {
     "install": "napa alexvandesande/blockies",
@@ -9,13 +9,9 @@
     "webpack": "webpack",
     "commit": "commit-wizard",
     "lint": "semistandard",
-    "ci": "npm run lint && npm run testOnce",
-    "test": "npm run testOnce -- -w",
-    "testOnce": "mocha --compilers js:babel-core/register 'client/**/*.spec.js'",
-    "startTest": "NODE_ENV=tests npm start",
+    "test": "mocha --compilers js:babel-core/register 'client/**/*.spec.js'",
     "prebuild": "npm run clean",
-    "build": "NODE_ENV=production webpack --progress --colors",
-    "buildStatic": "RPC_ADDRESS=http://localhost:8545 NODE_ENV=production webpack --progress --colors",
+    "build": "webpack --bail --progress --colors",
     "clean": "rm static -rf"
   },
   "license": "GPL-3.0",
@@ -67,19 +63,5 @@
   },
   "semistandard": {
     "parser": "babel-eslint"
-  },
-  "config": {
-    "pre-git": {
-      "pre-commit": [
-        "./scripts/check-master.sh"
-      ],
-      "pre-push": [
-        "npm run lint",
-        "npm run testOnce"
-      ],
-      "post-commit": [],
-      "post-checkout": [],
-      "post-merge": []
-    }
   }
 }

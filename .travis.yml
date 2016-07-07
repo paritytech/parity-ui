@@ -7,15 +7,17 @@ rust:
   - nightly
 env:
   - PROJECT=home
-  - PROJECT=wallet
+  - PROJECT=signer
   - PROJECT=status
+  - PROJECT=wallet
 
 cache:
   directories:
     - $HOME/.cargo
     - $TRAVIS_BUILD_DIR/home/target
-    - $TRAVIS_BUILD_DIR/wallet/target
+    - $TRAVIS_BUILD_DIR/signer/target
     - $TRAVIS_BUILD_DIR/status/target
+    - $TRAVIS_BUILD_DIR/wallet/target
 
 matrix:
   fast_finish: true

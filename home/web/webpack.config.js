@@ -11,15 +11,19 @@ module.exports = {
   cache: !isProd,
   devtool: isProd ? '#source-map' : '#cheap-module-eval-source-map',
   context: path.join(__dirname, './client'),
-  entry: {
-    'transfer': ['whatwg-fetch', './transfer.js'],
+  entry: isProd ? {
+    'inject': ['whatwg-fetch', './inject.js'],
+    'home': ['whatwg-fetch', './home.js'],
+    'cols.frame': './cols.frame.js'
+  } : {
+    'transfer': './transfer.js',
     'inject': ['whatwg-fetch', './inject.js'],
     'parity-utils/inject': ['whatwg-fetch', './inject.js'],
-    'index': ['whatwg-fetch', './index.js'],
+    'home': ['whatwg-fetch', './home.js'],
     'home/cols.frame': './cols.frame'
   },
   output: {
-    path: path.join(__dirname, './static'),
+    path: path.join(__dirname, '..', 'src', 'web'),
     filename: '[name].js'
   },
   module: {
