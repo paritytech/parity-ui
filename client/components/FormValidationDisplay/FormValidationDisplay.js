@@ -12,7 +12,7 @@ export default class FormValidationDisplay extends React.Component {
     const isValidClass = isValid ? styles.isValid : '';
     const icon = isValid ? <ValidIcon /> : <InvalidIcon />;
     return (
-      <div className={`${styles.container} ${isValidClass}`}>
+      <div className={ `${styles.container} ${isValidClass}` }>
         { icon } { text }
       </div>
     );

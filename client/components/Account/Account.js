@@ -37,15 +37,15 @@ export default class Account extends Web3Component {
     const acc = this.props.address;
     const address = this.context.web3.toChecksumAddress(acc);
     return (
-      <div className={styles.account} title={this.renderTitle(address)}>
-        <Identicon seed={acc} />
+      <div className={ styles.account } title={ this.renderTitle(address) }>
+        <Identicon seed={ acc } />
         { this.renderName(address) }
         { this.renderBalance() }
       </div>
     );
   }
 
-  renderTitle = (address) => {
+  renderTitle = address => {
     if (this.props.name) {
       return address + ' ' + this.props.name;
     }
@@ -57,28 +57,28 @@ export default class Account extends Web3Component {
     const { balance } = this.state;
     if (balance === null) {
       return (
-        <span className={styles.balance}> (...)</span>
+        <span className={ styles.balance }> (...)</span>
       );
     }
     const val = this.context.web3.fromWei(balance);
     return (
-      <span className={styles.balance}> {val.toFixed(2)} Eth</span>
+      <span className={ styles.balance }> { val.toFixed(2) } Eth</span>
     );
   }
 
   renderName (address) {
-    const {name} = this.props;
+    const { name } = this.props;
     if (!name) {
       return (
-        <span className={styles.address}>
+        <span className={ styles.address }>
           [{ this.shortAddress(address) }]
         </span>
       );
     }
     return (
       <span>
-        <span className={styles.name}>{name}</span>
-        <span className={styles.address}>[{ this.tinyAddress(address) }]</span>
+        <span className={ styles.name }>{ name }</span>
+        <span className={ styles.address }>[{ this.tinyAddress(address) }]</span>
       </span>
     );
   }
