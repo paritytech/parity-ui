@@ -37,7 +37,15 @@ module.exports = {
         test: /\.js$/,
         loader: 'babel',
         exclude: /node_modules/
-      }, 
+      },
+      {
+        test: /\.(js|jsx)$/,
+        include: /node_modules\/parity-signer/,
+        loader: 'babel',
+        query: {
+          presets: ['react-hmre']
+        }
+      },
       {
         test: /\.css$/,
         loaders: [

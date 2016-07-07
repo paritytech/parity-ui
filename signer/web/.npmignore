@@ -1,5 +1,3 @@
-app/
-scripts/
 test/
 npm-debug.log
 .babelrc

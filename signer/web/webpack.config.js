@@ -10,7 +10,7 @@ module.exports = {
   debug: !isProd,
   cache: !isProd,
   devtool: isProd ? '#source-map' : '#cheap-module-eval-source-map',
-  context: path.join(__dirname, './app'),
+  context: path.join(__dirname, './src'),
   entry: isProd ? {
     app: './app.js',
     index: './index.js',
@@ -49,7 +49,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        include: /app/,
+        include: /src/,
         loaders: [
           'style',
           'css?modules&sourceMap&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]',
@@ -58,7 +58,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        exclude: /app/,
+        exclude: /src/,
         loader: 'style!css'
       },
       {
@@ -126,7 +126,7 @@ module.exports = {
     return plugins;
   }()),
   devServer: {
-    contentBase: './app',
+    contentBase: './src',
     hot: !isProd
   }
 };

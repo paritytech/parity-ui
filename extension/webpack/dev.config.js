@@ -51,6 +51,14 @@ const baseDevConfig = () => ({
         }
       },
       {
+        test: /\.(js|jsx)$/,
+        include: /node_modules\/parity-signer/,
+        loader: 'babel',
+        query: {
+          presets: ['react-hmre']
+        }
+      },
+      {
         test: /\.css$/,
         loaders: [
           'style',
