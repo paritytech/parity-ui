@@ -17,32 +17,36 @@
 use std::fmt;
 use std::process::Command;
 
-const JS_LOCATION: &str = concat!(env!("CARGO_MANIFEST_DIR"), "/web");
-
 fn die<T : fmt::Debug>(s: &'static str, e: T) -> ! {
 	panic!("Error: {}: {:?}", s, e);
 }
 
-pub fn build() {
+pub fn build(path: &str) {
+	let mut child = Command::new("npm")
+		.arg("install")
+		.current_dir(path)
+		.spawn()
+		.unwrap_or_else(|e| die("Installing dependencies", e));
+	let code = child.wait().unwrap_or_else(|e| die("Installing dependencies", e));
+	assert!(code.success());
+
 	let mut child = Command::new("npm")
 		.arg("run")
 		.arg("build")
 		.env("NODE_ENV", "production")
-		.current_dir(JS_LOCATION)
+		.current_dir(path)
 		.spawn()
-		.unwrap_or_else(|e| die("Running command", e));
-
+		.unwrap_or_else(|e| die("Building JS code", e));
 	let code = child.wait().unwrap_or_else(|e| die("Building JS code", e));
 	assert!(code.success());
 }
 
-pub fn test() {
+pub fn test(path: &str) {
 	use std::process::Command;
-
 	let mut child = Command::new("npm")
 		.arg("run")
 		.arg("test")
-		.current_dir(JS_LOCATION)
+		.current_dir(path)
 		.spawn().unwrap_or_else(|e| die("Running test command", e));
 	let code = child.wait().unwrap_or_else(|e| die("Testing JS code", e));
 	assert!(code.success());

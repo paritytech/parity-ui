@@ -16,7 +16,7 @@ module.exports = {
     index: './index.js'
   },
   output: {
-    path: path.join(__dirname, './static'),
+    path: path.join(__dirname, '../src/web'),
     filename: '[name].js'
   },
   module: {

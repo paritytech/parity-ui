@@ -19,7 +19,7 @@ extern crate quasi;
 mod codegen;
 mod build;
 pub mod js;
-pub use build::inner::build;
+pub use build::inner::generate;
 
 use std::default::Default;
 

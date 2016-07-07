@@ -17,6 +17,6 @@
 extern crate parity_dapps;
 
 fn main() {
-	parity_dapps::js::build();
+	parity_dapps::js::build(concat!(env!("CARGO_MANIFEST_DIR"), "/web"));
 	parity_dapps::generate();
 }
