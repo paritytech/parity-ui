@@ -13,40 +13,40 @@
 
 // You should have received a copy of the GNU General Public License
 // along with Parity.  If not, see <http://www.gnu.org/licenses/>.
-//
 
 extern crate quasi;
 
 mod codegen;
 mod build;
+pub mod js;
 pub use build::inner::build;
 
 use std::default::Default;
 
 #[derive(Clone)]
 pub struct File {
-  pub path: &'static str,
-  pub content: &'static [u8],
-  pub content_type: &'static str,
+	pub path: &'static str,
+	pub content: &'static [u8],
+	pub content_type: &'static str,
 }
 
 #[derive(Clone, Debug)]
 pub struct Info {
-  pub name: &'static str,
-  pub version: &'static str,
-  pub author: &'static str,
-  pub description: &'static str,
-  pub icon_url: &'static str,
+	pub name: &'static str,
+	pub version: &'static str,
+	pub author: &'static str,
+	pub description: &'static str,
+	pub icon_url: &'static str,
 }
 
 pub trait WebApp : Default + Send + Sync {
-  fn file(&self, path: &str) -> Option<&File>;
-  fn info(&self) -> Info;
+	fn file(&self, path: &str) -> Option<&File>;
+	fn info(&self) -> Info;
 }
 
 #[cfg(test)]
 mod tests {
-  #[test]
-  fn it_works() {
-  }
+	#[test]
+	fn it_works() {
+	}
 }
