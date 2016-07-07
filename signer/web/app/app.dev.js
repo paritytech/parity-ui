@@ -1,9 +1,8 @@
 /* global localStorage */
+import app from './app';
 import EventEmitter from 'event-emitter';
 
 const emitter = EventEmitter({});
-
-const app = global.paritySysuiApp;
 
 tokenGetter(initToken => {
   app(initToken, tokenSetter, addTokenListener, '127.0.0.1:8180');

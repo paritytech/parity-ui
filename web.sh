@@ -6,26 +6,20 @@ PROJECTS=(./components ./extension ./home/web ./signer/web ./status/web)
 CMD="help"
 
 # Parse CLI
-while :
-do
-  case "$1" in
-    install | i)
-      CMD="install"
-      shift 1
-      ;;
-    clean | c)
-      CMD="clean"
-      shift 1
-      ;;
-    help | h)
-      CMD="help"
-      shift 1
-      ;;
-    *)
-      break
-      ;;
-  esac
-done
+case "$1" in
+  install | i)
+    CMD="install"
+    ;;
+  clean | c)
+    CMD="clean"
+    ;;
+  shrinkwrap)
+    CMD="shrinkwrap"
+    ;;
+  *)
+    break
+    ;;
+esac
 
 # Run Command
 case "$CMD" in
@@ -40,6 +34,14 @@ case "$CMD" in
       cd -
     done
     ;;
+  shrinkwrap)
+    set -x
+    for P in ${PROJECTS[@]}; do
+      cd $P
+      npm shrinkwrap
+      cd -
+    done
+    ;;
   clean)
     set -x
     for P in ${PROJECTS[@]}; do
@@ -49,7 +51,7 @@ case "$CMD" in
     done
     ;;
   *)
-    echo "Unknown option"
+    echo "Unknown command: $CMD"
     exit 1
     ;;
 esac

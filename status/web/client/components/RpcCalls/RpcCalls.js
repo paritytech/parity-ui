@@ -4,7 +4,7 @@ import _ from 'lodash';
 
 import Toggle from 'material-ui/Toggle/Toggle';
 import TextField from 'material-ui/TextField';
-import { RpcAutoComplete } from 'dapps-react-ui';
+import { RpcAutoComplete } from 'dapps-react-components';
 import { formatRpcMd } from '../../util/rpc-md';
 import AnimateChildren from '../../components-compositors/Animated/children';
 import JsonEditor from '../JsonEditor';

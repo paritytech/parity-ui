@@ -1,4 +1,4 @@
-# Dapps React UI
+# Dapps React Components
 
 [![Build Status][travis-image]][travis-url]
 [![js-semistandard-style][semistandard-image]][semistandard-url]
@@ -20,12 +20,12 @@ DRY
 
 ### Install
 ```bash
-npm i --save dapps-react-ui
+npm i --save dapps-react-components
 ```
 
 ### Usage
 ```bash
-import { ComponentName, ComponentName2 } from 'dapps-react-ui';
+import { ComponentName, ComponentName2 } from 'dapps-react-components';
 ```
 
 ### Relevant Links

@@ -2,7 +2,7 @@
   "name": "dapps-react-components",
   "version": "0.0.684",
   "description": "React Reusable Components For Dapps",
-  "main": "./build/index.js",
+  "main": "./src/index.js",
   "scripts": {
     "start": "webpack-dev-server -d --history-api-fallback --hot --inline --progress --colors --port 3020",
     "webpack": "webpack",

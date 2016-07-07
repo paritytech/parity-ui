@@ -37,7 +37,10 @@
   top: -15px; /* due to material ui weird styling */
 }
 
-.hasInfoIcon svg {
+.hasInfoIcon svg,
+.miningTime svg,
+.gasPrice svg,
+.data svg {
   width: 16px !important;
   height: 16px !important;
   position: relative;
@@ -45,12 +48,17 @@
   fill: rgba(0,0,0, 0.35) !important;
 }
 
+/* TODO [ToDr] composes was handling weird errors when linking from other app */
 .miningTime {
-  composes: hasInfoIcon;
+  /* composes: hasInfoIcon; */
+}
+
+.gasPrice {
+  /* composes: hasInfoIcon; */
 }
 
 .data  {
-  composes: hasInfoIcon;
+  /* composes: hasInfoIcon; */
   cursor: pointer;
 }
 
@@ -58,9 +66,6 @@
   cursor: text;
 }
 
-.gasPrice {
-  composes: hasInfoIcon;
-}
 
 .dataTooltip {
   word-wrap: break-word;

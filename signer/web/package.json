@@ -101,7 +101,7 @@
   "dependencies": {
     "axios": "^0.12.0",
     "babel-polyfill": "^6.9.1",
-    "dapps-react-ui": "0.0.684",
+    "dapps-react-components": "../../components",
     "event-emitter": "^0.3.4",
     "exports-loader": "0.6.3",
     "history": "^2.1.1",

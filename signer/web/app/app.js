@@ -9,7 +9,7 @@ import ReactDOM from 'react-dom';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
 import Web3 from 'web3';
-import { Web3Provider, MuiThemeProvider, web3Extension } from 'dapps-react-ui';
+import { Web3Provider, MuiThemeProvider, web3Extension } from 'dapps-react-components';
 
 import 'reset-css/reset.css';
 import './index.css';

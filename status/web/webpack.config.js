@@ -30,6 +30,11 @@ module.exports = {
         ]
       },
       {
+        test: /\.(js|jsx)$/,
+        include: /node_modules\/dapps-react-components/,
+        loader: 'babel'
+      },
+      {
         test: /\.json$/,
         loaders: ['json']
       },
@@ -140,6 +145,9 @@ module.exports = {
         target: 'http://localhost:8080'
       },
       '/api*': {
+        target: 'http://localhost:8080'
+      },
+      '/parity-utils/*': {
         target: 'http://localhost:8080'
       }
     }

@@ -35,6 +35,11 @@ module.exports = {
         ]
       },
       {
+        test: /\.(js|jsx)$/,
+        include: /node_modules\/dapps-react-components/,
+        loader: 'babel'
+      },
+      {
         test: /\.json$/,
         loaders: ['json']
       },

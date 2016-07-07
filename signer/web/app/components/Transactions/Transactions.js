@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { TransactionPendingWeb3, TransactionFinishedWeb3 } from 'dapps-react-ui';
+import { TransactionPendingWeb3, TransactionFinishedWeb3 } from 'dapps-react-components';
 import styles from './Transactions.css';
 
 export default class Transactions extends Component {

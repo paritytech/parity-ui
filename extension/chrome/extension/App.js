@@ -1,7 +1,7 @@
 import 'reset-css/reset.css';
 import './App.css';
 import logger from '../utils/logger';
-import app from 'parity-sysui-app';
+import app from 'parity-signer';
 
 initApp();
 
