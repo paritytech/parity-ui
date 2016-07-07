@@ -3,8 +3,8 @@ import { addRejectedTransaction, addConfirmedTransaction, addErrorTransaction, e
 
 export default class LocalstorageMiddleware {
 
-  constructor (ws, tokenSetter) {
-    this.setToken = tokenSetter;
+  constructor (ws, setToken) {
+    this.setToken = setToken;
     this.ws = ws;
   }
 

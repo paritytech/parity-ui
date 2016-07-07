@@ -24,13 +24,13 @@ import middlewares from './middlewares';
 import createStore from './store/configureStore';
 import Routes from './routes';
 
-export default function app (token, tokenSetter, paritySysuiPath) {
+export default function app (token, setToken, paritySysuiPath) {
   const ws = new Ws(paritySysuiPath);
   const web3WebSocketProvider = new Web3WebSocketProvider(ws);
   const web3 = new Web3(web3WebSocketProvider);
   web3._extend(web3Extension(web3));
 
-  const store = createStore(middlewares(ws, tokenSetter), paritySysuiPath);
+  const store = createStore(middlewares(ws, setToken), paritySysuiPath);
 
   injectTapEventPlugin();
   ReactDOM.render(
