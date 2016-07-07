@@ -5,21 +5,17 @@
   "main": "./build/index.js",
   "scripts": {
     "start": "webpack-dev-server -d --history-api-fallback --hot --inline --progress --colors --port 3001",
-    "test": "npm run testOnce -- -w",
     "startPerf": "NODE_ENV=perf-debug npm start",
     "startTest": "NODE_ENV=tests npm start",
     "webpack": "webpack --progress --colors",
     "coveralls": "npm run testCoverage && coveralls < coverage/lcov.info",
     "lint": "eslint --ignore-path ../.gitignore .",
+    "test": "mocha 'app/**/*.spec.js'",
     "testCoverage": "istanbul cover _mocha -- 'app/**/*.spec.js'",
-    "testOnce": "mocha 'app/**/*.spec.js'",
     "nightwatch": "NODE_ENV=tests nightwatch",
     "nightwatchCI": "npm run nightwatch  -- -e saucelabs",
     "prebuild": "npm run clean",
     "build": "NODE_ENV=production webpack --progress --colors",
-    "buildForSignerDapp": "npm run build -- --signer=dapp --watch",
-    "buildForSignerExt": "npm run build -- --signer=ext --watch",
-    "localPublish": "npm run build && npm publish",
     "clean": "rm build -rf || true",
     "commit": "commit-wizard"
   },
@@ -96,7 +92,6 @@
     "url-loader": "^0.5.7",
     "webpack": "^1.13.1",
     "webpack-bundle-update-hook-plugin": "^1.0.2",
-    "webpack-copy-on-done-plugin": "0.0.0",
     "webpack-dev-server": "^1.14.1",
     "webpack-error-notification": "^0.1.6",
     "webpack-hot-middleware": "^2.10.0",
@@ -129,19 +124,5 @@
     "redux-thunk": "^2.0.1",
     "reset-css": "^2.0.2011012603",
     "web3": "0.16.0"
-  },
-  "config": {
-    "pre-git": {
-      "pre-commit": [
-        "./scripts/check-master.sh"
-      ],
-      "pre-push": [
-        "npm run lint",
-        "npm run testOnce"
-      ],
-      "post-commit": [],
-      "post-checkout": [],
-      "post-merge": []
-    }
   }
 }

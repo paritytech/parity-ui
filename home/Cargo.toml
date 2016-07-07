@@ -1,6 +1,6 @@
 [package]
 description = "Parity built-in dapps."
-name = "parity-dapps-builtins"
+name = "parity-dapps-home"
 version = "0.5.2"
 license = "GPL-3.0"
 authors = ["Ethcore <admin@ethcore.io>"]

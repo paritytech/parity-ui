@@ -2,26 +2,26 @@ var rucksack = require('rucksack-css');
 var webpack = require('webpack');
 var path = require('path');
 var WebpackErrorNotificationPlugin = require('webpack-error-notification');
-var WebpackCopyOnDonePlugin = require('webpack-copy-on-done-plugin');
 
 var ENV = process.env.NODE_ENV || 'development';
 var isProd = ENV === 'production';
-
-process.env.LOGGING = !isProd || isSigner();
 
 module.exports = {
   debug: !isProd,
   cache: !isProd,
   devtool: isProd ? '#source-map' : '#cheap-module-eval-source-map',
   context: path.join(__dirname, './app'),
-  entry: {
-    index: isProd ? './index.js' : './index.dev.js'
+  entry: isProd ? {
+    app: './app.js',
+    index: './index.js',
+  } : {
+    index: './app.dev.js'
   },
   output: {
-    library: 'parity-sysui-app',
+    library: 'parity-signer',
     libraryTarget: 'umd',
     umdNamedDefine: true,
-    path: path.join(__dirname, './build'),
+    path: path.join(__dirname, '../src/web'),
     filename: '[name].js'
   },
   module: {
@@ -101,17 +101,14 @@ module.exports = {
       new webpack.DefinePlugin({
         'process.env': {
           NODE_ENV: JSON.stringify(ENV),
-          RPC_ADDRESS: JSON.stringify(process.env.RPC_ADDRESS)
+          RPC_ADDRESS: JSON.stringify(process.env.RPC_ADDRESS),
+          LOGGING: JSON.stringify(!isProd)
         }
       }),
       new WebpackErrorNotificationPlugin(/* strategy, options */)
     ];
 
-    if (isSigner()) {
-      plugins.push(new WebpackCopyOnDonePlugin(signerPluginOpts()));
-    }
-
-    if (isProd && !isSigner()) {
+    if (isProd) {
       plugins.push(new webpack.optimize.OccurrenceOrderPlugin());
       plugins.push(new webpack.optimize.DedupePlugin());
       plugins.push(new webpack.optimize.UglifyJsPlugin({
@@ -132,22 +129,3 @@ module.exports = {
     hot: !isProd
   }
 };
-
-function isSigner () {
-  return !!process.argv.find(arg => arg.indexOf('--signer=') > -1);
-}
-
-function signerPluginOpts () {
-  const dappTarget = '../parity-dapps-minimal-sysui-rs/src/web/app.js';
-  const extTarget = '../parity-sysui-chrome-extension/node_modules/parity-sysui-app/build/index.js';
-  const target = isDappSigner() ? dappTarget : extTarget;
-  return {
-    target: target
-  };
-}
-
-function isDappSigner () {
-  return process.argv
-              .find(arg => arg.indexOf('--signer=') > -1)
-              .indexOf('dapp') > -1;
-}

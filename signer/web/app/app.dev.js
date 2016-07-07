@@ -1,8 +1,9 @@
 /* global localStorage */
-import ee from 'event-emitter';
-import app from './';
+import EventEmitter from 'event-emitter';
 
-const emitter = ee({});
+const emitter = EventEmitter({});
+
+const app = global.paritySysuiApp;
 
 tokenGetter(initToken => {
   app(initToken, tokenSetter, addTokenListener, '127.0.0.1:8180');

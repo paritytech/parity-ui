@@ -24,6 +24,7 @@ fn die<T : fmt::Debug>(s: &'static str, e: T) -> ! {
 pub fn build(path: &str) {
 	let mut child = Command::new("npm")
 		.arg("install")
+		.arg("--no-progress")
 		.current_dir(path)
 		.spawn()
 		.unwrap_or_else(|e| die("Installing dependencies", e));
