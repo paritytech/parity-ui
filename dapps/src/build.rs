@@ -37,7 +37,7 @@ pub mod inner {
 		reg.add_post_expansion_pass(strip_attributes);
 	}
 
-	pub fn build() {
+	pub fn generate() {
 		let out_dir = env::var_os("OUT_DIR").unwrap();
 		let mut registry = syntex::Registry::new();
 		register(&mut registry);
@@ -62,5 +62,5 @@ pub mod inner {
 		reg.register_attribute("webapp".to_owned(), AttributeType::Normal);
 	}
 
-	pub fn build() {}
+	pub fn generate() {}
 }
