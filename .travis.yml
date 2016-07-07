@@ -5,11 +5,15 @@ rust:
   - stable
   - beta
   - nightly
+
 env:
-  - PROJECT=home
-  - PROJECT=signer
-  - PROJECT=status
-  - PROJECT=wallet
+  global:
+    - TRAVIS_NODE_VERSION="5"
+  matrix:
+    - PROJECT=home
+    - PROJECT=signer
+    - PROJECT=status
+    - PROJECT=wallet
 
 cache:
   directories:
@@ -23,6 +27,9 @@ matrix:
   fast_finish: true
   allow_failures:
     - rust: nightly
+
+install:
+  - rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install $TRAVIS_NODE_VERSION
 
 script:
   - cd $PROJECT
