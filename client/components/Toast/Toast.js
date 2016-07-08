@@ -47,13 +47,13 @@ export default class Toast extends Component {
     );
   }
 
-  onRemoveToast = (evt) => {
+  onRemoveToast = evt => {
     evt.stopPropagation();
     const { id, onRemoveToast } = this.props;
     onRemoveToast(id);
   }
 
-  onClickToast = (evt) => {
+  onClickToast = evt => {
     const { id, onClickToast } = this.props;
     onClickToast(id);
   }

@@ -1,6 +1,6 @@
 
 export default function web3extensions (web3) {
-  const {Method, formatters} = web3._extend;
+  const { Method, formatters } = web3._extend;
 
   return [{
     property: 'personal',

@@ -10,10 +10,6 @@ export default class Identicon extends React.Component {
     src: ''
   };
 
-  constructor (...args) {
-    super(...args);
-  }
-
   componentDidMount () {
     this.updateIcon(this.props.seed);
   }
@@ -39,7 +35,7 @@ export default class Identicon extends React.Component {
 
   render () {
     return (
-      <img src={this.state.src} className={styles.icon} />
+      <img src={ this.state.src } className={ styles.icon } />
     );
   }
 

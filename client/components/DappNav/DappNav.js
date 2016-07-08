@@ -27,11 +27,11 @@ export default class DappNav extends React.Component {
   render () {
     const isActiveclass = this.state.active ? styles.isActive : '';
     return (
-      <div className={styles.container}>
-        <div className={`${styles.searchContainer} ${isActiveclass}`}>
-          {this.renderSearchBar()}
+      <div className={ styles.container }>
+        <div className={ `${styles.searchContainer} ${isActiveclass}` }>
+          { this.renderSearchBar() }
         </div>
-        {this.renderSearchIcon()}
+        { this.renderSearchIcon() }
       </div>
     );
   }
@@ -39,9 +39,9 @@ export default class DappNav extends React.Component {
   renderSearchIcon () {
     return (
       <a
-        onClick={this.toggleActive}
-        className={styles.searchIcon}
-        title={'navigate to another dapp'}
+        onClick={ this.toggleActive }
+        className={ styles.searchIcon }
+        title={ 'navigate to another dapp' }
         >
         <SearchIcon />
       </a>
@@ -59,11 +59,11 @@ export default class DappNav extends React.Component {
         name='DappNavAutoComplete' // avoid Material Ui warning
         openOnFocus
         hintText='Search Dapps'
-        onNewRequest={this.onChooseApp}
-        onUpdateInput={this.onUpdateInput}
-        onBlur={this.onBlur}
-        filter={this.filterSearch}
-        dataSource={appNames}
+        onNewRequest={ this.onChooseApp }
+        onUpdateInput={ this.onUpdateInput }
+        onBlur={ this.onBlur }
+        filter={ this.filterSearch }
+        dataSource={ appNames }
       />
     );
   }
@@ -76,7 +76,7 @@ export default class DappNav extends React.Component {
     this.setActive(false);
   }
 
-  onUpdateInput = (searchText) => {
+  onUpdateInput = searchText => {
     this.setState({ searchText });
   }
 
@@ -85,7 +85,7 @@ export default class DappNav extends React.Component {
     ReactDOM.findDOMNode(node).focus();
   }
 
-  onChooseApp = (name) => {
+  onChooseApp = name => {
     const app = this.state.apps.filter(app => app.name === name)[0];
     window.location = appLink(app.id);
   }
@@ -132,7 +132,7 @@ export default class DappNav extends React.Component {
       });
   }
 
-  onKeyPressedWhenActive = (evt) => {
+  onKeyPressedWhenActive = evt => {
     if (evt.keyCode === 27) {
       this.setActive(false);
     }

@@ -1,8 +1,8 @@
 import React from 'react';
 
-import {GridList, GridTile} from 'material-ui/GridList';
+import { GridList, GridTile } from 'material-ui/GridList';
 
-import {appLink} from '../appLink';
+import { appLink } from '../appLink';
 
 import styles from './AppsList.css';
 
@@ -10,9 +10,9 @@ export default class AppsList extends React.Component {
 
   render () {
     return (
-      <div className={styles.container}>
-        <GridList cellHeight={200} cols={2}>
-          {this.props.apps.map(app => this.renderApp(app))}
+      <div className={ styles.container }>
+        <GridList cellHeight={ 200 } cols={ 2 }>
+          { this.props.apps.map(app => this.renderApp(app)) }
         </GridList>
       </div>
     );
@@ -20,15 +20,15 @@ export default class AppsList extends React.Component {
 
   renderApp (app) {
     return (
-      <a href={appLink(app.id)} key={app.id}>
+      <a href={ appLink(app.id) } key={ app.id }>
         <GridTile
-          key={app.id}
-          title={this.renderName(app)}
-          subtitle={this.renderDescription(app)}
+          key={ app.id }
+          title={ this.renderName(app) }
+          subtitle={ this.renderDescription(app) }
           >
           <div
-            className={styles.image}
-            style={{backgroundImage: `url(${appLink(app.id)}${app.iconUrl})`}}
+            className={ styles.image }
+            style={ { backgroundImage: `url(${appLink(app.id)}${app.iconUrl})` } }
             />
         </GridTile>
       </a>
@@ -38,11 +38,11 @@ export default class AppsList extends React.Component {
   renderName (app) {
     return (
       <span>
-        {app.name}
+        { app.name }
         <span
-          className={styles.author}
-          title={app.author}
-          > by {app.author}</span>
+          className={ styles.author }
+          title={ app.author }
+          > by { app.author }</span>
       </span>
     );
   }
@@ -50,8 +50,8 @@ export default class AppsList extends React.Component {
   renderDescription (app) {
     return (
       <span>
-        {app.description}
-        <span className={styles.version}> {app.version}</span>
+        { app.description }
+        <span className={ styles.version }> { app.version }</span>
       </span>
     );
   }

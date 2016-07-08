@@ -20,7 +20,7 @@ export default class Interceptor {
   }
 
   handle (payload, cb, next) {
-    const {method} = payload;
+    const { method } = payload;
     const handlers = this.interceptions[method];
 
     if (!handlers || !handlers.length) {
@@ -41,7 +41,7 @@ export default class Interceptor {
   }
 
   send (payload) {
-    const next = (cb2) => {
+    const next = cb2 => {
       const ret = this.provider.send(payload);
       cb2 && cb2(null, ret);
       return ret;
@@ -50,7 +50,7 @@ export default class Interceptor {
   }
 
   sendAsync (payload, callback) {
-    const next = (cb2) => {
+    const next = cb2 => {
       return this.provider.sendAsync(payload, (...args) => {
         cb2 && cb2(...args);
         return callback(...args);

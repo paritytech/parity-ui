@@ -14,7 +14,7 @@ export default class EthereumWalletCompatibility {
   }
 
   startDetectingChanges () {
-    const detectChange = (next) => {
+    const detectChange = next => {
       const accounts = this.getWalletAccounts().reduce((all, key) => {
         all[key] = this.storage.getItem(key);
         return all;
@@ -54,13 +54,13 @@ export default class EthereumWalletCompatibility {
   }
 
   fireChanged (accounts) {
-    this.callbacks.map((cb) => {
+    this.callbacks.map(cb => {
       cb(accounts);
     });
   }
 
   getWalletAccounts () {
-    return this.storage.keys().filter((key) => accountPattern.test(key));
+    return this.storage.keys().filter(key => accountPattern.test(key));
   }
 
   setWalletAccountsNames (names) {

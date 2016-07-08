@@ -21,7 +21,7 @@ import StatusLine from '../StatusLine';
 import DappNav from '../DappNav';
 import ExtensionLink from '../ExtensionLink';
 import Storage from '../Storage';
-import {appLink} from '../appLink';
+import { appLink } from '../appLink';
 
 import styles from './TopBar.css';
 
@@ -64,7 +64,7 @@ export default class TopBar extends Web3Component {
   componentWillMount () {
     this.updateIsExtensionInstalled();
 
-    this.storageListener = this.storage.onAccountsNames((accountsNames) => {
+    this.storageListener = this.storage.onAccountsNames(accountsNames => {
       if (isEqual(this.state.accountsNames, accountsNames)) {
         return;
       }
@@ -81,7 +81,7 @@ export default class TopBar extends Web3Component {
   componentWillUnmount () {
     super.componentWillUnmount();
     this.storageListener();
-    this.listeners.map((off) => off());
+    this.listeners.map(off => off());
     clearTimeout(this.isExtenstionInstalledTimeout);
   }
 
@@ -97,8 +97,8 @@ export default class TopBar extends Web3Component {
         });
       }, 5);
       return (
-        <div className={styles.topbar}>
-            <h4 className={styles.header}>Loading...</h4>
+        <div className={ styles.topbar }>
+            <h4 className={ styles.header }>Loading...</h4>
         </div>
       );
     }
@@ -106,24 +106,24 @@ export default class TopBar extends Web3Component {
     const { allAccounts, accountsNames, accountsDetails, createAccountOpen, isLoadingExtensionInstalled, isExtenstionInstalled } = this.state;
 
     return (
-      <MuiThemeProvider muiTheme={muiTheme}>
+      <MuiThemeProvider muiTheme={ muiTheme }>
         <div>
-          <div className={styles.topbar}>
-            <div className={styles.header}>
+          <div className={ styles.topbar }>
+            <div className={ styles.header }>
               <a
-                href={appLink('home')}
-                onClick={this.forceNavigation}
+                href={ appLink('home') }
+                onClick={ this.forceNavigation }
                 title='Home @ Parity'
                 >
-                <img src={AppsIcon} className={styles.dapps} />
+                <img src={ AppsIcon } className={ styles.dapps } />
               </a>
-              <div className={styles.dialog}>
+              <div className={ styles.dialog }>
                 <SubdomainDialog>
                   <ReportProblem />
                 </SubdomainDialog>
               </div>
-              <DappNav onSearchActive={this.onSearchActive}/>
-              <div className={this.state.searchActive ? styles.statusHidden : styles.statusVisible }>
+              <DappNav onSearchActive={ this.onSearchActive }/>
+              <div className={ this.state.searchActive ? styles.statusHidden : styles.statusVisible }>
                 <StatusLine />
               </div>
               <div className={ styles.separator } />
@@ -134,26 +134,26 @@ export default class TopBar extends Web3Component {
                 />
               </div>
             </div>
-            {this.renderManageAccounts()}
+            { this.renderManageAccounts() }
           </div>
           { this.renderToasts() }
           <AccountsDetails
-            open={accountsDetails}
-            accounts={allAccounts}
-            onOpenCreateAccount={this.onOpenCreateAccount}
-            accountsNames={accountsNames}
-            onClose={this.onAccountsDetailsClose}
+            open={ accountsDetails }
+            accounts={ allAccounts }
+            onOpenCreateAccount={ this.onOpenCreateAccount }
+            accountsNames={ accountsNames }
+            onClose={ this.onAccountsDetailsClose }
             />
           <CreateAccount
-            open={createAccountOpen}
-            accounts={allAccounts}
-            onClose={this.closeCreateAccount}
+            open={ createAccountOpen }
+            accounts={ allAccounts }
+            onClose={ this.closeCreateAccount }
           />
           <TransactionConfirmation
-            open={this.state.sendingTransaction}
-            transaction={this.state.transaction}
-            onAbort={this.abortTransaction}
-            onConfirm={this.confirmTransaction}
+            open={ this.state.sendingTransaction }
+            transaction={ this.state.transaction }
+            onAbort={ this.abortTransaction }
+            onConfirm={ this.confirmTransaction }
           />
         </div>
       </MuiThemeProvider>
@@ -171,20 +171,20 @@ export default class TopBar extends Web3Component {
 
     if (!unsignedTransactionsCount) {
       return (
-        <div className={styles.signerCount}></div>
+        <div className={ styles.signerCount }></div>
       );
     }
 
     const port = isSignerEnabled;
     return (
-      <div className={styles.signerCount}>
+      <div className={ styles.signerCount }>
         <a
-          target={'_signer'}
-          href={`http://127.0.0.1:${port}/index.html`}
-          title={`There are ${unsignedTransactionsCount} transactions awaiting your confirmation.`}
+          target={ '_signer' }
+          href={ `http://127.0.0.1:${port}/index.html` }
+          title={ `There are ${unsignedTransactionsCount} transactions awaiting your confirmation.` }
         >
           <span>
-            {unsignedTransactionsCount}
+            { unsignedTransactionsCount }
           </span>
         </a>
       </div>
@@ -196,8 +196,8 @@ export default class TopBar extends Web3Component {
 
     if (!allAccounts.length) {
       return (
-        <div className={styles.link}>
-          <a onClick={this.onOpenCreateAccount}>
+        <div className={ styles.link }>
+          <a onClick={ this.onOpenCreateAccount }>
             Create Account
           </a>
         </div>
@@ -205,20 +205,20 @@ export default class TopBar extends Web3Component {
     }
 
     return (
-      <div className={styles.nowrap}>
+      <div className={ styles.nowrap }>
         <AccountChooser
-          accounts={allAccounts}
-          accountsNames={accountsNames}
-          onChange={this.changeAccount}
+          accounts={ allAccounts }
+          accountsNames={ accountsNames }
+          onChange={ this.changeAccount }
         />
         <a
-          className={styles.settings}
+          className={ styles.settings }
           href='javascript:void(0)'
-          onClick={this.onOpenAccountDetails}
+          onClick={ this.onOpenAccountDetails }
           >
           <SettingsIcon />
         </a>
-        {this.renderUnconfirmedTransactions()}
+        { this.renderUnconfirmedTransactions() }
       </div>
     );
   }
@@ -266,12 +266,12 @@ export default class TopBar extends Web3Component {
       }
 
       this.fixAccountNames(this.state.accountsNames, allAccounts);
-      this.setState({allAccounts});
+      this.setState({ allAccounts });
       next();
     });
   }
 
-  onSearchActive = (active) => {
+  onSearchActive = active => {
     this.setState({
       searchActive: active
     });
@@ -334,7 +334,7 @@ export default class TopBar extends Web3Component {
     this.clearTx();
   }
 
-  changeAccount = (account) => {
+  changeAccount = account => {
     this.setState({
       accounts: [account]
     });
@@ -353,7 +353,7 @@ export default class TopBar extends Web3Component {
     });
   }
 
-  onAccountsDetailsClose = (names) => {
+  onAccountsDetailsClose = names => {
     this.setState({
       accountsDetails: false,
       accountsNames: names
@@ -373,7 +373,7 @@ export default class TopBar extends Web3Component {
     window.location.reload(true);
   }
 
-  handleFirstRun = (allAccounts) => {
+  handleFirstRun = allAccounts => {
     this.handleFirstRun = () => {}; // change to noop after first tick
     this.storage.getNotFirstRun(notFirstRun => {
       if (notFirstRun) {
@@ -422,7 +422,7 @@ export default class TopBar extends Web3Component {
     );
   }
 
-  onClickToast = (id) => {
+  onClickToast = id => {
     this.openSigner();
     this.onRemoveToast(id);
   }
@@ -433,7 +433,7 @@ export default class TopBar extends Web3Component {
     win.focus();
   }
 
-  onRemoveToast = (id) => {
+  onRemoveToast = id => {
     this.setState({
       toasts: this.state.toasts.filter(t => t.id !== id)
     });

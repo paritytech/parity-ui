@@ -29,15 +29,15 @@ export default class CreateAccount extends Web3Component {
 
     return (
       <Dialog
-        title={this.state.createdAccount ? 'Account Created' : 'New Account'}
-        actions={this.renderDialogActions()}
-        open={open}
+        title={ this.state.createdAccount ? 'Account Created' : 'New Account' }
+        actions={ this.renderDialogActions() }
+        open={ open }
         autoScrollBodyContent
-        onRequestClose={this.onClose}
+        onRequestClose={ this.onClose }
         >
-        {this.renderNoAccountsMsg()}
-        {this.renderForm()}
-        {this.renderCreatedAccount()}
+        { this.renderNoAccountsMsg() }
+        { this.renderForm() }
+        { this.renderCreatedAccount() }
       </Dialog>
     );
   }
@@ -54,15 +54,15 @@ export default class CreateAccount extends Web3Component {
         <br />
         <p>Provide passphrase to protect your account. Make sure to note it down - it's not recoverable.</p>
         <TextField
-          errorText={errorText}
+          errorText={ errorText }
           fullWidth
           type='password'
-          name={'new-account-password'}
+          name={ 'new-account-password' }
           floatingLabelText='Type password to encrypt your private key'
-          value={password}
-          onChange={this.modifyPassword}
+          value={ password }
+          onChange={ this.modifyPassword }
         />
-        {this.renderValidations()}
+        { this.renderValidations() }
       </div>
     );
   }
@@ -71,17 +71,17 @@ export default class CreateAccount extends Web3Component {
     return (
       <div>
         <br />
-        {validationsData.map(
+        { validationsData.map(
           (v, idx) => {
             return (
               <FormValidationDisplay
-                text={v.text}
-                key={idx}
-                isValid={this.state.validations[idx] || false}
+                text={ v.text }
+                key={ idx }
+                isValid={ this.state.validations[idx] || false }
               />
             );
           }
-        )}
+        ) }
       </div>
     );
   }
@@ -93,9 +93,9 @@ export default class CreateAccount extends Web3Component {
     }
 
     return (
-      <p className={styles.newAccount}>
+      <p className={ styles.newAccount }>
         New account address is: <br />
-        <Identicon seed={createdAccount} /><code>{createdAccount}</code>
+        <Identicon seed={ createdAccount } /><code>{ createdAccount }</code>
         <br />
         You can now choose it in the top right corner and expose it to dapps.
       </p>
@@ -108,7 +108,7 @@ export default class CreateAccount extends Web3Component {
     }
 
     return (
-      <p className={styles.noAccount}>
+      <p className={ styles.noAccount }>
         You don't have any accounts created.<br />
         Enter a passphrase below to create one.
       </p>
@@ -120,7 +120,7 @@ export default class CreateAccount extends Web3Component {
     this.setState({ createdAccount });
   }
 
-  modifyPassword = (evt) => {
+  modifyPassword = evt => {
     const password = evt.target.value;
     const validations = validationsData.map(v => v.predicate(password));
     const isValid = every(validations);
@@ -135,7 +135,7 @@ export default class CreateAccount extends Web3Component {
         <FlatButton
           label='Ok'
           primary
-          onTouchTap={this.onClose}
+          onTouchTap={ this.onClose }
         />
       );
     }
@@ -143,14 +143,14 @@ export default class CreateAccount extends Web3Component {
       <FlatButton
         label='Cancel'
         secondary
-        onTouchTap={this.onClose}
+        onTouchTap={ this.onClose }
       />,
       <RaisedButton
         label='Create'
-        className={styles.submit}
+        className={ styles.submit }
         primary
-        disabled={!this.state.isValid}
-        onTouchTap={this.submit}
+        disabled={ !this.state.isValid }
+        onTouchTap={ this.submit }
       />
     ];
   }
