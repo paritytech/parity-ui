@@ -25,9 +25,9 @@ const web3 = new Web3(new Web3.providers.HttpProvider(process.env.RPC_ADDRESS ||
 const store = configure(middlewares(web3));
 
 ReactDOM.render(
-  <Provider store={store}>
+  <Provider store={ store }>
     <MuiThemeProvider>
-      <Routes store={store} />
+      <Routes store={ store } />
     </MuiThemeProvider>
   </Provider>,
   document.getElementById('root')

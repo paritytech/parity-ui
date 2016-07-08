@@ -13,7 +13,7 @@ describe('components/AutoComplete', () => {
       const dataSource = ['abc', 'def', 'ghi'];
       const component =
         <WrappedAutoComplete
-          dataSource={dataSource}
+          dataSource={ dataSource }
           name='testComponent'
         />;
 

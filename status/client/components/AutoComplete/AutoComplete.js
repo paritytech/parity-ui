@@ -5,7 +5,7 @@ export default class WrappedAutoComplete extends Component {
 
   render () {
     return (
-      <AutoComplete {...this.props} />
+      <AutoComplete { ...this.props } />
     );
   }
 

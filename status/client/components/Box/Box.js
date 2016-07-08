@@ -9,16 +9,16 @@ export default class Box extends Component {
     }
 
     return (
-      <h1>{this.props.value}</h1>
+      <h1>{ this.props.value }</h1>
     );
   }
 
   render () {
     return (
       <div className='dapp-box'>
-        <h2>{this.props.title}</h2>
-        {this.renderValue()}
-        {this.props.children}
+        <h2>{ this.props.title }</h2>
+        { this.renderValue() }
+        { this.props.children }
       </div>
     );
   }

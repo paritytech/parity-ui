@@ -29,14 +29,14 @@ export default class ScrollTopButton extends Component {
 
     return (
       <IconButton
-        className={`${styles.scrollButton} ${hiddenClass}`}
-        onClick={this._scrollToTop}>
+        className={ `${styles.scrollButton} ${hiddenClass}` }
+        onClick={ this._scrollToTop }>
         <ArrowUpwardIcon />
       </IconButton>
     );
   }
 
-  handleScroll = (event) => {
+  handleScroll = event => {
     let { scrollTop } = event.srcElement.body;
     let { showScrollButton } = this.state;
 

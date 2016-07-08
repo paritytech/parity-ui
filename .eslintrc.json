@@ -11,6 +11,8 @@
   "rules": {
     "object-curly-spacing": ["error", "always"],
     "arrow-parens": ["error", "as-needed"],
+    "no-debugger": "error",
+    "no-alert": "error",
     "react/jsx-curly-spacing": ["error", "always"]
   }
 }

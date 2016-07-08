@@ -12,7 +12,7 @@ describe('components/Calls', () => {
     before(() => {
       const calls = [];
 
-      rendered = shallow(<Calls calls={calls} />);
+      rendered = shallow(<Calls calls={ calls } />);
     });
 
     it('renders the component and container', () => {
@@ -44,7 +44,7 @@ describe('components/Calls', () => {
     let instance;
 
     before(() => {
-      rendered = shallow(<Calls calls={calls} actions={actions} />);
+      rendered = shallow(<Calls calls={ calls } actions={ actions } />);
       instance = rendered.instance();
     });
 
@@ -90,7 +90,7 @@ describe('components/Calls', () => {
         { callNo: 1, name: 'eth_sendTransaction', params: '', response: '' }
       ];
 
-      rendered = shallow(<Calls calls={calls} />);
+      rendered = shallow(<Calls calls={ calls } />);
       instance = rendered.instance();
     });
 

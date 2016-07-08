@@ -15,20 +15,20 @@ export default class Calls extends Component {
     return (
       <div
         className='calls-container'
-        onMouseLeave={this.clearActiveCall}
-        {...this._test('container')}
+        onMouseLeave={ this.clearActiveCall }
+        { ...this._test('container') }
       >
-        {this.renderClear()}
-        <h2 className={styles.header}>History</h2>
-        <div className={`${styles.history} row`} ref={this.setCallsHistory}>
-          {this.renderNoCallsMsg()}
-          {this.renderCalls()}
+        { this.renderClear() }
+        <h2 className={ styles.header }>History</h2>
+        <div className={ `${styles.history} row` } ref={ this.setCallsHistory }>
+          { this.renderNoCallsMsg() }
+          { this.renderCalls() }
         </div>
         <CallsToolbar
-          call={this.state.activeCall}
-          callEl={this.state.activeChild}
-          containerEl={this._callsHistory}
-          actions={this.props.actions}
+          call={ this.state.activeCall }
+          callEl={ this.state.activeChild }
+          containerEl={ this._callsHistory }
+          actions={ this.props.actions }
         />
       </div>
     );
@@ -41,10 +41,10 @@ export default class Calls extends Component {
 
     return (
       <a
-        {...this._test('remove')}
+        { ...this._test('remove') }
         title='Clear RPC calls history'
-        onClick={this.clearHistory}
-        className={styles.removeIcon}
+        onClick={ this.clearHistory }
+        className={ styles.removeIcon }
         >
         <i className='icon-trash'></i>
       </a>
@@ -58,8 +58,8 @@ export default class Calls extends Component {
 
     return (
       <AnimateChildren>
-        <div {...this._test('empty-wrapper')}>
-          <h3 className={styles.historyInfo} {...this._test('empty')}>
+        <div { ...this._test('empty-wrapper') }>
+          <h3 className={ styles.historyInfo } { ...this._test('empty') }>
             Fire up some calls and the results will be here.
           </h3>
         </div>
@@ -76,13 +76,13 @@ export default class Calls extends Component {
 
     return (
       <AnimateChildren>
-        {calls.map((call, idx) => (
+        { calls.map((call, idx) => (
           <Call
-            key={calls.length - idx}
-            call={call}
-            setActiveCall={this.setActiveCall}
+            key={ calls.length - idx }
+            call={ call }
+            setActiveCall={ this.setActiveCall }
           />
-        ))}
+        )) }
       </AnimateChildren>
     );
   }
@@ -95,7 +95,7 @@ export default class Calls extends Component {
     this.setState({ activeCall: call, activeChild: el });
   }
 
-  setCallsHistory = (el) => {
+  setCallsHistory = el => {
     this._callsHistory = el;
   }
 
