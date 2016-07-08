@@ -62,24 +62,5 @@
     "react-tap-event-plugin": "^1.0.0",
     "web3": "^0.15.3",
     "whatwg-fetch": "^1.0.0"
-  },
-<<<<<<< HEAD:home/web/package.json
-  "semistandard": {
-    "parser": "babel-eslint"
-=======
-  "config": {
-    "pre-git": {
-      "pre-commit": [
-        "./scripts/check-master.sh"
-      ],
-      "pre-push": [
-        "npm run lint",
-        "npm run testOnce"
-      ],
-      "post-commit": [],
-      "post-checkout": [],
-      "post-merge": []
-    }
->>>>>>> ui/master:home/package.json
   }
 }
