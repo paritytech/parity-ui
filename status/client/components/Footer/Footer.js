@@ -9,12 +9,12 @@ export default class Footer extends Component {
 
   render () {
     return (
-      <footer {...this._testInherit()}>
-        <div className={styles.footer}>
+      <footer { ...this._testInherit() }>
+        <div className={ styles.footer }>
           <a href='http://ethcore.io'>ethcore.io</a>
-          {this.renderLogIcon()}
-          <span className={styles.right}>
-            Powered by: {this.props.version}
+          { this.renderLogIcon() }
+          <span className={ styles.right }>
+            Powered by: { this.props.version }
           </span>
         </div>
       </footer>
@@ -29,12 +29,12 @@ export default class Footer extends Component {
 
     return (
       <IconButton
-        {...this._testInherit('log-button')}
-        onClick={onClick}
+        { ...this._testInherit('log-button') }
+        onClick={ onClick }
         tooltip='Toggle logging' tooltipPosition='top-left'
-        className={styles.logButton}
+        className={ styles.logButton }
         >
-        <IconEventNote className={`${styles.logIcon} ${isOffClass}`} />
+        <IconEventNote className={ `${styles.logIcon} ${isOffClass}` } />
       </IconButton>
     );
   }

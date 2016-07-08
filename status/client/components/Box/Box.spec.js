@@ -9,7 +9,7 @@ describe('components/Box', () => {
     let rendered;
 
     beforeEach(() => {
-      rendered = shallow(<Box title={title} />);
+      rendered = shallow(<Box title={ title } />);
     });
 
     it('renders the component', () => {
@@ -36,9 +36,9 @@ describe('components/Box', () => {
       rendered = shallow(
         <Box
           title='title'
-          value={value}
+          value={ value }
         >
-          <pre>{child}</pre>
+          <pre>{ child }</pre>
         </Box>
       );
     });

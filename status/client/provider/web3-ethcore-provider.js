@@ -91,7 +91,7 @@ class Ethcore {
   constructor (web3) {
     this._requestManager = web3._requestManager;
 
-    methods.map((method) => {
+    methods.map(method => {
       method.attachToObject(this);
       method.setRequestManager(this._requestManager);
     });

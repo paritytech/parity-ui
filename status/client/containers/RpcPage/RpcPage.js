@@ -12,9 +12,9 @@ class RpcPage extends Component {
   render () {
     return (
       <div>
-        {this.props.children && React.cloneElement(this.props.children, {
+        { this.props.children && React.cloneElement(this.props.children, {
           ...this.props
-        })}
+        }) }
       </div>
     );
   }

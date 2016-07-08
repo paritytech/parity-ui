@@ -21,10 +21,10 @@ export default class WrappedMuiThemeProvider extends Component {
 
   render () {
     return (
-      <MuiThemeProvider muiTheme={muiTheme}>
-        {this.props.children && React.cloneElement(this.props.children, {
+      <MuiThemeProvider muiTheme={ muiTheme }>
+        { this.props.children && React.cloneElement(this.props.children, {
           ...this.props
-        })}
+        }) }
       </MuiThemeProvider>
     );
   }

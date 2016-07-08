@@ -31,18 +31,18 @@ class RpcDocs extends Component {
               </div>
             </div>
           </div>
-          <div style={{ clear: 'both' }}></div>
+          <div style={ { clear: 'both' } }></div>
           <div className='dapp-container'>
             <div className='row'>
               <div className='col col-12'>
                 <AutoComplete
                   floatingLabelText='Method name'
-                  className={styles.autocomplete}
-                  dataSource={rpcMethods.map(m => m.name)}
-                  onNewRequest={this.handleMethodChange}
-                  {...this._test('autocomplete')}
+                  className={ styles.autocomplete }
+                  dataSource={ rpcMethods.map(m => m.name) }
+                  onNewRequest={ this.handleMethodChange }
+                  { ...this._test('autocomplete') }
                 />
-                {this.renderData()}
+                { this.renderData() }
               </div>
             </div>
           </div>
@@ -54,33 +54,33 @@ class RpcDocs extends Component {
 
   renderData () {
     const methods = rpcMethods.map((m, idx) => {
-      const setMethod = (el) => { this[`_method-${m.name}`] = el; };
+      const setMethod = el => { this[`_method-${m.name}`] = el; };
 
       return (
         <ListItem
-          key={m.name}
+          key={ m.name }
           disabled
-          ref={setMethod}
+          ref={ setMethod }
         >
-          <h3 className={styles.headline}>{m.name}</h3>
-          <Markdown val={m.desc} />
-          <p><strong>Params</strong>{!m.params.length ? ' - none' : ''}</p>
-          {m.params.map((p, idx) => <Markdown key={`${m.name}-${idx}`} val={formatRpcMd(p)} />)}
-          <p className={styles.returnsTitle}><strong>Returns</strong> - </p>
-          <Markdown className={styles.returnsDesc} val={formatRpcMd(m.returns)} />
-          {idx !== rpcMethods.length - 1 ? <hr /> : ''}
+          <h3 className={ styles.headline }>{ m.name }</h3>
+          <Markdown val={ m.desc } />
+          <p><strong>Params</strong>{ !m.params.length ? ' - none' : '' }</p>
+          { m.params.map((p, idx) => <Markdown key={ `${m.name}-${idx}` } val={ formatRpcMd(p) } />) }
+          <p className={ styles.returnsTitle }><strong>Returns</strong> - </p>
+          <Markdown className={ styles.returnsDesc } val={ formatRpcMd(m.returns) } />
+          { idx !== rpcMethods.length - 1 ? <hr /> : '' }
         </ListItem>
       );
     });
 
     return (
       <List>
-        {methods}
+        { methods }
       </List>
     );
   }
 
-  handleMethodChange = (name) => {
+  handleMethodChange = name => {
     ReactDOM.findDOMNode(this[`_method-${name}`]).scrollIntoViewIfNeeded();
   }
 

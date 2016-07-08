@@ -17,8 +17,8 @@ describe('components/Call', () => {
   beforeEach(() => {
     rendered = shallow(
       <Call
-        call={call}
-        setActiveCall={setActiveCall}
+        call={ call }
+        setActiveCall={ setActiveCall }
       />
     );
     instance = rendered.instance();

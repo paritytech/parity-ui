@@ -16,7 +16,7 @@ describe('components/CallsToolbar', () => {
     before(() => {
       const call = null;
 
-      rendered = shallow(<CallsToolbar call={call} callEl={callEl} containerEl={containerEl} />);
+      rendered = shallow(<CallsToolbar call={ call } callEl={ callEl } containerEl={ containerEl } />);
     });
 
     it('does not render the component', () => {
@@ -30,7 +30,7 @@ describe('components/CallsToolbar', () => {
     let btncontainer;
 
     before(() => {
-      rendered = shallow(<CallsToolbar call={call} callEl={callEl} containerEl={containerEl} />);
+      rendered = shallow(<CallsToolbar call={ call } callEl={ callEl } containerEl={ containerEl } />);
       btncontainer = rendered.find('[data-test="CallsToolbar-button-container"]');
     });
 
@@ -59,7 +59,7 @@ describe('components/CallsToolbar', () => {
     let instance;
 
     before(() => {
-      rendered = shallow(<CallsToolbar call={call} callEl={callEl} containerEl={containerEl} actions={actions} />);
+      rendered = shallow(<CallsToolbar call={ call } callEl={ callEl } containerEl={ containerEl } actions={ actions } />);
       instance = rendered.instance();
     });
 
@@ -85,7 +85,7 @@ describe('components/CallsToolbar', () => {
     let instance;
 
     before(() => {
-      rendered = shallow(<CallsToolbar call={call} callEl={callEl} containerEl={containerEl} />);
+      rendered = shallow(<CallsToolbar call={ call } callEl={ callEl } containerEl={ containerEl } />);
       instance = rendered.instance();
     });
 

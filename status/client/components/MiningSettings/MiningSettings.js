@@ -12,7 +12,7 @@ export default class MiningSettings extends Component {
   render () {
     const { mining, actions } = this.props;
 
-    let onMinGasPriceChange = (newVal) => {
+    let onMinGasPriceChange = newVal => {
       actions.modifyMinGasPrice(numberFromString(newVal));
     };
 
@@ -23,43 +23,43 @@ export default class MiningSettings extends Component {
       actions.modifyExtraData(val);
     };
 
-    let onAuthorChange = (newVal) => {
+    let onAuthorChange = newVal => {
       actions.modifyAuthor(newVal);
     };
 
-    let onGasFloorTargetChange = (newVal) => {
+    let onGasFloorTargetChange = newVal => {
       actions.modifyGasFloorTarget(numberFromString(newVal));
     };
 
     return (
-      <div {...this._testInherit()}>
+      <div { ...this._testInherit() }>
         <h1><span>Mining</span> settings</h1>
         <h3>Author</h3>
         <Value
-          value={mining.author}
+          value={ mining.author }
           autocomplete
-          dataSource={this.props.accounts}
-          onSubmit={onAuthorChange}
-          {...this._test('author')}
+          dataSource={ this.props.accounts }
+          onSubmit={ onAuthorChange }
+          { ...this._test('author') }
           />
         <h3>Extradata</h3>
         <Value
-          value={decodeExtraData(mining.extraData)}
-          onSubmit={onExtraDataChange}
-          defaultValue={decodeExtraData(mining.defaultExtraData)}
-          {...this._test('extra-data')}
+          value={ decodeExtraData(mining.extraData) }
+          onSubmit={ onExtraDataChange }
+          defaultValue={ decodeExtraData(mining.defaultExtraData) }
+          { ...this._test('extra-data') }
           />
         <h3>Minimal Gas Price</h3>
         <Value
-          value={toNiceNumber(mining.minGasPrice)}
-          onSubmit={onMinGasPriceChange}
-          {...this._test('min-gas-price')}
+          value={ toNiceNumber(mining.minGasPrice) }
+          onSubmit={ onMinGasPriceChange }
+          { ...this._test('min-gas-price') }
           />
         <h3>Gas floor target</h3>
         <Value
-          value={toNiceNumber(mining.gasFloorTarget)}
-          onSubmit={onGasFloorTargetChange}
-          {...this._test('gas-floor-target')}
+          value={ toNiceNumber(mining.gasFloorTarget) }
+          onSubmit={ onGasFloorTargetChange }
+          { ...this._test('gas-floor-target') }
           />
       </div>
     );

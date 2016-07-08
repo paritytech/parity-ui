@@ -29,45 +29,45 @@ export default class CallsToolbar extends Component {
 
     return (
       <div
-        className={styles.callActionsWrap}
-        style={wrapStyle}
+        className={ styles.callActionsWrap }
+        style={ wrapStyle }
         >
         <IconButton
-          className={styles.callActionsButton}
-          {...this._test('button-more')}
+          className={ styles.callActionsButton }
+          { ...this._test('button-more') }
           >
           <MoreHorizIcon />
         </IconButton>
-        <div className={styles.callActions} {...this._test('button-container')}>
+        <div className={ styles.callActions } { ...this._test('button-container') }>
           <IconButton
-            className={styles.callAction}
-            onClick={this.setCall}
+            className={ styles.callAction }
+            onClick={ this.setCall }
             tooltip='Set'
             tooltipPosition='top-left'
-            {...this._test('button-setCall')}
+            { ...this._test('button-setCall') }
             >
-            <InputIcon className={styles.callActionIcon} />
+            <InputIcon className={ styles.callActionIcon } />
           </IconButton>
           <IconButton
-            className={styles.callAction}
-            onClick={this.makeCall}
+            className={ styles.callAction }
+            onClick={ this.makeCall }
             tooltip='Fire again'
             tooltipPosition='top-left'
-            {...this._test('button-makeCall')}
+            { ...this._test('button-makeCall') }
             >
-            <CallIcon className={styles.callActionIcon} />
+            <CallIcon className={ styles.callActionIcon } />
           </IconButton>
           <CopyToClipboard
-            text={JSON.stringify(call)}
-            onCopy={this.copyToClipboard}
+            text={ JSON.stringify(call) }
+            onCopy={ this.copyToClipboard }
             >
             <IconButton
-              className={styles.callAction}
+              className={ styles.callAction }
               tooltip='Copy to clipboard'
               tooltipPosition='top-left'
-              {...this._test('copyCallToClipboard')}
+              { ...this._test('copyCallToClipboard') }
               >
-              <AssignmentIcon className={styles.callActionIcon} />
+              <AssignmentIcon className={ styles.callActionIcon } />
             </IconButton>
           </CopyToClipboard>
         </div>

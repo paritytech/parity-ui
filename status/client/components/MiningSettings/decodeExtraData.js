@@ -10,7 +10,7 @@ export function decodeExtraData (str) {
     return decoded.join('/');
   } catch (err) {
     // hex -> str
-    return str.match(/.{1,2}/g).map((v) => {
+    return str.match(/.{1,2}/g).map(v => {
       return String.fromCharCode(parseInt(v, 16));
     }).join('');
   }

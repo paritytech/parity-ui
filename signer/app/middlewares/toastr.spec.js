@@ -112,7 +112,7 @@ describe('MIDDLEWARE: TOASTR', () => {
     beforeEach('spy on clearTimeoutFor', () => {
       cut.clearTimeoutFor = sinon.spy();
     });
-    it('should call clearTimeoutFor and next after cut._time', (done) => {
+    it('should call clearTimeoutFor and next after cut._time', done => {
       // given
       const next = sinon.spy();
 
@@ -159,7 +159,7 @@ describe('MIDDLEWARE: TOASTR', () => {
         mockedTimeoutSpy();
       }, time);
     });
-    it('should clear and delete timeout', (done) => {
+    it('should clear and delete timeout', done => {
       // when
       cut.clearTimeoutFor(toastNo);
 

@@ -8,7 +8,7 @@ describe('util/index', () => {
         callback(ERROR);
       };
 
-      return toPromise(FN).catch((err) => {
+      return toPromise(FN).catch(err => {
         expect(err).to.equal(ERROR);
       });
     });
@@ -19,7 +19,7 @@ describe('util/index', () => {
         callback(null, SUCCESS);
       };
 
-      return toPromise(FN).then((success) => {
+      return toPromise(FN).then(success => {
         expect(success).to.equal(SUCCESS);
       });
     });

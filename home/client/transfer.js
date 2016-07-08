@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 import './transfer.html';
 
 const web3 = window.web3;
