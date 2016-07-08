@@ -34,11 +34,11 @@ export default class JsonEditor extends Component {
     return (
       <div className='row'>
         <textarea
-          onChange={this.onChange}
-          className={`${styles.editor} ${errorClass}`}
-          value={this.state.value}
+          onChange={ this.onChange }
+          className={ `${styles.editor} ${errorClass}` }
+          value={ this.state.value }
           />
-          {this.renderError()}
+          { this.renderError() }
       </div>
     );
   }
@@ -50,11 +50,11 @@ export default class JsonEditor extends Component {
     }
 
     return (
-      <div className={styles.errorMsg}>{error}</div>
+      <div className={ styles.errorMsg }>{ error }</div>
     );
   }
 
-  onChange = (evt) => {
+  onChange = evt => {
     const { value } = evt.target;
     let parsed;
     let error;

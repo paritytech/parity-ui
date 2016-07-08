@@ -10,19 +10,19 @@ export default class Call extends Component {
     params = this.formatParams(params);
     return (
       <div
-        onMouseEnter={this.setActiveCall}
-        ref={this.setElement}
-        className={styles.call}
-        {...this._test(`call-${callNo}`)}
+        onMouseEnter={ this.setActiveCall }
+        ref={ this.setElement }
+        className={ styles.call }
+        { ...this._test(`call-${callNo}`) }
         >
-        <span className={styles.callNo} {...this._test('callNo')}>#{callNo}</span>
-        <pre {...this._test('name')}>{name}({params})</pre>
-        <Response response={response} />
+        <span className={ styles.callNo } { ...this._test('callNo') }>#{ callNo }</span>
+        <pre { ...this._test('name') }>{ name }({ params })</pre>
+        <Response response={ response } />
       </div>
     );
   }
 
-  setElement = (el) => {
+  setElement = el => {
     this.element = el;
   }
 

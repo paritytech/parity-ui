@@ -76,7 +76,7 @@ describe('WEB3 PROVIDER', () => {
     expect(web3.eth.getBlockNumber.called).to.be.true;
 
     [web3.eth.getHashrate, web3.eth.getCoinbase, web3.net.getPeerCount]
-      .map((method) => {
+      .map(method => {
         expect(method.called).to.be.false;
       });
   });

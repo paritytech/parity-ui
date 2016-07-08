@@ -14,7 +14,7 @@ class FakeRpcServer {
   }
 
   simpleRpc (rpcMethod, result) {
-    this.rpc(rpcMethod, (req) => result);
+    this.rpc(rpcMethod, req => result);
   }
 
   rpc (rpcMethod, middleware) {
@@ -23,14 +23,14 @@ class FakeRpcServer {
     });
   }
 
-  handleRequest = (req) => {
+  handleRequest = req => {
     setTimeout(() => {
       req.body = JSON.parse(req.requestBody);
       const middlewaresForMethod = this.middlewares
-        .filter((m) => m.rpcMethod === req.body.method);
+        .filter(m => m.rpcMethod === req.body.method);
 
       const response = middlewaresForMethod
-        .map((m) => m.middleware)
+        .map(m => m.middleware)
         .reduce((replied, middleware) => {
           if (replied) {
             return replied;

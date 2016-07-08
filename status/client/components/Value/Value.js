@@ -8,16 +8,16 @@ export default class Value extends Component {
   render () {
     return (
       <div
-        className={styles.inputContainer}
-        {...this._testInherit()}
+        className={ styles.inputContainer }
+        { ...this._testInherit() }
         >
         <input
-          className={styles.value}
+          className={ styles.value }
           type='text'
-          value={this.props.value}
+          value={ this.props.value }
           readOnly
           />
-        {this.props.children}
+        { this.props.children }
       </div>
     );
   }

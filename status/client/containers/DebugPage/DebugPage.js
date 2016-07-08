@@ -11,7 +11,7 @@ import Debug from '../../components/Debug';
 class DebugPage extends Component {
 
   render () {
-    return <Debug {...this.props} />;
+    return <Debug { ...this.props } />;
   }
 
   static propTypes = {

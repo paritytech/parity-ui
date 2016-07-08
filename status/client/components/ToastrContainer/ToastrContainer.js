@@ -8,8 +8,8 @@ export default class ToastrContainer extends Component {
 
   render () {
     return (
-      <div className={styles.toastrContainer}>
-        {this.renderToasts()}
+      <div className={ styles.toastrContainer }>
+        { this.renderToasts() }
       </div>
     );
   }
@@ -20,15 +20,15 @@ export default class ToastrContainer extends Component {
 
       return (
         <Paper
-          className={`${styles.toast} ${styles[t.type]}`}
-          zDepth={2}
-          key={t.toastNo}
-          {...this._test(`toast-${t.toastNo}`)}
+          className={ `${styles.toast} ${styles[t.type]}` }
+          zDepth={ 2 }
+          key={ t.toastNo }
+          { ...this._test(`toast-${t.toastNo}`) }
           >
-          <a className={styles.remove} onClick={removeToast}>
+          <a className={ styles.remove } onClick={ removeToast }>
             <i className='icon-trash'></i>
           </a>
-          <span className={styles.msg}>{t.msg}</span>
+          <span className={ styles.msg }>{ t.msg }</span>
         </Paper>
       );
     });

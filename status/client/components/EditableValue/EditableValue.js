@@ -21,13 +21,13 @@ export default class EditableValue extends Component {
     });
   }
 
-  onChange = (value) => {
+  onChange = value => {
     this.setState({
       value: value
     });
   }
 
-  onOpenEdit = (evt) => {
+  onOpenEdit = evt => {
     this.setState({
       inEditMode: true
     });
@@ -38,7 +38,7 @@ export default class EditableValue extends Component {
     this._input.focus();
   }
 
-  onCancel = (evt) => {
+  onCancel = evt => {
     this.setState({
       inEditMode: false,
       value: this.props.value
@@ -59,16 +59,16 @@ export default class EditableValue extends Component {
   render () {
     return (
       <form
-        className={`${valueStyles.valueContainer} ${styles.container}`}
-        onSubmit={this.onSubmit}
-        {...this._testInherit()}
+        className={ `${valueStyles.valueContainer} ${styles.container}` }
+        onSubmit={ this.onSubmit }
+        { ...this._testInherit() }
         >
-        {this.renderResetButton()}
-        <div className={this.state.inEditMode ? styles.iconsVisible : styles.icons}>
-          {this.props.children}
-          {this.renderButtons()}
+        { this.renderResetButton() }
+        <div className={ this.state.inEditMode ? styles.iconsVisible : styles.icons }>
+          { this.props.children }
+          { this.renderButtons() }
         </div>
-        {this.renderInput()}
+        { this.renderInput() }
       </form>
     );
   }
@@ -76,19 +76,19 @@ export default class EditableValue extends Component {
   renderInput () {
     const { inEditMode, value } = this.state;
 
-    const setInput = (el) => { this._input = el; };
-    const onChange = (evt) => this.onChange(evt.target.value);
+    const setInput = el => { this._input = el; };
+    const onChange = evt => this.onChange(evt.target.value);
 
     if (!inEditMode || !this.props.autocomplete) {
       return (
         <input
-          className={inEditMode ? styles.input : valueStyles.value}
+          className={ inEditMode ? styles.input : valueStyles.value }
           type='text'
-          value={value}
-          onClick={this.onOpenEdit}
-          ref={setInput}
-          onChange={onChange}
-          readOnly={!inEditMode}
+          value={ value }
+          onClick={ this.onOpenEdit }
+          ref={ setInput }
+          onChange={ onChange }
+          readOnly={ !inEditMode }
           />
       );
     }
@@ -96,14 +96,14 @@ export default class EditableValue extends Component {
     return (
       <AutoComplete
         name='EditableValueAutoComplete' // avoid Material Ui warning
-        className={styles.autocomplete}
+        className={ styles.autocomplete }
         fullWidth
-        searchText={value}
-        dataSource={this.props.dataSource}
-        onUpdateInput={this.onChange}
-        onNewRequest={this.onChange}
+        searchText={ value }
+        dataSource={ this.props.dataSource }
+        onUpdateInput={ this.onChange }
+        onNewRequest={ this.onChange }
         openOnFocus
-        filter={AutoComplete.noFilter}
+        filter={ AutoComplete.noFilter }
       />
     );
   }
@@ -119,11 +119,11 @@ export default class EditableValue extends Component {
 
     return (
       <a
-        key={'reset'}
-        className={`${styles.icon} ${styles.firstIcon}`}
-        onClick={this.onResetToDefault}
-        title={`Reset to ${this.props.defaultValue}`}
-        {...this._testInherit('reset')}
+        key={ 'reset' }
+        className={ `${styles.icon} ${styles.firstIcon}` }
+        onClick={ this.onResetToDefault }
+        title={ `Reset to ${this.props.defaultValue}` }
+        { ...this._testInherit('reset') }
         >
         <i className='icon-anchor'></i>
       </a>
@@ -134,18 +134,18 @@ export default class EditableValue extends Component {
     if (this.state.inEditMode) {
       return [
         <a
-          key={'submit'}
-          className={styles.iconSuccess}
-          onClick={this.onSubmit}
-          {...this._testInherit('submit')}
+          key={ 'submit' }
+          className={ styles.iconSuccess }
+          onClick={ this.onSubmit }
+          { ...this._testInherit('submit') }
           >
           <i className='icon-check'></i>
         </a>,
         <a
-          key={'cancel'}
-          className={styles.icon}
-          onClick={this.onCancel}
-          {...this._testInherit('cancel')}
+          key={ 'cancel' }
+          className={ styles.icon }
+          onClick={ this.onCancel }
+          { ...this._testInherit('cancel') }
           >
           <i className='icon-close'></i>
         </a>
@@ -154,11 +154,11 @@ export default class EditableValue extends Component {
 
     return (
       <a
-        key={'edit'}
-        className={styles.icon}
-        onClick={this.onOpenEdit}
+        key={ 'edit' }
+        className={ styles.icon }
+        onClick={ this.onOpenEdit }
         title='Edit'
-        {...this._testInherit('edit')}
+        { ...this._testInherit('edit') }
         >
         <i className='icon-pencil'></i>
       </a>
