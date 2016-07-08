@@ -1,0 +1,9 @@
+test/
+npm-debug.log
+.babelrc
+.editorconfig
+.eslintrc.json
+.gitignore
+.istanbul.yml
+.npmignore
+.travis.yml

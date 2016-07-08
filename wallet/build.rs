@@ -17,5 +17,5 @@
 extern crate parity_dapps;
 
 fn main() {
-  parity_dapps::build();
+	parity_dapps::generate();
 }

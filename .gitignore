@@ -1,4 +1,17 @@
 target
 Cargo.lock
-*.swp
 node_modules
+.module-cache
+*.swp
+
+# IDE project folders
+.idea
+*.sublime-project
+*.sublime-workspace
+jsconfig.json
+
+# OS files
+.DS_STORE
+
+# Logs
+*.log*

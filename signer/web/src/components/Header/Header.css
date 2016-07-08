@@ -1,0 +1,10 @@
+.bar {
+  padding: 0 !important;
+}
+.bar h1 {
+  box-sizing: border-box;
+  width: 800px !important;
+  margin: 0 auto !important;
+  flex: none !important;
+  padding: 0 25px !important;
+}

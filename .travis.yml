@@ -1,28 +1,80 @@
+sudo: false
 language: rust
 
 rust:
   - stable
   - beta
   - nightly
+
 env:
-  - PROJECT=home
-  - PROJECT=wallet
-  - PROJECT=status
+  global:
+    - TRAVIS_NODE_VERSION="5"
+  matrix:
+    - PROJECT=home
+    - PROJECT=signer
+    - PROJECT=status
+    - PROJECT=wallet
 
 cache:
   directories:
     - $HOME/.cargo
     - $TRAVIS_BUILD_DIR/home/target
-    - $TRAVIS_BUILD_DIR/wallet/target
+    - $TRAVIS_BUILD_DIR/signer/target
     - $TRAVIS_BUILD_DIR/status/target
+    - $TRAVIS_BUILD_DIR/wallet/target
 
 matrix:
   fast_finish: true
   allow_failures:
     - rust: nightly
 
+install:
+  - rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install $TRAVIS_NODE_VERSION
+
 script:
   - cd $PROJECT
   - cargo build
   - cargo test --release
+# sudo: false
+# language: node_js
+#
+# node_js:
+#   - '5'
+#
+# env:
+#   - PROJECT=status
+#   - PROJECT=home
+#   - PROJECT=components
+#   - PROJECT=signer
+#
+# cache:
+#   directories:
+#     - $TRAVIS_BUILD_DIR/status/node_modules
+#     - $TRAVIS_BUILD_DIR/home/node_modules
+#     - $TRAVIS_BUILD_DIR/components/node_modules
+#     - $TRAVIS_BUILD_DIR/signer/node_modules
+#
+# script:
+#   - cd $PROJECT
+#   - npm install
+#   - npm run lint
+#   - npm run testOnce
+#   # TODO add coverals for projects?
+#   - if [ "$SCRIPT" ]; then npm run $SCRIPT; fi
+#   # - if [ "$E2E" ] && [ "$SAUCE_ACCESS_KEY" ]; then npm run startTest & sleep 25 && npm run $E2E; fi
+#
+# after_success:
+# - ./scripts/deploy-to-gh-pages.sh
 
+#
+# before_deploy:
+#   - ./scripts/pre-publish.sh
+#
+# deploy:
+#   provider: npm
+#   email: adamgoldman7@gmail.com
+#   api_key:
+#     secure: lz1o7WTOIMcI6nA8CI23/27MtDktcAwvkR8UgPM7cK5vcmpGTW5tkOV5vGLZL26gX1sarJ/cl51uQ5Xl4ydolmFAaDxYMx7zvcH0UCjESFTr/BBnGZmPoVBnwqqzzw0hzil4yba0ZohoLpGou9VGOJTN/eRKGEdGTvaahDZkXNUBaWZpbqaDH/EPzeHvwCGJFaM2bBbHyNJHl1yIk/rD+0wx6voSM6ibsEC02Zsn9Pq37srKw5R+qvPtRJZzR43O5DqUSa+X2o5ypg1eUwjjVlp8UtPtVTyAwpYwyZNCW3oR9SXHH/ZJ5MIO7eETWpUXIxOHZlS0qkwbn69VU9Ma98aDh8Swln8akSOfUHQ1/ZZoQSxkM0+vz5Z3r2RVTo4xyXN4/mPpOlp8cVMfje59atVnzUI5CT81C+TqvkDTNe1U2qNW4fQ2OuKxcoo2FQUnn0qBA3hpg9zdHIZhnJSUCsLcswpbfaFaz1KBfrPp87UiXY0rNY2Qpr2QZLsq4n+7yHKl/5rfbe+ASlcGXhBQwur/EYuC0PBTEusGxSzJLXizPmLaQbzPtntaH75zw1hxh2vN6YlR/pYE6cP2IL8XAZABNL8IYRh0eeh32ZNtXfzNvszdizxnGMgQe6fINAT/6sHNb0fRl3NZnm3a3SfhN5ulW3pyIKXTvMge2KPyrk4=
+#   on:
+#     tags: true
+#     repo: ethcore/dapps-react-ui

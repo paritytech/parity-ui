@@ -1,0 +1,150 @@
+html {
+  padding-top: 54px !important;
+}
+html,body {
+  background: #fff;
+  margin: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.nowrap {
+  white-space: nowrap;
+}
+
+.header {
+  margin-top: 15px;
+  display: flex;
+  flex: 1 1 auto;
+}
+.dialog {
+  margin-left: 10px;
+  opacity: 0.6;
+}
+.dialog svg {
+  fill: #F57F17 !important;
+}
+
+.topbar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  text-align: right;
+  padding: 0 30px 5px;
+  border-bottom: 1px solid #d3cbc8;
+  background: #dfd6d3;
+  box-shadow: 0 -3px 2px -3px rgba(119, 102, 102, 0.75);
+  z-index: 0;
+  display: flex;
+}
+
+.statusVisible {
+  animation: showStatus 1s linear 0s 1 normal forwards;
+}
+@media (max-width: 900px) {
+  .statusVisible { display: none; }
+}
+
+.statusHidden {
+  opacity: 0;
+  display: none;
+}
+
+@keyframes showStatus {
+  0% {
+    opacity: 0;
+    display: none;
+  }
+  50% {
+    opacity: 0;
+    display: block;
+  }
+  100% {
+    opacity: 0.6;
+    display: block;
+  }
+}
+
+.dapps {
+  width: 32px;
+  height: 32px;
+  position: relative;
+  top: -4px;
+}
+
+.settings {
+  margin-right: 5px;
+  opacity: 0.1;
+  transition: opacity 0.3s ease-in-out;
+}
+.settings:hover {
+  opacity: 0.8;
+}
+.settings svg {
+  vertical-align: -7px;
+}
+
+.signerCount {
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+  margin: 0;
+  position: relative;
+}
+.signerCount a {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  font-size: 11px;
+  display: flex;
+  padding: 3px;
+  text-align: center;
+  align-items: center;
+  border-radius: 50%;
+  background-color: #E73535;
+  color: #fff;
+  font-family: sans-serif;
+  font-weight: bold;
+  text-shadow: 1px 1px 2px #000;
+  text-decoration: none;
+}
+.signerCount a:hover {
+  text-decoration: none;
+}
+.signerCount a::before, .signerCount a::after {
+  display: block;
+  content: ' ';
+  flex: 1 0 auto;
+}
+.separator {
+  flex: 1 0 auto;
+}
+
+.link {
+  cursor: pointer;
+  line-height: 26px;
+  font-family: 'Roboto', sans-serif;
+  padding: 0 7px 0;
+  margin: 15px 8px 5px;
+  border-left: 1px solid #eee;
+}
+.link a, .link a:visited {
+  text-decoration: none;
+  color: #2196F3;
+  white-space: nowrap;
+}
+.link a:hover, .link a:active {
+  text-decoration: underline;
+  color: #2C78B5;
+}
+
+.toasts {
+  position: fixed;
+  top: 30px;
+  right: 30px;
+  z-index: 100000;
+  width: 200px;
+}

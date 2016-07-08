@@ -1,11 +1,17 @@
 [package]
-name = "parity-minimal-sysui"
+name = "parity-dapps-signer"
 version = "0.2.0"
 license = "GPL-3.0"
 authors = ["Ethcore <admin@ethcore.io>"]
-
-[dependencies]
+build = "build.rs"
 
 [features]
 # default = ["dev"]
-dev = []
+default = ["with-syntex"]
+with-syntex = ["parity-dapps/with-syntex"]
+
+[build-dependencies]
+parity-dapps = { path = "../dapps" }
+
+[dependencies]
+parity-dapps = { path = "../dapps" }
