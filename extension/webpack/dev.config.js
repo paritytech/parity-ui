@@ -10,7 +10,7 @@ const baseDevConfig = () => ({
   devtool: 'eval-cheap-module-source-map',
   entry: {
     App: [hotScript, path.join(__dirname, '../chrome/extension/App')],
-    background: [hotScript, path.join(__dirname, '../chrome/extension/background')],
+    background: [hotScript, path.join(__dirname, '../chrome/extension/background')]
   },
   devMiddleware: {
     publicPath: `http://${host}:${port}/js/`,
