@@ -32,7 +32,7 @@ export default class AccountPage extends Component {
       <div className={ styles.accountInfo }>
         <div>Chain: { acc.chain }</div>
         <div>Address: { acc.address }</div>
-        <div>Balance: { acc.balance }</div>
+        <div>Balance: { Number(acc.balance) }</div>
         <div>Name: { acc.name || 'empty' }</div>
       </div>
     );
