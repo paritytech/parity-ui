@@ -2,7 +2,7 @@
 
 set -e
 
-PROJECTS=(./components ./extension ./home/web ./signer/web ./status/web)
+PROJECTS=(./components ./home/web ./signer/web ./status/web ./extension)
 CMD="help"
 
 # Parse CLI
@@ -38,7 +38,9 @@ case "$CMD" in
     set -x
     for P in ${PROJECTS[@]}; do
       cd $P
-      npm shrinkwrap
+      npm install --ignore-scripts
+      npm prune --production=false
+      npm shrinkwrap --dev
       cd -
     done
     ;;
