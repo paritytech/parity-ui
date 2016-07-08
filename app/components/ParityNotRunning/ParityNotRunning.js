@@ -8,7 +8,7 @@ import { isExtension } from '../../utils/extension';
 export default class ParityNotRunning extends Component {
 
   static propTypes = {
-    parityPath: PropTypes.string.isRequired,
+    paritySysuiPath: PropTypes.string.isRequired,
     updateAppState: PropTypes.func.isRequired
   }
 
@@ -21,7 +21,7 @@ export default class ParityNotRunning extends Component {
   }
 
   pollIsParityRunning = () => {
-    isParityRunning(this.props.parityPath).then(isRunning => {
+    isParityRunning(this.props.paritySysuiPath).then(isRunning => {
       if (isRunning) {
         window.location.reload();
         return;

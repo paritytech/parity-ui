@@ -2,7 +2,7 @@ import { createStore, applyMiddleware } from 'redux';
 
 import rootReducer from '../reducers';
 
-export default function configure (middlewares, parityPath) {
+export default function configure (middlewares, paritySysuiPath) {
   const create = window.devToolsExtension
     ? window.devToolsExtension()(createStore)
     : createStore;
@@ -11,7 +11,7 @@ export default function configure (middlewares, parityPath) {
     ...middlewares
   )(create);
 
-  const store = createStoreWithMiddleware(rootReducer, { parity: { path: parityPath } });
+  const store = createStoreWithMiddleware(rootReducer, { parity: { path: paritySysuiPath } });
 
   if (module.hot) {
     module.hot.accept('../reducers', () => {

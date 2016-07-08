@@ -41,18 +41,18 @@ export default class Routes extends Component {
   };
 
   requireAuth = (nextState, replace) => {
-    const { app, ws } = this.props.store.getState();
-    if (app.isLoading) {
+    const { isLoading, isWsConnected } = this.props.store.getState().app;
+    if (isLoading) {
       replace('/loading');
       return;
     }
 
-    // if (!app.isParityRunning) {
+    // if (!isParityRunning) {
     //   replace('/parityNotRunning');
     //   return;
     // }
 
-    if (!ws.isConnected) {
+    if (!isWsConnected) {
       replace('/unAuthorized');
       return;
     }

@@ -14,20 +14,23 @@ import { Web3Provider, MuiThemeProvider, web3Extension } from 'dapps-react-ui';
 import 'reset-css/reset.css';
 import './index.css';
 import './utils/logger';
+import Ws from './utils/Ws';
 
 import Web3WebSocketProvider from './providers/web3WebsocketProvider';
 import WsProvider from './providers/wsProvider';
+import AppProvider from './providers/appProvider';
 
 import middlewares from './middlewares';
 import createStore from './store/configureStore';
 import Routes from './routes';
 
-export default function app (initToken, tokenSetter, addTokenListener, parityPath) {
-  const web3WebSocketProvider = new Web3WebSocketProvider(initToken, addTokenListener, parityPath);
+export default function app (token, setToken, paritySysuiPath) {
+  const ws = new Ws(paritySysuiPath);
+  const web3WebSocketProvider = new Web3WebSocketProvider(ws);
   const web3 = new Web3(web3WebSocketProvider);
   web3._extend(web3Extension(web3));
 
-  const store = createStore(middlewares(initToken, tokenSetter, parityPath), parityPath);
+  const store = createStore(middlewares(ws, setToken), paritySysuiPath);
 
   injectTapEventPlugin();
   ReactDOM.render(
@@ -41,9 +44,10 @@ export default function app (initToken, tokenSetter, addTokenListener, parityPat
     document.querySelector('#root')
   );
 
-  const wsProvider = new WsProvider(store, parityPath, addTokenListener);
+  new WsProvider(store, paritySysuiPath, ws); // eslint-disable-line no-new
+  new AppProvider(store, paritySysuiPath, ws); // eslint-disable-line no-new
 
-  wsProvider.init(initToken);
+  ws.init(token);
 }
 
 // expose globally for parity builtin sysui dapp
