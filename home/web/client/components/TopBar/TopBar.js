@@ -9,6 +9,8 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 const muiTheme = getMuiTheme({});
 
+import { CHROME_EXT_ID } from '../../constants/constants';
+import Toast from '../Toast';
 import TransactionConfirmation from '../TransactionConfirmation';
 import AccountChooser from '../AccountsChooser';
 import Web3Component from '../Web3Component';
@@ -18,9 +20,8 @@ import CreateAccount from '../CreateAccount';
 import StatusLine from '../StatusLine';
 import DappNav from '../DappNav';
 import ExtensionLink from '../ExtensionLink';
-
 import Storage from '../Storage';
-import {appLink} from '../appLink';
+import { appLink } from '../appLink';
 
 import styles from './TopBar.css';
 
@@ -39,7 +40,14 @@ export default class TopBar extends Web3Component {
 
   storage = Storage.crossOrigin();
 
+  isChrome = !!window.chrome && !!window.chrome.webstore;
+
+  toastId = 0;
+
   state = {
+    isLoadingExtensionInstalled: true,
+    isExtenstionInstalled: false,
+    toasts: [],
     waiting: 0,
     accounts: [],
     allAccounts: [],
@@ -54,7 +62,9 @@ export default class TopBar extends Web3Component {
   listeners = [];
 
   componentWillMount () {
-    this.storageListener = this.storage.onAccountsNames((accountsNames) => {
+    this.updateIsExtensionInstalled();
+
+    this.storageListener = this.storage.onAccountsNames(accountsNames => {
       if (isEqual(this.state.accountsNames, accountsNames)) {
         return;
       }
@@ -71,7 +81,8 @@ export default class TopBar extends Web3Component {
   componentWillUnmount () {
     super.componentWillUnmount();
     this.storageListener();
-    this.listeners.map((off) => off());
+    this.listeners.map(off => off());
+    clearTimeout(this.isExtenstionInstalledTimeout);
   }
 
   render () {
@@ -86,59 +97,63 @@ export default class TopBar extends Web3Component {
         });
       }, 5);
       return (
-        <div className={styles.topbar}>
-            <h4 className={styles.header}>Loading...</h4>
+        <div className={ styles.topbar }>
+            <h4 className={ styles.header }>Loading...</h4>
         </div>
       );
     }
 
-    const { allAccounts, accountsNames, accountsDetails, createAccountOpen } = this.state;
+    const { allAccounts, accountsNames, accountsDetails, createAccountOpen, isLoadingExtensionInstalled, isExtenstionInstalled } = this.state;
 
     return (
-      <MuiThemeProvider muiTheme={muiTheme}>
+      <MuiThemeProvider muiTheme={ muiTheme }>
         <div>
-          <div className={styles.topbar}>
-            <div className={styles.header}>
+          <div className={ styles.topbar }>
+            <div className={ styles.header }>
               <a
-                href={appLink('home')}
-                onClick={this.forceNavigation}
+                href={ appLink('home') }
+                onClick={ this.forceNavigation }
                 title='Home @ Parity'
                 >
-                <img src={AppsIcon} className={styles.dapps} />
+                <img src={ AppsIcon } className={ styles.dapps } />
               </a>
-              <div className={styles.dialog}>
+              <div className={ styles.dialog }>
                 <SubdomainDialog>
                   <ReportProblem />
                 </SubdomainDialog>
               </div>
-              <DappNav onSearchActive={this.onSearchActive}/>
-              <div className={this.state.searchActive ? styles.statusHidden : styles.statusVisible }>
+              <DappNav onSearchActive={ this.onSearchActive }/>
+              <div className={ this.state.searchActive ? styles.statusHidden : styles.statusVisible }>
                 <StatusLine />
               </div>
               <div className={ styles.separator } />
               <div className={ styles.extension }>
-                <ExtensionLink />
+                <ExtensionLink
+                  isLoading={ isLoadingExtensionInstalled }
+                  isInstalled={ isExtenstionInstalled }
+                />
               </div>
             </div>
-            {this.renderManageAccounts()}
+            { this.renderManageAccounts() }
           </div>
+          { this.renderToasts() }
           <AccountsDetails
-            open={accountsDetails}
-            accounts={allAccounts}
-            onOpenCreateAccount={this.onOpenCreateAccount}
-            accountsNames={accountsNames}
-            onClose={this.onAccountsDetailsClose}
+            open={ accountsDetails }
+            accounts={ allAccounts }
+            onOpenCreateAccount={ this.onOpenCreateAccount }
+            accountsNames={ accountsNames }
+            onClose={ this.onAccountsDetailsClose }
             />
           <CreateAccount
-            open={createAccountOpen}
-            accounts={allAccounts}
-            onClose={this.closeCreateAccount}
+            open={ createAccountOpen }
+            accounts={ allAccounts }
+            onClose={ this.closeCreateAccount }
           />
           <TransactionConfirmation
-            open={this.state.sendingTransaction}
-            transaction={this.state.transaction}
-            onAbort={this.abortTransaction}
-            onConfirm={this.confirmTransaction}
+            open={ this.state.sendingTransaction }
+            transaction={ this.state.transaction }
+            onAbort={ this.abortTransaction }
+            onConfirm={ this.confirmTransaction }
           />
         </div>
       </MuiThemeProvider>
@@ -156,20 +171,20 @@ export default class TopBar extends Web3Component {
 
     if (!unsignedTransactionsCount) {
       return (
-        <div className={styles.signerCount}></div>
+        <div className={ styles.signerCount }></div>
       );
     }
 
     const port = isSignerEnabled;
     return (
-      <div className={styles.signerCount}>
+      <div className={ styles.signerCount }>
         <a
-          target={'_signer'}
-          href={`http://127.0.0.1:${port}/index.html`}
-          title={`There are ${unsignedTransactionsCount} transactions awaiting your confirmation.`}
+          target={ '_signer' }
+          href={ `http://127.0.0.1:${port}/index.html` }
+          title={ `There are ${unsignedTransactionsCount} transactions awaiting your confirmation.` }
         >
           <span>
-            {unsignedTransactionsCount}
+            { unsignedTransactionsCount }
           </span>
         </a>
       </div>
@@ -181,8 +196,8 @@ export default class TopBar extends Web3Component {
 
     if (!allAccounts.length) {
       return (
-        <div className={styles.link}>
-          <a onClick={this.onOpenCreateAccount}>
+        <div className={ styles.link }>
+          <a onClick={ this.onOpenCreateAccount }>
             Create Account
           </a>
         </div>
@@ -190,20 +205,20 @@ export default class TopBar extends Web3Component {
     }
 
     return (
-      <div className={styles.nowrap}>
+      <div className={ styles.nowrap }>
         <AccountChooser
-          accounts={allAccounts}
-          accountsNames={accountsNames}
-          onChange={this.changeAccount}
+          accounts={ allAccounts }
+          accountsNames={ accountsNames }
+          onChange={ this.changeAccount }
         />
         <a
-          className={styles.settings}
+          className={ styles.settings }
           href='javascript:void(0)'
-          onClick={this.onOpenAccountDetails}
+          onClick={ this.onOpenAccountDetails }
           >
           <SettingsIcon />
         </a>
-        {this.renderUnconfirmedTransactions()}
+        { this.renderUnconfirmedTransactions() }
       </div>
     );
   }
@@ -230,6 +245,11 @@ export default class TopBar extends Web3Component {
           if (err) {
             return;
           }
+
+          if (this.state.unsignedTransactionsCount === unsignedTransactionsCount) {
+            return;
+          }
+
           this.setState({ unsignedTransactionsCount });
         });
       }
@@ -246,12 +266,12 @@ export default class TopBar extends Web3Component {
       }
 
       this.fixAccountNames(this.state.accountsNames, allAccounts);
-      this.setState({allAccounts});
+      this.setState({ allAccounts });
       next();
     });
   }
 
-  onSearchActive = (active) => {
+  onSearchActive = active => {
     this.setState({
       searchActive: active
     });
@@ -277,7 +297,11 @@ export default class TopBar extends Web3Component {
 
   onEthSendTransaction = (payload, cb, next) => {
     // Don't intercept sendTransaction if we are running with signer module.
-    if (this.state.isSignerEnabled) {
+    const { isSignerEnabled, isExtenstionInstalled } = this.state;
+    if (isSignerEnabled) {
+      if (!isExtenstionInstalled) {
+        this.notifyNewTransaction();
+      }
       return next();
     }
 
@@ -310,7 +334,7 @@ export default class TopBar extends Web3Component {
     this.clearTx();
   }
 
-  changeAccount = (account) => {
+  changeAccount = account => {
     this.setState({
       accounts: [account]
     });
@@ -329,7 +353,7 @@ export default class TopBar extends Web3Component {
     });
   }
 
-  onAccountsDetailsClose = (names) => {
+  onAccountsDetailsClose = names => {
     this.setState({
       accountsDetails: false,
       accountsNames: names
@@ -349,7 +373,7 @@ export default class TopBar extends Web3Component {
     window.location.reload(true);
   }
 
-  handleFirstRun = (allAccounts) => {
+  handleFirstRun = allAccounts => {
     this.handleFirstRun = () => {}; // change to noop after first tick
     this.storage.getNotFirstRun(notFirstRun => {
       if (notFirstRun) {
@@ -363,4 +387,75 @@ export default class TopBar extends Web3Component {
     });
   }
 
+  notifyNewTransaction () {
+    const toast = {
+      id: this.toastId,
+      type: 'default',
+      msg: 'New pending transaction' //
+    };
+    this.toastId++;
+    this.setState({
+      toasts: [toast].concat(this.state.toasts)
+    });
+  }
+
+  renderToasts () {
+    const { toasts } = this.state;
+    if (!toasts.length) {
+      return;
+    }
+    return (
+      <div className={ styles.toasts }>
+        {
+          toasts.map(t => (
+            <Toast
+              key={ t.id }
+              id={ t.id }
+              msg={ t.msg }
+              type={ t.type }
+              onRemoveToast={ this.onRemoveToast }
+              onClickToast={ this.onClickToast }
+            />
+          ))
+        }
+      </div>
+    );
+  }
+
+  onClickToast = id => {
+    this.openSigner();
+    this.onRemoveToast(id);
+  }
+
+  openSigner () {
+    const port = this.state.isSignerEnabled;
+    const win = window.open(`http://127.0.0.1:${port}/index.html`, '_blank');
+    win.focus();
+  }
+
+  onRemoveToast = id => {
+    this.setState({
+      toasts: this.state.toasts.filter(t => t.id !== id)
+    });
+  }
+
+  updateIsExtensionInstalled = () => {
+    if (!this.isChrome || this.state.isExtenstionInstalled) {
+      return;
+    }
+    window.chrome.runtime.sendMessage(
+      CHROME_EXT_ID,
+      'version',
+      reply => {
+        if (!reply) {
+          this.setState({ isExtenstionInstalled: false, isLoadingExtensionInstalled: false });
+          this.isExtenstionInstalledTimeout = setTimeout(this.updateIsExtensionInstalled, 10000);
+          return;
+        }
+        this.setState({ isExtenstionInstalled: true, isLoadingExtensionInstalled: false });
+      }
+    );
+  }
+
 }
+

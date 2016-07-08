@@ -1,9 +1,9 @@
 import './cols.frame.html';
-import {NAMESPACE, PREFIX} from './components/Storage/cols.data';
+import { NAMESPACE, PREFIX } from './components/Storage/cols.data';
 import localStorage from './components/Storage/safeLocalStorage';
 
 window.addEventListener('message', function (ev) {
-  const {source, origin, data} = ev;
+  const { source, origin, data } = ev;
   if (!data || data.namespace !== NAMESPACE || data.type !== 'request' || !data.id) {
     // Ignore messages with no data or with wrong namespace or type
     return;
@@ -25,7 +25,7 @@ window.addEventListener('message', function (ev) {
 });
 
 function processMessage (data, cb) {
-  const {action, key, value} = data;
+  const { action, key, value } = data;
   if (!action || !key) {
     return cb('Missing fields. Action:', action, 'Key: ', key);
   }

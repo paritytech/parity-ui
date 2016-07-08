@@ -1,4 +1,4 @@
-import {NAMESPACE, FRAME_URL} from './cols.data';
+import { NAMESPACE, FRAME_URL } from './cols.data';
 import localStorage from './safeLocalStorage';
 
 export default class Cols {
@@ -19,7 +19,7 @@ export default class Cols {
   }
 
   responseListener (ev) {
-    const {origin, data} = ev;
+    const { origin, data } = ev;
     // Ignore messages from unknown origin
     if (origin !== this.origin) {
       return;
@@ -44,7 +44,7 @@ export default class Cols {
   }
 
   initFrame () {
-    this.iframe.addEventListener('load', (ev) => {
+    this.iframe.addEventListener('load', ev => {
       // If we don't get ping response in time we have to assume that
       // the frame was loaded incorrectly
       const timeout = setTimeout(() => {
@@ -78,7 +78,7 @@ export default class Cols {
 
   sendRequest (data, callback) {
     if (!this.isLoaded) {
-      this.queue.push({data, callback});
+      this.queue.push({ data, callback });
       return;
     }
     if (this.isError) {

@@ -39,14 +39,14 @@ export default class AccountDetails extends Web3Component {
     return (
       <Dialog
         title='Accounts Details'
-        actions={this.renderDialogActions()}
-        open={open}
-        className={resetStyles.reset}
+        actions={ this.renderDialogActions() }
+        open={ open }
+        className={ resetStyles.reset }
         autoScrollBodyContent
-        onRequestClose={::this.onCancel}
+        onRequestClose={ ::this.onCancel }
         >
-        <div className={styles.accounts}>
-          {this.renderAccounts(accounts)}
+        <div className={ styles.accounts }>
+          { this.renderAccounts(accounts) }
         </div>
       </Dialog>
     );
@@ -57,27 +57,27 @@ export default class AccountDetails extends Web3Component {
       return;
     }
 
-    return accounts.map((acc) => {
+    return accounts.map(acc => {
       const address = this.context.web3.toChecksumAddress(acc);
       const modify = this.changeName.bind(this, acc);
       return (
-        <div key={acc} className={styles.acc}>
-          <Identicon seed={acc} />
-          <div className={styles.inputs}>
+        <div key={ acc } className={ styles.acc }>
+          <Identicon seed={ acc } />
+          <div className={ styles.inputs }>
             <TextField
               fullWidth
-              name={`name-${acc}`}
+              name={ `name-${acc}` }
               floatingLabelText='Friendly name'
-              value={this.state[acc] || ''}
-              onChange={modify}
+              value={ this.state[acc] || '' }
+              onChange={ modify }
               />
             <TextField
               fullWidth
-              style={{height: '20px'}}
-              underlineDisabledStyle={{display: 'none'}}
-              name={`address-${acc}`}
+              style={ { height: '20px' } }
+              underlineDisabledStyle={ { display: 'none' } }
+              name={ `address-${acc}` }
               disabled
-              value={address}
+              value={ address }
               />
           </div>
         </div>
@@ -94,21 +94,21 @@ export default class AccountDetails extends Web3Component {
   renderDialogActions () {
     return [
       <FlatButton
-        style={{ float: 'left' }}
-        label={<span className={styles.newAccount}><AddIcon /> New Account</span>}
+        style={ { float: 'left' } }
+        label={ <span className={ styles.newAccount }><AddIcon /> New Account</span> }
         primary
-        onTouchTap={this.props.onOpenCreateAccount}
+        onTouchTap={ this.props.onOpenCreateAccount }
       />,
       <FlatButton
         label='Cancel'
         secondary
-        onTouchTap={::this.onCancel}
+        onTouchTap={ ::this.onCancel }
       />,
       <FlatButton
         label='OK'
         primary
         keyboardFocused
-        onTouchTap={::this.onClose}
+        onTouchTap={ ::this.onClose }
       />
     ];
   }

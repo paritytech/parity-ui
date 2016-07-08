@@ -16,7 +16,7 @@ class ParityNotRunningPage extends Component {
 
 function mapStateToProps (state) {
   return {
-    parityPath: state.parity.path
+    paritySysuiPath: state.parity.path
   };
 }
 

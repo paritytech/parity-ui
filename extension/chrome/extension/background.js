@@ -1,28 +1,11 @@
-const bluebird = require('bluebird');
-global.Promise = bluebird;
+import Transactions from './Transactions';
+import ProxyManager from './ProxyManager';
+import { getToken, onTokenChange } from '../utils/token';
 
-function promisifier(method) {
-  // return a function
-  return function promisified(...args) {
-    // which returns a promise
-    return new Promise(resolve => {
-      args.push(resolve);
-      method.apply(this, args);
-    });
-  };
-}
+const proxyManager = new ProxyManager();
+const transactions = new Transactions();
+onTokenChange(token => transactions.init(token));
 
-function promisifyAll(obj, list) {
-  list.forEach(api => bluebird.promisifyAll(obj[api], { promisifier }));
-}
+proxyManager.init();
 
-// let chrome extension api support Promise
-promisifyAll(chrome, [
-  'storage',
-]);
-promisifyAll(chrome.storage, [
-  'local',
-]);
-
-require('./background/ws');
-require('./proxy/proxy');
+getToken(token => transactions.init(token));

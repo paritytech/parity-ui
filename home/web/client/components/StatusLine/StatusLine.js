@@ -3,7 +3,7 @@ import React from 'react';
 import LinearProgress from 'material-ui/LinearProgress';
 
 import Web3Component from '../Web3Component';
-import {appLink} from '../appLink';
+import { appLink } from '../appLink';
 
 import styles from './StatusLine.css';
 
@@ -24,9 +24,9 @@ export default class StatusLine extends Web3Component {
   }
 
   onTick (next) {
-    const {web3} = this.context;
+    const { web3 } = this.context;
     let errorCalled = false;
-    const handleError = (f) => (err, data) => {
+    const handleError = f => (err, data) => {
       if (err) {
         console.error(err);
         this.setState({
@@ -88,11 +88,11 @@ export default class StatusLine extends Web3Component {
   render () {
     if (!this.state.isReady) {
       return (
-        <div className={styles.status}>...</div>
+        <div className={ styles.status }>...</div>
       );
     }
 
-    const {isSyncing, latestBlock, highestBlock} = this.state;
+    const { isSyncing, latestBlock, highestBlock } = this.state;
     // TODO [ToDr] Because eth_syncing is a bit broken now we will be checking if there
     // is actually anything to sync before displaying the progress bar.
     // See: https://github.com/ethcore/parity/issues/1110
@@ -101,42 +101,42 @@ export default class StatusLine extends Web3Component {
     }
 
     return (
-      <div className={styles.status}>
-        <ul className={styles.info}>
-          <li>{this.state.connectedPeers} peers</li>
-          <li>#{this.state.latestBlock}</li>
-          <li>{this.renderNetwork()}</li>
-          <li><a href={appLink('status')}>more</a></li>
+      <div className={ styles.status }>
+        <ul className={ styles.info }>
+          <li>{ this.state.connectedPeers } peers</li>
+          <li>#{ this.state.latestBlock }</li>
+          <li>{ this.renderNetwork() }</li>
+          <li><a href={ appLink('status') }>more</a></li>
         </ul>
       </div>
     );
   }
 
   renderNetwork () {
-    const {network} = this.state;
+    const { network } = this.state;
     if (network !== DEFAULT_NETWORK) {
       return (
-        <span className={styles.alert}>
-          {network}
+        <span className={ styles.alert }>
+          { network }
         </span>
       );
     }
     return (
-      <span>{network}</span>
+      <span>{ network }</span>
     );
   }
 
   renderSyncing () {
-    const {startingBlock, latestBlock, highestBlock} = this.state;
+    const { startingBlock, latestBlock, highestBlock } = this.state;
     const val = 100 * (latestBlock - startingBlock) / (highestBlock - startingBlock);
     return (
-      <div className={styles.status} title='Syncing...'>
+      <div className={ styles.status } title='Syncing...'>
         <LinearProgress
-          style={s.progress}
-          value={val}
-          mode={'determinate'}
+          style={ s.progress }
+          value={ val }
+          mode={ 'determinate' }
           />
-        #{latestBlock}/{highestBlock}...
+        #{ latestBlock }/{ highestBlock }...
       </div>
     );
   }

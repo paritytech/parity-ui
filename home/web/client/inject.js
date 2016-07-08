@@ -1,6 +1,5 @@
 import 'babel-polyfill';
-import styles from './reset.css';
-
+import stylesReset from './reset.css';
 import ReactDOM from 'react-dom';
 import React from 'react';
 import injectTapEventPlugin from 'react-tap-event-plugin';
@@ -34,12 +33,12 @@ document.querySelector('html').appendChild(el);
 
 ReactDOM.render(
   // wrapping id used to resest css, see inject.css
-  <div className={styles.reset}>
-    <Web3Provider web3={rawWeb3}>
+  <div className={ stylesReset.reset }>
+    <Web3Provider web3={ rawWeb3 }>
       <TopBar
-        interceptor={interceptor}
-        web3={web3}
-        options={options}
+        interceptor={ interceptor }
+        web3={ web3 }
+        options={ options }
         />
     </Web3Provider>
   </div>,
