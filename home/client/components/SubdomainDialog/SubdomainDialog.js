@@ -34,25 +34,25 @@ export default class SubdomainDialog extends React.Component {
       return (<span></span>);
     }
 
-    const {isOpen} = this.state;
+    const { isOpen } = this.state;
     return (
       <div>
         <a
           href='javascript:void(0)'
-          onClick={this.open}
+          onClick={ this.open }
           title='Learn how to configure subdomains for your node.'
           >
-          {this.props.children}
+          { this.props.children }
         </a>
         <Dialog
           title='Proxy configuration'
-          className={resetStyles.reset}
-          actions={this.renderDialogActions()}
-          onRequestClose={this.close}
-          open={isOpen}
+          className={ resetStyles.reset }
+          actions={ this.renderDialogActions() }
+          onRequestClose={ this.close }
+          open={ isOpen }
           autoScrollBodyContent
           >
-          {this.renderDialogContent()}
+          { this.renderDialogContent() }
         </Dialog>
       </div>
     );
@@ -62,22 +62,22 @@ export default class SubdomainDialog extends React.Component {
     const proxyPacLocation = this.getProxyPacLocation();
 
     return (
-      <div className={styles.dialog}>
+      <div className={ styles.dialog }>
         <h3>For the best experience it is recommended to use subdomains-based routing.</h3>
         <p>
-          Instead of: <code>{window.location.toString()}</code>
+          Instead of: <code>{ window.location.toString() }</code>
           <br />
-          in your address bar you would see: <code>{appPrettyLink()}</code>
+          in your address bar you would see: <code>{ appPrettyLink() }</code>
         </p>
         <h3>To configure the routing add the following link to your proxy configuration url</h3>
         <pre>
           <CopyToClipboard
-            text={proxyPacLocation}
-            onCopy={this.onCopyToClipboard}
+            text={ proxyPacLocation }
+            onCopy={ this.onCopyToClipboard }
             >
-            <AssignmentIcon className={styles.copyToClipboardIcon} />
+            <AssignmentIcon className={ styles.copyToClipboardIcon } />
           </CopyToClipboard>
-          <a href={proxyPacLocation} target='_blank'>
+          <a href={ proxyPacLocation } target='_blank'>
             { proxyPacLocation }
           </a>
           { this.renderCopiedToClipboardmsg() }
@@ -123,7 +123,7 @@ export default class SubdomainDialog extends React.Component {
       <FlatButton
         label='OK'
         primary
-        onClick={this.close}
+        onClick={ this.close }
       />
     ];
   }

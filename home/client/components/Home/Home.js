@@ -50,8 +50,8 @@ export default class Home extends React.Component {
 
   render () {
     return (
-      <div className={styles.home}>
-        {this.renderApps()}
+      <div className={ styles.home }>
+        { this.renderApps() }
       </div>
     );
   }
@@ -59,23 +59,23 @@ export default class Home extends React.Component {
   renderApps () {
     if (this.state.isLoading) {
       return (
-        <div className={styles.loading}>
+        <div className={ styles.loading }>
           <CircularProgress />
         </div>
       );
     }
     if (this.state.isError) {
       return (
-        <div className={styles.error}>
+        <div className={ styles.error }>
           <h1>Couldn't fetch apps.</h1>
 
-          <a href='javascript:void(0)' onClick={this.fetchApps} title='Try again'>
+          <a href='javascript:void(0)' onClick={ this.fetchApps } title='Try again'>
             <RefreshIndicator
-              percentage={50}
-              size={70}
-              top={0}
+              percentage={ 50 }
+              size={ 70 }
+              top={ 0 }
               status='ready'
-              style={{ position: 'static', margin: 'auto' }}
+              style={ { position: 'static', margin: 'auto' } }
             />
           </a>
         </div>
@@ -84,9 +84,9 @@ export default class Home extends React.Component {
 
     return (
       <div>
-        <AppsList apps={this.state.apps} />
+        <AppsList apps={ this.state.apps } />
         <SubdomainDialog>
-          {this.renderSubdomainInfo()}
+          { this.renderSubdomainInfo() }
         </SubdomainDialog>
       </div>
     );
@@ -94,7 +94,7 @@ export default class Home extends React.Component {
 
   renderSubdomainInfo () {
     return (
-      <h3 className={styles.alert}>
+      <h3 className={ styles.alert }>
         <ReportProblem />
         We recommend configuring <code>http://home.parity/</code> address for your parity node. Learn more.
       </h3>

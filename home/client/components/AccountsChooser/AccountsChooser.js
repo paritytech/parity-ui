@@ -34,7 +34,7 @@ export default class AccountChooser extends Web3Component {
 
   refreshLastSelectedAccount (props) {
     const { accounts } = props;
-    this.storage.getLastAccount((lastAccount) => {
+    this.storage.getLastAccount(lastAccount => {
       const idx = accounts.indexOf(lastAccount);
       const defaultAccountIdx = idx !== -1 ? idx : this.state.defaultAccountIdx;
 
@@ -58,22 +58,22 @@ export default class AccountChooser extends Web3Component {
   render () {
     return (
       <DropDownMenu
-        autoWidth={false}
-        className={styles.accounts}
-        value={this.state.defaultAccountIdx}
-        onChange={::this.handleChange}
-        maxHeight={700}
-        styles={menuStyles}
-        underlineStyle={{display: 'none'}}
-        iconStyle={{ fill: '#888' }}
+        autoWidth={ false }
+        className={ styles.accounts }
+        value={ this.state.defaultAccountIdx }
+        onChange={ ::this.handleChange }
+        maxHeight={ 700 }
+        styles={ menuStyles }
+        underlineStyle={ { display: 'none' } }
+        iconStyle={ { fill: '#888' } }
         >
-        {this.props.accounts.map((acc, idx) => (
+        { this.props.accounts.map((acc, idx) => (
           <MenuItem
-            key={acc}
-            value={idx}
-            primaryText={<Account address={acc} name={this.props.accountsNames[acc]} />}
+            key={ acc }
+            value={ idx }
+            primaryText={ <Account address={ acc } name={ this.props.accountsNames[acc] } /> }
             />
-        ))}
+        )) }
 
       </DropDownMenu>
     );
@@ -86,4 +86,4 @@ export default class AccountChooser extends Web3Component {
 
 }
 
-const menuStyles = {width: '350px'};
+const menuStyles = { width: '350px' };

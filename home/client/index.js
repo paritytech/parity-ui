@@ -15,8 +15,8 @@ if (!global.web3) {
 }
 
 ReactDOM.render(
-  <Web3Provider web3={global.web3}>
-    <MuiThemeProvider muiTheme={muiTheme}>
+  <Web3Provider web3={ global.web3 }>
+    <MuiThemeProvider muiTheme={ muiTheme }>
       <Home />
     </MuiThemeProvider>
   </Web3Provider>,

@@ -40,11 +40,11 @@ export default class TransactionConfirmation extends Web3Component {
     return (
       <Dialog
         title='Confirm Transaction'
-        actions={this.renderDialogActions()}
+        actions={ this.renderDialogActions() }
         modal
-        open={open}
+        open={ open }
         >
-        {this.renderTransaction(transaction)}
+        { this.renderTransaction(transaction) }
       </Dialog>
     );
   }
@@ -65,20 +65,20 @@ export default class TransactionConfirmation extends Web3Component {
 
     return (
       <div>
-        <div className={styles.confirmation}>
-          <div className={styles.from}>
-            <Account address={from} />
+        <div className={ styles.confirmation }>
+          <div className={ styles.from }>
+            <Account address={ from } />
           </div>
-          <div className={styles.tx}>
+          <div className={ styles.tx }>
             <span>&rArr;</span>
             <br />
-            {this.renderValue(value)}
+            { this.renderValue(value) }
           </div>
-          <div className={styles.to}>
+          <div className={ styles.to }>
             { this.renderTo() }
           </div>
         </div>
-        {this.renderPassword(from)}
+        { this.renderPassword(from) }
       </div>
     );
   }
@@ -102,7 +102,7 @@ export default class TransactionConfirmation extends Web3Component {
 
     if (sending) {
       return (
-        <div className={styles.progress}>
+        <div className={ styles.progress }>
           <LinearProgress mode='indeterminate' />
         </div>
       );
@@ -113,13 +113,13 @@ export default class TransactionConfirmation extends Web3Component {
     return (
       <TextField
         fullWidth
-        hintText={`Password for ${from}`}
-        errorText={errorMsg}
+        hintText={ `Password for ${from}` }
+        errorText={ errorMsg }
         floatingLabelText='Unlock the account'
         type='password'
-        value={this.state.password}
-        onChange={::this.onPasswordChange}
-        onKeyDown={::this.onPasswordKeyDown}
+        value={ this.state.password }
+        onChange={ ::this.onPasswordChange }
+        onKeyDown={ ::this.onPasswordKeyDown }
       />
     );
   }
@@ -128,7 +128,7 @@ export default class TransactionConfirmation extends Web3Component {
     const val = this.context.web3.fromWei(value);
     return (
       <div>
-        <strong style={{display: 'block'}}>{val}</strong>
+        <strong style={ { display: 'block' } }>{ val }</strong>
         <span>Eth</span>
       </div>
     );
@@ -174,15 +174,15 @@ export default class TransactionConfirmation extends Web3Component {
       <FlatButton
         label='Abort'
         secondary
-        disabled={sending}
-        onTouchTap={this.props.onAbort}
+        disabled={ sending }
+        onTouchTap={ this.props.onAbort }
       />,
       <FlatButton
         label='Confirm'
         primary
-        keyboardFocused={!!password.length}
-        disabled={!password.length || sending}
-        onTouchTap={::this.confirm}
+        keyboardFocused={ !!password.length }
+        disabled={ !password.length || sending }
+        onTouchTap={ ::this.confirm }
       />
     ];
   }

@@ -22,7 +22,7 @@ export default class Web3Component extends React.Component {
       return;
     }
 
-    this.onTick((mod) => {
+    this.onTick(mod => {
       mod = mod || 1;
       setTimeout(::this.next, 1000 * mod);
     });
