@@ -312,7 +312,7 @@ export default class TopBar extends Web3Component {
     this.setState({
       sendingTransaction: true,
       transaction: payload,
-      callbackFunc: cb
+      callbackFunc: this.toTransactionCb(payload.id, cb)
     });
   }
 
@@ -325,13 +325,22 @@ export default class TopBar extends Web3Component {
   }
 
   abortTransaction = () => {
-    this.state.callbackFunc('aborted');
+    this.state.callbackFunc({ message: 'aborted' });
     this.clearTx();
   }
 
-  confirmTransaction = (err, data) => {
-    this.state.callbackFunc(err, data);
+  confirmTransaction = (err, result) => {
+    this.state.callbackFunc(err, result);
     this.clearTx();
+  }
+
+  toTransactionCb (id, cb) {
+    return (err, result) => {
+      cb(err, {
+        jsonrpc: '2.0',
+        id, result
+      });
+    };;
   }
 
   changeAccount = account => {
