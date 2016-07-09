@@ -340,7 +340,7 @@ export default class TopBar extends Web3Component {
         jsonrpc: '2.0',
         id, result
       });
-    };;
+    };
   }
 
   changeAccount = account => {
