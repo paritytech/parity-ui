@@ -13,7 +13,7 @@ export default class Status extends Component {
     const { status } = this.props;
     return (
       <span>
-        {status.name || 'Node'}
+        { status.name || 'Node' }
       </span>
     );
   }
@@ -21,48 +21,48 @@ export default class Status extends Component {
   renderSettings () {
     const { status, settings } = this.props;
     return (
-      <div {...this._test('settings')}>
+      <div { ...this._test('settings') }>
         <h1><span>Network</span> settings</h1>
         <h3>Chain</h3>
         <Value
-          value={settings.chain}
-          {...this._test('chain')}
+          value={ settings.chain }
+          { ...this._test('chain') }
           />
-        <div className={styles.row}>
+        <div className={ styles.row }>
           <div className='col col-6 mobile-full'>
             <h3>Peers</h3>
             <Value
-              value={`${status.peers}/${settings.maxPeers}`}
-              {...this._test('peers')}
+              value={ `${status.peers}/${settings.maxPeers}` }
+              { ...this._test('peers') }
               />
           </div>
           <div className='col col-6 mobile-full'>
             <h3>Network port</h3>
             <Value
-              value={settings.networkPort}
-              {...this._test('network-port')}
+              value={ settings.networkPort }
+              { ...this._test('network-port') }
               />
           </div>
         </div>
 
         <h3>RPC Enabled</h3>
         <Value
-          value={settings.rpcEnabled ? 'yes' : 'no'}
-          {...this._test('rpc-enabled')}
+          value={ settings.rpcEnabled ? 'yes' : 'no' }
+          { ...this._test('rpc-enabled') }
           />
-        <div className={styles.row}>
+        <div className={ styles.row }>
           <div className='col col-6 mobile-full'>
             <h3>RPC Interface</h3>
             <Value
-              value={settings.rpcInterface}
-              {...this._test('rpc-interface')}
+              value={ settings.rpcInterface }
+              { ...this._test('rpc-interface') }
               />
           </div>
           <div className='col col-6 mobile-full'>
             <h3>RPC Port</h3>
             <Value
-              value={settings.rpcPort}
-              {...this._test('rpc-port')}
+              value={ settings.rpcPort }
+              { ...this._test('rpc-port') }
               />
           </div>
         </div>
@@ -83,24 +83,24 @@ export default class Status extends Component {
               <div className='col col-3 tablet-full mobile-full'>
                 <div className='col col-12 tablet-col-1-2 mobile-full'>
                   <h1><span>Best</span> Block</h1>
-                  <h1 {...this._test('best-block')}>#{bestBlock}</h1>
+                  <h1 { ...this._test('best-block') }>#{ bestBlock }</h1>
                 </div>
                 <div className='col col-12 tablet-col-1-2 mobile-full'>
                   <h1><span>Hash</span> Rate</h1>
-                  <h1 {...this._test('hashrate')}>{`${hashrate} H/s`}</h1>
+                  <h1 { ...this._test('hashrate') }>{ `${hashrate} H/s` }</h1>
                 </div>
               </div>
               <div className='col col-5 tablet-col-1-2 mobile-full'>
                 <MiningSettings
-                  {...this._test('mining')}
-                  mining={this.props.mining}
-                  accounts={this.props.status.accounts}
-                  actions={this.props.actions}
-                  version={this.props.status.version}
+                  { ...this._test('mining') }
+                  mining={ this.props.mining }
+                  accounts={ this.props.status.accounts }
+                  actions={ this.props.actions }
+                  version={ this.props.status.version }
                   />
               </div>
               <div className='col col-4 tablet-col-1-2 mobile-full'>
-                {this.renderSettings()}
+                { this.renderSettings() }
               </div>
             </div>
           </div>

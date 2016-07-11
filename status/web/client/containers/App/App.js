@@ -20,21 +20,21 @@ class AppContainer extends Component {
       <AnimateChildren>
         <div>
           <Header
-            nodeName={name}
-            disconnected={disconnected}
-            noOfErrors={noOfErrors}
-            {...this._test('header')}
+            nodeName={ name }
+            disconnected={ disconnected }
+            noOfErrors={ noOfErrors }
+            { ...this._test('header') }
           />
-          <AnimateChildren absolute isView pathname={this.props.location.pathname}>
-            {this.props.children}
+          <AnimateChildren absolute isView pathname={ this.props.location.pathname }>
+            { this.props.children }
           </AnimateChildren>
           <Footer
-            version={version}
-            logging={this.props.logger.logging}
-            updateLogging={this.props.actions.updateLogging}
-            {...this._test('footer')}
+            version={ version }
+            logging={ this.props.logger.logging }
+            updateLogging={ this.props.actions.updateLogging }
+            { ...this._test('footer') }
           />
-          <ToastrContainer {...this.props} />
+          <ToastrContainer { ...this.props } />
         </div>
       </AnimateChildren>
     );

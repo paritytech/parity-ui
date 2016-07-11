@@ -51,17 +51,17 @@ export default class RpcCalls extends Component {
               </div>
             </div>
           </div>
-          <div style={{ clear: 'both' }}></div>
+          <div style={ { clear: 'both' } }></div>
           <div className='dapp-container'>
             <div className='row'>
               <div className='col col-6 mobile-full'>
-                {this.renderForm()}
+                { this.renderForm() }
               </div>
               <div className='col col-6 mobile-full'>
                 <Calls
-                  calls={this.props.rpc.prevCalls}
-                  reset={this.props.actions.resetRpcPrevCalls}
-                  actions={this.props.actions}
+                  calls={ this.props.rpc.prevCalls }
+                  reset={ this.props.actions.resetRpcPrevCalls }
+                  actions={ this.props.actions }
                 />
               </div>
             </div>
@@ -75,18 +75,18 @@ export default class RpcCalls extends Component {
     return (
       <div>
         <Toggle
-          className={styles.jsonToggle}
-          onToggle={this.onJsonToggle}
+          className={ styles.jsonToggle }
+          onToggle={ this.onJsonToggle }
           label='JSON'
         />
-        <h2 className={styles.header}>
+        <h2 className={ styles.header }>
           <label htmlFor='selectedMethod'>
             Call Method
           </label>
         </h2>
         <AnimateChildren absolute>
-          {this.renderJsonForm()}
-          {this.renderInputForm()}
+          { this.renderJsonForm() }
+          { this.renderInputForm() }
         </AnimateChildren>
       </div>
     );
@@ -100,12 +100,12 @@ export default class RpcCalls extends Component {
     const { returns } = this.props.rpc.selectedMethod;
     return (
       <div className='row'>
-        {this.renderMethodList()}
+        { this.renderMethodList() }
         <h3>Parameters</h3>
-        {this.renderInputs()}
+        { this.renderInputs() }
         <h3>Returns</h3>
-        <Markdown val={formatRpcMd(returns)} />
-        {this.renderFormButton()}
+        <Markdown val={ formatRpcMd(returns) } />
+        { this.renderFormButton() }
       </div>
     );
   }
@@ -115,18 +115,18 @@ export default class RpcCalls extends Component {
     return (
       <div>
         <RpcAutoComplete
-          style={{ marginTop: 0 }}
-          onNewRequest={this.handleMethodChange}
-          {...this._test('rpcAutoComplete')}
+          style={ { marginTop: 0 } }
+          onNewRequest={ this.handleMethodChange }
+          { ...this._test('rpcAutoComplete') }
         />
         <div>
-          <Markdown val={desc} />
+          <Markdown val={ desc } />
         </div>
       </div>
     );
   }
 
-  handleMethodChange = (name) => {
+  handleMethodChange = name => {
     const method = rpcMethods.find(m => m.name === name);
     this.props.actions.selectRpcMethod(method);
   }
@@ -164,7 +164,7 @@ export default class RpcCalls extends Component {
     return _.find(rpcMethods, { name })
             .params.map(
               p => {
-                const onChange = (evt) => this.setState({
+                const onChange = evt => this.setState({
                   [this.paramKey(p)]: evt.target.value
                 });
 
@@ -174,15 +174,15 @@ export default class RpcCalls extends Component {
 
                 return (
                   <TextField
-                    key={p}
-                    inputStyle={{ marginTop: 0 }}
+                    key={ p }
+                    inputStyle={ { marginTop: 0 } }
                     fullWidth
-                    hintText={p}
-                    title={p}
-                    hintStyle={{ maxWidth: '100%', overflow: 'hidden', whiteSpace: 'nowrap' }}
-                    value={this.paramValue(p)}
-                    onChange={onChange}
-                    {...this._test(this.paramKey(p))}
+                    hintText={ p }
+                    title={ p }
+                    hintStyle={ { maxWidth: '100%', overflow: 'hidden', whiteSpace: 'nowrap' } }
+                    value={ this.paramValue(p) }
+                    onChange={ onChange }
+                    { ...this._test(this.paramKey(p)) }
                   />
                 );
               }
@@ -194,28 +194,28 @@ export default class RpcCalls extends Component {
 
     return (
       <div>
-        <Markdown val={description} />
+        <Markdown val={ description } />
         <ul>
-          {Object.keys(details).map(k => {
-            const onChange = (evt) => this.setState({
+          { Object.keys(details).map(k => {
+            const onChange = evt => this.setState({
               [this.paramKey(`${description}.${k}`)]: evt.target.value
             });
 
             return (
-              <li key={k}>
+              <li key={ k }>
                 <TextField
-                  inputStyle={{ marginTop: 0 }}
+                  inputStyle={ { marginTop: 0 } }
                   fullWidth
-                  title={`${k}: ${details[k]}`}
-                  hintText={`${k}: ${details[k]}`}
-                  hintStyle={{ maxWidth: '100%', overflow: 'hidden', whiteSpace: 'nowrap' }}
-                  value={this.paramValue(`${description}.${k}`)}
-                  onChange={onChange}
-                  {...this._test(this.paramKey(k))}
+                  title={ `${k}: ${details[k]}` }
+                  hintText={ `${k}: ${details[k]}` }
+                  hintStyle={ { maxWidth: '100%', overflow: 'hidden', whiteSpace: 'nowrap' } }
+                  value={ this.paramValue(`${description}.${k}`) }
+                  onChange={ onChange }
+                  { ...this._test(this.paramKey(k)) }
                 />
               </li>
             );
-          })}
+          }) }
         </ul>
       </div>
     );
@@ -247,10 +247,10 @@ export default class RpcCalls extends Component {
     return (
       <div>
         <JsonEditor
-          onChange={this.onJsonEditorChange}
-          value={this.state.jsonEditorValue}
+          onChange={ this.onJsonEditorChange }
+          value={ this.state.jsonEditorValue }
         />
-        {this.renderFormButton()}
+        { this.renderFormButton() }
       </div>
     );
   }
@@ -258,10 +258,10 @@ export default class RpcCalls extends Component {
   renderFormButton () {
     return (
       <button
-        {...this._test('fireRpc')}
-        className={'dapp-block-button'}
-        disabled={this.state.jsonEditorError}
-        onClick={this.onRpcFire}
+        { ...this._test('fireRpc') }
+        className={ 'dapp-block-button' }
+        disabled={ this.state.jsonEditorError }
+        onClick={ this.onRpcFire }
         >
         Fire!
       </button>
@@ -275,7 +275,7 @@ export default class RpcCalls extends Component {
     });
   }
 
-  jsonParamValue = (p) => {
+  jsonParamValue = p => {
     if (_.isPlainObject(p)) {
       const { description, details } = p;
       return Object.keys(details).reduce((obj, key) => {

@@ -31,7 +31,7 @@ describe('MIDDLEWARE: WEB3 INTERACTIONS', () => {
 
     // then
     expect(next.calledWith(action)).to.be.true;
-    Object.keys(cut.ethcoreWeb3).map((func) => {
+    Object.keys(cut.ethcoreWeb3).map(func => {
       expect(cut.ethcoreWeb3[func].notCalled).to.be.true;
     });
   });

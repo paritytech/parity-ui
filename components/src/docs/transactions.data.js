@@ -21,6 +21,7 @@ export default [
     id: '0x04',
     from: '0x8704f2c24439592822be3d71d4fca6e87285f673',
     fromBalance: new BigNumber('0x733a8ab53da50c000'),
+    value: '0x0',
     status: 'confirmed',
     msg: 'Confirmed',
     txHash: '0xc573fee50fab265ea0bbe1739ebbc595dae0f368380f6165721c2b0693de8a40',

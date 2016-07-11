@@ -12,7 +12,7 @@ export default class Marked extends Component {
     if (!parsed) {
       return null;
     }
-    return <div className={styles.container} style={this.props.style} dangerouslySetInnerHTML={{ __html: parsed }} />;
+    return <div className={ styles.container } style={ this.props.style } dangerouslySetInnerHTML={ { __html: parsed } } />;
   }
 
   componentWillMount () {

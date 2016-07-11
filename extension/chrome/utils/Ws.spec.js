@@ -72,7 +72,7 @@ describe('Ws', () => {
       global.WebSocket = originalWebSocket;
     });
 
-    it('should clear _initTimeout', (done) => {
+    it('should clear _initTimeout', done => {
       // given
       let spy = sinon.spy();
       cut._initTimeout = setTimeout(spy, 50);

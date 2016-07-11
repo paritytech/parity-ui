@@ -14,7 +14,7 @@ export default class Web3WsProvider {
   }
 
   formatCb (id, cb) {
-    return (result) => {
+    return result => {
       cb(null, {
         jsonrpc: '2.0',
         id, result

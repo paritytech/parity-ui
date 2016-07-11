@@ -10,7 +10,7 @@ import { updateLogging } from '../../actions/logger';
 class StatusPage extends Component {
 
   render () {
-    return <Status {...this.props} />;
+    return <Status { ...this.props } />;
   }
 
   static propTypes = {

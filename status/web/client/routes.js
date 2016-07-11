@@ -22,16 +22,16 @@ export default class Routes extends Component {
   render () {
     const history = syncHistoryWithStore(routerHistory, this.props.store);
     return (
-      <Router history={history}>
-        <Route path={'/'} component={AppContainer}>
+      <Router history={ history }>
+        <Route path={ '/' } component={ AppContainer }>
           <IndexRedirect to='status' />
-          <Route path={'status'} component={StatusPage} />
-          <Route path={'debug'} component={DebugPage} />
-          <Route path={'accounts'} component={AccountsPage} />
-          <Route path={'rpc'} component={RpcPage}>
+          <Route path={ 'status' } component={ StatusPage } />
+          <Route path={ 'debug' } component={ DebugPage } />
+          <Route path={ 'accounts' } component={ AccountsPage } />
+          <Route path={ 'rpc' } component={ RpcPage }>
             <IndexRedirect to='calls' />
-            <Route path={'calls'} component={RpcCalls} />
-            <Route path={'docs'} component={RpcDocs} />
+            <Route path={ 'calls' } component={ RpcCalls } />
+            <Route path={ 'docs' } component={ RpcDocs } />
           </Route>
         </Route>
       </Router>
