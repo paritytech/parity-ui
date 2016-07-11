@@ -21,8 +21,13 @@ fn die<T : fmt::Debug>(s: &'static str, e: T) -> ! {
 	panic!("Error: {}: {:?}", s, e);
 }
 
+#[cfg(not(windows))]
+static NPM_CMD: &'static str = "npm";
+#[cfg(windows)]
+static NPM_CMD: &'static str = "npm.cmd";
+
 pub fn build(path: &str) {
-	let mut child = Command::new("npm")
+	let mut child = Command::new(NPM_CMD)
 		.arg("install")
 		.arg("--no-progress")
 		.current_dir(path)
@@ -31,7 +36,7 @@ pub fn build(path: &str) {
 	let code = child.wait().unwrap_or_else(|e| die("Installing dependencies", e));
 	assert!(code.success());
 
-	let mut child = Command::new("npm")
+	let mut child = Command::new(NPM_CMD)
 		.arg("run")
 		.arg("build")
 		.env("NODE_ENV", "production")
@@ -44,7 +49,7 @@ pub fn build(path: &str) {
 
 pub fn test(path: &str) {
 	use std::process::Command;
-	let mut child = Command::new("npm")
+	let mut child = Command::new(NPM_CMD)
 		.arg("run")
 		.arg("test")
 		.current_dir(path)
