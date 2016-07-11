@@ -8,7 +8,7 @@ module.exports = {
   tags: ['App Container'],
 
   before (client) {
-    client.url(url).pause(1000);
+    client.url(url).waitForElementVisible('body', 1000, false);
   },
 
   'Assert redirect to status page' (client) {
