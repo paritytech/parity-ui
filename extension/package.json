@@ -4,11 +4,11 @@
   "description": "Parity Web Extension",
   "scripts": {
     "postinstall": "npm link ../signer/web",
-    "start": "webpack -w --progress --colors --port 3030",
-    "build": "NODE_ENV=production node scripts/build",
+    "start": "npm run devBuild -- -w --port 3030",
+    "devBuild": "webpack --progress --colors",
+    "build": "NODE_ENV=production npm run devBuild",
     "compress": "node scripts/compress",
     "genZip": "npm run build && npm run compress",
-    "compress-keygen": "crx keygen",
     "clean": "rimraf build/ dev/ *.zip *.crx",
     "lint": "eslint . --ignore-path ../.gitignore",
     "test": "mocha 'chrome/**/*.spec.js'"
