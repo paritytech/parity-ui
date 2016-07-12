@@ -1,5 +1,5 @@
 import React from 'react';
-import isEqual from 'lodash.isequal';
+import { isEqual } from 'lodash';
 
 import AppsIcon from './logo.svg';
 import ReportProblem from 'material-ui/svg-icons/action/report-problem';

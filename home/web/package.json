@@ -50,13 +50,12 @@
     "webpack-hot-middleware": "^2.7.1"
   },
   "dependencies": {
+    "lodash": "*",
     "babel-polyfill": "^6.9.1",
     "bignumber.js": "2.3.0",
     "blockies": "git+https://github.com/tomusdrw/blockies#master",
     "classnames": "^2.2.3",
     "exports-loader": "^0.6.3",
-    "lodash.every": "4.4.0",
-    "lodash.isequal": "^4.2.0",
     "material-ui": "0.15.0",
     "react-copy-to-clipboard": "^4.1.0",
     "react-tap-event-plugin": "^1.0.0",
