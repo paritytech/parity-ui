@@ -76,8 +76,14 @@ module.exports = {
     ]
   },
   resolve: {
+    root: path.join(__dirname, 'node_modules'),
+    fallback: path.join(__dirname, 'node_modules'),
     extensions: ['', '.js', '.jsx'],
     unsafeCache: true
+  },
+  resolveLoaders: {
+    root: path.join(__dirname, 'node_modules'),
+    fallback: path.join(__dirname, 'node_modules')
   },
   postcss: [
     rucksack({

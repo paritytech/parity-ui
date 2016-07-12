@@ -27,7 +27,7 @@ module.exports = {
   module: {
     loaders: [
       {
-        test: /\.(js|jsx)$/,
+        test: /\.js$/,
         exclude: /node_modules/,
         loaders: isProd ? ['babel'] : [
           'react-hot',
@@ -35,7 +35,7 @@ module.exports = {
         ]
       },
       {
-        test: /\.(js|jsx)$/,
+        test: /\.js$/,
         include: /node_modules(\/|\\)dapps-react-components/,
         loader: 'babel'
       },
@@ -89,8 +89,14 @@ module.exports = {
     ]
   },
   resolve: {
+    root: path.join(__dirname, 'node_modules'),
+    fallback: path.join(__dirname, 'node_modules'),
     extensions: ['', '.js', '.jsx'],
     unsafeCache: true
+  },
+  resolveLoaders: {
+    root: path.join(__dirname, 'node_modules'),
+    fallback: path.join(__dirname, 'node_modules')
   },
   postcss: [
     rucksack({
