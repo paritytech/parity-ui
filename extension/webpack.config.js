@@ -7,6 +7,9 @@ var WebpackCopyOnDonePlugin = require('webpack-copy-on-done-plugin');
 var ENV = process.env.NODE_ENV || 'development';
 var isProd = ENV === 'production';
 
+var outputBase = isProd ? 'build' : 'dev';
+var env = isProd ? 'prod' : 'dev';
+
 module.exports = {
   debug: !isProd,
   cache: !isProd,
@@ -17,7 +20,7 @@ module.exports = {
     background: './extension/background.js'
   },
   output: {
-    path: path.join(__dirname, 'dev'), // todo
+    path: path.join(__dirname, outputBase),
     filename: '[name].js'
   },
   module: {
@@ -96,14 +99,23 @@ module.exports = {
       }),
       new WebpackErrorNotificationPlugin(/* strategy, options */),
       new WebpackCopyOnDonePlugin([
-        { src: 'chrome/manifest.dev.json', target: './dev/manifest.json' },
-        { src: 'chrome/assets/*', target: './dev/' }
+        { src: `chrome/manifest.${env}.json`, target: `./${outputBase}/manifest.json` },
+        { src: 'chrome/assets/*', target: `./${outputBase}/` }
       ])
     ];
 
     if (isProd) {
       plugins.push(new webpack.optimize.DedupePlugin());
       plugins.push(new webpack.optimize.OccurrenceOrderPlugin());
+      plugins.push(new webpack.optimize.UglifyJsPlugin({
+        screwIe8: true,
+        compress: {
+          warnings: false
+        },
+        output: {
+          comments: false
+        }
+      }));
     }
 
     return plugins;
