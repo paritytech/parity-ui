@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 import LinearProgress from 'material-ui/LinearProgress';
 
@@ -13,6 +13,18 @@ export default class StatusLine extends Web3Component {
   // IE9 - contextTypes are not inherited
   static contextTypes = Web3Component.contextTypes;
 
+  static propTypes = {
+    network: PropTypes.string
+  }
+
+  componentWillReceiveProps (nextProps) {
+    const { network } = nextProps;
+    if (this.state.network === network) {
+      return;
+    }
+    this.setState({ network })
+  }
+
   state = {
     isReady: false,
     isSyncing: false,
@@ -20,7 +32,7 @@ export default class StatusLine extends Web3Component {
     startingBlock: 1234,
     highestBlock: 1234,
     connectedPeers: 25,
-    network: 'homestead'
+    network: '?'
   }
 
   onTick (next) {
@@ -59,11 +71,6 @@ export default class StatusLine extends Web3Component {
       // peers
       web3.net.getPeerCount(handleError(peers => this.setState({
         connectedPeers: peers
-      })));
-
-      // network
-      web3.version.getNetwork(handleError(network => this.setState({
-        network: networkName(network)
       })));
 
       this.setState({
@@ -148,12 +155,3 @@ const s = {
     margin: '10px 5px'
   }
 };
-
-function networkName (netId) {
-  const networks = {
-    0x0: 'olympic',
-    0x1: 'homestead',
-    0x2: 'morden'
-  };
-  return networks[netId] || 'unknown';
-}

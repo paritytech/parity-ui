@@ -10,7 +10,7 @@ injectTapEventPlugin();
 import Web3 from 'web3';
 
 import web3extensions from './components/web3.extensions';
-import Web3Provider from './components/Web3Provider';
+import Web3Provider from 'dapps-react-components/src/Web3Provider';
 import TopBar from './components/TopBar';
 import Interceptor from './components/TopBar/Interceptor';
 import readInjectOptions from './utils/readInjectOptions';

@@ -8,7 +8,7 @@ import TextField from 'material-ui/TextField';
 import Dialog from 'material-ui/Dialog';
 import LinearProgress from 'material-ui/LinearProgress';
 
-import Account from '../Account';
+import Account from 'dapps-react-components/src/Account';
 import Web3Component from '../Web3Component';
 
 import styles from './TransactionConfirmation.css';

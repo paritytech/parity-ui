@@ -10,7 +10,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 const muiTheme = getMuiTheme({});
 
 import { CHROME_EXT_ID } from '../../constants/constants';
-import Toast from '../Toast';
+import Toast from 'dapps-react-components/src/Toast';
 import TransactionConfirmation from '../TransactionConfirmation';
 import AccountChooser from '../AccountsChooser';
 import Web3Component from '../Web3Component';
@@ -47,6 +47,7 @@ export default class TopBar extends Web3Component {
   state = {
     isLoadingExtensionInstalled: true,
     isExtenstionInstalled: false,
+    network: null,
     toasts: [],
     waiting: 0,
     accounts: [],
@@ -103,7 +104,7 @@ export default class TopBar extends Web3Component {
       );
     }
 
-    const { allAccounts, accountsNames, accountsDetails, createAccountOpen, isLoadingExtensionInstalled, isExtenstionInstalled } = this.state;
+    const { allAccounts, accountsNames, accountsDetails, createAccountOpen, isLoadingExtensionInstalled, isExtenstionInstalled, searchActive, network } = this.state;
 
     return (
       <MuiThemeProvider muiTheme={ muiTheme }>
@@ -123,8 +124,8 @@ export default class TopBar extends Web3Component {
                 </SubdomainDialog>
               </div>
               <DappNav onSearchActive={ this.onSearchActive }/>
-              <div className={ this.state.searchActive ? styles.statusHidden : styles.statusVisible }>
-                <StatusLine />
+              <div className={ searchActive ? styles.statusHidden : styles.statusVisible }>
+                <StatusLine network={ network } />
               </div>
               <div className={ styles.separator } />
               <div className={ styles.extension }>
@@ -192,7 +193,7 @@ export default class TopBar extends Web3Component {
   }
 
   renderManageAccounts () {
-    const { allAccounts, accountsNames } = this.state;
+    const { allAccounts, accountsNames, network } = this.state;
 
     if (!allAccounts.length) {
       return (
@@ -207,6 +208,7 @@ export default class TopBar extends Web3Component {
     return (
       <div className={ styles.nowrap }>
         <AccountChooser
+          network={ network }
           accounts={ allAccounts }
           accountsNames={ accountsNames }
           onChange={ this.changeAccount }
@@ -233,6 +235,14 @@ export default class TopBar extends Web3Component {
   }
 
   onTick (next) {
+    this.context.web3.version.getNetwork((err, network) => {
+      if (err) {
+        return;
+      }
+      this.setState({
+        network: networkName(network)
+      });
+    });
     this.context.web3.personal.signerEnabled((err, isSignerEnabled) => {
       if (err) {
         return;
@@ -468,3 +478,11 @@ export default class TopBar extends Web3Component {
 
 }
 
+function networkName (netId) {
+  const networks = {
+    0x0: 'olympic',
+    0x1: 'homestead',
+    0x2: 'morden'
+  };
+  return networks[netId] || 'unknown';
+}

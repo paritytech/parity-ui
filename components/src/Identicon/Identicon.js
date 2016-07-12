@@ -8,9 +8,9 @@ import blockies from 'blockies';
 export default class Identicon extends Component {
 
   static propTypes = {
-    chain: PropTypes.string.isRequired,
     address: PropTypes.string.isRequired,
-    className: PropTypes.string
+    className: PropTypes.string,
+    chain: PropTypes.string
   };
 
   static defaultProps = {

@@ -6,7 +6,7 @@ import Dialog from 'material-ui/Dialog';
 import AddIcon from 'material-ui/svg-icons/content/add';
 
 import Web3Component from '../Web3Component';
-import Identicon from '../Identicon';
+import Identicon from 'dapps-react-components/src/Identicon';
 
 import resetStyles from '../../reset.css';
 import styles from './AccountsDetails.css';
@@ -62,7 +62,7 @@ export default class AccountDetails extends Web3Component {
       const modify = this.changeName.bind(this, acc);
       return (
         <div key={ acc } className={ styles.acc }>
-          <Identicon seed={ acc } />
+          <Identicon address={ acc } />
           <div className={ styles.inputs }>
             <TextField
               fullWidth

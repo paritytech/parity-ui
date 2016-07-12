@@ -9,7 +9,7 @@ import { every } from 'lodash';
 
 import validationsData from './validations.data';
 import FormValidationDisplay from '../FormValidationDisplay';
-import Identicon from '../Identicon';
+import Identicon from 'dapps-react-components/src/Identicon';
 import styles from './CreateAccount.css';
 import Web3Component from '../Web3Component/Web3Component';
 

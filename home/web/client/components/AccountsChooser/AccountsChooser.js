@@ -5,7 +5,7 @@ import MenuItem from 'material-ui/MenuItem';
 import { isEqual } from 'lodash';
 
 import Web3Component from '../Web3Component';
-import Account from '../Account';
+import Account from 'dapps-react-components/src/Account';
 import Storage from '../Storage';
 
 import styles from './AccountChooser.css';
@@ -56,6 +56,7 @@ export default class AccountChooser extends Web3Component {
   }
 
   render () {
+    const { network, accountsNames, accounts } = this.props;
     return (
       <DropDownMenu
         autoWidth={ false }
@@ -67,13 +68,17 @@ export default class AccountChooser extends Web3Component {
         underlineStyle={ { display: 'none' } }
         iconStyle={ { fill: '#888' } }
         >
-        { this.props.accounts.map((acc, idx) => (
-          <MenuItem
-            key={ acc }
-            value={ idx }
-            primaryText={ <Account address={ acc } name={ this.props.accountsNames[acc] } /> }
+        {
+          accounts.map((acc, idx) => (
+            <MenuItem
+              key={ acc }
+              value={ idx }
+              primaryText={
+                <Account chain={ network } address={ acc } name={ accountsNames[acc] } />
+              }
             />
-        )) }
+          ))
+        }
 
       </DropDownMenu>
     );
@@ -81,7 +86,8 @@ export default class AccountChooser extends Web3Component {
 
   static propTypes = {
     accountsNames: React.PropTypes.object.isRequired,
-    onChange: React.PropTypes.func.isRequired
+    onChange: React.PropTypes.func.isRequired,
+    network: React.PropTypes.string
   };
 
 }
