@@ -12,9 +12,7 @@ import TransactionsPage from '../containers/TransactionsPage';
 import UnAuthorizedPage from '../containers/UnAuthorizedPage';
 // import ParityNotRunningPage from '../containers/ParityNotRunningPage';
 
-const routerHistory = useRouterHistory(createHashHistory)({
-  queryKey: false
-});
+const routerHistory = useRouterHistory(createHashHistory)({});
 
 export default class Routes extends Component {
 
