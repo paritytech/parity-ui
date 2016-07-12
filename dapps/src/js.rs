@@ -15,19 +15,23 @@
 // along with Parity.  If not, see <http://www.gnu.org/licenses/>.
 
 use std::fmt;
-use std::process::{Command, Stdio};
+use std::process::Command;
 
 #[cfg(not(windows))]
 mod platform {
+	use std::process::Command;
+
 	pub static NPM_CMD: &'static str = "npm";
 	pub fn handle_fd(cmd: &mut Command) -> &mut Command {
 		cmd
 	}
 }
+
 #[cfg(windows)]
 mod platform {
-	pub static NPM_CMD: &'static str = "npm.cmd";
+	use std::process::{Command, Stdio};
 
+	pub static NPM_CMD: &'static str = "npm.cmd";
 	// NOTE [ToDr] For some reason on windows
 	// We cannot have any file descriptors open when running a child process
 	// during build phase.

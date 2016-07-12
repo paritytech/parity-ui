@@ -10,7 +10,7 @@ module.exports = {
   debug: !isProd,
   cache: !isProd,
   devtool: isProd ? '#source-map' : '#cheap-module-eval-source-map',
-  context: path.join(__dirname, './src'),
+  context: path.join(__dirname, 'src'),
   entry: isProd ? {
     app: './app.js',
     index: './index.js',
@@ -21,7 +21,7 @@ module.exports = {
     library: 'parity-signer',
     libraryTarget: 'umd',
     umdNamedDefine: true,
-    path: path.join(__dirname, '../src/web'),
+    path: path.join(__dirname, '..', 'src', 'web'),
     filename: '[name].js'
   },
   module: {
@@ -36,7 +36,7 @@ module.exports = {
       },
       {
         test: /\.(js|jsx)$/,
-        include: /node_modules\/dapps-react-components/,
+        include: /node_modules(\/|\\)dapps-react-components/,
         loader: 'babel'
       },
       {
