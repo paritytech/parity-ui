@@ -15,40 +15,58 @@
 // along with Parity.  If not, see <http://www.gnu.org/licenses/>.
 
 use std::fmt;
-use std::process::Command;
+use std::process::{Command, Stdio};
+
+#[cfg(not(windows))]
+static NPM_CMD: &'static str = "npm";
+#[cfg(windows)]
+static NPM_CMD: &'static str = "npm.cmd";
 
 fn die<T : fmt::Debug>(s: &'static str, e: T) -> ! {
 	panic!("Error: {}: {:?}", s, e);
 }
 
+
+// NOTE [ToDr] For some reason on windows
+// We cannot have any file descriptors open when running a child process
+// during build phase.
+#[cfg(windows)]
+fn handle_fd(cmd: &mut Command) -> &mut Command {
+	cmd.stdin(Stdio::null())
+		.stdout(Stdio::null())
+		.stderr(Stdio::null())
+}
+
+#[cfg(not(windows))]
+fn handle_fd(cmd: &mut Command) -> &mut Command {
+	cmd
+}
+
 pub fn build(path: &str) {
-	let mut child = Command::new("npm")
+	let child = handle_fd(&mut Command::new(NPM_CMD))
 		.arg("install")
 		.arg("--no-progress")
 		.current_dir(path)
-		.spawn()
+		.status()
 		.unwrap_or_else(|e| die("Installing dependencies", e));
-	let code = child.wait().unwrap_or_else(|e| die("Installing dependencies", e));
-	assert!(code.success());
+	assert!(child.success(), "There was an error installing dependencies.");
 
-	let mut child = Command::new("npm")
+	let child = handle_fd(&mut Command::new(NPM_CMD))
 		.arg("run")
 		.arg("build")
 		.env("NODE_ENV", "production")
 		.current_dir(path)
-		.spawn()
+		.status()
 		.unwrap_or_else(|e| die("Building JS code", e));
-	let code = child.wait().unwrap_or_else(|e| die("Building JS code", e));
-	assert!(code.success());
+	assert!(child.success(), "There was an error build JS code.");
 }
 
 pub fn test(path: &str) {
-	use std::process::Command;
-	let mut child = Command::new("npm")
+	let child = Command::new(NPM_CMD)
 		.arg("run")
 		.arg("test")
 		.current_dir(path)
-		.spawn().unwrap_or_else(|e| die("Running test command", e));
-	let code = child.wait().unwrap_or_else(|e| die("Testing JS code", e));
-	assert!(code.success());
+		.status()
+		.unwrap_or_else(|e| die("Running test command", e));
+	assert!(child.success(), "There was an error while running JS tests.");
 }
