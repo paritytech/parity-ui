@@ -7,8 +7,9 @@ const el = utils.el;
 
 module.exports = {
   tags: ['statuspage'],
-  'Navigate to status page' (client) {
-    client.url(url).pause(1000);
+
+  before (client) {
+    client.url(url).waitForElementVisible('body', 1000, false);
   },
 
   'Assert ui' (client) {

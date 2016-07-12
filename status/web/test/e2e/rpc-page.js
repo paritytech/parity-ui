@@ -10,7 +10,7 @@ module.exports = {
   tags: ['rpcpage'],
 
   before (client) {
-    client.url(url).pause(1000);
+    client.url(url).waitForElementVisible('body', 1000, false);
   },
 
   'Assert redirect to calls' (client) {
@@ -21,8 +21,10 @@ module.exports = {
     const callsLink = el('RpcNav-rpc-calls-link');
     const docsLink = el('RpcNav-rpc-docs-link');
     client.click(docsLink);
+    client.waitForElementVisible(el('RpcDocs-autocomplete'), 1000, false).pause(200); // pause for callLink to be clickable
     client.assert.urlContains('rpc/docs');
     client.click(callsLink);
+    client.waitForElementVisible(el('RpcCalls-rpcAutoComplete'), 1000, false);
     client.assert.urlContains('rpc/calls');
   },
 

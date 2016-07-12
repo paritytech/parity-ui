@@ -18,32 +18,32 @@ use std::fmt;
 use std::process::{Command, Stdio};
 
 #[cfg(not(windows))]
-static NPM_CMD: &'static str = "npm";
+mod platform {
+	pub static NPM_CMD: &'static str = "npm";
+	pub fn handle_fd(cmd: &mut Command) -> &mut Command {
+		cmd
+	}
+}
 #[cfg(windows)]
-static NPM_CMD: &'static str = "npm.cmd";
+mod platform {
+	pub static NPM_CMD: &'static str = "npm.cmd";
+
+	// NOTE [ToDr] For some reason on windows
+	// We cannot have any file descriptors open when running a child process
+	// during build phase.
+	pub fn handle_fd(cmd: &mut Command) -> &mut Command {
+		cmd.stdin(Stdio::null())
+			.stdout(Stdio::null())
+			.stderr(Stdio::null())
+	}
+}
 
 fn die<T : fmt::Debug>(s: &'static str, e: T) -> ! {
 	panic!("Error: {}: {:?}", s, e);
 }
 
-
-// NOTE [ToDr] For some reason on windows
-// We cannot have any file descriptors open when running a child process
-// during build phase.
-#[cfg(windows)]
-fn handle_fd(cmd: &mut Command) -> &mut Command {
-	cmd.stdin(Stdio::null())
-		.stdout(Stdio::null())
-		.stderr(Stdio::null())
-}
-
-#[cfg(not(windows))]
-fn handle_fd(cmd: &mut Command) -> &mut Command {
-	cmd
-}
-
 pub fn build(path: &str) {
-	let child = handle_fd(&mut Command::new(NPM_CMD))
+	let child = platform::handle_fd(&mut Command::new(platform::NPM_CMD))
 		.arg("install")
 		.arg("--no-progress")
 		.current_dir(path)
@@ -51,7 +51,7 @@ pub fn build(path: &str) {
 		.unwrap_or_else(|e| die("Installing dependencies", e));
 	assert!(child.success(), "There was an error installing dependencies.");
 
-	let child = handle_fd(&mut Command::new(NPM_CMD))
+	let child = platform::handle_fd(&mut Command::new(platform::NPM_CMD))
 		.arg("run")
 		.arg("build")
 		.env("NODE_ENV", "production")
@@ -62,7 +62,7 @@ pub fn build(path: &str) {
 }
 
 pub fn test(path: &str) {
-	let child = Command::new(NPM_CMD)
+	let child = Command::new(platform::NPM_CMD)
 		.arg("run")
 		.arg("test")
 		.current_dir(path)
