@@ -17,7 +17,7 @@
     "nightwatchCI": "npm run nightwatch  -- -e saucelabs",
     "prebuild": "npm run clean",
     "build": "webpack --bail --progress --colors",
-    "clean": "rm static -rf || true",
+    "clean": "rm -rf static || true",
     "prezip": "npm run build",
     "zip": "cd static && zip ../status.zip * -r",
     "genRpc": "./rpc-docs/index.js"
