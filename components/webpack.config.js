@@ -79,12 +79,7 @@ module.exports = {
       {
         test: /\.(woff(2)|ttf|eot|svg|otf)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
         loader: 'file-loader'
-      },
-      {
-        test: /blockies/,
-        loader: 'exports?blockies'
       }
-
     ],
     noParse: [
       /node_modules\/sinon/
