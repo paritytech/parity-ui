@@ -39,7 +39,7 @@ module.exports = {
   module: {
     loaders: [
       {
-        test: /\.(js|jsx)$/,
+        test: /\.js$/,
         exclude: /node_modules/,
         loaders: isProd ? ['babel'] : [
           'react-hot',

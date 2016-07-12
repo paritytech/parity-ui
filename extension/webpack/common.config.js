@@ -1,6 +1,6 @@
 exports.loaders = [
   {
-    test: /\.(js|jsx)$/,
+    test: /\.js$/,
     include: [
       /node_modules\/parity-signer/,
       /node_modules\/dapps-react-components/

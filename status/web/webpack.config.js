@@ -22,7 +22,7 @@ module.exports = {
   module: {
     loaders: [
       {
-        test: /\.(js|jsx)$/,
+        test: /\.js$/,
         exclude: /node_modules/,
         loaders: isProd ? ['babel'] : [
           'react-hot',
@@ -30,7 +30,7 @@ module.exports = {
         ]
       },
       {
-        test: /\.(js|jsx)$/,
+        test: /\.js$/,
         include: /node_modules(\/|\\)dapps-react-components/,
         loader: 'babel'
       },
