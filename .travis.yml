@@ -11,20 +11,30 @@ rust:
 env:
   global:
     - TRAVIS_NODE_VERSION="5"
+    - BUILD="rust"
+    - BUILD="js"
 
 cache:
   directories:
     - $HOME/.cargo
+    - $HOME/.npm
     - $TRAVIS_BUILD_DIR/home/target
     - $TRAVIS_BUILD_DIR/signer/target
     - $TRAVIS_BUILD_DIR/status/target
     - $TRAVIS_BUILD_DIR/wallet/target
+    - $TRAVIS_BUILD_DIR/extension/node_modules
+    - $TRAVIS_BUILD_DIR/components/node_modules
+    - $TRAVIS_BUILD_DIR/home/web/node_modules
+    - $TRAVIS_BUILD_DIR/signer/web/node_modules
+    - $TRAVIS_BUILD_DIR/status/web/node_modules
+    - $TRAVIS_BUILD_DIR/wallet/web/node_modules
 
 install:
   - rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install $TRAVIS_NODE_VERSION
 
 script:
-  - scripts/build.sh
+  - if [ "$BUILD" = "rust" ]; then ./scripts/build_rs.sh; fi
+  - if [ "$BUILD" = "js" ]; then ./scripts/build_js.sh; fi
 # sudo: false
 # language: node_js
 #

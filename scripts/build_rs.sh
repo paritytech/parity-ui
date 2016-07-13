@@ -11,5 +11,3 @@ for PROJECT in ${PROJECTS[@]}; do
   cargo test
   cd -
 done
-
-exit 0
