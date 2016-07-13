@@ -53,6 +53,7 @@
   "dependencies": {
     "babel-polyfill": "^6.9.1",
     "bignumber.js": "2.3.0",
+    "blockies": "0.0.2",
     "classnames": "^2.2.3",
     "dapps-react-components": "../../components",
     "lodash": "*",
