@@ -7,16 +7,19 @@ CMD="help"
 
 # Parse CLI
 case "$1" in
-  install | i)
+  install | i | ins | inst | insta | instal)
     CMD="install"
     ;;
-  clean | c)
+  clean | c | cl | cle | clea)
     CMD="clean"
     ;;
-  build | b)
+  build | b | bu | bui | buil)
     CMD="build"
     ;;
-  test | t)
+  lint | l | li | lin)
+    CMD="test"
+    ;;
+  test | t | te | tes)
     CMD="test"
     ;;
   shrinkwrap)
@@ -54,6 +57,14 @@ case "$CMD" in
       cd $P
       npm install --no-progress --ignore-scripts
       NODE_ENV="production" npm run build
+      cd -
+    done
+    ;;
+  lint)
+    set -x
+    for P in ${PROJECTS[@]}; do
+      cd $P
+      npm run lint
       cd -
     done
     ;;
