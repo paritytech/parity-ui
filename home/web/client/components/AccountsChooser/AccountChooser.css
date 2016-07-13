@@ -1,4 +1,4 @@
 .accounts {
-  max-width: 350px;
+  max-width: 350px !important;
   text-align: left;
 }

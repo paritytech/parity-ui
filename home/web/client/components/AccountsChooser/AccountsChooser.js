@@ -5,7 +5,7 @@ import MenuItem from 'material-ui/MenuItem';
 import { isEqual } from 'lodash';
 
 import Web3Component from '../Web3Component';
-import Account from 'dapps-react-components/src/Account';
+import AccountWeb3 from 'dapps-react-components/src/AccountWeb3';
 import Storage from '../Storage';
 
 import styles from './AccountChooser.css';
@@ -64,7 +64,6 @@ export default class AccountChooser extends Web3Component {
         value={ this.state.defaultAccountIdx }
         onChange={ ::this.handleChange }
         maxHeight={ 700 }
-        styles={ menuStyles }
         underlineStyle={ { display: 'none' } }
         iconStyle={ { fill: '#888' } }
         >
@@ -74,7 +73,7 @@ export default class AccountChooser extends Web3Component {
               key={ acc }
               value={ idx }
               primaryText={
-                <Account chain={ network } address={ acc } name={ accountsNames[acc] } />
+                <AccountWeb3 chain={ network } address={ acc } name={ accountsNames[acc] } />
               }
             />
           ))
@@ -91,5 +90,3 @@ export default class AccountChooser extends Web3Component {
   };
 
 }
-
-const menuStyles = { width: '350px' };

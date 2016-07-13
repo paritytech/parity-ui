@@ -139,6 +139,7 @@ export default class TopBar extends Web3Component {
           </div>
           { this.renderToasts() }
           <AccountsDetails
+            network={ network }
             open={ accountsDetails }
             accounts={ allAccounts }
             onOpenCreateAccount={ this.onOpenCreateAccount }
@@ -146,6 +147,7 @@ export default class TopBar extends Web3Component {
             onClose={ this.onAccountsDetailsClose }
             />
           <CreateAccount
+            network={ network }
             open={ createAccountOpen }
             accounts={ allAccounts }
             onClose={ this.closeCreateAccount }
