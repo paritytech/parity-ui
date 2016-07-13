@@ -1,19 +1,16 @@
 sudo: false
 language: rust
 
+branches:
+  only:
+  - master
+
 rust:
   - stable
-  - beta
-  - nightly
 
 env:
   global:
     - TRAVIS_NODE_VERSION="5"
-  matrix:
-    - PROJECT=home
-    - PROJECT=signer
-    - PROJECT=status
-    - PROJECT=wallet
 
 cache:
   directories:
@@ -23,18 +20,11 @@ cache:
     - $TRAVIS_BUILD_DIR/status/target
     - $TRAVIS_BUILD_DIR/wallet/target
 
-matrix:
-  fast_finish: true
-  allow_failures:
-    - rust: nightly
-
 install:
   - rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install $TRAVIS_NODE_VERSION
 
 script:
-  - cd $PROJECT
-  - cargo build
-  - cargo test --release
+  - scripts/build.sh
 # sudo: false
 # language: node_js
 #
