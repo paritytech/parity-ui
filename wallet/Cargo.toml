@@ -7,7 +7,8 @@ authors = ["Alexander Van de Sande <alex.vandesande@ethdev.com>", "Fabian Vogels
 build = "build.rs"
 
 [features]
-default = ["parity-dapps/with-syntex", "parity-dapps/use-precompiled-js"]
+default = ["with-syntex", "parity-dapps/use-precompiled-js"]
+with-syntex = ["parity-dapps/with-syntex"]
 
 [build-dependencies]
 parity-dapps = { path = "../dapps" }
