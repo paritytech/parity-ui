@@ -37,10 +37,10 @@
     "react-addons-css-transition-group": "^15.1.0",
     "react-tap-event-plugin": "^1.0.0",
     "bignumber.js": "^2.3.0",
-    "blockies": "*",
+    "blockies": "0.0.2",
     "classnames": "^2.2.3",
-    "ethereum-rpc-json": "*",
-    "lodash": "*",
+    "ethereum-rpc-json": "0.0.1",
+    "lodash": "4.11.1",
     "react-tooltip": "^2.0.3"
   },
   "devDependencies": {

@@ -56,7 +56,7 @@
     "blockies": "0.0.2",
     "classnames": "^2.2.3",
     "dapps-react-components": "../../components",
-    "lodash": "*",
+    "lodash": "4.11.1",
     "material-ui": "0.15.0",
     "react-copy-to-clipboard": "^4.1.0",
     "react-tap-event-plugin": "^1.0.0",

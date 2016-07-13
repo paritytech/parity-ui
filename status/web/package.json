@@ -92,7 +92,7 @@
   },
   "dependencies": {
     "bignumber.js": "2.3.0",
-    "blockies": "*",
+    "blockies": "0.0.2",
     "browser-request": "0.3.3",
     "bytes": "2.3.0",
     "dapp-styles": "^0.2.2",
