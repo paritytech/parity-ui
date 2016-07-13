@@ -1,14 +1,13 @@
 [package]
 description = "Ethereum Wallet Ðapp for Parity"
 name = "parity-dapps-wallet"
-version = "0.6.1"
+version = "0.6.0"
 license = "GPL-3.0"
 authors = ["Alexander Van de Sande <alex.vandesande@ethdev.com>", "Fabian Vogelsteller <fabian.vogelsteller@gmail.com>"]
 build = "build.rs"
 
 [features]
-default = ["with-syntex"]
-with-syntex = ["parity-dapps/with-syntex"]
+default = ["parity-dapps/with-syntex", "parity-dapps/use-precompiled-js"]
 
 [build-dependencies]
 parity-dapps = { path = "../dapps" }

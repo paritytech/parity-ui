@@ -1,14 +1,13 @@
 [package]
 description = "Status Page for Parity"
 name = "parity-dapps-status"
-version = "0.5.1"
+version = "0.6.0"
 license = "GPL-3.0"
 authors = ["Ethcore <admin@ethcore.io>"]
 build = "build.rs"
 
 [features]
-default = ["with-syntex"]
-with-syntex = ["parity-dapps/with-syntex"]
+default = ["parity-dapps/with-syntex", "parity-dapps/use-precompiled-js"]
 
 [build-dependencies]
 parity-dapps = { path = "../dapps" }
