@@ -33,7 +33,15 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         loaders: isProd ? ['babel'] : [
-          'react-hot',
+          require.resolve('react-hot-loader'),
+          'babel'
+        ]
+      },
+      {
+        test: /\.js$/,
+        include: /node_modules(\/|\\)dapps-react-components/,
+        loaders: isProd ? ['babel'] : [
+          require.resolve('react-hot-loader'),
           'babel'
         ]
       },

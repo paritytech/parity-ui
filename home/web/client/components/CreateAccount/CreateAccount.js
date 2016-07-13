@@ -9,7 +9,7 @@ import { every } from 'lodash';
 
 import validationsData from './validations.data';
 import FormValidationDisplay from '../FormValidationDisplay';
-import Identicon from '../Identicon';
+import Identicon from 'dapps-react-components/src/Identicon';
 import styles from './CreateAccount.css';
 import Web3Component from '../Web3Component/Web3Component';
 
@@ -95,7 +95,7 @@ export default class CreateAccount extends Web3Component {
     return (
       <p className={ styles.newAccount }>
         New account address is: <br />
-        <Identicon seed={ createdAccount } /><code>{ createdAccount }</code>
+        <Identicon chain={ this.props.network } seed={ createdAccount } /><code>{ createdAccount }</code>
         <br />
         You can now choose it in the top right corner and expose it to dapps.
       </p>
@@ -168,7 +168,8 @@ export default class CreateAccount extends Web3Component {
   static propTypes = {
     open: React.PropTypes.bool.isRequired,
     accounts: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
-    onClose: React.PropTypes.func.isRequired
+    onClose: React.PropTypes.func.isRequired,
+    network: React.PropTypes.string
   };
 
 }

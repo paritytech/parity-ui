@@ -1,4 +1,5 @@
 export Account from './Account';
+export AccountWeb3 from './AccountWeb3';
 export AccountLink from './AccountLink';
 export AnimateChildren from './AnimateChildren';
 export Identicon from './Identicon';

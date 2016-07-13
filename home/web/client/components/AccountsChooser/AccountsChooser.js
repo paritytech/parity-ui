@@ -5,7 +5,7 @@ import MenuItem from 'material-ui/MenuItem';
 import { isEqual } from 'lodash';
 
 import Web3Component from '../Web3Component';
-import Account from '../Account';
+import AccountWeb3 from 'dapps-react-components/src/AccountWeb3';
 import Storage from '../Storage';
 
 import styles from './AccountChooser.css';
@@ -56,6 +56,7 @@ export default class AccountChooser extends Web3Component {
   }
 
   render () {
+    const { network, accountsNames, accounts } = this.props;
     return (
       <DropDownMenu
         autoWidth={ false }
@@ -63,17 +64,20 @@ export default class AccountChooser extends Web3Component {
         value={ this.state.defaultAccountIdx }
         onChange={ ::this.handleChange }
         maxHeight={ 700 }
-        styles={ menuStyles }
         underlineStyle={ { display: 'none' } }
         iconStyle={ { fill: '#888' } }
         >
-        { this.props.accounts.map((acc, idx) => (
-          <MenuItem
-            key={ acc }
-            value={ idx }
-            primaryText={ <Account address={ acc } name={ this.props.accountsNames[acc] } /> }
+        {
+          accounts.map((acc, idx) => (
+            <MenuItem
+              key={ acc }
+              value={ idx }
+              primaryText={
+                <AccountWeb3 chain={ network } address={ acc } name={ accountsNames[acc] } />
+              }
             />
-        )) }
+          ))
+        }
 
       </DropDownMenu>
     );
@@ -81,9 +85,8 @@ export default class AccountChooser extends Web3Component {
 
   static propTypes = {
     accountsNames: React.PropTypes.object.isRequired,
-    onChange: React.PropTypes.func.isRequired
+    onChange: React.PropTypes.func.isRequired,
+    network: React.PropTypes.string
   };
 
 }
-
-const menuStyles = { width: '350px' };
