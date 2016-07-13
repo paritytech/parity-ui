@@ -1,4 +1,4 @@
-import isEqual from 'lodash.isequal';
+import { isEqual } from 'lodash';
 import logger from '../../utils/logger';
 import Ws from '../../utils/Ws';
 import BadgeTextAnimator from 'chrome-badge-animator';

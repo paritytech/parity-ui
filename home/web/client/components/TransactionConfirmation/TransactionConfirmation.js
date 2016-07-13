@@ -1,6 +1,6 @@
 import React from 'react';
 
-import isEqual from 'lodash.isequal';
+import { isEqual } from 'lodash';
 
 import ContractIcon from 'material-ui/svg-icons/action/code';
 import FlatButton from 'material-ui/FlatButton';

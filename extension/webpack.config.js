@@ -2,26 +2,26 @@ var rucksack = require('rucksack-css');
 var webpack = require('webpack');
 var path = require('path');
 var WebpackErrorNotificationPlugin = require('webpack-error-notification');
+var WebpackCopyOnDonePlugin = require('webpack-copy-on-done-plugin');
+var LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 
 var ENV = process.env.NODE_ENV || 'development';
 var isProd = ENV === 'production';
+
+var outputBase = isProd ? 'build' : 'dev';
+var env = isProd ? 'prod' : 'dev';
 
 module.exports = {
   debug: !isProd,
   cache: !isProd,
   devtool: isProd ? '#source-map' : '#cheap-module-eval-source-map',
-  context: path.join(__dirname, 'src'),
-  entry: isProd ? {
-    app: './app.js',
-    index: './index.js',
-  } : {
-    index: './app.dev.js'
+  context: path.join(__dirname, 'chrome'),
+  entry: {
+    App: './extension/App.js',
+    background: './extension/background.js'
   },
   output: {
-    library: 'parity-signer',
-    libraryTarget: 'umd',
-    umdNamedDefine: true,
-    path: path.join(__dirname, '..', 'src', 'web'),
+    path: path.join(__dirname, outputBase),
     filename: '[name].js'
   },
   module: {
@@ -29,10 +29,7 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loaders: isProd ? ['babel'] : [
-          'react-hot',
-          'babel'
-        ]
+        loader: 'babel'
       },
       {
         test: /\.js$/,
@@ -41,7 +38,7 @@ module.exports = {
       },
       {
         test: /\.json$/,
-        loaders: ['json']
+        loader: 'json'
       },
       {
         test: /\.html$/,
@@ -62,26 +59,16 @@ module.exports = {
         loader: 'style!css'
       },
       {
-        test: /\.less$/,
-        loaders: [
-          'style',
-          'css',
-          'less'
-        ]
-      },
-      {
         test: /\.(png|jpg|)$/,
         loader: 'file-loader'
       },
       {
-        // Match woff2 in addition to patterns like .woff?v=1.1.1.
         test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: 'url',
-        query: {
-          limit: 50000,
-          mimetype: 'application/font-woff',
-          name: 'assets/fonts/[hash].[ext]'
-        }
+        loader: 'url-loader?limit=10000&mimetype=application/font-woff'
+      },
+      {
+        test: /\.(woff(2)|ttf|eot|svg|otf)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        loader: 'file-loader'
       }
     ],
     noParse: [
@@ -105,19 +92,23 @@ module.exports = {
   ],
   plugins: (function () {
     var plugins = [
+      new LodashModuleReplacementPlugin(),
       new webpack.DefinePlugin({
         'process.env': {
-          NODE_ENV: JSON.stringify(ENV),
-          RPC_ADDRESS: JSON.stringify(process.env.RPC_ADDRESS),
-          LOGGING: JSON.stringify(!isProd)
+          NODE_ENV: JSON.stringify('development'),
+          RPC_ADDRESS: JSON.stringify(process.env.RPC_ADDRESS)
         }
       }),
-      new WebpackErrorNotificationPlugin(/* strategy, options */)
+      new WebpackErrorNotificationPlugin(/* strategy, options */),
+      new WebpackCopyOnDonePlugin([
+        { src: `chrome/manifest.${env}.json`, target: `./${outputBase}/manifest.json` },
+        { src: 'chrome/assets/*', target: `./${outputBase}/` }
+      ])
     ];
 
     if (isProd) {
-      plugins.push(new webpack.optimize.OccurrenceOrderPlugin());
       plugins.push(new webpack.optimize.DedupePlugin());
+      plugins.push(new webpack.optimize.OccurrenceOrderPlugin());
       plugins.push(new webpack.optimize.UglifyJsPlugin({
         screwIe8: true,
         compress: {
@@ -130,9 +121,5 @@ module.exports = {
     }
 
     return plugins;
-  }()),
-  devServer: {
-    contentBase: './src',
-    hot: !isProd
-  }
+  }())
 };

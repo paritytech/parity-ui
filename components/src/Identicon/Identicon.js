@@ -3,7 +3,7 @@ import React, { Component, PropTypes } from 'react';
 import styles from './Identicon.css';
 import AccountLink from '../AccountLink';
 
-import * as blockies from 'blockies/blockies';
+import blockies from 'blockies';
 
 export default class Identicon extends Component {
 
@@ -33,7 +33,7 @@ export default class Identicon extends Component {
   }
 
   updateIcon (address) {
-    const dataUrl = blockies.create({
+    const dataUrl = blockies({
       seed: address.toLowerCase(), // in case it's a checksummed address
       size: 8,
       scale: 8

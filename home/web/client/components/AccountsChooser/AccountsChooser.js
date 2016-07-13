@@ -2,7 +2,7 @@ import React from 'react';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 
-import isEqual from 'lodash.isequal';
+import { isEqual } from 'lodash';
 
 import Web3Component from '../Web3Component';
 import Account from '../Account';
