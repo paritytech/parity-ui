@@ -8,6 +8,7 @@ build = "build.rs"
 [features]
 # default = ["dev"]
 default = ["with-syntex"]
+dev = []
 with-syntex = ["parity-dapps/with-syntex"]
 
 [build-dependencies]

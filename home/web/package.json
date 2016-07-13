@@ -12,7 +12,7 @@
     "test": "mocha --compilers js:babel-core/register \"client/**/*.spec.js\"",
     "prebuild": "npm run clean",
     "build": "webpack --bail --progress --colors",
-    "clean": "rm static -rf"
+    "clean": "rm -rf static"
   },
   "license": "GPL-3.0",
   "devDependencies": {
