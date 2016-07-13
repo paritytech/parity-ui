@@ -1,3 +1,4 @@
+import './background.html';
 import Transactions from './Transactions';
 import ProxyManager from './ProxyManager';
 import { getToken, onTokenChange } from '../utils/token';

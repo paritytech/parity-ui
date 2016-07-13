@@ -1,4 +1,4 @@
-import isEqual from 'lodash.isequal';
+import { isEqual } from 'lodash';
 import logger from '../utils/logger';
 import { updatePendingTransactions } from '../actions/transactions';
 

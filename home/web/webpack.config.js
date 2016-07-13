@@ -29,7 +29,7 @@ module.exports = {
   module: {
     loaders: [
       {
-        test: /\.(js|jsx)$/,
+        test: /\.js$/,
         exclude: /node_modules/,
         loaders: isProd ? ['babel'] : [
           'react-hot',
@@ -76,8 +76,14 @@ module.exports = {
     ]
   },
   resolve: {
+    root: path.join(__dirname, 'node_modules'),
+    fallback: path.join(__dirname, 'node_modules'),
     extensions: ['', '.js', '.jsx'],
     unsafeCache: true
+  },
+  resolveLoaders: {
+    root: path.join(__dirname, 'node_modules'),
+    fallback: path.join(__dirname, 'node_modules')
   },
   postcss: [
     rucksack({
