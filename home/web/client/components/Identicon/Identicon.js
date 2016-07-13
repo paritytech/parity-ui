@@ -2,7 +2,7 @@ import React from 'react';
 
 import styles from './Identicon.css';
 
-import * as blockies from 'exports?blockies!blockies/blockies';
+import blockies from 'blockies';
 
 export default class Identicon extends React.Component {
 
@@ -22,7 +22,7 @@ export default class Identicon extends React.Component {
   }
 
   updateIcon (seed) {
-    const dataUrl = blockies.create({
+    const dataUrl = blockies({
       seed: seed,
       size: 8,
       scale: 8

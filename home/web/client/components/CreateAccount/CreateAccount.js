@@ -5,7 +5,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import Dialog from 'material-ui/Dialog';
 
-import every from 'lodash.every';
+import { every } from 'lodash';
 
 import validationsData from './validations.data';
 import FormValidationDisplay from '../FormValidationDisplay';

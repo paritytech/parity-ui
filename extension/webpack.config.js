@@ -1,30 +1,27 @@
 var rucksack = require('rucksack-css');
 var webpack = require('webpack');
 var path = require('path');
+var WebpackErrorNotificationPlugin = require('webpack-error-notification');
+var WebpackCopyOnDonePlugin = require('webpack-copy-on-done-plugin');
+var LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 
 var ENV = process.env.NODE_ENV || 'development';
 var isProd = ENV === 'production';
-var WebpackErrorNotificationPlugin = require('webpack-error-notification');
-var LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
+
+var outputBase = isProd ? 'build' : 'dev';
+var env = isProd ? 'prod' : 'dev';
 
 module.exports = {
   debug: !isProd,
   cache: !isProd,
-  devtool: isProd ? '#eval' : '#cheap-module-eval-source-map',
-  context: path.join(__dirname, './client'),
-  entry: isProd ? {
-    'inject': ['whatwg-fetch', './inject.js'],
-    'home': ['whatwg-fetch', './home.js'],
-    'cols.frame': './cols.frame.js'
-  } : {
-    'transfer': './transfer.js',
-    'inject': ['whatwg-fetch', './inject.js'],
-    'parity-utils/inject': ['whatwg-fetch', './inject.js'],
-    'home': ['whatwg-fetch', './home.js'],
-    'home/cols.frame': './cols.frame'
+  devtool: isProd ? '#source-map' : '#cheap-module-eval-source-map',
+  context: path.join(__dirname, 'chrome'),
+  entry: {
+    App: './extension/App.js',
+    background: './extension/background.js'
   },
   output: {
-    path: isProd ? path.join(__dirname, '..', 'src', 'web') : path.join(__dirname, 'target'),
+    path: path.join(__dirname, outputBase),
     filename: '[name].js'
   },
   module: {
@@ -32,14 +29,16 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loaders: isProd ? ['babel'] : [
-          'react-hot',
-          'babel'
-        ]
+        loader: 'babel'
+      },
+      {
+        test: /\.js$/,
+        include: /node_modules(\/|\\)dapps-react-components/,
+        loader: 'babel'
       },
       {
         test: /\.json$/,
-        loaders: ['json']
+        loader: 'json'
       },
       {
         test: /\.html$/,
@@ -47,7 +46,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        include: /client/,
+        include: /src/,
         loaders: [
           'style',
           'css?modules&sourceMap&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]',
@@ -56,7 +55,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        exclude: /client/,
+        exclude: /src/,
         loader: 'style!css'
       },
       {
@@ -69,7 +68,7 @@ module.exports = {
       },
       {
         test: /\.(woff(2)|ttf|eot|svg|otf)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: 'url-loader?limit=10000'
+        loader: 'file-loader'
       }
     ],
     noParse: [
@@ -93,19 +92,23 @@ module.exports = {
   ],
   plugins: (function () {
     var plugins = [
-      new WebpackErrorNotificationPlugin(),
       new LodashModuleReplacementPlugin(),
       new webpack.DefinePlugin({
         'process.env': {
-          NODE_ENV: JSON.stringify(ENV),
+          NODE_ENV: JSON.stringify('development'),
           RPC_ADDRESS: JSON.stringify(process.env.RPC_ADDRESS)
         }
-      })
+      }),
+      new WebpackErrorNotificationPlugin(/* strategy, options */),
+      new WebpackCopyOnDonePlugin([
+        { src: `chrome/manifest.${env}.json`, target: `./${outputBase}/manifest.json` },
+        { src: 'chrome/assets/*', target: `./${outputBase}/` }
+      ])
     ];
 
     if (isProd) {
-      plugins.push(new webpack.optimize.OccurrenceOrderPlugin(false));
       plugins.push(new webpack.optimize.DedupePlugin());
+      plugins.push(new webpack.optimize.OccurrenceOrderPlugin());
       plugins.push(new webpack.optimize.UglifyJsPlugin({
         screwIe8: true,
         compress: {
@@ -118,23 +121,5 @@ module.exports = {
     }
 
     return plugins;
-  }()),
-  devServer: {
-    contentBase: './client',
-    hot: !isProd,
-    proxy: {
-      '/rpc/*': {
-        target: 'http://localhost:8080',
-        changeOrigin: true
-      },
-      '/api*': {
-        target: 'http://localhost:8080',
-        changeOrigin: true
-      },
-      '/wallet/*': {
-        target: 'http://localhost:8080',
-        changeOrigin: true
-      }
-    }
-  }
+  }())
 };

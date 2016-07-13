@@ -6,6 +6,8 @@ var ENV = process.env.NODE_ENV || 'development';
 var isProd = ENV === 'production';
 var isPerfDebug = process.env.NODE_ENV === 'perf-debug';
 var isIntegrationTests = process.env.NODE_ENV === 'tests';
+var WebpackErrorNotificationPlugin = require('webpack-error-notification');
+var LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 
 module.exports = {
   debug: !isProd,
@@ -22,7 +24,7 @@ module.exports = {
   module: {
     loaders: [
       {
-        test: /\.(js|jsx)$/,
+        test: /\.js$/,
         exclude: /node_modules/,
         loaders: isProd ? ['babel'] : [
           'react-hot',
@@ -30,7 +32,7 @@ module.exports = {
         ]
       },
       {
-        test: /\.(js|jsx)$/,
+        test: /\.js$/,
         include: /node_modules(\/|\\)dapps-react-components/,
         loader: 'babel'
       },
@@ -82,8 +84,14 @@ module.exports = {
     ]
   },
   resolve: {
+    root: path.join(__dirname, 'node_modules'),
+    fallback: path.join(__dirname, 'node_modules'),
     extensions: ['', '.js', '.jsx'],
     unsafeCache: true
+  },
+  resolveLoaders: {
+    root: path.join(__dirname, 'node_modules'),
+    fallback: path.join(__dirname, 'node_modules'),
   },
   postcss: [
     rucksack({
@@ -92,6 +100,8 @@ module.exports = {
   ],
   plugins: (function () {
     var plugins = [
+      new WebpackErrorNotificationPlugin(),
+      new LodashModuleReplacementPlugin(),
       // TODO [todr] paths in dapp-styles is hardcoded for meteor, we need to rewrite it here
       new webpack.NormalModuleReplacementPlugin(
         /ethereum_dapp-styles/,

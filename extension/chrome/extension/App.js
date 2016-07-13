@@ -1,3 +1,4 @@
+import './App.html';
 import 'reset-css/reset.css';
 import './App.css';
 import { getToken, setToken, onTokenChange } from '../utils/token';
