@@ -3,6 +3,7 @@ var webpack = require('webpack');
 var path = require('path');
 var WebpackErrorNotificationPlugin = require('webpack-error-notification');
 var WebpackCopyOnDonePlugin = require('webpack-copy-on-done-plugin');
+var LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 
 var ENV = process.env.NODE_ENV || 'development';
 var isProd = ENV === 'production';
@@ -91,6 +92,7 @@ module.exports = {
   ],
   plugins: (function () {
     var plugins = [
+      new LodashModuleReplacementPlugin(),
       new webpack.DefinePlugin({
         'process.env': {
           NODE_ENV: JSON.stringify('development'),

@@ -5,6 +5,7 @@ var path = require('path');
 var ENV = process.env.NODE_ENV || 'development';
 var isProd = ENV === 'production';
 var WebpackErrorNotificationPlugin = require('webpack-error-notification');
+var LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 
 module.exports = {
   debug: !isProd,
@@ -101,6 +102,7 @@ module.exports = {
   plugins: (function () {
     var plugins = [
       new WebpackErrorNotificationPlugin(),
+      new LodashModuleReplacementPlugin(),
       new webpack.DefinePlugin({
         'process.env': {
           NODE_ENV: JSON.stringify(ENV),
