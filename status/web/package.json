@@ -17,10 +17,7 @@
     "nightwatchCI": "npm run nightwatch  -- -e saucelabs",
     "prebuild": "npm run clean",
     "build": "webpack --bail --progress --colors",
-    "clean": "rm -rf static || true",
-    "prezip": "npm run build",
-    "zip": "cd static && zip ../status.zip * -r",
-    "genRpc": "./rpc-docs/index.js"
+    "clean": "rm -rf ../src/web && rm -rf target"
   },
   "license": "GPL-3.0",
   "author": "Ethcore dev team",

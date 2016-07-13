@@ -11,7 +11,7 @@
     "test": "mocha --compilers js:babel-core/register \"client/**/*.spec.js\"",
     "prebuild": "npm run clean",
     "build": "webpack --bail --progress --colors",
-    "clean": "rm -rf static"
+    "clean": "rm -rf ../src/web && rm -rf ./target"
   },
   "license": "GPL-3.0",
   "devDependencies": {

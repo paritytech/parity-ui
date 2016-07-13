@@ -13,6 +13,9 @@ case "$1" in
   clean | c)
     CMD="clean"
     ;;
+  build | b)
+    CMD="build"
+    ;;
   shrinkwrap)
     CMD="shrinkwrap"
     ;;
@@ -24,13 +27,30 @@ esac
 # Run Command
 case "$CMD" in
   help)
-    echo "Options: install, clean, help"
+    echo "Options: install, clean, shrinkwrap, build, help"
     ;;
   install)
     set -x
     for P in ${PROJECTS[@]}; do
       cd $P
       npm install
+      cd -
+    done
+    ;;
+  clean)
+    set -x
+    for P in ${PROJECTS[@]}; do
+      cd $P
+      rm -rf node_modules
+      cd -
+    done
+    ;;
+  build)
+    set -x
+    for P in ${PROJECTS[@]}; do
+      cd $P
+      npm install
+      NODE_ENV="production" npm run build
       cd -
     done
     ;;
@@ -41,14 +61,6 @@ case "$CMD" in
       npm install --ignore-scripts
       npm prune --production=false
       npm shrinkwrap --dev
-      cd -
-    done
-    ;;
-  clean)
-    set -x
-    for P in ${PROJECTS[@]}; do
-      cd $P
-      rm -rf node_modules
       cd -
     done
     ;;
