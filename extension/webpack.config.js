@@ -32,7 +32,7 @@ module.exports = {
       },
       {
         test: /\.js$/,
-        include: [/node_modules(\/|\\)dapps-react-components/, /node_modules(\/|\\)parity-signer/],
+        include: [/dapps-react-components/, /parity-signer/],
         loader: 'babel'
       },
       {
