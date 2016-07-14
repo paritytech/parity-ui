@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { CHROME_EXT_LINK } from '../../constants/constants';
+import { CHROME_EXT_LINK } from '../../constants/extension';
 
 import styles from './styles.css';
 

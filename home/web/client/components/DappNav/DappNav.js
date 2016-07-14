@@ -6,8 +6,8 @@ import SearchIcon from 'material-ui/svg-icons/action/search';
 
 import styles from './DappNav.css';
 
-import fetchApps from '../fetchApps';
-import { appLink } from '../appLink';
+import fetchApps from '../../utils/fetchApps';
+import { appLink } from '../../utils/appLink';
 
 export default class DappNav extends React.Component {
   state = {

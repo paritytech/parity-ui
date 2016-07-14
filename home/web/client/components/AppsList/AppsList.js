@@ -2,7 +2,7 @@ import React from 'react';
 
 import { GridList, GridTile } from 'material-ui/GridList';
 
-import { appLink } from '../appLink';
+import { appLink } from '../../utils/appLink';
 
 import styles from './AppsList.css';
 

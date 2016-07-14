@@ -6,13 +6,17 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 // Needed for onTouchTap, for material ui
 // http://stackoverflow.com/a/34015469/988941
 injectTapEventPlugin();
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+const muiTheme = getMuiTheme({});
 
-import Web3 from 'web3';
+import Web3 from 'web3'; // must b after ./test otherwise it breaks
 
-import web3extensions from './components/web3.extensions';
-import Web3Provider from './components/Web3Provider';
+import web3extensions from 'dapps-react-components/src/util/web3.extensions';
+import Web3Provider from 'dapps-react-components/src/Web3Provider';
+import Root from './components/Root';
 import TopBar from './components/TopBar';
-import Interceptor from './components/TopBar/Interceptor';
+import Interceptor from './utils/Interceptor';
 import readInjectOptions from './utils/readInjectOptions';
 
 const http = new Web3.providers.HttpProvider('/rpc/');
@@ -24,7 +28,6 @@ web3extensions(rawWeb3)
 
 // expose global web3
 global.web3 = web3;
-
 const options = readInjectOptions();
 
 // Render account chooser
@@ -35,11 +38,12 @@ ReactDOM.render(
   // wrapping id used to resest css, see inject.css
   <div className={ stylesReset.reset }>
     <Web3Provider web3={ rawWeb3 }>
-      <TopBar
-        interceptor={ interceptor }
-        web3={ web3 }
-        options={ options }
+      <MuiThemeProvider muiTheme={ muiTheme }>
+        <Root
+          interceptor={ interceptor }
+          options={ options }
         />
+      </MuiThemeProvider>
     </Web3Provider>
   </div>,
   el

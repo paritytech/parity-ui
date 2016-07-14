@@ -1,5 +1,5 @@
 import Cols from './cols';
-import { isUsingSubdomains, appLink } from '../appLink';
+import { isUsingSubdomains, appLink } from '../../utils/appLink';
 import EthereumWalletCompatibility from './eth-wallet-compat';
 import localStorage from './safeLocalStorage';
 

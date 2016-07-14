@@ -63,7 +63,7 @@ export default class AccountChooser extends Web3Component {
         value={ this.state.defaultAccountIdx }
         onChange={ ::this.handleChange }
         maxHeight={ 700 }
-        styles={ menuStyles }
+        style={ menuStyles }
         underlineStyle={ { display: 'none' } }
         iconStyle={ { fill: '#888' } }
         >
