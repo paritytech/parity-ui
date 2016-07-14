@@ -32,10 +32,9 @@
     "parser": "babel-eslint"
   },
   "peerDependencies": {
-    "react": "^15.0.0",
-    "material-ui": "^0.15.0",
-    "react-addons-css-transition-group": "^15.1.0",
-    "react-tap-event-plugin": "^1.0.0",
+    "react": "^15.2.1",
+    "material-ui": "^0.15.2",
+    "react-addons-css-transition-group": "^15.2.1",
     "bignumber.js": "^2.3.0",
     "blockies": "0.0.2",
     "classnames": "^2.2.3",
