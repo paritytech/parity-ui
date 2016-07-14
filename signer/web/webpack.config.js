@@ -11,11 +11,9 @@ module.exports = {
   cache: !isProd,
   devtool: isProd ? '#eval' : '#cheap-module-eval-source-map',
   context: path.join(__dirname, 'src'),
-  entry: isProd ? {
+  entry: {
     app: './app.js',
     index: './index.js',
-  } : {
-    index: './app.dev.js'
   },
   output: {
     library: 'parity-signer',
