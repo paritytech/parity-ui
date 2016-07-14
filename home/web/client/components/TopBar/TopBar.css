@@ -140,11 +140,3 @@ html,body {
   text-decoration: underline;
   color: #2C78B5;
 }
-
-.toasts {
-  position: fixed;
-  top: 30px;
-  right: 30px;
-  z-index: 100000;
-  width: 200px;
-}

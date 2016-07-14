@@ -62,7 +62,7 @@
     "karma-babel-preprocessor": "6.0.1",
     "less": "^2.6.1",
     "less-loader": "^2.2.3",
-    "lodash-webpack-plugin": "^0.9.2",
+    
     "mocha": "^2.4.5",
     "mock-local-storage": "1.0.2",
     "nightwatch": "0.8.18",

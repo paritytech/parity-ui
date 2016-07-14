@@ -9,7 +9,7 @@ import SubdomainDialog from '../SubdomainDialog';
 
 import styles from './Home.css';
 
-import fetchApps from '../fetchApps';
+import fetchApps from '../../utils/fetchApps';
 
 export default class Home extends React.Component {
 

@@ -3,7 +3,7 @@ import React from 'react';
 import LinearProgress from 'material-ui/LinearProgress';
 
 import Web3Component from '../Web3Component';
-import { appLink } from '../appLink';
+import { appLink } from '../../utils/appLink';
 
 import styles from './StatusLine.css';
 

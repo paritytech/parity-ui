@@ -5,7 +5,7 @@ import FlatButton from 'material-ui/FlatButton';
 import AssignmentIcon from 'material-ui/svg-icons/action/assignment';
 import CopyToClipboard from 'react-copy-to-clipboard';
 
-import { isUsingSubdomains, appPrettyLink } from '../appLink';
+import { isUsingSubdomains, appPrettyLink } from '../../utils/appLink';
 
 import resetStyles from '../../reset.css';
 import styles from './SubdomainDialog.css';
