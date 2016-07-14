@@ -4,7 +4,7 @@
   "description": "Parity Web Extension",
   "scripts": {
     "postinstall": "npm link ../signer/web && npm link ../components",
-    "start": "npm run devBuild -- -w --port 3030",
+    "start": "npm run devBuild -- -w",
     "devBuild": "webpack --progress --colors",
     "build": "webpack --progress --colors --bail",
     "compress": "node scripts/compress",
