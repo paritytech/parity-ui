@@ -1,7 +1,7 @@
 [package]
 description = "Base Package for all parity dapps"
 name = "parity-dapps"
-version = "0.3.0"
+version = "0.6.0"
 license = "GPL-3.0"
 authors = ["Ethcore <admin@ethcore.io"]
 build = "build.rs"
@@ -18,7 +18,7 @@ quasi = { version = "0.11", default-features = false }
 quasi_macros = { version = "0.11", optional = true }
 syntex = { version = "0.33", optional = true }
 syntex_syntax = { version = "0.33", optional = true }
-clippy = { version = "0.0.69", optional = true }
+clippy = { version = "0.0.79", optional = true }
 
 [features]
 dev = ["clippy"]
@@ -26,5 +26,6 @@ default = ["with-syntex"]
 nightly = ["quasi_macros"]
 nightly-testing = ["clippy"]
 with-syntex = ["quasi/with-syntex", "quasi_codegen", "quasi_codegen/with-syntex", "syntex", "syntex_syntax"]
+use-precompiled-js = []
 
 

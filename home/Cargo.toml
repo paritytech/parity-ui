@@ -1,13 +1,13 @@
 [package]
 description = "Parity built-in dapps."
 name = "parity-dapps-home"
-version = "0.5.2"
+version = "0.6.0"
 license = "GPL-3.0"
 authors = ["Ethcore <admin@ethcore.io>"]
 build = "build.rs"
 
 [features]
-default = ["with-syntex"]
+default = ["with-syntex", "parity-dapps/use-precompiled-js"]
 with-syntex = ["parity-dapps/with-syntex"]
 
 [build-dependencies]

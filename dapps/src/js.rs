@@ -14,6 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with Parity.  If not, see <http://www.gnu.org/licenses/>.
 
+#![cfg_attr(feature="use-precompiled-js", allow(dead_code))]
+#![cfg_attr(feature="use-precompiled-js", allow(unused_imports))]
+
 use std::fmt;
 use std::process::Command;
 
@@ -46,6 +49,14 @@ fn die<T : fmt::Debug>(s: &'static str, e: T) -> ! {
 	panic!("Error: {}: {:?}", s, e);
 }
 
+#[cfg(feature = "use-precompiled-js")]
+pub fn test(_path: &str) {
+}
+#[cfg(feature = "use-precompiled-js")]
+pub fn build(_path: &str) {
+}
+
+#[cfg(not(feature = "use-precompiled-js"))]
 pub fn build(path: &str) {
 	let child = platform::handle_fd(&mut Command::new(platform::NPM_CMD))
 		.arg("install")
@@ -65,6 +76,7 @@ pub fn build(path: &str) {
 	assert!(child.success(), "There was an error build JS code.");
 }
 
+#[cfg(not(feature = "use-precompiled-js"))]
 pub fn test(path: &str) {
 	let child = Command::new(platform::NPM_CMD)
 		.arg("run")

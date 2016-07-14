@@ -9,7 +9,7 @@ var isProd = ENV === 'production';
 module.exports = {
   debug: !isProd,
   cache: !isProd,
-  devtool: isProd ? '#source-map' : '#cheap-module-eval-source-map',
+  devtool: isProd ? '#eval' : '#cheap-module-eval-source-map',
   context: path.join(__dirname, 'src'),
   entry: isProd ? {
     app: './app.js',
@@ -21,7 +21,7 @@ module.exports = {
     library: 'parity-signer',
     libraryTarget: 'umd',
     umdNamedDefine: true,
-    path: path.join(__dirname, '..', 'src', 'web'),
+    path: isProd ? path.join(__dirname, '..', 'src', 'web') : path.join(__dirname, 'target'),
     filename: '[name].js'
   },
   module: {

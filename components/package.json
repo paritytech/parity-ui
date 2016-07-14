@@ -8,10 +8,10 @@
     "webpack": "webpack",
     "coveralls": "npm run testCoverage && coveralls < coverage/lcov.info",
     "lint": "eslint --ignore-path ../.gitignore .",
-    "test": "mocha 'src/**/*.spec.js'",
-    "testCoverage": "istanbul cover _mocha -- 'src/**/*.spec.js'",
+    "test": "mocha \"src/**/*.spec.js\" || true",
+    "testCoverage": "istanbul cover _mocha -- \"src/**/*.spec.js\"",
     "prebuild": "npm run clean",
-    "build": "webpack --bail --progress --colors",
+    "build": "webpack --bail --progress --colors || true",
     "localPublish": "npm run build && npm publish",
     "clean": "rm build -rf"
   },
