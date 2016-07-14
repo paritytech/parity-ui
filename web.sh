@@ -25,10 +25,9 @@ case "$1" in
   shrinkwrap)
     CMD="shrinkwrap"
     ;;
-  *)
-    break
-    ;;
 esac
+
+shift
 
 # Run Command
 case "$CMD" in
@@ -39,7 +38,7 @@ case "$CMD" in
     set -x
     for P in ${PROJECTS[@]}; do
       cd $P
-      npm install
+      npm install $@
       cd -
     done
     ;;

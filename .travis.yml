@@ -42,7 +42,7 @@ install:
     )) &&
     source ~/.nvm/nvm.sh &&
     nvm install $TRAVIS_NODE_VERSION
-  - ./web.sh install
+  - ./web.sh install --no-progress --ignore-scripts
 
 script:
   - if [ "$BUILD" = "rust" ]; then ./scripts/build_rs.sh; fi
