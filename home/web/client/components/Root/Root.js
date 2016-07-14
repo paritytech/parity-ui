@@ -3,12 +3,11 @@ import { isEqual } from 'lodash';
 import { fixAccountNames } from '../../utils/accounts';
 import { signerUrl } from '../../utils/signer';
 import { fetchIsExtensionInstalled } from '../../utils/extension';
-import Toast from '../Toast';
+import Toasts from '../Toasts';
 import TopBar from '../TopBar';
 import TransactionConfirmation from '../TransactionConfirmation';
 import Web3Component from '../Web3Component';
 import Storage from '../Storage';
-import styles from './Root.css';
 
 export default class Root extends Web3Component {
 
@@ -29,7 +28,7 @@ export default class Root extends Web3Component {
   toastId = 0;
 
   state = {
-    waitingForDom: 0,
+    isDomReady: false,
     isLoadingExtensionInstalled: true,
     isExtenstionInstalled: false,
     toasts: [],
@@ -44,6 +43,9 @@ export default class Root extends Web3Component {
   listeners = [];
 
   componentWillMount () {
+    // Because dom might not be ready yet we are deferring component load.
+    // (We want to load component anyway for Interceptor logic to kick in)
+    this.pollIsDomReady();
     this.updateIsExtensionInstalled();
 
     this.storageListener = this.storage.onAccountsNames(accountsNames => {
@@ -66,14 +68,12 @@ export default class Root extends Web3Component {
     super.componentWillUnmount();
     this.storageListener();
     this.listeners.map(off => off());
-    clearTimeout(this.isExtenstionInstalledTimeout);
+    clearTimeout(this.isExtensionInstalledTimeout);
   }
 
   render () {
-    // Because dom might not be ready yet we are deferring component load.
-    // (We want to load component anyway for Interceptor logic to kick in)
-    if (!document.body) {
-      return this.waitForDom();
+    if (!this.state.isDomReady) {
+      return this.renderTopBar();
     }
     return (
       <div>
@@ -85,9 +85,10 @@ export default class Root extends Web3Component {
   }
 
   renderTopBar () {
-    const { isLoadingExtensionInstalled, isExtenstionInstalled, accounts, allAccounts, accountsNames, signerPort, unsignedTransactionsCount } = this.state;
+    const { isLoadingExtensionInstalled, isExtenstionInstalled, accounts, allAccounts, accountsNames, signerPort, unsignedTransactionsCount, isDomReady } = this.state;
     return (
       <TopBar
+        isDomReady={ isDomReady }
         isLoadingExtensionInstalled={ isLoadingExtensionInstalled }
         isExtenstionInstalled={ isExtenstionInstalled }
         accounts={ accounts }
@@ -115,24 +116,12 @@ export default class Root extends Web3Component {
 
   renderToasts () {
     const { toasts } = this.state;
-    if (!toasts.length) {
-      return;
-    }
     return (
-      <div className={ styles.toasts }>
-        {
-          toasts.map(t => (
-            <Toast
-              key={ t.id }
-              id={ t.id }
-              msg={ t.msg }
-              type={ t.type }
-              onRemoveToast={ this.onRemoveToast }
-              onClickToast={ this.onClickToast }
-            />
-          ))
-        }
-      </div>
+      <Toasts
+        toasts={ toasts }
+        onClickToast={ this.onClickToast }
+        onRemoveToast={ this.onRemoveToast }
+      />
     );
   }
 
@@ -297,7 +286,7 @@ export default class Root extends Web3Component {
           isExtenstionInstalled: false,
           isLoadingExtensionInstalled: false
         });
-        this.isExtenstionInstalledTimeout = setTimeout(this.updateIsExtensionInstalled, 10000);
+        this.isExtensionInstalledTimeout = setTimeout(this.updateIsExtensionInstalled, 10000);
         return;
       }
       this.setState({
@@ -305,19 +294,6 @@ export default class Root extends Web3Component {
         isLoadingExtensionInstalled: false
       });
     });
-  }
-
-  waitForDom () {
-    setTimeout(() => {
-      this.setState({
-        waitingForDom: this.state.waitingForDom + 1
-      });
-    }, 5);
-    return (
-      <div className={ styles.topbar }>
-          <h4 className={ styles.header }>Loading...</h4>
-      </div>
-    );
   }
 
   handleFirstRun = allAccounts => {
@@ -331,6 +307,17 @@ export default class Root extends Web3Component {
         return;
       }
       this.onOpenCreateAccount();
+    });
+  }
+
+
+  pollIsDomReady = () => {
+    if (!document.body) {
+      setTimeout(this.pollIsDomReady, 5);
+      return;
+    }
+    this.setState({
+      isDomReady: true
     });
   }
 

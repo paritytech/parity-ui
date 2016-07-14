@@ -19,6 +19,7 @@ import styles from './TopBar.css';
 export default class TopBar extends Component {
 
   static propTypes = {
+    isDomReady: PropTypes.bool.isRequired,
     isLoadingExtensionInstalled: PropTypes.bool.isRequired,
     isExtenstionInstalled: PropTypes.bool.isRequired,
     accounts: PropTypes.arrayOf(PropTypes.string).isRequired,
@@ -36,8 +37,16 @@ export default class TopBar extends Component {
   };
 
   render () {
-    const { allAccounts, accountsNames, isLoadingExtensionInstalled, isExtenstionInstalled } = this.props;
+    const { isDomReady, allAccounts, accountsNames, isLoadingExtensionInstalled, isExtenstionInstalled } = this.props;
     const { accountsDetailsOpen, createAccountOpen } = this.state;
+
+    if (!isDomReady) {
+      return (
+      <div className={ styles.topbar }>
+          <h4 className={ styles.header }>Loading...</h4>
+      </div>
+      );
+    }
 
     return (
       <div>
