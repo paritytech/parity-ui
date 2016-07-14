@@ -7,7 +7,6 @@ PROJECTS=(home signer status wallet)
 
 for PROJECT in ${PROJECTS[@]}; do
   cd $PROJECT
-  cargo build
-  cargo test
+  cargo test --no-default-features --features with-syntex
   cd -
 done
