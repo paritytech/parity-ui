@@ -5,12 +5,14 @@ branches:
   only:
   - master
 
+env:
+  global:
+    - TRAVIS_NODE_VERSION="5"
+
 rust:
   - stable
 
 env:
-  global:
-    - TRAVIS_NODE_VERSION="5"
   - BUILD=rust
   - BUILD=js
 
