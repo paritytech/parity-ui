@@ -11,8 +11,8 @@ if [ "$TRAVIS_BRANCH" = "master" ]; then
   # Run build if:
   # 1. Any .rs file was modified
   # 2. Master branch is being built
-  RS_MODIFIED=`./scripts/modified_rs.sh`
-  SHOULD_RUN=$RS_MODIFIED || [ $TRAVIS_PULL_REQUEST = false ]
+  RS_MODIFIED=$(./scripts/modified_rs.sh)
+  SHOULD_RUN=$RS_MODIFIED || [ $TRAVIS_PULL_REQUEST = false ];
 fi
 
 if [ $SHOULD_RUN != true ]; then
