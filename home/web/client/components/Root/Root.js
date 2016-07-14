@@ -158,8 +158,10 @@ export default class Root extends Web3Component {
         return next(10);
       }
 
-      fixAccountNames(this.state.accountsNames, allAccounts);
-      this.setState({ allAccounts });
+      this.setState({
+        allAccounts,
+        accountsNames: fixAccountNames(this.state.accountsNames, allAccounts)
+      });
       next();
     });
   }
