@@ -3,7 +3,7 @@
 const url = 'http://localhost:3000/#/rpc/';
 const utils = require('../utils');
 const el = utils.el;
-const mckResponses = utils.mckResponses;
+// const mckResponses = utils.mckResponses;
 const rpcMethods = require('../../client/data/rpc.json').methods;
 
 module.exports = {
@@ -44,7 +44,7 @@ module.exports = {
     const method = 'ethcore_setExtraData';
     const methodData = rpcMethods.find(m => m.name === method);
     const valueToSet = '123';
-    const mckResponse = mckResponses.rpc.find(m => m.name === method).response;
+    // const mckResponse = mckResponses.rpc.find(m => m.name === method).response;
     // clear value, set test method
     client.clearValue(autocomplete);
     client.click(autocomplete);

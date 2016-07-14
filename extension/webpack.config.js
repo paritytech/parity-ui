@@ -93,7 +93,7 @@ module.exports = {
     var plugins = [
       new webpack.DefinePlugin({
         'process.env': {
-          NODE_ENV: JSON.stringify('development'),
+          NODE_ENV: JSON.stringify(ENV),
           RPC_ADDRESS: JSON.stringify(process.env.RPC_ADDRESS)
         }
       }),
