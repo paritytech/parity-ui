@@ -9,12 +9,13 @@ env:
   global:
     - TRAVIS_NODE_VERSION="5"
 
-rust:
-  - stable
 
-env:
-  - BUILD=rust
-  - BUILD=js
+matrix:
+  include:
+    - rust: stable
+      env: BUILD=rust
+    - rust: stable
+      env: BUILD=js
 
 cache:
   directories:
