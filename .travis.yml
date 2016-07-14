@@ -1,9 +1,10 @@
 sudo: false
-language: rust
 
 branches:
   only:
   - master
+
+language: rust
 
 env:
   global:
@@ -17,9 +18,11 @@ matrix:
       env: BUILD=js
 
 cache:
+  cargo: true
   directories:
     - $HOME/.cargo
     - $HOME/.npm
+    - $HOME/.nvm
     - $TRAVIS_BUILD_DIR/home/target
     - $TRAVIS_BUILD_DIR/signer/target
     - $TRAVIS_BUILD_DIR/status/target
@@ -32,7 +35,13 @@ cache:
     - $TRAVIS_BUILD_DIR/wallet/web/node_modules
 
 install:
-  - rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install $TRAVIS_NODE_VERSION
+  - (test -d ~/.nvm || (
+      git clone https://github.com/creationix/nvm.git ~/.nvm &&
+      cd ~/.nvm &&
+      git checkout `git describe --abbrev=0 --tags`
+    )) &&
+    source ~/.nvm/nvm.sh &&
+    nvm install $TRAVIS_NODE_VERSION
   - ./web.sh install
 
 script:
