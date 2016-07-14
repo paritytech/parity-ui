@@ -37,6 +37,14 @@ module.exports = {
         ]
       },
       {
+        test: /\.js$/,
+        include: /dapps-react-components/,
+        loaders: isProd ? ['babel'] : [
+          'react-hot',
+          'babel'
+        ]
+      },
+      {
         test: /\.json$/,
         loaders: ['json']
       },

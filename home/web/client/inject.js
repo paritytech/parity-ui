@@ -2,6 +2,7 @@ import 'babel-polyfill';
 import stylesReset from './reset.css';
 import ReactDOM from 'react-dom';
 import React from 'react';
+import { Provider } from 'react-redux';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 // Needed for onTouchTap, for material ui
 // http://stackoverflow.com/a/34015469/988941
@@ -18,6 +19,8 @@ import Root from './components/Root';
 import TopBar from './components/TopBar';
 import Interceptor from './utils/Interceptor';
 import readInjectOptions from './utils/readInjectOptions';
+import createStore from './store/configureStore';
+import middlewares from './middlewares';
 
 const http = new Web3.providers.HttpProvider('/rpc/');
 const interceptor = new Interceptor(http);
@@ -34,17 +37,20 @@ const options = readInjectOptions();
 const el = document.createElement('div');
 document.querySelector('html').appendChild(el);
 
+const store = createStore(middlewares());
+
 ReactDOM.render(
-  // wrapping id used to resest css, see inject.css
-  <div className={ stylesReset.reset }>
-    <Web3Provider web3={ rawWeb3 }>
-      <MuiThemeProvider muiTheme={ muiTheme }>
-        <Root
-          interceptor={ interceptor }
-          options={ options }
-        />
-      </MuiThemeProvider>
-    </Web3Provider>
-  </div>,
+  <Provider store={ store }>
+    <div className={ stylesReset.reset }>
+      <Web3Provider web3={ rawWeb3 }>
+        <MuiThemeProvider muiTheme={ muiTheme }>
+          <Root
+            interceptor={ interceptor }
+            options={ options }
+          />
+        </MuiThemeProvider>
+      </Web3Provider>
+    </div>
+  </Provider>,
   el
 );
