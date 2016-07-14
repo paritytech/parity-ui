@@ -6,27 +6,32 @@
     "postinstall": "npm link ../signer/web && npm link ../components",
     "start": "npm run devBuild -- -w --port 3030",
     "devBuild": "webpack --progress --colors",
-    "build": "NODE_ENV=production npm run devBuild",
+    "build": "webpack --progress --colors --bail",
     "compress": "node scripts/compress",
     "genZip": "npm run build && npm run compress",
     "clean": "rimraf build/ dev/ *.zip *.crx",
     "lint": "eslint . --ignore-path ../.gitignore",
     "test": "mocha \"chrome/**/*.spec.js\""
   },
+  "author": "Ethcore <admin@ethcore.io>",
+  "license": "GPL-3.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ethcore/parity-sysui-chrome-extension.git"
+    "url": "git+https://github.com/ethcore/parity-ui.git"
   },
+  "bugs": {
+    "url": "https://github.com/ethcore/parity-ui/issues"
+  },
+  "homepage": "https://github.com/ethcore/parity-ui#readme",
   "keywords": [
     "parity-sysui"
   ],
-  "author": "Ethcore team <admin@ethcore.io>",
-  "license": "GPL-3.0",
   "devDependencies": {
     "babel-core": "^6.3.15",
     "babel-eslint": "^6.0.0",
     "babel-loader": "^6.2.4",
     "babel-plugin-add-module-exports": "^0.1.1",
+    "babel-plugin-lodash": "^3.2.2",
     "babel-plugin-transform-decorators-legacy": "^1.2.0",
     "babel-plugin-transform-runtime": "^6.5.2",
     "babel-plugin-webpack-loaders": "^0.4.0",
@@ -59,12 +64,11 @@
     "sinon": "^1.17.1",
     "sinon-chai": "^2.8.0",
     "style-loader": "^0.13.1",
+    "url-loader": "^0.5.7",
     "webpack": "^1.13.1",
     "webpack-copy-on-done-plugin": "0.0.9",
     "webpack-error-notification": "^0.1.6",
     "webpack-hot-middleware": "^2.10.0",
-    "babel-plugin-lodash": "^3.2.2",
-    
     "webpack-httpolyglot-server": "^0.2.0"
   },
   "dependencies": {
