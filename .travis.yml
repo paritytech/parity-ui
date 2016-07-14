@@ -11,8 +11,8 @@ rust:
 env:
   global:
     - TRAVIS_NODE_VERSION="5"
-    - BUILD="rust"
-    - BUILD="js"
+  - BUILD=rust
+  - BUILD=js
 
 cache:
   directories:
