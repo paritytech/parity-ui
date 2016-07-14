@@ -33,6 +33,6 @@ fi
 
 for PROJECT in ${PROJECTS[@]}; do
   cd $PROJECT
-  cargo test --no-default-features --features with-syntex
+  cargo test
   cd -
 done
