@@ -10,7 +10,7 @@
     "compress": "node scripts/compress",
     "genZip": "npm run build && npm run compress",
     "clean": "rimraf build/ dev/ *.zip *.crx",
-    "lint": "eslint . --ignore-path ../.gitignore",
+    "lint": "eslint . --ignore-path .gitignore",
     "test": "mocha \"chrome/**/*.spec.js\""
   },
   "author": "Ethcore <admin@ethcore.io>",

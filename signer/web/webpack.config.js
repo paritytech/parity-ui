@@ -13,7 +13,7 @@ module.exports = {
   context: path.join(__dirname, 'src'),
   entry: {
     app: './app.js',
-    index: './index.js',
+    index: './index.js'
   },
   output: {
     library: 'parity-signer',

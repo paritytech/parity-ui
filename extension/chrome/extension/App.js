@@ -1,13 +1,8 @@
-
-debugger;
 import './App.html';
 import 'reset-css/reset.css';
 import './App.css';
 import { getToken, setToken, onTokenChange } from '../utils/token';
 import app from 'parity-signer';
-
-console.log('Hello world');
-
 
 onTokenChange(initApp);
 

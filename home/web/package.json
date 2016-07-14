@@ -8,7 +8,7 @@
     "start": "webpack-dev-server -d --history-api-fallback --open --hot --inline --progress --colors --port 3010",
     "webpack": "webpack",
     "commit": "commit-wizard",
-    "lint": "eslint . --ignore-path ../.gitignore",
+    "lint": "eslint . --ignore-path ../../.gitignore",
     "test": "mocha --compilers js:babel-core/register \"client/**/*.spec.js\"",
     "prebuild": "npm run clean",
     "build": "webpack --bail --progress --colors",
