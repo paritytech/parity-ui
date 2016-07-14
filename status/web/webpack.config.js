@@ -7,7 +7,6 @@ var isProd = ENV === 'production';
 var isPerfDebug = process.env.NODE_ENV === 'perf-debug';
 var isIntegrationTests = process.env.NODE_ENV === 'tests';
 var WebpackErrorNotificationPlugin = require('webpack-error-notification');
-var LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 
 module.exports = {
   debug: !isProd,
@@ -101,7 +100,6 @@ module.exports = {
   plugins: (function () {
     var plugins = [
       new WebpackErrorNotificationPlugin(),
-      new LodashModuleReplacementPlugin(),
       // TODO [todr] paths in dapp-styles is hardcoded for meteor, we need to rewrite it here
       new webpack.NormalModuleReplacementPlugin(
         /ethereum_dapp-styles/,
