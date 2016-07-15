@@ -13,7 +13,7 @@
     "prebuild": "npm run clean",
     "build": "webpack --bail --progress --colors || true",
     "localPublish": "npm run build && npm publish",
-    "clean": "rm build -rf"
+    "clean": "rm -rf build"
   },
   "author": "Ethcore <admin@ethcore.io>",
   "license": "GPL-3.0",
