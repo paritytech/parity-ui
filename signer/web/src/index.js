@@ -6,12 +6,12 @@ initApp();
 
 function initApp () {
   const initToken = window.localStorage.getItem('sysuiToken');
-  app(initToken, tokenSetter, tokenListener, window.location.host);
+  // TODO [ToDr] Hardcoded address should replaced with options
+  const address = process.env.NODE_ENV === 'production' ? window.location.host : '127.0.0.1:8180';
+  app(initToken, tokenSetter, address);
 }
 
 function tokenSetter (token, cb) {
   window.localStorage.setItem('sysuiToken', token);
   window.location.reload();
 }
-
-function tokenListener (cb) {} // noop

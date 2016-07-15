@@ -6,6 +6,7 @@ export function getToken (cb) {
   chrome.storage.local.get('sysuiToken', obj => {
     let { sysuiToken } = obj;
     if (!sysuiToken) {
+      cb(null);
       return;
     }
     sysuiToken = sysuiToken.replace(/"/g, '');

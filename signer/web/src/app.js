@@ -28,7 +28,8 @@ export default function app (token, setToken, paritySysuiPath) {
   const ws = new Ws(paritySysuiPath);
   const web3WebSocketProvider = new Web3WebSocketProvider(ws);
   const web3 = new Web3(web3WebSocketProvider);
-  web3._extend(web3Extension(web3));
+  web3Extension(web3)
+    .map(extension => web3._extend(extension));
 
   const store = createStore(middlewares(ws, setToken), paritySysuiPath);
 

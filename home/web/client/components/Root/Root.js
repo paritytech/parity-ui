@@ -112,7 +112,7 @@ export default class Root extends Web3Component {
         onConfirm={ this.confirmTransaction }
       />
     );
-  } 
+  }
 
   renderToasts () {
     const { toasts } = this.state;
@@ -311,7 +311,6 @@ export default class Root extends Web3Component {
       this.onOpenCreateAccount();
     });
   }
-
 
   pollIsDomReady = () => {
     if (!document.body) {

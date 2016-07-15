@@ -90,7 +90,7 @@ module.exports = {
   },
   resolveLoaders: {
     root: path.join(__dirname, 'node_modules'),
-    fallback: path.join(__dirname, 'node_modules'),
+    fallback: path.join(__dirname, 'node_modules')
   },
   postcss: [
     rucksack({

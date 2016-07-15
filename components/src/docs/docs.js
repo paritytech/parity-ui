@@ -21,7 +21,7 @@ import createStore from './store';
 const http = new Web3.providers.HttpProvider(process.env.RPC_ADDRESS || '/rpc/');
 const web3 = new Web3(http);
 web3extensions(web3)
-  .map(extension => rawWeb3._extend(extension));
+  .map(extension => web3._extend(extension));
 
 const store = createStore(middlewares());
 

@@ -1,7 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-import Paper from 'material-ui/Paper';
-import IconButton from 'material-ui/IconButton';
-import RemoveIcon from 'material-ui/svg-icons/action/delete';
 import Toast from '../Toast';
 import styles from './Toasts.css';
 
