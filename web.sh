@@ -17,7 +17,7 @@ case "$1" in
     CMD="build"
     ;;
   lint | l | li | lin)
-    CMD="test"
+    CMD="lint"
     ;;
   test | t | te | tes)
     CMD="test"

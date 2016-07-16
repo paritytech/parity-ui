@@ -14,5 +14,8 @@ if [ $MODIFIED_FILES != 0 ]; then
   exit 1
 fi
 
+# Run lint
+./web.sh lint
+
 # Run tests
 ./web.sh test

@@ -14,7 +14,16 @@
     "build": "webpack --bail --progress --colors",
     "clean": "rm -rf ../src/web && rm -rf ./target"
   },
+  "author": "Ethcore <admin@ethcore.io>",
   "license": "GPL-3.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ethcore/parity-ui.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ethcore/parity-ui/issues"
+  },
+  "homepage": "https://github.com/ethcore/parity-ui#readme",
   "devDependencies": {
     "babel-core": "^6.5.2",
     "babel-eslint": "6.0.2",

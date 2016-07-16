@@ -3,6 +3,19 @@
 set -e
 set -x
 
+function modified_rs() {
+  HEAD=FETCH_HEAD
+  # HEAD=HEAD
+
+  RS_FILES_MODIFIED=`git --no-pager diff --name-only $HEAD $(git merge-base $HEAD master) | grep \.rs | wc -l`
+
+  if [ -z $RS_FILES_MODIFIED ]; then
+    return 1
+  else
+    return 0
+  fi
+}
+
 PROJECTS=(home signer status wallet)
 
 # For travis builds we check if there is a need to run this build
@@ -11,16 +24,15 @@ if [ "$TRAVIS_BRANCH" = "master" ]; then
   # Run build if:
   # 1. Any .rs file was modified
   # 2. Master branch is being built
-  RS_MODIFIED=`./scripts/modified_rs.sh`
-  SHOULD_RUN=$RS_MODIFIED || [ $TRAVIS_PULL_REQUEST = false ]
+  SHOULD_RUN=`modified_rs || [ $TRAVIS_PULL_REQUEST = false ]`
 fi
 
-if [ $SHOULD_RUN != true ]; then
+if [ -z $SHOULD_RUN ]; then
   exit 0
 fi
 
 for PROJECT in ${PROJECTS[@]}; do
   cd $PROJECT
-  cargo test --no-default-features --features with-syntex
+  cargo test
   cd -
 done
