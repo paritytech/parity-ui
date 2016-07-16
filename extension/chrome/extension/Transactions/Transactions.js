@@ -95,7 +95,7 @@ export default class Transactions {
       return;
     }
     const { version } = chrome.runtime.getManifest();
-    sendResponse({ version });
+    sendResponse(version);
   }
 
   onWsMsg (msg) {

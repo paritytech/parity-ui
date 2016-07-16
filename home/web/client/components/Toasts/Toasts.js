@@ -1,11 +1,11 @@
 import React, { Component, PropTypes } from 'react';
-import Paper from 'material-ui/Paper';
-import IconButton from 'material-ui/IconButton';
-import RemoveIcon from 'material-ui/svg-icons/action/delete';
-import Toast from '../Toast';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import Toast from 'dapps-react-components/src/Toast';
+import { removeToast, onClickToast } from 'dapps-react-components/src/actions/toastr';
 import styles from './Toasts.css';
 
-export default class Toasts extends Component {
+class Toasts extends Component {
 
   static propTypes = {
     toasts: PropTypes.arrayOf(PropTypes.shape({
@@ -13,17 +13,12 @@ export default class Toasts extends Component {
       type: PropTypes.string.isRequired,
       msg: PropTypes.string.isRequired
     })).isRequired,
-    className: PropTypes.string,
     onClickToast: PropTypes.func,
     onRemoveToast: PropTypes.func
   };
 
-  static defaultProps = {
-    onClickToast: () => {}
-  };
-
   render () {
-    const { toasts, onClickToast, onRemoveToast } = this.props;
+    const { toasts } = this.props;
     if (!toasts.length) {
       return null;
     }
@@ -36,8 +31,8 @@ export default class Toasts extends Component {
               id={ t.id }
               msg={ t.msg }
               type={ t.type }
-              onRemoveToast={ onRemoveToast }
-              onClickToast={ onClickToast }
+              onRemoveToast={ this.onRemoveToast }
+              onClickToast={ this.onClickToast }
             />
           ))
         }
@@ -45,4 +40,30 @@ export default class Toasts extends Component {
     );
   }
 
+  onClickToast () {
+    this.props.onClickToast();
+  }
+
+  onRemoveToast () {
+    this.props.onRemoveToast();
+  }
+
 }
+
+function mapStateToProps (state) {
+  return {
+    toasts: state.toastr.toasts
+  };
+}
+
+function bindDispatchToProps (dispatch) {
+  return bindActionCreators({
+    onRemoveToast: removeToast,
+    onClickToast
+  }, dispatch);
+}
+
+export default connect(
+  mapStateToProps,
+  bindDispatchToProps
+)(Toasts);

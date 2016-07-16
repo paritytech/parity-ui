@@ -1,16 +1,16 @@
 import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
 
 import AppsIcon from './logo.svg';
 import ReportProblem from 'material-ui/svg-icons/action/report-problem';
 import SettingsIcon from 'material-ui/svg-icons/action/settings';
-
-import { signerUrl } from '../../utils/signer';
-import AccountChooser from '../AccountsChooser';
+import AccountsChooser from '../AccountsChooser';
+import UnconfirmedTransactions from '../UnconfirmedTransactions';
 import AccountsDetails from '../AccountsDetails';
 import SubdomainDialog from '../SubdomainDialog';
 import CreateAccount from '../CreateAccount';
 import StatusLine from '../StatusLine';
-import DappNav from '../DappNav';
+import DappsNav from '../DappsNav';
 import ExtensionLink from '../ExtensionLink';
 import { appLink } from '../../utils/appLink';
 
@@ -20,25 +20,18 @@ export default class TopBar extends Component {
 
   static propTypes = {
     isDomReady: PropTypes.bool.isRequired,
-    isLoadingExtensionInstalled: PropTypes.bool.isRequired,
-    isExtenstionInstalled: PropTypes.bool.isRequired,
-    accounts: PropTypes.arrayOf(PropTypes.string).isRequired,
-    allAccounts: PropTypes.arrayOf(PropTypes.string).isRequired,
-    accountsNames: PropTypes.object.isRequired,
-    signerPort: PropTypes.number.isRequired,
-    unsignedTransactionsCount: PropTypes.number.isRequired,
-    onAccountsDetailsClose: PropTypes.func.isRequired,
-    onChangeAccount: PropTypes.func.isRequired
+    noAccounts: PropTypes.bool.isRequired
   };
 
   state = {
+    DappsNavOpen: false,
     createAccountOpen: false,
     accountsDetailsOpen: false
   };
 
   render () {
-    const { isDomReady, allAccounts, accountsNames, isLoadingExtensionInstalled, isExtenstionInstalled } = this.props;
-    const { accountsDetailsOpen, createAccountOpen } = this.state;
+    const { isDomReady } = this.props;
+    const { accountsDetailsOpen, createAccountOpen, DappsNavOpen } = this.state;
 
     if (!isDomReady) {
       return (
@@ -64,68 +57,38 @@ export default class TopBar extends Component {
                 <ReportProblem />
               </SubdomainDialog>
             </div>
-            <DappNav onSearchActive={ this.onSearchActive }/>
-            <div className={ this.state.searchActive ? styles.statusHidden : styles.statusVisible }>
+            <DappsNav
+              onOpen={ this.onOpenDappsNav }
+              onClose={ this.onCloseDappsNav }
+              open={ DappsNavOpen }
+            />
+            <div className={ DappsNavOpen ? styles.statusHidden : styles.statusVisible }>
               <StatusLine />
             </div>
             <div className={ styles.separator } />
             <div className={ styles.extension }>
-              <ExtensionLink
-                isLoading={ isLoadingExtensionInstalled }
-                isInstalled={ isExtenstionInstalled }
-              />
+              <ExtensionLink />
             </div>
           </div>
           { this.renderManageAccounts() }
         </div>
         <AccountsDetails
           open={ accountsDetailsOpen }
-          accounts={ allAccounts }
           onOpenCreateAccount={ this.onOpenCreateAccount }
-          accountsNames={ accountsNames }
-          onClose={ this.onAccountsDetailsClose }
+          onClose={ this.onCloseAccountsDetails }
           />
         <CreateAccount
           open={ createAccountOpen }
-          accounts={ allAccounts }
           onClose={ this.closeCreateAccount }
         />
       </div>
     );
   }
 
-  renderUnconfirmedTransactions () {
-    const { signerPort, unsignedTransactionsCount } = this.props;
-
-    if (!signerPort) {
-      return;
-    }
-    if (!unsignedTransactionsCount) {
-      return (
-        <div className={ styles.signerCount }></div>
-      );
-    }
-
-    const port = signerPort;
-    return (
-      <div className={ styles.signerCount }>
-        <a
-          target={ '_signer' }
-          href={ signerUrl(port) }
-          title={ `There are ${unsignedTransactionsCount} transactions awaiting your confirmation.` }
-        >
-          <span>
-            { unsignedTransactionsCount }
-          </span>
-        </a>
-      </div>
-    );
-  }
-
   renderManageAccounts () {
-    const { allAccounts, accountsNames, onChangeAccount } = this.props;
+    const { noAccounts } = this.props;
 
-    if (!allAccounts.length) {
+    if (noAccounts) {
       return (
         <div className={ styles.link }>
           <a onClick={ this.onOpenCreateAccount }>
@@ -137,11 +100,7 @@ export default class TopBar extends Component {
 
     return (
       <div className={ styles.nowrap }>
-        <AccountChooser
-          accounts={ allAccounts }
-          accountsNames={ accountsNames }
-          onChange={ onChangeAccount }
-        />
+        <AccountsChooser />
         <a
           className={ styles.settings }
           href='javascript:void(0)'
@@ -149,14 +108,20 @@ export default class TopBar extends Component {
           >
           <SettingsIcon />
         </a>
-        { this.renderUnconfirmedTransactions() }
+        <UnconfirmedTransactions />
       </div>
     );
   }
 
-  onSearchActive = active => {
+  onOpenDappsNav = () => {
     this.setState({
-      searchActive: active
+      DappsNavOpen: true
+    });
+  }
+
+  onCloseDappsNav = () => {
+    this.setState({
+      DappsNavOpen: false
     });
   }
 
@@ -166,11 +131,10 @@ export default class TopBar extends Component {
     });
   }
 
-  onAccountsDetailsClose = names => {
+  onCloseAccountsDetails = () => {
     this.setState({
       accountsDetailsOpen: false
     });
-    this.props.onAccountsDetailsClose(names);
   }
 
   closeCreateAccount = () => {
@@ -186,3 +150,14 @@ export default class TopBar extends Component {
   }
 
 }
+
+function mapStateToProps (state) {
+  return {
+    isDomReady: state.dom.isReady,
+    noAccounts: !state.rpc.accounts.length
+  };
+}
+
+export default connect(
+  mapStateToProps
+)(TopBar);

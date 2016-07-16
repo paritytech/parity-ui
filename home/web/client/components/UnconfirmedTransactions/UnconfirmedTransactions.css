@@ -1,0 +1,37 @@
+.signerCount {
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+  margin: 0;
+  position: relative;
+}
+
+.signerCount a {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  font-size: 11px;
+  display: flex;
+  padding: 3px;
+  text-align: center;
+  align-items: center;
+  border-radius: 50%;
+  background-color: #E73535;
+  color: #fff;
+  font-family: sans-serif;
+  font-weight: bold;
+  text-shadow: 1px 1px 2px #000;
+  text-decoration: none;
+}
+
+.signerCount a:hover {
+  text-decoration: none;
+}
+
+.signerCount a::before, .signerCount a::after {
+  display: block;
+  content: ' ';
+  flex: 1 0 auto;
+}

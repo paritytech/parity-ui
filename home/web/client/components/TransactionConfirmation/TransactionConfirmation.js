@@ -1,6 +1,6 @@
-import React from 'react';
-
-import { isEqual } from 'lodash';
+import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 import ContractIcon from 'material-ui/svg-icons/action/code';
 import FlatButton from 'material-ui/FlatButton';
@@ -8,35 +8,42 @@ import TextField from 'material-ui/TextField';
 import Dialog from 'material-ui/Dialog';
 import LinearProgress from 'material-ui/LinearProgress';
 
-import Account from '../Account';
-import Web3Component from '../Web3Component';
+import Account from 'dapps-react-components/src/Account';
 
 import styles from './TransactionConfirmation.css';
 
-export default class TransactionConfirmation extends Web3Component {
+import { confirmTransaction, rejectTransaction } from '../../actions/rpc';
 
-  // IE9 - contextTypes are not inherited
-  static contextTypes = Web3Component.contextTypes;
+class TransactionConfirmation extends Component {
+
+  static propTypes = {
+    open: PropTypes.bool.isRequired,
+    from: PropTypes.string.isRequired,
+    fromBalance: PropTypes.string.isRequired,
+    to: PropTypes.string.isRequired,
+    toBalance: PropTypes.string.isRequired,
+    value: PropTypes.string.isRequired,
+    data: PropTypes.string.isRequired,
+    chain: PropTypes.string.isRequired,
+    error: PropTypes.string.isRequired,
+    onConfirm: PropTypes.func.isRequired,
+    onReject: PropTypes.func.isRequired
+  };
 
   state = {
     sending: false,
     password: '',
-    error: false
+    error: ''
   };
 
-  componentWillReceiveProps (newProps) {
-    if (isEqual(this.props, newProps)) {
-      return;
+  componentWillReceiveProps (nextProps) {
+    if (nextProps.error !== this.props.error) {
+      this.setState({ error: nextProps.error });
     }
-
-    this.setState({
-      password: ''
-    });
   }
 
   render () {
-    const { open, transaction } = this.props;
-
+    const { open } = this.props;
     return (
       <Dialog
         title='Confirm Transaction'
@@ -44,47 +51,39 @@ export default class TransactionConfirmation extends Web3Component {
         modal
         open={ open }
         >
-        { this.renderTransaction(transaction) }
+        { this.renderTransaction() }
       </Dialog>
     );
   }
 
-  onPasswordChange (val) {
-    this.setState({
-      password: val.target.value,
-      error: false
-    });
-  }
-
-  renderTransaction (transaction) {
-    if (!transaction) {
+  renderTransaction () {
+    const { from, fromBalance, chain } = this.props;
+    if (!from) {
       return;
     }
-
-    const { from, value } = transaction.params[0];
 
     return (
       <div>
         <div className={ styles.confirmation }>
           <div className={ styles.from }>
-            <Account address={ from } />
+            <Account address={ from } balance={ fromBalance } chain={ chain } />
           </div>
           <div className={ styles.tx }>
             <span>&rArr;</span>
             <br />
-            { this.renderValue(value) }
+            { this.renderValue() }
           </div>
           <div className={ styles.to }>
             { this.renderTo() }
           </div>
         </div>
-        { this.renderPassword(from) }
+        { this.renderPassword() }
       </div>
     );
   }
 
   renderTo () {
-    const { to } = this.props.transaction.params[0];
+    const { to, toBalance, chain } = this.props;
     if (!to) {
       return (
         <div>
@@ -94,10 +93,11 @@ export default class TransactionConfirmation extends Web3Component {
       );
     }
 
-    return <Account address={ to } />;
+    return <Account address={ to } balance={ toBalance } chain={ chain } />;
   }
 
-  renderPassword (from) {
+  renderPassword () {
+    const { from } = this.props;
     const { password, error, sending } = this.state;
 
     if (sending) {
@@ -108,7 +108,7 @@ export default class TransactionConfirmation extends Web3Component {
       );
     }
 
-    const errorMsg = password ? (error ? 'Invalid password or transaction.' : null) : 'Type your password.';
+    const errorMsg = password ? (error.length ? 'Invalid password or transaction.' : null) : 'Type your password.';
 
     return (
       <TextField
@@ -118,80 +118,83 @@ export default class TransactionConfirmation extends Web3Component {
         floatingLabelText='Unlock the account'
         type='password'
         value={ this.state.password }
-        onChange={ ::this.onPasswordChange }
-        onKeyDown={ ::this.onPasswordKeyDown }
+        onChange={ this.onPasswordChange }
+        onKeyDown={ this.onPasswordKeyDown }
       />
     );
   }
 
-  renderValue (value) {
-    const val = this.context.web3.fromWei(value);
+  renderValue () {
+    const { value } = this.props;
     return (
       <div>
-        <strong style={ { display: 'block' } }>{ val }</strong>
+        <div><strong>{ value }</strong></div>
         <span>Eth</span>
       </div>
     );
-  }
-
-  onPasswordKeyDown (ev) {
-    if (ev.keyCode === 13) {
-      this.confirm();
-    }
-  }
-
-  confirm () {
-    const txRequest = this.props.transaction.params[0];
-    const pass = this.state.password;
-
-    this.setState({
-      sending: true,
-      error: false
-    });
-
-    this.context.web3.personal.signAndSendTransaction(txRequest, pass, (err, txHash) => {
-      // TODO [ToDr] 0x0 is a valid response. We should wait some time and then timeout.
-      if (err || txHash === '0x0000000000000000000000000000000000000000000000000000000000000000') {
-        console.error(err);
-        this.setState({
-          sending: false,
-          error: true
-        });
-        return;
-      }
-
-      this.setState({
-        sending: false,
-        password: ''
-      });
-      this.props.onConfirm(err, txHash);
-    });
   }
 
   renderDialogActions () {
     const { sending, password } = this.state;
     return [
       <FlatButton
-        label='Abort'
+        label='Reject'
         secondary
         disabled={ sending }
-        onTouchTap={ this.props.onAbort }
+        onTouchTap={ this.props.onReject }
       />,
       <FlatButton
         label='Confirm'
         primary
         keyboardFocused={ !!password.length }
         disabled={ !password.length || sending }
-        onTouchTap={ ::this.confirm }
+        onTouchTap={ this.confirm }
       />
     ];
   }
 
-  static propTypes = {
-    open: React.PropTypes.bool.isRequired,
-    transaction: React.PropTypes.object,
-    onAbort: React.PropTypes.func.isRequired,
-    onConfirm: React.PropTypes.func.isRequired
-  };
+  onConfirm () {
+    this.setState({
+      sending: true,
+      error: ''
+    });
+    const pass = this.state.password;
+    const { from, to, value, data } = this.props;
+    this.props.onConfirm(pass, from, to, value, data);
+  }
+
+  onPasswordKeyDown = evt => {
+    if (evt.keyCode === 13) {
+      this.confirm();
+    }
+  }
+
+  onPasswordChange = evt => {
+    this.setState({
+      password: evt.target.value,
+      error: ''
+    });
+  }
 
 }
+
+function mapStateToProps (state) {
+  const [fromBalance, toBalance] = ['0x', '0x']; // TODO get from state
+  const { open, from, to, value, data, error } = state.pendingTransaction;
+  const chain = state.rpc.network;
+  return {
+    open, from, fromBalance, to, toBalance, value, data, chain, error
+  };
+}
+
+function mapDispatchToProps (dispatch) {
+  return bindActionCreators({
+    onConfirm: confirmTransaction,
+    onReject: rejectTransaction
+  });
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(TransactionConfirmation);

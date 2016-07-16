@@ -2,7 +2,10 @@
 import localStore from 'store';
 import { syncRpcStateFromLocalStorage } from '../actions/localstorage';
 import rpcMetods from '../data/rpc.json';
-
+sdf 
+dsa f
+dsaf
+ onAddRpcResponsef 
 export default class localStorageMiddleware {
 
   toMiddleware () {

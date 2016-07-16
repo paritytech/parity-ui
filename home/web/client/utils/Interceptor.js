@@ -5,7 +5,7 @@ export default class Interceptor {
     this.interceptions = {};
   }
 
-  intercept (rpcMethodName, handler) {
+  intercept = (rpcMethodName, handler) => {
     this.interceptions[rpcMethodName] = this.interceptions[rpcMethodName] || [];
     const i = this.interceptions[rpcMethodName];
     i.push(handler);

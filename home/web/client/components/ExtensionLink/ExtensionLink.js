@@ -1,20 +1,20 @@
 import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
 import { CHROME_EXT_LINK } from '../../constants/extension';
 
-import styles from './styles.css';
+import styles from './ExtensionLink.css';
 
-export default class ExtensionLink extends Component {
+class ExtensionLink extends Component {
 
   static propTypes = {
-    isInstalled: PropTypes.bool.isRequired,
+    version: PropTypes.string.isRequired,
+    isChrome: PropTypes.bool.isRequired,
     isLoading: PropTypes.bool.isRequired
   }
 
-  isChrome = !!window.chrome && !!window.chrome.webstore;
-
   render () {
-    const { isInstalled, isLoading } = this.props;
-    if (!this.isChrome || isInstalled || isLoading) {
+    const { version, isLoading, isChrome } = this.props;
+    if (!isChrome || version.length || isLoading) {
       return null;
     }
 
@@ -29,3 +29,16 @@ export default class ExtensionLink extends Component {
   }
 
 }
+
+function mapStateToProps (state) {
+  const { version, isChrome, isLoading } = state.extension;
+  return {
+    version,
+    isChrome,
+    isLoading
+  };
+}
+
+export default connect(
+  mapStateToProps
+)(ExtensionLink);

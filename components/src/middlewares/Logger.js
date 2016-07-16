@@ -4,9 +4,10 @@ export default class LoggerMiddleware {
 
   toMiddleware () {
     return store => next => action => {
-      if (store.getState().logger.logging) {
-        const msg = [`[${this.now()}] action:`, `${action.type};`, 'payload: ', action.payload];
-        // const logMethod = action.type.indexOf('error') > -1 ? 'error' : 'log';
+      const msg = [`[${this.now()}] action:`, `${action.type};`, 'payload: ', action.payload];
+      if (action.type.match('error')) {
+        logger.warn(...msg); // todo [adgo] - implement error logs
+      } else {
         logger.log(...msg); // todo [adgo] - implement error logs
       }
       return next(action);

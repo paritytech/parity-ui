@@ -13,7 +13,12 @@ export default class Toast extends Component {
     id: PropTypes.number.isRequired,
     type: PropTypes.string.isRequired,
     msg: PropTypes.string.isRequired,
+    onClickToast: PropTypes.func,
     onRemoveToast: PropTypes.func
+  }
+
+  static defaultProps = {
+    onClickToast: () => {}
   }
 
   render () {
@@ -41,9 +46,15 @@ export default class Toast extends Component {
     );
   }
 
-  onRemoveToast = () => {
-    const { id } = this.props;
-    this.props.onRemoveToast(id);
+  onRemoveToast = evt => {
+    evt.stopPropagation();
+    const { id, onRemoveToast } = this.props;
+    onRemoveToast(id);
+  }
+
+  onClickToast = evt => {
+    const { id, onClickToast } = this.props;
+    onClickToast(id);
   }
 
 }

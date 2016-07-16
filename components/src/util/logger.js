@@ -3,7 +3,7 @@ const isLogging = process.env.LOGGING;
 export default logger();
 
 function logger () {
-  return isLogging ? prodLogger() : devLogger();
+  return isLogging ? devLogger() : prodLogger();
 }
 
 function prodLogger () {

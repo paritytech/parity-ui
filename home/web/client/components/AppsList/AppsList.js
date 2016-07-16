@@ -1,12 +1,16 @@
-import React from 'react';
+// used by HOME
+import React, { Component, PropTypes } from 'react';
 
 import { GridList, GridTile } from 'material-ui/GridList';
-
 import { appLink } from '../../utils/appLink';
 
 import styles from './AppsList.css';
 
-export default class AppsList extends React.Component {
+export default class AppsList extends Component {
+
+  static propTypes = {
+    apps: PropTypes.array.isRequired
+  };
 
   render () {
     return (
@@ -55,9 +59,5 @@ export default class AppsList extends React.Component {
       </span>
     );
   }
-
-  static propTypes = {
-    apps: React.PropTypes.array.isRequired
-  };
 
 }

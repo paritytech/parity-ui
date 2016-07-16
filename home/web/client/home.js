@@ -7,7 +7,7 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 const muiTheme = getMuiTheme({});
 
-import Web3Provider from './components/Web3Provider';
+import Web3Provider from 'dapps-react-components/src/Web3Provider';
 import Home from './components/Home';
 
 if (!global.web3) {
