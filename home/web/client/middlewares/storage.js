@@ -1,6 +1,5 @@
 import { isEqual } from 'lodash';
 import { updateAccountsNames } from '../actions/rpc';
-import { fixAccountNames } from '../utils/accounts';
 import Storage from '../components/Storage';
 
 export default class StorageMiddleware {
@@ -55,7 +54,7 @@ export default class StorageMiddleware {
       }
       store.dispatch(
         updateAccountsNames(
-          fixAccountNames(accountsNames, rpc.accounts)
+          this.fixAccountNames(accountsNames, rpc.accounts)
         )
       );
     });
@@ -68,6 +67,14 @@ export default class StorageMiddleware {
       }
       this.storage.saveNotFirstRun();
     });
+  }
+
+  fixAccountNames (names, accounts) {
+    const copy = Object.assign({}, names);
+    return accounts.reduce((memo, acc, idx) => {
+      memo[acc] = names[acc] || `Account ${idx + 1}`;
+      return memo;
+    }, copy);
   }
 
 }
