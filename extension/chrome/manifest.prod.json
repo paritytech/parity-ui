@@ -7,7 +7,7 @@
   "author": "Ethcore Team",
   "browser_action": {
     "default_title": "Parity Signer UI",
-    "default_popup": "App.html"
+    "default_popup": "app.html"
   },
   "externally_connectable": {
     "matches": [
