@@ -19,15 +19,16 @@
     "build": "webpack --bail --progress --colors",
     "clean": "rm -rf ../src/web && rm -rf target"
   },
+  "author": "Ethcore <admin@ethcore.io>",
   "license": "GPL-3.0",
-  "author": "Ethcore dev team",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ethcore/eth-node-status-page.git"
+    "url": "git+https://github.com/ethcore/parity-ui.git"
   },
   "bugs": {
-    "url": "https://github.com/ethcore/eth-node-status-page/issues"
+    "url": "https://github.com/ethcore/parity-ui/issues"
   },
+  "homepage": "https://github.com/ethcore/parity-ui#readme",
   "devDependencies": {
     "babel-cli": "^6.8.0",
     "babel-core": "^6.5.2",

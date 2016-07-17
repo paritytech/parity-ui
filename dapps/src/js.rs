@@ -63,7 +63,7 @@ pub fn build(path: &str) {
 		.arg("--no-progress")
 		.current_dir(path)
 		.status()
-		.unwrap_or_else(|e| die("Installing dependencies", e));
+		.unwrap_or_else(|e| die("Installing node.js dependencies with npm", e));
 	assert!(child.success(), "There was an error installing dependencies.");
 
 	let child = platform::handle_fd(&mut Command::new(platform::NPM_CMD))

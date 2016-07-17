@@ -15,7 +15,6 @@ import Web3 from 'web3'; // must b after ./test otherwise it breaks
 import web3extensions from 'dapps-react-components/src/util/web3.extensions';
 import Web3Provider from 'dapps-react-components/src/Web3Provider';
 import Root from './components/Root';
-import TopBar from './components/TopBar';
 import Interceptor from './utils/Interceptor';
 import readInjectOptions from './utils/readInjectOptions';
 

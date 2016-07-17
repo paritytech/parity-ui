@@ -13,21 +13,21 @@
     "prebuild": "npm run clean",
     "build": "webpack --bail --progress --colors || true",
     "localPublish": "npm run build && npm publish",
-    "clean": "rm build -rf"
+    "clean": "rm -rf build"
   },
+  "author": "Ethcore <admin@ethcore.io>",
+  "license": "GPL-3.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ethcore/dapps-react-ui.git"
+    "url": "git+https://github.com/ethcore/parity-ui.git"
   },
+  "bugs": {
+    "url": "https://github.com/ethcore/parity-ui/issues"
+  },
+  "homepage": "https://github.com/ethcore/parity-ui#readme",
   "keywords": [
     "dapps"
   ],
-  "author": "ethcore team <admin@ethcore.io>",
-  "license": "GPL-3.0",
-  "bugs": {
-    "url": "https://github.com/ethcore/dapps-react-ui/issues"
-  },
-  "homepage": "https://github.com/ethcore/dapps-react-ui#readme",
   "semistandard": {
     "parser": "babel-eslint"
   },
