@@ -41,10 +41,7 @@ export default class AccountsDetails extends Component {
   }
 
   componentDidMount () {
-    console.log('componentDidMount: state before: ', this.state)
-    console.log('componentDidMount: props: ', this.props.accountsNames)
     this.copyToState(this.props.accountsNames);
-    console.log('componentDidMount: state after: ', this.state)
   }
 
   copyToState (accountsNames) {

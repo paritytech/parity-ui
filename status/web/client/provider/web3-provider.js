@@ -116,7 +116,7 @@ export class Web3Provider extends Web3Base {
 
   filterChanged (actions) {
     return actions.filter(action => {
-      const val = this.state[this.actionToStatePtop(action)];
+      const val = this.state[this.actionToStateProp(action)];
 
       if (isBigNumber(val)) {
         return !val.equals(action.payload);
@@ -132,12 +132,12 @@ export class Web3Provider extends Web3Base {
 
   updateState (actions) {
     return actions.map(action => {
-      this.state[this.actionToStatePtop(action)] = action.payload;
+      this.state[this.actionToStateProp(action)] = action.payload;
       return action;
     });
   }
 
-  actionToStatePtop (action) {
+  actionToStateProp (action) {
     return action.type.split(' ')[1];
   }
 
