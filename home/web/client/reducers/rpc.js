@@ -105,6 +105,14 @@ export default handleActions({
     };
   },
 
+  'update signerPort' (state, action) {
+    return {
+      ...state,
+      ...onRpcSuccess(),
+      signerPort: action.payload
+    };
+  },
+
   'update createdAccount' (state, action) {
     return {
       ...state,

@@ -19,7 +19,7 @@ export default class DappsMiddleware {
         return;
       }
       next(action);
-    }
+    };
   }
 
   onInitApp (store) {
@@ -30,7 +30,7 @@ export default class DappsMiddleware {
         }
         store.dispatch(actions.updateDapps(dapps));
       })
-      .catch(err =>{
+      .catch(err => {
         logger.warn('error fetcing dapps ', err);
         store.dispatch(actions.error(err));
       });

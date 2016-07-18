@@ -35,9 +35,9 @@ export default class TopBar extends Component {
 
     if (!isDomReady) {
       return (
-      <div className={ styles.topbar }>
+        <div className={ styles.topbar }>
           <h4 className={ styles.header }>Loading...</h4>
-      </div>
+        </div>
       );
     }
 

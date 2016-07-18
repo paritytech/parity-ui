@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-import BigNumber from 'bignumber.js';
 
 import logger from '../util/logger';
 import Account from '../Account';

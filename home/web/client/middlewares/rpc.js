@@ -1,5 +1,5 @@
 import logger from 'dapps-react-components/src/util/logger';
-import { updateActiveAccount, errorCreatedAccount, updateCreatedAccount } from '../actions/rpc';
+import * as actions from '../actions/rpc';
 
 export default class RpcMiddleware {
 
@@ -21,8 +21,28 @@ export default class RpcMiddleware {
         return;
       }
 
+      if (action.type === 'start signTransaction') {
+        const { txRequest, password } = action.payload;
+        // swallow async action, dispatch sequence from middleware method
+        this.onStartSignTransaction(store, txRequest, password);
+        next(action);
+        return;
+      }
+
+      if (action.type === 'success signTransaction') {
+        this.onSuccessSignTransaction(store, action.payload);
+        next(action);
+        return;
+      }
+
+      if (action.type === 'reject transaction') {
+        this.onRejectTransaction(store);
+        next(action);
+        return;
+      }
+
       next(action);
-    }
+    };
   }
 
   // if there are no accounts, set first account as active
@@ -33,17 +53,40 @@ export default class RpcMiddleware {
     if (!nextAccounts.length || accounts.length) {
       return;
     }
-    store.dispatch(updateActiveAccount(nextAccounts[0]));
+    store.dispatch(actions.updateActiveAccount(nextAccounts[0]));
   }
 
   onCreateAccount (store, password) {
     this.web3.personal.newAccount(password, (err, address) => {
       if (err) {
-        store.dispatch(errorCreateAccount('error creating account ' + err.message));
+        store.dispatch(actions.errorCreatedAccount('error creating account ' + err.message));
         return;
       }
-      store.dispatch(updateCreatedAccount(address));
+      store.dispatch(actions.updateCreatedAccount(address));
     });
+  }
+
+  onStartSignTransaction (store, txRequest, password) {
+    this.web3.personal.signAndSendTransaction(txRequest, password, (err, txHash) => {
+      // TODO [ToDr] 0x0 is a valid response. We should wait some time and then timeout.
+      if (err || txHash === '0x0000000000000000000000000000000000000000000000000000000000000000') {
+        logger.warn('[MIDDLEWARE RPC] err signing transaction', txRequest);
+        store.dispatch(actions.errorSignTransaction('Invalid password or transaction.'));
+        return;
+      }
+
+      store.dispatch(actions.successSignTransaction(txHash));
+    });
+  }
+
+  onSuccessSignTransaction (store, txHash) {
+    const { callback } = store.getState().pendingTransaction;
+    callback(null, txHash);
+  }
+
+  onRejectTransaction (store) {
+    const { callback } = store.getState().pendingTransaction;
+    callback({ message: 'aborted' });
   }
 
 }

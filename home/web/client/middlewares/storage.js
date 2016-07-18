@@ -10,7 +10,6 @@ export default class StorageMiddleware {
 
   toMiddleware () {
     return store => next => action => {
-
       if (action.type === 'init app') {
         this.onInitApp(store);
         next(action);

@@ -107,7 +107,7 @@ export default class RpcProvider {
       { method: this.web3.eth.getAccounts, actionMaker: actions.updateAccounts },
       { method: this.web3.eth.getSyncing, actionMaker: actions.updateSyncing },
       { method: this.web3.eth.getBlockNumber, actionMaker: actions.updateLatestBlock },
-      { method: this.web3.net.getPeerCount, actionMaker: actions. updatePeers }
+      { method: this.web3.net.getPeerCount, actionMaker: actions.updatePeers }
     ];
     if (this.store.getState().rpc.signerPort) {
       arr.push({ method: this.web3.ethcore.unsignedTransactionsCount, actionMaker: actions.updateUnsignedTransactionsCount });
@@ -116,56 +116,3 @@ export default class RpcProvider {
   }
 
 }
-
-/*
-confirm transaction
-    this.web3.personal.signAndSendTransaction(txRequest, pass, (err, txHash) => {
-      // TODO [ToDr] 0x0 is a valid response. We should wait some time and then timeout.
-      if (err || txHash === '0x0000000000000000000000000000000000000000000000000000000000000000') {
-        logger.error(err);
-        this.setState({
-          sending: false,
-          error: err.message || err
-        });
-        return;
-      }
-
-      this.setState({
-        sending: false,
-        password: ''
-      });
-      this.props.onConfirm(err, txHash);
-    });
-
-*/
-
-/*
-migrated from root
-
-  clearTx = () => {
-    this.setState({
-      sendingTransaction: false,
-      transaction: null,
-      callbackFunc: null
-    });
-  }
-
-  abortTransaction = () => {
-    this.state.callbackFunc({ message: 'aborted' });
-    this.clearTx();
-  }
-
-  confirmTransaction = (err, result) => {
-    this.state.callbackFunc(err, result);
-    this.clearTx();
-  }
-
-  toTransactionCb (id, cb) {
-    return (err, result) => {
-      cb(err, {
-        jsonrpc: '2.0',
-        id, result
-      });
-    };
-  }
-*/

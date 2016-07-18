@@ -17,15 +17,13 @@ export default class Toast extends Component {
     onRemoveToast: PropTypes.func
   }
 
-  static defaultProps = {
-    onClickToast: () => {}
-  }
-
   render () {
-    const { msg, type, className } = this.props;
+    const { msg, type, className, onClickToast } = this.props;
+    const clickableClass = onClickToast ? styles.clickable : '';
     return (
       <Paper
-        className={ `${styles.container} ${styles[type]} ${className}` }
+        onClick={ this.onClickToast }
+        className={ `${styles.container} ${styles[type]} ${className} ${clickableClass}` }
         zDepth={ 2 }
         >
         { this.renderActions() }
@@ -54,6 +52,9 @@ export default class Toast extends Component {
 
   onClickToast = evt => {
     const { id, onClickToast } = this.props;
+    if (!onClickToast) {
+      return;
+    }
     onClickToast(id);
   }
 

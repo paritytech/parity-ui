@@ -1,4 +1,5 @@
 import { addToast } from 'dapps-react-components/src/actions/toastr';
+import { updatePendingTransaction } from '../actions/rpc';
 
 export default class InterceptorProvider {
 
@@ -33,17 +34,16 @@ export default class InterceptorProvider {
       throw new Error('Synchronous sendTransaction is not supported.');
     }
 
-    // todo
-    console.log('payload', payload);
-    // this.setState({
-    //   sendingTransaction: true,
-    //   transaction: payload,
-    //   callbackFunc: this.toTransactionCb(payload.id, cb)
-    // });
+    this.store.dispatch(
+      updatePendingTransaction({
+        transaction: payload,
+        callback: this.toTransactionCb(payload.id, cb)
+      })
+    );
   }
 
   onEthAccounts = (payload, cb, next) => {
-    const { options, rpc } = this.store.getState();;
+    const { options, rpc } = this.store.getState();
     if (options.allAccounts) {
       next();
       return;
@@ -70,6 +70,15 @@ export default class InterceptorProvider {
         msg: 'New pending transaction'
       })
     );
+  }
+
+  toTransactionCb (id, cb) {
+    return (err, result) => {
+      cb(err, {
+        jsonrpc: '2.0',
+        id, result
+      });
+    };
   }
 
   stop () {

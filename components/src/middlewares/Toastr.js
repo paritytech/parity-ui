@@ -15,6 +15,11 @@ export default class ToastrMiddleware {
         this.clearTimeoutFor(payload);
       }
 
+      if (type === 'add toast') {
+        this.onAddToast(store, next, action);
+        return;
+      }
+
       // pass along action
       next(action);
 
@@ -28,16 +33,23 @@ export default class ToastrMiddleware {
   }
 
   toast (store, next, action) {
-    const { toastNo } = store.getState().toastr;
+    const { id } = store.getState().toastr;
     const { msg, type } = action.meta.toastr;
-    next(addToast({ type, msg, toastNo }));
-    this.setTimeoutFor(toastNo, next);
+    next(addToast({ type, msg, id }));
+    this.setTimeoutFor(id, next);
   }
 
-  setTimeoutFor (toastNo, next) {
-    this._timeouts[String(toastNo)] = setTimeout(() => {
-      this.clearTimeoutFor(toastNo);
-      next(removeToast(toastNo));
+  onAddToast (store, next, action) {
+    const { id } = store.getState().toastr;
+    action.payload.id = id;
+    next(action);
+    this.setTimeoutFor(id, next);
+  }
+
+  setTimeoutFor (id, next) {
+    this._timeouts[String(id)] = setTimeout(() => {
+      this.clearTimeoutFor(id);
+      next(removeToast(id));
     }, this._time);
   }
 
@@ -45,9 +57,9 @@ export default class ToastrMiddleware {
     return !!(action.meta && action.meta.toastr);
   }
 
-  clearTimeoutFor (toastNo) {
-    clearTimeout(this._timeouts[String(toastNo)]);
-    delete this._timeouts[String(toastNo)];
+  clearTimeoutFor (id) {
+    clearTimeout(this._timeouts[String(id)]);
+    delete this._timeouts[String(id)];
   }
 
 }

@@ -24,7 +24,8 @@ class CreateAccount extends Component {
     createAccount: PropTypes.func.isRequired,
     createdAccount: PropTypes.string.isRequired,
     createdAccountError: PropTypes.string.isRequired,
-    onClose: PropTypes.func.isRequired
+    onClose: PropTypes.func.isRequired,
+    resetCreateAccount: PropTypes.func.isRequired
   };
 
   componentWillReceiveProps (nextProps) {

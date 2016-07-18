@@ -2,45 +2,50 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
+import { isEqual } from 'lodash';
 import ContractIcon from 'material-ui/svg-icons/action/code';
 import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
 import Dialog from 'material-ui/Dialog';
 import LinearProgress from 'material-ui/LinearProgress';
 
-import Account from 'dapps-react-components/src/Account';
+import AccountWeb3 from 'dapps-react-components/src/AccountWeb3';
 
 import styles from './TransactionConfirmation.css';
 
-import { confirmTransaction, rejectTransaction } from '../../actions/rpc';
+import { startSignTransaction, rejectTransaction } from '../../actions/rpc';
 
 class TransactionConfirmation extends Component {
 
+  static contextTypes = {
+    web3: PropTypes.object.isRequired
+  };
+
   static propTypes = {
+    isSending: PropTypes.bool.isRequired,
     open: PropTypes.bool.isRequired,
-    from: PropTypes.string.isRequired,
-    fromBalance: PropTypes.string.isRequired,
-    to: PropTypes.string.isRequired,
-    toBalance: PropTypes.string.isRequired,
-    value: PropTypes.string.isRequired,
-    data: PropTypes.string.isRequired,
-    chain: PropTypes.string.isRequired,
     error: PropTypes.string.isRequired,
+    transaction: PropTypes.object.isRequired,
+    chain: PropTypes.string.isRequired,
     onConfirm: PropTypes.func.isRequired,
     onReject: PropTypes.func.isRequired
   };
 
+  componentWillReceiveProps (newProps) {
+    if (isEqual(this.props, newProps)) {
+      return;
+    }
+
+    this.setState({
+      password: '',
+      error: newProps.error
+    });
+  }
+
   state = {
-    sending: false,
     password: '',
     error: ''
   };
-
-  componentWillReceiveProps (nextProps) {
-    if (nextProps.error !== this.props.error) {
-      this.setState({ error: nextProps.error });
-    }
-  }
 
   render () {
     const { open } = this.props;
@@ -57,16 +62,17 @@ class TransactionConfirmation extends Component {
   }
 
   renderTransaction () {
-    const { from, fromBalance, chain } = this.props;
-    if (!from) {
+    const { open, chain } = this.props;
+    if (!open) {
       return;
     }
+    const { from } = this.props.transaction.params[0];
 
     return (
       <div>
         <div className={ styles.confirmation }>
           <div className={ styles.from }>
-            <Account address={ from } balance={ fromBalance } chain={ chain } />
+            <AccountWeb3 address={ from } chain={ chain } />
           </div>
           <div className={ styles.tx }>
             <span>&rArr;</span>
@@ -83,7 +89,8 @@ class TransactionConfirmation extends Component {
   }
 
   renderTo () {
-    const { to, toBalance, chain } = this.props;
+    const { chain } = this.props;
+    const { to } = this.props.transaction.params[0];
     if (!to) {
       return (
         <div>
@@ -93,14 +100,15 @@ class TransactionConfirmation extends Component {
       );
     }
 
-    return <Account address={ to } balance={ toBalance } chain={ chain } />;
+    return <AccountWeb3 address={ to } chain={ chain } />;
   }
 
   renderPassword () {
-    const { from } = this.props;
-    const { password, error, sending } = this.state;
+    const { password, error } = this.state;
+    const { isSending } = this.props;
+    const { from } = this.props.transaction.params[0];
 
-    if (sending) {
+    if (isSending) {
       return (
         <div className={ styles.progress }>
           <LinearProgress mode='indeterminate' />
@@ -108,16 +116,16 @@ class TransactionConfirmation extends Component {
       );
     }
 
-    const errorMsg = password ? (error.length ? 'Invalid password or transaction.' : null) : 'Type your password.';
+    const errorMsg = error.length ? error : null;
 
     return (
       <TextField
         fullWidth
         hintText={ `Password for ${from}` }
         errorText={ errorMsg }
-        floatingLabelText='Unlock the account'
+        floatingLabelText='Type your password'
         type='password'
-        value={ this.state.password }
+        value={ password }
         onChange={ this.onPasswordChange }
         onKeyDown={ this.onPasswordKeyDown }
       />
@@ -125,7 +133,7 @@ class TransactionConfirmation extends Component {
   }
 
   renderValue () {
-    const { value } = this.props;
+    const { value } = this.props.transaction.params[0];
     return (
       <div>
         <div><strong>{ value }</strong></div>
@@ -135,37 +143,34 @@ class TransactionConfirmation extends Component {
   }
 
   renderDialogActions () {
-    const { sending, password } = this.state;
+    const { password } = this.state;
+    const { isSending } = this.props;
     return [
       <FlatButton
         label='Reject'
         secondary
-        disabled={ sending }
+        disabled={ isSending }
         onTouchTap={ this.props.onReject }
       />,
       <FlatButton
         label='Confirm'
         primary
         keyboardFocused={ !!password.length }
-        disabled={ !password.length || sending }
-        onTouchTap={ this.confirm }
+        disabled={ !password.length || isSending }
+        onTouchTap={ this.onConfirm }
       />
     ];
   }
 
-  onConfirm () {
-    this.setState({
-      sending: true,
-      error: ''
-    });
-    const pass = this.state.password;
-    const { from, to, value, data } = this.props;
-    this.props.onConfirm(pass, from, to, value, data);
+  onConfirm = () => {
+    const txRequest = this.props.transaction.params[0];
+    const { password } = this.state;
+    this.props.onConfirm({ txRequest, password });
   }
 
   onPasswordKeyDown = evt => {
     if (evt.keyCode === 13) {
-      this.confirm();
+      this.onConfirm();
     }
   }
 
@@ -179,19 +184,18 @@ class TransactionConfirmation extends Component {
 }
 
 function mapStateToProps (state) {
-  const [fromBalance, toBalance] = ['0x', '0x']; // TODO get from state
-  const { open, from, to, value, data, error } = state.pendingTransaction;
+  const { open, isSending, error, transaction } = state.pendingTransaction;
   const chain = state.rpc.network;
   return {
-    open, from, fromBalance, to, toBalance, value, data, chain, error
+    open, isSending, error, transaction, chain
   };
 }
 
 function mapDispatchToProps (dispatch) {
   return bindActionCreators({
-    onConfirm: confirmTransaction,
+    onConfirm: startSignTransaction,
     onReject: rejectTransaction
-  });
+  }, dispatch);
 }
 
 export default connect(

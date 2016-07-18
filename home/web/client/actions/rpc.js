@@ -5,8 +5,13 @@ export const updateActiveAccount = createAction('update activeAccount');
 export const updateAccountsNames = createAction('update accountsNames');
 export const createAccount = createAction('create account');
 export const resetCreateAccount = createAction('reset createAccount');
-export const confirmTransaction = createAction('confirm transaction');
+
+export const updatePendingTransaction = createAction('update pendingTransaction');
 export const rejectTransaction = createAction('reject transaction');
+export const startSignTransaction = createAction('start signTransaction');
+export const successSignTransaction = createAction('success signTransaction');
+export const errorSignTransaction = createAction('error signTransaction');
+
 export const errorCreatedAccount = createAction('error transaction');
 export const updateCreatedAccount = createAction('update createdAccount');
 

@@ -2,7 +2,8 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Toast from 'dapps-react-components/src/Toast';
-import { removeToast, onClickToast } from 'dapps-react-components/src/actions/toastr';
+import { removeToast } from 'dapps-react-components/src/actions/toastr';
+import { openSigner } from '../../actions/signer';
 import styles from './Toasts.css';
 
 class Toasts extends Component {
@@ -40,12 +41,14 @@ class Toasts extends Component {
     );
   }
 
-  onClickToast () {
+  onClickToast = id => {
+    console.log('onClickToast', id);
     this.props.onClickToast();
+    this.props.onRemoveToast(id);
   }
 
-  onRemoveToast () {
-    this.props.onRemoveToast();
+  onRemoveToast = id => {
+    this.props.onRemoveToast(id);
   }
 
 }
@@ -59,7 +62,7 @@ function mapStateToProps (state) {
 function bindDispatchToProps (dispatch) {
   return bindActionCreators({
     onRemoveToast: removeToast,
-    onClickToast
+    onClickToast: openSigner
   }, dispatch);
 }
 
