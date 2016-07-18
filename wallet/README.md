@@ -5,7 +5,8 @@ To build a new version of wallet:
 ```bash
 $ pwd
 /home/.../parity-ui/wallet
-$ git clone https://github.com/ethereum/meteor-dapp-wallet.git
+$ git clone https://github.com/ethcore/meteor-dapp-wallet.git
+# Make sure you have meteor-build-client (see below)
 $ ./build.sh
 ```
 
