@@ -20,7 +20,7 @@ export default class InterceptorProvider {
   onEthSendTransaction = (payload, cb, next) => {
     const state = this.store.getState();
     const { signerPort } = state.rpc;
-    const { isInstalled } = state.extension;
+    const isInstalled = state.extension.version.length;
     // Don't intercept sendTransaction if we are running with signer module.
     if (signerPort) {
       next();
