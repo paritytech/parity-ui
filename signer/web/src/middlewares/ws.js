@@ -41,7 +41,7 @@ export default class LocalstorageMiddleware {
 
       // wrong password
       if (res === false) {
-        const errMsg = 'Failed to confirm transaction. make sure the password is correct';
+        const errMsg = 'Failed to confirm transaction. Make sure the password is correct';
         store.dispatch(errorTransaction(errMsg));
         return next(action);
       }

@@ -4,6 +4,7 @@
   "description": "reusable app for Parity's system UIs",
   "main": "./src/app.js",
   "scripts": {
+    "postinstall": "npm link ../../components",
     "start": "webpack-dev-server -d --history-api-fallback --open --hot --inline --progress --colors --port 3001",
     "startTest": "NODE_ENV=tests npm start",
     "webpack": "webpack --progress --colors",
