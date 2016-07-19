@@ -23,7 +23,6 @@ export default class RpcMiddleware {
 
       if (action.type === 'start signTransaction') {
         const { txRequest, password } = action.payload;
-        // swallow async action, dispatch sequence from middleware method
         this.onStartSignTransaction(store, txRequest, password);
         next(action);
         return;

@@ -132,7 +132,8 @@ class TransactionConfirmation extends Component {
   }
 
   renderValue () {
-    const { value } = this.props.transaction.params[0];
+    let { value } = this.props.transaction.params[0];
+    value = this.context.web3.fromWei(value);
     return (
       <div>
         <div><strong>{ value }</strong></div>

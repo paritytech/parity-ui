@@ -4,11 +4,11 @@ export default class LoggerMiddleware {
 
   toMiddleware () {
     return store => next => action => {
-      const msg = [`[${this.now()}] action:`, `${action.type};`, 'payload: ', action.payload];
+      const msg = [`[${this.now()}] action:`, `${action.type};`, 'payload:', action.payload];
       if (action.type.match('error')) {
-        logger.warn(...msg); // todo [adgo] - implement error logs
+        logger.warn(...msg);
       } else {
-        logger.log(...msg); // todo [adgo] - implement error logs
+        logger.log(...msg);
       }
       return next(action);
     };
@@ -16,10 +16,14 @@ export default class LoggerMiddleware {
 
   now () {
     const date = new Date(Date.now());
-    const seconds = date.getSeconds();
-    const minutes = date.getMinutes();
-    const hour = date.getHours();
+    const seconds = this.pad(date.getSeconds());
+    const minutes = this.pad(date.getMinutes());
+    const hour = this.pad(date.getHours());
     return `${hour}::${minutes}::${seconds}`;
+  }
+
+  pad (n) {
+    return n < 10 ? '0' + n : n;
   }
 
 }

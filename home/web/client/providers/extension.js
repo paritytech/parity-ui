@@ -18,8 +18,8 @@ export default class ExtensionProvider {
     }
     fetchExtensionVersion(version => {
       version = this.formatVersion(version);
-      this.store.dispatch(updateExtensionVersion(version));
-      if (version.length) {
+      if (version) {
+        this.store.dispatch(updateExtensionVersion(version));
         return;
       }
       setTimeout(this.pollVersion, 10000);
@@ -32,7 +32,7 @@ export default class ExtensionProvider {
     try {
       return version.version;
     } catch (err) {
-      return version || '';
+      return version;
     }
   }
 

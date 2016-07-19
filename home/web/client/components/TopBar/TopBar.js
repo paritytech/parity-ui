@@ -24,14 +24,14 @@ export default class TopBar extends Component {
   };
 
   state = {
-    DappsNavOpen: false,
+    dappsNavOpen: false,
     createAccountOpen: false,
     accountsDetailsOpen: false
   };
 
   render () {
     const { isDomReady } = this.props;
-    const { accountsDetailsOpen, createAccountOpen, DappsNavOpen } = this.state;
+    const { accountsDetailsOpen, createAccountOpen, dappsNavOpen } = this.state;
 
     if (!isDomReady) {
       return (
@@ -60,9 +60,9 @@ export default class TopBar extends Component {
             <DappsNav
               onOpen={ this.onOpenDappsNav }
               onClose={ this.onCloseDappsNav }
-              open={ DappsNavOpen }
+              open={ dappsNavOpen }
             />
-            <div className={ DappsNavOpen ? styles.statusHidden : styles.statusVisible }>
+            <div className={ dappsNavOpen ? styles.statusHidden : styles.statusVisible }>
               <StatusLine />
             </div>
             <div className={ styles.separator } />
@@ -115,13 +115,13 @@ export default class TopBar extends Component {
 
   onOpenDappsNav = () => {
     this.setState({
-      DappsNavOpen: true
+      dappsNavOpen: true
     });
   }
 
   onCloseDappsNav = () => {
     this.setState({
-      DappsNavOpen: false
+      dappsNavOpen: false
     });
   }
 

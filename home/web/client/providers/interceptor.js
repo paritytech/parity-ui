@@ -81,8 +81,4 @@ export default class InterceptorProvider {
     };
   }
 
-  stop () {
-    this.listeners.map(off => off());
-  }
-
 }

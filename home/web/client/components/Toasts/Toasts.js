@@ -42,7 +42,6 @@ class Toasts extends Component {
   }
 
   onClickToast = id => {
-    console.log('onClickToast', id);
     this.props.onClickToast();
     this.props.onRemoveToast(id);
   }

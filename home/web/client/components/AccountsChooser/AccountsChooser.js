@@ -12,10 +12,6 @@ import styles from './AccountChooser.css';
 
 class AccountChooser extends Component {
 
-  static contextTypes = {
-    web3: PropTypes.object.isRequired
-  };
-
   static propTypes = {
     activeAccount: PropTypes.string.isRequired,
     accounts: PropTypes.arrayOf(PropTypes.string).isRequired,
