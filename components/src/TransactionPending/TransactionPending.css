@@ -1,5 +1,5 @@
 .container {
-  padding: 25px 8px;
+  padding: 25px 0 15px;
 }
 
 .transactionDetails {
@@ -10,7 +10,7 @@
 .mainContainer > * {
   display: inline-block;
   vertical-align: middle;
-  min-height: 110px;
+  min-height: 120px;
 }
 
 .iconsContainer {

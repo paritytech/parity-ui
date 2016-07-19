@@ -1,15 +1,15 @@
 .container {
-  padding: 25px 8px;
+  padding: 25px 0 15px;
 }
 
 .mainContainer > * {
   display: inline-block;
   vertical-align: middle;
-  min-height: 110px;
+  min-height: 120px;
 }
 
 .statusContainer {
-  width: 300px;
+  width: 280px;
 }
 
 .transactionDetails {

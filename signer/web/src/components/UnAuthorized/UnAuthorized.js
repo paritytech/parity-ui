@@ -36,8 +36,8 @@ export default class UnAuthorized extends Component {
     return (
       <div className={ styles.container }>
         <h1>Not Authorized</h1>
-        <p>Connections used by Signer UI are secured. You need to authorize this app.</p>
-        <p>Please make sure parity is running and run <code className={ styles.code }>$ parity signer new-token</code> to generate authorization token and paste the token below.</p>
+        <p>Connections used by Trusted Signer are secured. You need to authorize this app.</p>
+        <p>Please make sure Parity is running and run <code className={ styles.code }>$ parity signer new-token</code> to generate authorization token and paste it below.</p>
         <TextField
           name='token'
           type='text'

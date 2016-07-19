@@ -16,7 +16,7 @@ export default class Header extends Component {
     isWsConnected: PropTypes.bool.isRequired
   }
 
-  title = isExtension() ? 'Parity Signer UI' : 'Parity Signer UI (DAPP)';
+  title = 'Parity Trusted Signer';
   styles = {
     backgroundColor: isExtension() ? '#6691C2' : '#FF5722'
   };
