@@ -16,11 +16,11 @@ export default class Transactions {
     this.pendingTransactions = [];
     chrome.storage.onChanged.addListener(this.onSysuiTokenChange);
     chrome.browserAction.setBadgeBackgroundColor({ color: '#f00' });
-    chrome.runtime.onMessageExternal.addListener(this.onWebsiteMsg);
     chrome.browserAction.setBadgeBackgroundColor({ color: '#f00' });
   }
 
   init (token) {
+    logger.log('[BG WS] init with token:', token);
     this.ws.init(token);
   }
 
@@ -31,12 +31,17 @@ export default class Transactions {
 
   // when token changes in chrome LS
   onSysuiTokenChange = (changes, namespace) => {
+    logger.log(`[BG WS] changes in LS namespace: ${namespace};`, changes);
     if (!(namespace === 'local' && 'sysuiToken' in changes)) {
       return;
     }
-    const newSysuiToken = JSON.parse(changes.sysuiToken.newValue);
-    logger.log('[BG WS] sysuiToken changed! ', newSysuiToken);
-    this.init(newSysuiToken);
+    let token = null;
+    try {
+      token = changes.sysuiToken.newValue.replace(/["']/g, '');
+    } catch (err) {
+      logger.warn('[BG WS] error parsing token: ', changes.sysuiToken.newValue, 'returning null');
+    }
+    this.init(token);
   }
 
   fetchPendingTransactions = () => {
@@ -88,14 +93,6 @@ export default class Transactions {
     this.setBadgeText(txsLength);
     this.isBadgeAnimated = false;
     this.fetchPendingTransactions(); // in case there were new transactions while the con was animated
-  }
-
-  onWebsiteMsg (msg, sender, sendResponse) {
-    if (msg !== 'version') {
-      return;
-    }
-    const { version } = chrome.runtime.getManifest();
-    sendResponse({ version });
   }
 
   onWsMsg (msg) {

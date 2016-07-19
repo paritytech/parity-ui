@@ -105,7 +105,10 @@ export default class Ws {
 
   _executeCbsWithError () {
     logger.log('[WS] executing callbacks with error: ', this._callbacks);
-    this._callbacks.forEach(cb => cb('[WS] disconnected, cb cannot be called'));
+    for (const msgId in this._callbacks) {
+      const cb = this._callbacks[msgId];
+      cb('[WS] disconnected, cb cannot be called');
+    }
     this._callbacks = {};
   }
 

@@ -1,6 +1,6 @@
-import './App.html';
+import './app.html';
 import 'reset-css/reset.css';
-import './App.css';
+import './app.css';
 import { getToken, setToken, onTokenChange } from '../utils/token';
 import app from 'parity-signer';
 
