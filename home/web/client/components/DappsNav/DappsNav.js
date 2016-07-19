@@ -131,7 +131,7 @@ export default class DappsNav extends Component {
   }
 
   onEsc = evt => {
-    if (!evt.keyCode === 27) {
+    if (evt.keyCode !== 27) {
       return;
     }
     this.onClose();

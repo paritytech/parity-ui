@@ -120,9 +120,9 @@ class TransactionConfirmation extends Component {
     return (
       <TextField
         fullWidth
-        hintText={ `Password for ${from}` }
+        hintText={ `Type password for ${from}` }
         errorText={ errorMsg }
-        floatingLabelText='Type your password'
+        floatingLabelText='Password to unlock your account'
         type='password'
         value={ password }
         onChange={ this.onPasswordChange }
