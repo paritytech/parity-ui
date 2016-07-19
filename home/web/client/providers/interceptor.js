@@ -23,11 +23,10 @@ export default class InterceptorProvider {
     const isInstalled = state.extension.version.length;
     // Don't intercept sendTransaction if we are running with signer module.
     if (signerPort) {
-      next();
       if (!isInstalled) {
         this.notifyNewPendingTransaction();
       }
-      return;
+      return next();
     }
 
     if (!cb) {
@@ -45,8 +44,7 @@ export default class InterceptorProvider {
   onEthAccounts = (payload, cb, next) => {
     const { options, rpc } = this.store.getState();
     if (options.allAccounts) {
-      next();
-      return;
+      return next();
     }
 
     const response = {

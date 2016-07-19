@@ -26,7 +26,7 @@ class TransactionConfirmation extends Component {
     open: PropTypes.bool.isRequired,
     error: PropTypes.string.isRequired,
     transaction: PropTypes.object.isRequired,
-    chain: PropTypes.string.isRequired,
+    network: PropTypes.string.isRequired,
     onConfirm: PropTypes.func.isRequired,
     onReject: PropTypes.func.isRequired
   };
@@ -62,7 +62,7 @@ class TransactionConfirmation extends Component {
   }
 
   renderTransaction () {
-    const { open } = this.props;
+    const { open, network } = this.props;
     if (!open) {
       return;
     }
@@ -72,7 +72,7 @@ class TransactionConfirmation extends Component {
       <div>
         <div className={ styles.confirmation }>
           <div className={ styles.from }>
-            <Account address={ from } />
+            <Account address={ from } chain={ network } />
           </div>
           <div className={ styles.tx }>
             <span>&rArr;</span>
@@ -99,7 +99,7 @@ class TransactionConfirmation extends Component {
       );
     }
 
-    return <Account address={ to } />;
+    return <Account address={ to } chain={ this.props.network } />;
   }
 
   renderPassword () {
@@ -185,9 +185,9 @@ class TransactionConfirmation extends Component {
 
 function mapStateToProps (state) {
   const { open, isSending, error, transaction } = state.pendingTransaction;
-  const chain = state.rpc.network;
+  const { network } = state.rpc;
   return {
-    open, isSending, error, transaction, chain
+    open, isSending, error, transaction, network
   };
 }
 

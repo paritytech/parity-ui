@@ -17,8 +17,8 @@ export default class StorageMiddleware {
       }
 
       if (action.type === 'update accountsNames') {
-        this.onUpdateAccountsNames(action.payload);
         next(action);
+        this.onUpdateAccountsNames(action.payload);
         return;
       }
 
@@ -34,7 +34,9 @@ export default class StorageMiddleware {
 
   onInitApp (store) {
     this.handleFirstRun();
-    this.syncAccountsNames(store);
+    this.storage.onAccountsNames(names => {
+      this.syncAccountsNames(store, names);
+    });
   }
 
   onUpdateAccountsNames (names) {
@@ -42,21 +44,22 @@ export default class StorageMiddleware {
   }
 
   onUpdateAccounts (store) {
-    this.syncAccountsNames(store);
+    this.storage.getAccountsNames(names => {
+      this.syncAccountsNames(store, names);
+    });
   }
 
-  syncAccountsNames (store) {
+  syncAccountsNames (store, accountsNames) {
     const { rpc } = store.getState();
-    this.storage.getAccountsNames(accountsNames => {
-      if (isEqual(rpc.accountsNames, accountsNames)) {
-        return;
-      }
-      store.dispatch(
-        updateAccountsNames(
-          this.fixAccountNames(accountsNames, rpc.accounts)
-        )
-      );
-    });
+    if (isEqual(rpc.accountsNames, accountsNames)) {
+      return;
+    }
+
+    store.dispatch(
+      updateAccountsNames(
+        this.fixAccountNames(accountsNames, rpc.accounts)
+      )
+    );
   }
 
   handleFirstRun () {

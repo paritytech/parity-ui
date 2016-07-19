@@ -13,6 +13,7 @@ import styles from './AccountChooser.css';
 class AccountChooser extends Component {
 
   static propTypes = {
+    network: PropTypes.string.isRequired,
     activeAccount: PropTypes.string.isRequired,
     accounts: PropTypes.arrayOf(PropTypes.string).isRequired,
     accountsNames: PropTypes.object.isRequired,
@@ -20,7 +21,7 @@ class AccountChooser extends Component {
   };
 
   render () {
-    const { accountsNames, activeAccount, accounts } = this.props;
+    const { network, accountsNames, activeAccount, accounts } = this.props;
     return (
       <DropDownMenu
         autoWidth={ false }
@@ -39,6 +40,7 @@ class AccountChooser extends Component {
               value={ acc }
               primaryText={
                 <Account
+                  chain={ network }
                   address={ acc }
                   name={ accountsNames[acc] }
                 />
@@ -58,8 +60,8 @@ class AccountChooser extends Component {
 }
 
 function mapStateToProps (state) {
-  const { accounts, accountsNames, activeAccount } = state.rpc;
-  return { accounts, accountsNames, activeAccount };
+  const { network, accounts, accountsNames, activeAccount } = state.rpc;
+  return { network, accounts, accountsNames, activeAccount };
 }
 
 function mapDispatchToProps (dispatch) {
