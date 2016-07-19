@@ -28,7 +28,7 @@ export default class TransactionPendingFormConfirm extends Component {
           onKeyDown={ this.onKeyDown }
           name='password'
           fullWidth
-          floatingLabelText='Account password'
+          floatingLabelText='Account Password'
           type='password'
           value={ password }
         />

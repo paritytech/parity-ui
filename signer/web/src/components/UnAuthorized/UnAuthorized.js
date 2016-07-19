@@ -35,9 +35,12 @@ export default class UnAuthorized extends Component {
     const { processing, token } = this.state;
     return (
       <div className={ styles.container }>
-        <h1>Not Authorized</h1>
-        <p>Connections used by Trusted Signer are secured. You need to authorize this app.</p>
-        <p>Please make sure Parity is running and run <code className={ styles.code }>$ parity signer new-token</code> to generate authorization token and paste it below.</p>
+        <h2>Not Authorized</h2>
+        <p className={ styles.lead }>
+          Connections used by Trusted Signer are secured. You need to authorize this app.
+        </p>
+        <p>Make sure Parity is running, generate authorization token:</p>
+        <p><code className={ styles.code }>$ parity signer new-token</code> &nbsp;and paste the token below:</p>
         <TextField
           name='token'
           type='text'
@@ -51,9 +54,8 @@ export default class UnAuthorized extends Component {
           primary
           onClick={ this.onSubmit }
           disabled={ processing || !token }
-         >
-         Authorize
-        </RaisedButton>
+          label='Authorize'
+         />
         { this.renderInvalidToken() }
         { this.renderProcessing() }
       </div>
