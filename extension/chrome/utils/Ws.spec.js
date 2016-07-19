@@ -1,4 +1,5 @@
 /* global sinon */
+import { isEmpty } from 'lodash';
 
 import Ws from './Ws';
 
@@ -218,6 +219,24 @@ describe('Ws', () => {
         expect(cut.init).to.have.been.calledWith(cut._token);
         done();
       }, cut._reconnectTimeout);
+    });
+  });
+
+  describe('_executeCbsWithError', () => {
+    it('should call all callbacks with error message and reset object', () => {
+      // given
+      const spy = sinon.spy();
+      const spy2 = sinon.spy();
+      cut._callbacks[1] = spy;
+      cut._callbacks[2] = spy2;
+
+      // when
+      cut._executeCbsWithError();
+
+      // then
+      expect(spy).to.have.been.calledOnce;
+      expect(spy2).to.have.been.calledOnce;
+      expect(isEmpty(cut._callbacks)).to.be.true;
     });
   });
 });
