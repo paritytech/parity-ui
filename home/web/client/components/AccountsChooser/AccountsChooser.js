@@ -6,7 +6,7 @@ import { updateActiveAccount } from '../../actions/rpc';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 
-import AccountWeb3 from 'dapps-react-components/src/AccountWeb3';
+import Account from '../Account';
 
 import styles from './AccountChooser.css';
 
@@ -17,7 +17,6 @@ class AccountChooser extends Component {
   };
 
   static propTypes = {
-    network: PropTypes.string.isRequired,
     activeAccount: PropTypes.string.isRequired,
     accounts: PropTypes.arrayOf(PropTypes.string).isRequired,
     accountsNames: PropTypes.object.isRequired,
@@ -25,7 +24,7 @@ class AccountChooser extends Component {
   };
 
   render () {
-    const { network, accountsNames, activeAccount, accounts } = this.props;
+    const { accountsNames, activeAccount, accounts } = this.props;
     return (
       <DropDownMenu
         autoWidth={ false }
@@ -43,8 +42,7 @@ class AccountChooser extends Component {
               key={ acc }
               value={ acc }
               primaryText={
-                <AccountWeb3
-                  chain={ network }
+                <Account
                   address={ acc }
                   name={ accountsNames[acc] }
                 />
@@ -64,8 +62,8 @@ class AccountChooser extends Component {
 }
 
 function mapStateToProps (state) {
-  const { network, accounts, accountsNames, activeAccount } = state.rpc;
-  return { network, accounts, accountsNames, activeAccount };
+  const { accounts, accountsNames, activeAccount } = state.rpc;
+  return { accounts, accountsNames, activeAccount };
 }
 
 function mapDispatchToProps (dispatch) {

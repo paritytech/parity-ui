@@ -29,10 +29,11 @@ export default class ExtensionProvider {
   formatVersion (version) {
     // TODO [adgo] - temp hack until extension is updated
     // to return only version, instead of { version: version }
-    if (version.version) {
+    try {
       return version.version;
+    } catch (err) {
+      return version || '';
     }
-    return version || ''; // if extension isn't installed response would be null/undefined
   }
 
 }

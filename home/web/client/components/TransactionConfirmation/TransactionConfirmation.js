@@ -9,7 +9,7 @@ import TextField from 'material-ui/TextField';
 import Dialog from 'material-ui/Dialog';
 import LinearProgress from 'material-ui/LinearProgress';
 
-import AccountWeb3 from 'dapps-react-components/src/AccountWeb3';
+import Account from '../Account';
 
 import styles from './TransactionConfirmation.css';
 
@@ -62,7 +62,7 @@ class TransactionConfirmation extends Component {
   }
 
   renderTransaction () {
-    const { open, chain } = this.props;
+    const { open } = this.props;
     if (!open) {
       return;
     }
@@ -72,7 +72,7 @@ class TransactionConfirmation extends Component {
       <div>
         <div className={ styles.confirmation }>
           <div className={ styles.from }>
-            <AccountWeb3 address={ from } chain={ chain } />
+            <Account address={ from } />
           </div>
           <div className={ styles.tx }>
             <span>&rArr;</span>
@@ -89,7 +89,6 @@ class TransactionConfirmation extends Component {
   }
 
   renderTo () {
-    const { chain } = this.props;
     const { to } = this.props.transaction.params[0];
     if (!to) {
       return (
@@ -100,7 +99,7 @@ class TransactionConfirmation extends Component {
       );
     }
 
-    return <AccountWeb3 address={ to } chain={ chain } />;
+    return <Account address={ to } />;
   }
 
   renderPassword () {
