@@ -1,6 +1,6 @@
 import logger from '../utils/logger';
 import { updateAppState } from '../actions/app';
-import { isParityRunning } from '../utils/parity';
+// import { isParityRunning } from '../utils/parity';
 
 export default class appProvider {
 
@@ -14,14 +14,19 @@ export default class appProvider {
 
   onWsOpen () {
     logger.log('[APP Provider] connected');
-    this.store.dispatch(updateAppState({ isParityRunning: true, isLoading: false, isWsConnected: true }));
+    this.store.dispatch(
+      updateAppState({ isParityRunning: true, isLoading: false, isWsConnected: true })
+    );
   }
 
   onWsError () {
-    isParityRunning(this.wsPath)
-      .then(isRunning => {
-        this.store.dispatch(updateAppState({ isParityRunning: isRunning, isLoading: false, isWsConnected: false }));
-      });
+    this.store.dispatch(
+      updateAppState({ isLoading: false, isWsConnected: false })
+    );
+    // isParityRunning(this.wsPath)
+    //   .then(isRunning => {
+    //     this.store.dispatch(updateAppState({ isParityRunning: isRunning, isLoading: false, isWsConnected: false }));
+    //   });
   }
 
 }
