@@ -2,7 +2,9 @@
 
 # Parity UI
 
-A set of Parity built-in DApps and UI components.
+A set of [Parity](https://github.com/ethcore/parity) built-in DApps and UI components.
+
+[What's Parity?](https://github.com/ethcore/parity)
 
 ## List of projects
 
@@ -12,6 +14,10 @@ A set of Parity built-in DApps and UI components.
 * [Ethereum Wallet](./wallet) - Ethereum Wallet bundled for Parity
 * [Trusted Signer](./signer) - Trusted Signer Dapp
 * [Trusted Signer Chrome Extension](./extension) - Parity Integration Chrome Extension
+
+### How to add new Builtin-DApp?
+
+See description in [Parity Dapps](./dapps).
 
 ## Development
 
@@ -61,11 +67,11 @@ You can use [Cargo Config file](http://doc.crates.io/config.html) to use local v
 # ~/.cargo/config
 # Location of parity-ui repo: ~/workspace/parity-ui
 paths = [
-  "parity-ui/dapps",
-  "parity-ui/wallet",
-  "parity-ui/home",
-  "parity-ui/status",
-  "parity-ui/signer"
+  "workspace/parity-ui/dapps",
+  "workspace/parity-ui/wallet",
+  "workspace/parity-ui/home",
+  "workspace/parity-ui/status",
+  "workspace/parity-ui/signer"
 ]
 ```
 
@@ -88,4 +94,3 @@ $ ./scripts/hook.sh
 [license-image]: https://img.shields.io/badge/license-GPL%20v3-green.svg
 [license-url]: http://www.gnu.org/licenses/gpl-3.0.en.html
 
-----

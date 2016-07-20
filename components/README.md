@@ -2,7 +2,7 @@
 
 A set of (potentially) re-usable React components for DApp development.
 
-[Back to parity-ui](../)
+[Back to parity-ui](../README.md)
 
 ## Installation
 
@@ -54,6 +54,6 @@ It's currently not possible to work on components in isolation. Work on [Signer]
 
 ---
 
-Head to [parity-ui](../) to learn how to build Parity with your changes.
+Head to [parity-ui](../README.md) to learn how to build Parity with your changes.
 
 

@@ -2,7 +2,7 @@
 
 [![Add to chrome][webstore-image]][webstore-url]
 
-[Back to parity-ui](../)
+[Back to parity-ui](../README.md)
 
 ## Install
 

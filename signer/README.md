@@ -2,7 +2,7 @@
 
 Parity Trusted Signer DApp.
 
-[Back to parity-ui](../)
+[Back to parity-ui](../README.md)
 
 ## Development
 
@@ -45,4 +45,4 @@ to re-compile everything (recommended).
 
 ---
 
-Head to [parity-ui](../) to learn how to build Parity with your changes.
+Head to [parity-ui](../README.md) to learn how to build Parity with your changes.

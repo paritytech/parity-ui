@@ -2,7 +2,7 @@
 
 Code generator to simplify creating a built-in Parity DApp
 
-[Back to parity-ui](../)
+[Back to parity-ui](../README.md)
 
 # How to create new builtin DApp.
 1. Clone this repository.
