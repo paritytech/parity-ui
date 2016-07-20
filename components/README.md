@@ -1,38 +1,55 @@
-# Dapps React Components
+# DApps React Components
 
-[![Build Status][travis-image]][travis-url]
-[![js-semistandard-style][semistandard-image]][semistandard-url]
-[![GPLv3][license-image]][license-url]
+A set of (potentially) re-usable React components for DApp development.
 
-[travis-image]: https://travis-ci.org/ethcore/dapps-react-ui.svg?branch=master "Build Status"
-[travis-url]: https://travis-ci.org/ethcore/dapps-react-ui
-[semistandard-url]: (https://github.com/Flet/semistandard)
-[semistandard-image]: https://img.shields.io/badge/code%20style-semistandard-brightgreen.svg?style=flat-square
-[issues-image]: http://path/to/issues
-[issues-url]: https://github.com/ethcore/dapps-react-ui/issues "issues"
-[coveralls-image]: https://coveralls.io/repos/github/ethcore/dapps-react-ui/badge.svg?branch=master
-[coveralls-url]: https://coveralls.io/github/ethcore/dapps-react-ui?branch=master "Coverage Status"
-[license-image]: https://img.shields.io/badge/license-GPL%20v3-green.svg
-[license-url]: http://www.gnu.org/licenses/gpl-3.0.en.html
+## Installation
 
-## Why?
-DRY
-
-### Install
 ```bash
-npm i --save dapps-react-components
+$ npm install --save dapps-react-components # Old version name: dapps-react-ui
 ```
 
-### Usage
+Remember to also install all required peer dependencies:
+
 ```bash
-import { ComponentName, ComponentName2 } from 'dapps-react-components';
+$ npm i --save material-ui@0.15 react@15.0 react-addons-css-transition-group@15.1 react-tap-event-plugin@1.0 react-tooltip@2.0
 ```
 
-### Relevant Links
-[Units used](UNITS.md)
+## Usage
 
-### Development
-```bash
-git clone git@github.com:ethcore/dapps-react-ui.git
-npm start # starts webpack devserver at port 3020
+```javascript
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Web3 from 'web3';
+import { Web3Provider, MuiThemeProvider } from 'dapps-react-components';
+import { AccountWeb3 } from 'dapps-react-components';
+
+const web3 = typeof web3 === 'undefined' ? new Web3(new Web3.providers.HttpProvider()) : web3;
+
+ReactDOM.render(
+  <Web3Provider web3={ web3 }>
+    <MuiThemeProvider>
+      <AccountWeb3
+        address='0xbf4ed7b27f1d666546e30d74d50d173d20bca754'
+        chain='homestead'
+      />
+    </MuiThemeProvider>
+  </Web3Provider>
+, document.body.querySelector('#app'));
+
 ```
+
+## TODO
+
+1. Documentation for Components
+1. Auto-publishing
+1. Better polling heuristics
+1. Development for Components docs.
+
+
+## Development
+
+It's currently not possible to work on components in isolation. Work on [Signer](../signer/README.md) or [Home Page](../home/README.md) instead.
+
+Head to [parity-ui](../README.md) for building Parity with your changes.
+
+

@@ -21,7 +21,7 @@ module.exports = {
   context: path.join(__dirname, './src'),
   entry: entry,
   output: {
-    library: 'dapps-react-ui',
+    library: 'dapps-react-components',
     libraryTarget: 'umd',
     umdNamedDefine: true,
     path: path.join(__dirname, './build'),
