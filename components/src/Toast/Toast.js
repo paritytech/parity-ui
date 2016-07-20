@@ -13,14 +13,17 @@ export default class Toast extends Component {
     id: PropTypes.number.isRequired,
     type: PropTypes.string.isRequired,
     msg: PropTypes.string.isRequired,
+    onClickToast: PropTypes.func,
     onRemoveToast: PropTypes.func
   }
 
   render () {
-    const { msg, type, className } = this.props;
+    const { msg, type, className, onClickToast } = this.props;
+    const clickableClass = onClickToast ? styles.clickable : '';
     return (
       <Paper
-        className={ `${styles.container} ${styles[type]} ${className}` }
+        onClick={ this.onClickToast }
+        className={ `${styles.container} ${styles[type]} ${className} ${clickableClass}` }
         zDepth={ 2 }
         >
         { this.renderActions() }
@@ -41,9 +44,18 @@ export default class Toast extends Component {
     );
   }
 
-  onRemoveToast = () => {
-    const { id } = this.props;
-    this.props.onRemoveToast(id);
+  onRemoveToast = evt => {
+    evt.stopPropagation();
+    const { id, onRemoveToast } = this.props;
+    onRemoveToast(id);
+  }
+
+  onClickToast = evt => {
+    const { id, onClickToast } = this.props;
+    if (!onClickToast) {
+      return;
+    }
+    onClickToast(id);
   }
 
 }

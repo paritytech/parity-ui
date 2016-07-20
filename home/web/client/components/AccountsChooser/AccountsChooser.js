@@ -1,89 +1,76 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { updateActiveAccount } from '../../actions/rpc';
+
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 
-import { isEqual } from 'lodash';
-
-import Web3Component from '../Web3Component';
 import Account from '../Account';
-import Storage from '../Storage';
 
 import styles from './AccountChooser.css';
 
-export default class AccountChooser extends Web3Component {
-  // IE9 - contextTypes are not inherited
-  static contextTypes = Web3Component.contextTypes;
+class AccountChooser extends Component {
 
-  state = {
-    defaultAccountIdx: 0
+  static propTypes = {
+    network: PropTypes.string.isRequired,
+    activeAccount: PropTypes.string.isRequired,
+    accounts: PropTypes.arrayOf(PropTypes.string).isRequired,
+    accountsNames: PropTypes.object.isRequired,
+    onSelectAccount: PropTypes.func.isRequired
   };
 
-  storage = Storage.local();
-
-  componentWillMount () {
-    this.refreshLastSelectedAccount(this.props);
-  }
-
-  componentWillReceiveProps (nextProps) {
-    if (isEqual(nextProps.accounts, this.props.accounts)) {
-      return;
-    }
-
-    this.refreshLastSelectedAccount(nextProps);
-  }
-
-  refreshLastSelectedAccount (props) {
-    const { accounts } = props;
-    this.storage.getLastAccount(lastAccount => {
-      const idx = accounts.indexOf(lastAccount);
-      const defaultAccountIdx = idx !== -1 ? idx : this.state.defaultAccountIdx;
-
-      this.setState({
-        defaultAccountIdx
-      });
-
-      this.props.onChange(accounts[defaultAccountIdx]);
-    });
-  }
-
-  handleChange (e, index, value) {
-    this.setState({
-      defaultAccountIdx: value
-    });
-    const account = this.props.accounts[value];
-    this.storage.saveLastAccount(account);
-    this.props.onChange(account);
-  }
-
   render () {
+    const { network, accountsNames, activeAccount, accounts } = this.props;
     return (
       <DropDownMenu
         autoWidth={ false }
         className={ styles.accounts }
-        value={ this.state.defaultAccountIdx }
-        onChange={ ::this.handleChange }
+        value={ activeAccount }
+        onChange={ this.handleChange }
         maxHeight={ 700 }
         style={ menuStyles }
         underlineStyle={ { display: 'none' } }
         iconStyle={ { fill: '#888' } }
         >
-        { this.props.accounts.map((acc, idx) => (
-          <MenuItem
-            key={ acc }
-            value={ idx }
-            primaryText={ <Account address={ acc } name={ this.props.accountsNames[acc] } /> }
-            />
-        )) }
+        {
+          accounts.map((acc, idx) => (
+            <MenuItem
+              key={ acc }
+              value={ acc }
+              primaryText={
+                <Account
+                  chain={ network }
+                  address={ acc }
+                  name={ accountsNames[acc] }
+                />
+              }
+              />
+          ))
+        }
 
       </DropDownMenu>
     );
   }
 
-  static propTypes = {
-    accountsNames: React.PropTypes.object.isRequired,
-    onChange: React.PropTypes.func.isRequired
-  };
+  handleChange = (e, index, account) => {
+    this.props.onSelectAccount(account);
+  }
 
 }
+
+function mapStateToProps (state) {
+  const { network, accounts, accountsNames, activeAccount } = state.rpc;
+  return { network, accounts, accountsNames, activeAccount };
+}
+
+function mapDispatchToProps (dispatch) {
+  return bindActionCreators({ onSelectAccount: updateActiveAccount }, dispatch);
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AccountChooser);
 
 const menuStyles = { width: '350px' };

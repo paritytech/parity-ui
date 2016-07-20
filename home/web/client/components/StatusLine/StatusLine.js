@@ -1,98 +1,33 @@
-import React from 'react';
-
+import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
 import LinearProgress from 'material-ui/LinearProgress';
 
-import Web3Component from '../Web3Component';
 import { appLink } from '../../utils/appLink';
 
 import styles from './StatusLine.css';
 
-const DEFAULT_NETWORK = 'homestead';
+import { DEFAULT_NETWORK } from '../../constants/rpc';
 
-export default class StatusLine extends Web3Component {
-  // IE9 - contextTypes are not inherited
-  static contextTypes = Web3Component.contextTypes;
+class StatusLine extends Component {
 
-  state = {
-    isReady: false,
-    isSyncing: false,
-    latestBlock: 1234,
-    startingBlock: 1234,
-    highestBlock: 1234,
-    connectedPeers: 25,
-    network: 'homestead'
-  }
-
-  onTick (next) {
-    const { web3 } = this.context;
-    let errorCalled = false;
-    const handleError = f => (err, data) => {
-      if (err) {
-        console.error(err);
-        this.setState({
-          isError: true,
-          isReady: false
-        });
-        // Make sure to call next even if we have an error.
-        if (!errorCalled) {
-          next(10);
-          // Never call next callback in case of error in the same context.
-          errorCalled = true;
-        }
-        return;
-      }
-      this.setState({
-        isError: false
-      });
-      f(data);
-    };
-
-    // Syncing
-    web3.eth.getSyncing(handleError(syncing => {
-      next();
-
-      // Latest Block
-      web3.eth.getBlockNumber(handleError(blockNumber => this.setState({
-        latestBlock: parseInt(blockNumber, 10)
-      })));
-
-      // peers
-      web3.net.getPeerCount(handleError(peers => this.setState({
-        connectedPeers: peers
-      })));
-
-      // network
-      web3.version.getNetwork(handleError(network => this.setState({
-        network: networkName(network)
-      })));
-
-      this.setState({
-        isReady: true
-      });
-
-      if (!syncing) {
-        this.setState({
-          isSyncing: false
-        });
-        return;
-      }
-
-      this.setState({
-        isSyncing: true,
-        startingBlock: parseInt(syncing.startingBlock, 10),
-        highestBlock: parseInt(syncing.highestBlock, 10)
-      });
-    }));
+  static propTypes = {
+    isReady: PropTypes.bool.isRequired,
+    isSyncing: PropTypes.bool.isRequired,
+    latestBlock: PropTypes.number.isRequired,
+    startingBlock: PropTypes.number.isRequired,
+    highestBlock: PropTypes.number.isRequired,
+    peers: PropTypes.number.isRequired,
+    network: PropTypes.string.isRequired
   }
 
   render () {
-    if (!this.state.isReady) {
+    const { isReady, isSyncing, highestBlock, peers, latestBlock } = this.props;
+    if (!isReady) {
       return (
         <div className={ styles.status }>...</div>
       );
     }
 
-    const { isSyncing, latestBlock, highestBlock } = this.state;
     // TODO [ToDr] Because eth_syncing is a bit broken now we will be checking if there
     // is actually anything to sync before displaying the progress bar.
     // See: https://github.com/ethcore/parity/issues/1110
@@ -103,8 +38,8 @@ export default class StatusLine extends Web3Component {
     return (
       <div className={ styles.status }>
         <ul className={ styles.info }>
-          <li>{ this.state.connectedPeers } peers</li>
-          <li>#{ this.state.latestBlock }</li>
+          <li>{ peers } peers</li>
+          <li>#{ latestBlock }</li>
           <li>{ this.renderNetwork() }</li>
           <li><a href={ appLink('status') }>more</a></li>
         </ul>
@@ -113,7 +48,7 @@ export default class StatusLine extends Web3Component {
   }
 
   renderNetwork () {
-    const { network } = this.state;
+    const { network } = this.props;
     if (network !== DEFAULT_NETWORK) {
       return (
         <span className={ styles.alert }>
@@ -127,7 +62,7 @@ export default class StatusLine extends Web3Component {
   }
 
   renderSyncing () {
-    const { startingBlock, latestBlock, highestBlock } = this.state;
+    const { startingBlock, latestBlock, highestBlock } = this.props;
     const val = 100 * (latestBlock - startingBlock) / (highestBlock - startingBlock);
     return (
       <div className={ styles.status } title='Syncing...'>
@@ -149,11 +84,19 @@ const s = {
   }
 };
 
-function networkName (netId) {
-  const networks = {
-    0x0: 'olympic',
-    0x1: 'homestead',
-    0x2: 'morden'
+function mapStateToProps (state) {
+  const { isReady, isSyncing, latestBlock, startingBlock, highestBlock, peers, network } = state.rpc;
+  return {
+    isReady,
+    isSyncing,
+    latestBlock,
+    startingBlock,
+    highestBlock,
+    peers,
+    network
   };
-  return networks[netId] || 'unknown';
 }
+
+export default connect(
+  mapStateToProps
+)(StatusLine);
