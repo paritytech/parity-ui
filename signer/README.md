@@ -24,6 +24,8 @@ to disable origin verification. Otherwise your development server will not be ab
 
 ## Pre-compiling JS files
 
+After you finish changing the source code you need to also commit pre-compiled JS files, otherwise the build will fail.
+
 ```bash
  $ cd parity-ui/signer/web
  $ rm -rf node_modules                  # Make sure to start with fresh dependencies

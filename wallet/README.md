@@ -1,5 +1,16 @@
 # Parity Ethereum Wallet
 
+[Back to parity-ui](../README.md)
+
+## Development
+
+```bash
+$ cd parity-ui/wallet/meteor-dapp-wallet
+$ meteor
+```
+
+## Pre-compiling JS files
+
 To build a new version of wallet:
 
 ```bash
@@ -15,3 +26,8 @@ Make sure to have `meteor-build-client` installed:
 // install meteor-build-client
 $ npm install -g meteor-build-client
 ```
+
+---
+
+Head to [parity-ui](../README.md) to learn how to build Parity with your changes.
+

@@ -2,7 +2,7 @@
 
 [Back to parity-ui](../README.md)
 
-Parity Home Page (DApps list) and TopBar source code.
+Parity Home Page (DApps list) and TopBar.
 
 ## Development
 
@@ -16,6 +16,8 @@ Parity Home Page (DApps list) and TopBar source code.
 Make sure to have Parity running.
 
 ## Pre-compiling JS files
+
+After you finish changing the source code you need to also commit pre-compiled JS files, otherwise the build will fail.
 
 ```bash
  $ cd parity-ui/home/web
