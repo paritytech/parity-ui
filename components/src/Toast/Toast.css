@@ -6,6 +6,10 @@
   animation: fadein .5s;
 }
 
+.container.clickable {
+  cursor: pointer;
+}
+
 .error {
   background: red !important;
   color: #fff !important;

@@ -1,4 +1,7 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { createAccount, resetCreateAccount } from '../../actions/rpc';
 
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -9,27 +12,48 @@ import { every } from 'lodash';
 
 import validationsData from './validations.data';
 import FormValidationDisplay from '../FormValidationDisplay';
-import Identicon from '../Identicon';
+import Identicon from 'dapps-react-components/src/Identicon';
 import styles from './CreateAccount.css';
-import Web3Component from '../Web3Component/Web3Component';
 
-export default class CreateAccount extends Web3Component {
-  // IE9 - contextTypes are not inherited
-  static contextTypes = Web3Component.contextTypes;
+class CreateAccount extends Component {
+
+  static propTypes = {
+    open: PropTypes.bool.isRequired,
+    network: PropTypes.string.isRequired,
+    noAccounts: PropTypes.bool.isRequired,
+    createAccount: PropTypes.func.isRequired,
+    createdAccount: PropTypes.string.isRequired,
+    createdAccountError: PropTypes.string.isRequired,
+    onClose: PropTypes.func.isRequired,
+    resetCreateAccount: PropTypes.func.isRequired
+  };
+
+  componentWillReceiveProps (nextProps) {
+    if (
+      this.props.createdAccount === nextProps.createdAccount ||
+      nextProps.createdAccountError.length
+    ) {
+      return;
+    }
+    // todo [adgo] - handle better (probably in state)
+    this.setState({
+      isCreatingAccount: false
+    });
+  }
 
   state = {
-    createdAccount: false,
+    isCreatingAccount: false,
     password: '',
     validations: [],
     isValid: false
   };
 
   render () {
-    const { open } = this.props;
+    const { open, createdAccount } = this.props;
 
     return (
       <Dialog
-        title={ this.state.createdAccount ? 'Account Created' : 'New Account' }
+        title={ createdAccount.length ? 'Account Created' : 'New Account' }
         actions={ this.renderDialogActions() }
         open={ open }
         autoScrollBodyContent
@@ -43,11 +67,13 @@ export default class CreateAccount extends Web3Component {
   }
 
   renderForm () {
-    if (this.state.createdAccount) {
+    const { password, isValid } = this.state;
+    const { createdAccount } = this.props;
+
+    if (createdAccount.length) {
       return;
     }
 
-    const { password, isValid } = this.state;
     const errorText = !isValid && password ? ' ' : null;
     return (
       <div>
@@ -60,7 +86,7 @@ export default class CreateAccount extends Web3Component {
           name={ 'new-account-password' }
           floatingLabelText='Type password to encrypt your private key'
           value={ password }
-          onChange={ this.modifyPassword }
+          onChange={ this.onModifyPassword }
         />
         { this.renderValidations() }
       </div>
@@ -87,23 +113,22 @@ export default class CreateAccount extends Web3Component {
   }
 
   renderCreatedAccount () {
-    const { createdAccount } = this.state;
-    if (!createdAccount) {
+    const { createdAccount, network } = this.props;
+    if (!createdAccount.length) {
       return;
     }
 
     return (
       <p className={ styles.newAccount }>
-        New account address is: <br />
-        <Identicon seed={ createdAccount } /><code>{ createdAccount }</code>
-        <br />
-        You can now choose it in the top right corner and expose it to dapps.
+        Account created: <br />
+        <Identicon address={ createdAccount } chain={ network } />
+        <code>{ createdAccount }</code>
       </p>
     );
   }
 
   renderNoAccountsMsg () {
-    if (this.props.accounts.length || this.state.createdAccount) {
+    if (!this.props.noAccounts || this.props.createdAccount.length) {
       return;
     }
 
@@ -115,12 +140,7 @@ export default class CreateAccount extends Web3Component {
     );
   }
 
-  submit = () => {
-    const createdAccount = this.context.web3.personal.newAccount(this.state.password);
-    this.setState({ createdAccount });
-  }
-
-  modifyPassword = evt => {
+  onModifyPassword = evt => {
     const password = evt.target.value;
     const validations = validationsData.map(v => v.predicate(password));
     const isValid = every(validations);
@@ -130,7 +150,7 @@ export default class CreateAccount extends Web3Component {
   }
 
   renderDialogActions () {
-    if (this.state.createdAccount) {
+    if (this.props.createdAccount.length) {
       return (
         <FlatButton
           label='Ok'
@@ -149,26 +169,45 @@ export default class CreateAccount extends Web3Component {
         label='Create'
         className={ styles.submit }
         primary
-        disabled={ !this.state.isValid }
-        onTouchTap={ this.submit }
+        disabled={ !this.state.isValid || this.state.isCreatingAccount }
+        onTouchTap={ this.onSubmit }
       />
     ];
+  }
+
+  onSubmit = () => {
+    this.setState({
+      isCreatingAccount: true
+    });
+    this.props.createAccount(this.state.password);
   }
 
   onClose = () => {
     this.setState({
       password: '',
       isValid: false,
-      createdAccount: false,
       validations: []
     });
     this.props.onClose();
+    this.props.resetCreateAccount();
   }
 
-  static propTypes = {
-    open: React.PropTypes.bool.isRequired,
-    accounts: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
-    onClose: React.PropTypes.func.isRequired
-  };
-
 }
+
+function mapStateToProps (state) {
+  return {
+    network: state.rpc.network,
+    noAccounts: !state.rpc.accounts.length,
+    createdAccount: state.rpc.createdAccount,
+    createdAccountError: state.rpc.createdAccountError
+  };
+}
+
+function mapDispatchToProps (dispatch) {
+  return bindActionCreators({ createAccount, resetCreateAccount }, dispatch);
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CreateAccount);

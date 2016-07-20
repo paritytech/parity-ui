@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
@@ -6,28 +6,21 @@ import AssignmentIcon from 'material-ui/svg-icons/action/assignment';
 import CopyToClipboard from 'react-copy-to-clipboard';
 
 import { isUsingSubdomains, appPrettyLink } from '../../utils/appLink';
+import { getProxyPacLocation } from '../../utils/proxy';
 
 import resetStyles from '../../reset.css';
 import styles from './SubdomainDialog.css';
 
-export default class SubdomainDialog extends React.Component {
+export default class SubdomainDialog extends Component {
+
+  static propTypes = {
+    children: PropTypes.element.isRequired
+  };
 
   state = {
     isOpen: false,
     clipboardMsgOpen: false
   };
-
-  open = () => {
-    this.setState({
-      isOpen: true
-    });
-  };
-
-  close = () => {
-    this.setState({
-      isOpen: false
-    });
-  }
 
   render () {
     if (isUsingSubdomains()) {
@@ -39,7 +32,7 @@ export default class SubdomainDialog extends React.Component {
       <div>
         <a
           href='javascript:void(0)'
-          onClick={ this.open }
+          onClick={ this.onOpen }
           title='Learn how to configure subdomains for your node.'
           >
           { this.props.children }
@@ -48,7 +41,7 @@ export default class SubdomainDialog extends React.Component {
           title='Proxy configuration'
           className={ resetStyles.reset }
           actions={ this.renderDialogActions() }
-          onRequestClose={ this.close }
+          onRequestClose={ this.onClose }
           open={ isOpen }
           autoScrollBodyContent
           >
@@ -59,7 +52,7 @@ export default class SubdomainDialog extends React.Component {
   }
 
   renderDialogContent () {
-    const proxyPacLocation = this.getProxyPacLocation();
+    const proxyPacLocation = getProxyPacLocation();
 
     return (
       <div className={ styles.dialog }>
@@ -111,25 +104,26 @@ export default class SubdomainDialog extends React.Component {
     return <span className={ `${styles.copiedToClipboardMsg} ${hiddenClass}` }> | Copied to clipboard!</span>;
   }
 
-  getProxyPacLocation () {
-    const loc = window.location;
-    const host = loc.host;
-    const protocol = loc.protocol;
-    return `${protocol}//${host}/proxy/proxy.pac`;
-  }
-
   renderDialogActions () {
     return [
       <FlatButton
         label='OK'
         primary
-        onClick={ this.close }
+        onClick={ this.onClose }
       />
     ];
   }
 
-  static propTypes = {
-    children: React.PropTypes.element.isRequired
+  onOpen = () => {
+    this.setState({
+      isOpen: true
+    });
   };
+
+  onClose = () => {
+    this.setState({
+      isOpen: false
+    });
+  }
 
 }

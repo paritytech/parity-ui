@@ -39,7 +39,10 @@ module.exports = {
       {
         test: /\.js$/,
         include: /dapps-react-components/,
-        loader: 'babel'
+        loaders: isProd ? ['babel'] : [
+          'react-hot',
+          'babel'
+        ]
       },
       {
         test: /\.json$/,
@@ -51,7 +54,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        include: /client/,
+        include: [/client/, /dapps-react-components/],
         loaders: [
           'style',
           'css?modules&sourceMap&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]',
@@ -60,7 +63,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        exclude: /client/,
+        exclude: [/client/, /dapps-react-components/],
         loader: 'style!css'
       },
       {
@@ -101,7 +104,8 @@ module.exports = {
       new webpack.DefinePlugin({
         'process.env': {
           NODE_ENV: JSON.stringify(ENV),
-          RPC_ADDRESS: JSON.stringify(process.env.RPC_ADDRESS)
+          RPC_ADDRESS: JSON.stringify(process.env.RPC_ADDRESS),
+          LOGGING: JSON.stringify(!isProd)
         }
       })
     ];

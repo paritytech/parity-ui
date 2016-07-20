@@ -3,7 +3,7 @@ import React from 'react';
 import styles from './Account.css';
 
 import Web3Component from '../Web3Component';
-import Identicon from '../Identicon';
+import Identicon from 'dapps-react-components/src/Identicon';
 
 export default class Account extends Web3Component {
   // IE9 - contextTypes are not inherited
@@ -38,7 +38,7 @@ export default class Account extends Web3Component {
     const address = this.context.web3.toChecksumAddress(acc);
     return (
       <div className={ styles.account } title={ this.renderTitle(address) }>
-        <Identicon seed={ acc } />
+        <Identicon address={ acc } chain={ this.props.chain } />
         { this.renderName(address) }
         { this.renderBalance() }
       </div>
@@ -95,6 +95,7 @@ export default class Account extends Web3Component {
 
   static propTypes = {
     address: React.PropTypes.string.isRequired,
+    chain: React.PropTypes.string.isRequired,
     name: React.PropTypes.string
   };
 

@@ -1,8 +1,12 @@
 import React, { Component, PropTypes } from 'react';
-import Toast from '../Toast';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import Toast from 'dapps-react-components/src/Toast';
+import { removeToast } from 'dapps-react-components/src/actions/toastr';
+import { openSigner } from '../../actions/signer';
 import styles from './Toasts.css';
 
-export default class Toasts extends Component {
+class Toasts extends Component {
 
   static propTypes = {
     toasts: PropTypes.arrayOf(PropTypes.shape({
@@ -10,17 +14,12 @@ export default class Toasts extends Component {
       type: PropTypes.string.isRequired,
       msg: PropTypes.string.isRequired
     })).isRequired,
-    className: PropTypes.string,
     onClickToast: PropTypes.func,
     onRemoveToast: PropTypes.func
   };
 
-  static defaultProps = {
-    onClickToast: () => {}
-  };
-
   render () {
-    const { toasts, onClickToast, onRemoveToast } = this.props;
+    const { toasts } = this.props;
     if (!toasts.length) {
       return null;
     }
@@ -33,8 +32,8 @@ export default class Toasts extends Component {
               id={ t.id }
               msg={ t.msg }
               type={ t.type }
-              onRemoveToast={ onRemoveToast }
-              onClickToast={ onClickToast }
+              onRemoveToast={ this.onRemoveToast }
+              onClickToast={ this.onClickToast }
             />
           ))
         }
@@ -42,4 +41,31 @@ export default class Toasts extends Component {
     );
   }
 
+  onClickToast = id => {
+    this.props.onClickToast();
+    this.props.onRemoveToast(id);
+  }
+
+  onRemoveToast = id => {
+    this.props.onRemoveToast(id);
+  }
+
 }
+
+function mapStateToProps (state) {
+  return {
+    toasts: state.toastr.toasts
+  };
+}
+
+function bindDispatchToProps (dispatch) {
+  return bindActionCreators({
+    onRemoveToast: removeToast,
+    onClickToast: openSigner
+  }, dispatch);
+}
+
+export default connect(
+  mapStateToProps,
+  bindDispatchToProps
+)(Toasts);

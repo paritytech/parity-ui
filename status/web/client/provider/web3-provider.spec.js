@@ -46,7 +46,7 @@ describe('WEB3 PROVIDER', () => {
     const action = StatusActions.updatePeerCount(20);
 
     // then
-    expect(cut.actionProp(action)).to.equal('peerCount');
+    expect(cut.actionToStateProp(action)).to.equal('peerCount');
   });
 
   it('should get this.delay when no errors', () => {

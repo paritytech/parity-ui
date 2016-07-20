@@ -1,32 +1,47 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { isEqual } from 'lodash';
 
 import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
 import Dialog from 'material-ui/Dialog';
 import AddIcon from 'material-ui/svg-icons/content/add';
 
-import Web3Component from '../Web3Component';
-import Identicon from '../Identicon';
+import Identicon from 'dapps-react-components/src/Identicon';
 
 import resetStyles from '../../reset.css';
 import styles from './AccountsDetails.css';
 
-export default class AccountDetails extends Web3Component {
+import { updateAccountsNames } from '../../actions/rpc';
 
-  // IE9 - contextTypes are not inherited
-  static contextTypes = Web3Component.contextTypes;
+export default class AccountsDetails extends Component {
+
+  static contextTypes = {
+    web3: PropTypes.object.isRequired
+  };
+
+  static propTypes = {
+    open: PropTypes.bool.isRequired,
+    network: PropTypes.string.isRequired,
+    accounts: PropTypes.array.isRequired,
+    accountsNames: PropTypes.object.isRequired,
+    onClose: PropTypes.func.isRequired,
+    onOpenCreateAccount: PropTypes.func.isRequired,
+    updateAccountsNames: PropTypes.func.isRequired
+  };
 
   state = {};
 
-  componentDidMount () {
-    this.copyToState(this.props.accountsNames);
-  }
-
-  componentWillReceiveProps (newProps) {
-    if (newProps.accountsNames === this.props.accountsNames) {
+  componentWillReceiveProps (nextProps) {
+    if (isEqual(this.props.accountsNames, nextProps.accountsNames)) {
       return;
     }
-    this.copyToState(newProps.accountsNames);
+    this.copyToState(nextProps.accountsNames);
+  }
+
+  componentDidMount () {
+    this.copyToState(this.props.accountsNames);
   }
 
   copyToState (accountsNames) {
@@ -34,7 +49,7 @@ export default class AccountDetails extends Web3Component {
   }
 
   render () {
-    const { open, accounts } = this.props;
+    const { open } = this.props;
 
     return (
       <Dialog
@@ -43,16 +58,17 @@ export default class AccountDetails extends Web3Component {
         open={ open }
         className={ resetStyles.reset }
         autoScrollBodyContent
-        onRequestClose={ ::this.onCancel }
+        onRequestClose={ this.onCancel }
         >
         <div className={ styles.accounts }>
-          { this.renderAccounts(accounts) }
+          { this.renderAccounts() }
         </div>
       </Dialog>
     );
   }
 
-  renderAccounts (accounts) {
+  renderAccounts () {
+    const { accounts, network } = this.props;
     if (!accounts.length) {
       return;
     }
@@ -62,7 +78,7 @@ export default class AccountDetails extends Web3Component {
       const modify = this.changeName.bind(this, acc);
       return (
         <div key={ acc } className={ styles.acc }>
-          <Identicon seed={ acc } />
+          <Identicon address={ acc } chain={ network } />
           <div className={ styles.inputs }>
             <TextField
               fullWidth
@@ -97,36 +113,54 @@ export default class AccountDetails extends Web3Component {
         style={ { float: 'left' } }
         label={ <span className={ styles.newAccount }><AddIcon /> New Account</span> }
         primary
-        onTouchTap={ this.props.onOpenCreateAccount }
+        onTouchTap={ this.onOpenCreateAccount }
       />,
       <FlatButton
         label='Cancel'
         secondary
-        onTouchTap={ ::this.onCancel }
+        onTouchTap={ this.onCancel }
       />,
       <FlatButton
         label='OK'
         primary
         keyboardFocused
-        onTouchTap={ ::this.onClose }
+        onTouchTap={ this.onSubmit }
       />
     ];
   }
 
-  onCancel () {
+  onOpenCreateAccount = () => {
+    this.props.onOpenCreateAccount();
+  }
+
+  onCancel = () => {
     this.copyToState(this.props.accountsNames);
-    this.props.onClose(this.state);
+    this.props.onClose();
   }
 
-  onClose () {
-    this.props.onClose(this.state);
+  onSubmit = () => {
+    if (this.didNamesChange()) {
+      this.props.updateAccountsNames(this.state);
+    }
+    this.props.onClose();
   }
 
-  static propTypes = {
-    open: React.PropTypes.bool.isRequired,
-    accounts: React.PropTypes.array.isRequired,
-    onOpenCreateAccount: React.PropTypes.func.isRequired,
-    onClose: React.PropTypes.func.isRequired
-  };
+  didNamesChange () {
+    return !isEqual(this.state, this.props.accountsNames);
+  }
 
 }
+
+function mapStateToProps (state) {
+  const { network, accounts, accountsNames } = state.rpc;
+  return { network, accounts, accountsNames };
+}
+
+function mapDispatchToProps (dispatch) {
+  return bindActionCreators({ updateAccountsNames }, dispatch);
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AccountsDetails);
