@@ -9,6 +9,8 @@ language: rust
 env:
   global:
     - TRAVIS_NODE_VERSION="6"
+    # PARITY WRITE TOKEN
+    - secure: "l6dJ0nFhZWLQNelFO92tzHsEt8e9wvQzKBGd5/u8xG4IQz8pcjBpM5e0ZVKm1NUvgExdaOGEvl3kgqVyiMa1HiQQxox3nUCwOaEajEG/7AShoUf9OJuzUGI/pfnp7LmxhF3ZE+d9RSh9CXKkrCOdTpN1PhsijZqfOMolqRToB/puWpCkTW55YuK26q5Ok3YRs00NyZpUMs2uByn00YXuey/1MoLD+boTbcYFyxF+u8lrNv0iYKbx9uvx+ynVRSwd4oy0bt9OBE6mVu14Wa5Ie5/RFFm0JwEhtOq4HkO8d96aHvIK8C2ch63PJciKi2za4RU+VrOxkOt7ib0g1pj91CJMam0rGhetPn5ywL9EUwqt16EXxo0rOTQ9i4zFBoIb01iaXSzdqCGjbXR4VDcjOkS3fLhcEXMguj8K/9KXFLcazs8opohm/ODNPGlJkoh/xrXc80a4fr4o7LNLPxJHEGJcQ90Wvsb0Y/NSIAc//EHOpoHWZRACsmMhI7PfwBdRSWNvWU8re7B8SFb3S2GAAGmOO2oKYzgvLpmY+lQHjVV03ZA47QbCssHkh1/wjWIMT6YFh6a8O7jn8WCQ6t7omkviISzEkERarP7YUw4w70rgOCEwa0JOyjw944N+Yn771Ec/2sf+G+dfXnKi0zeStuUoJYY3E9uz/A2j8o+Bw7o="
 
 matrix:
   include:
@@ -42,3 +44,6 @@ script:
   - if [ "$BUILD" = "rust" ]; then ./scripts/build_rs.sh; fi
   - if [ "$BUILD" = "js" ]; then ./scripts/build_js.sh; fi
 
+after_success: |
+  [ $TRAVIS_BRANCH = master ] && [ $TRAVIS_PULL_REQUEST = false ] && \
+  ./scripts/deploy.sh
