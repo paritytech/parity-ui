@@ -150,13 +150,16 @@ module.exports = {
     hot: !isProd,
     proxy: {
       '/rpc*': {
-        target: 'http://localhost:8080'
+        target: 'http://localhost:8080',
+        changeOrigin: true
       },
       '/api*': {
-        target: 'http://localhost:8080'
+        target: 'http://localhost:8080',
+        changeOrigin: true
       },
       '/parity-utils/*': {
-        target: 'http://localhost:8080'
+        target: 'http://localhost:8080',
+        changeOrigin: true
       }
     }
   }
