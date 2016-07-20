@@ -15,12 +15,11 @@ export default class TransactionPendingFormConfirm extends Component {
   id = Math.random(); // for tooltip
 
   state = {
-    password: '',
-    isValid: false
+    password: ''
   }
 
   render () {
-    const { password, isValid } = this.state;
+    const { password } = this.state;
 
     return (
       <div className={ styles.confirmForm }>
@@ -29,7 +28,7 @@ export default class TransactionPendingFormConfirm extends Component {
           onKeyDown={ this.onKeyDown }
           name='password'
           fullWidth
-          floatingLabelText='password'
+          floatingLabelText='Account Password'
           type='password'
           value={ password }
         />
@@ -44,7 +43,6 @@ export default class TransactionPendingFormConfirm extends Component {
             className={ styles.confirmButton }
             fullWidth
             primary
-            disabled={ !isValid }
             label='Confirm Transaction'
           />
         </div>
@@ -54,9 +52,10 @@ export default class TransactionPendingFormConfirm extends Component {
   }
 
   renderTooltip () {
-    if (this.state.isValid) {
+    if (this.state.password.length) {
       return;
     }
+
     return (
       <ReactTooltip id={ 'transactionConfirmForm' + this.id }>
         Please provide a password for this account
@@ -67,8 +66,7 @@ export default class TransactionPendingFormConfirm extends Component {
   onModifyPassword = evt => {
     const password = evt.target.value;
     this.setState({
-      password,
-      isValid: this.validate(password)
+      password
     });
   }
 
@@ -83,9 +81,5 @@ export default class TransactionPendingFormConfirm extends Component {
     }
 
     this.onConfirm();
-  }
-
-  validate (password) {
-    return password.length > 0;
   }
 }

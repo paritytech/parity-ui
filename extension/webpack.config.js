@@ -16,7 +16,7 @@ module.exports = {
   devtool: isProd ? '#source-map' : '#cheap-module-eval-source-map',
   context: path.join(__dirname, 'chrome'),
   entry: {
-    App: './extension/App.js',
+    app: './extension/app.js',
     background: './extension/background.js'
   },
   output: {

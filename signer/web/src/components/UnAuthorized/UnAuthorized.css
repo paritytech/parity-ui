@@ -1,5 +1,9 @@
 .container {
-  padding: 25px;
+  padding: 0;
+}
+
+.lead {
+  margin-bottom: 2rem;
 }
 
 .toggleToken {

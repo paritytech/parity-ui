@@ -29,7 +29,6 @@ fn file(content: &str, mime: &str) -> Option<File> {
 	})
 }
 
-#[cfg(not(feature = "dev"))]
 pub fn handle(resource: &str) -> Option<File> {
 	match resource {
 		"/" | "/index.html" => file(include_str!("./web/index.html"), "text/html"),
@@ -37,48 +36,6 @@ pub fn handle(resource: &str) -> Option<File> {
 		"/app.js" => file(include_str!("./web/app.js"), "application/javascript"),
 		_ => None,
 	}
-}
-
-#[cfg(feature = "dev")]
-pub fn handle(resource: &str) -> Option<File> {
-	use std::path;
-	use std::fs;
-	use std::io::Read;
-
-	fn guess_mime(path: &path::Path) -> String {
-		path.extension()
-			.and_then(|s| s.to_str())
-			.map_or("application/octetstream", |extension| match extension {
-				"html" => "text/html",
-				"ico" => "image/ico",
-				"js" => "application/javascript",
-				"css" => "text/css",
-				_ => "application/octetstream",
-			})
-		.into()
-	}
-
-	// TODO [ToDr] Warning! Directory structure assumptions below!
-	let mut path = path::PathBuf::new();
-	path.push("..");
-	path.push("parity-dapps-minimal-sysui-rs");
-	path.push("src");
-	path.push("web");
-	path.push(resource[1..].to_owned());
-
-	let mime = guess_mime(&path);
-
-	fs::File::open(path)
-		.ok()
-		.and_then(|mut f| {
-			let mut s = String::new();
-			f.read_to_string(&mut s).ok().map(move |_| {
-				File {
-					content: s,
-					mime: mime
-				}
-			})
-		})
 }
 
 #[test]
