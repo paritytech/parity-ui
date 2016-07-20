@@ -2,6 +2,8 @@
 
 [![Add to chrome][webstore-image]][webstore-url]
 
+[Back to parity-ui](../)
+
 ## Install
 
 * [Get latest production version from webstore][webstore-url]

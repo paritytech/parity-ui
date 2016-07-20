@@ -1,8 +1,8 @@
 # Parity Status Page
 
-[Back to parity-ui](../README.md)
-
 Parity Status Page.
+
+[Back to parity-ui](../)
 
 ## Development
 
@@ -38,5 +38,5 @@ to re-compile everything (recommended).
 
 ---
 
-Head to [parity-ui](../README.md) to learn how to build Parity with your changes.
+Head to [parity-ui](../) to learn how to build Parity with your changes.
 
