@@ -23,7 +23,7 @@ export default class Debug extends Component {
   }
 
   renderLogs () {
-    return this.props.debug.logs.slice().reverse().map((log, idx) => (
+    return this.props.debug.logs.map((log, idx) => (
       <pre className={ styles.log } key={ idx }>
         { log }
       </pre>

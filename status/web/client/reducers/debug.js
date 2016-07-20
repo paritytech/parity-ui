@@ -37,7 +37,8 @@ export const actionHandlers = {
     if (!state.logging) {
       return { ...state };
     }
-    let newLogs = union(state.logs, action.payload);
+
+    let newLogs = union(state.logs, action.payload.reverse());
 
     return {
       ...state,
