@@ -48,7 +48,11 @@ export default class Transactions {
     if (this.isBadgeAnimated) {
       return; // avoid badge flicker in middle of animation
     }
-    this.send('personal_transactionsToConfirm', [], txsWs => {
+    this.send('personal_transactionsToConfirm', [], (err, txsWs) => {
+      if (err) {
+        logger.warn('[BG WS] error fetching pending transactions:', err);
+        return;
+      }
       if (isEqual(txsWs, this.pendingTransactions)) {
         return;
       }

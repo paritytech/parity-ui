@@ -1,26 +1,23 @@
 import React, { Component, PropTypes } from 'react';
 
-import ErrorIcon from 'material-ui/svg-icons/alert/error';
-
 import TransactionMainDetails from '../TransactionMainDetails';
 import TxHashLink from '../TxHashLink';
 import styles from './TransactionFinished.css';
 
 import * as tUtil from '../util/transaction';
+import { capitalize } from '../util/util';
 
 export default class TransactionFinished extends Component {
 
   static propTypes = {
     id: PropTypes.string.isRequired,
     from: PropTypes.string.isRequired,
-    fromBalance: PropTypes.object, // eth BigNumber, not required since it mght take time to fetch
+    fromBalance: PropTypes.object, // eth BigNumber, not required since it might take time to fetch
     value: PropTypes.string.isRequired, // wei hex
     chain: PropTypes.string.isRequired,
     gasPrice: PropTypes.string.isRequired, // wei hex
     gas: PropTypes.string.isRequired, // hex
     status: PropTypes.string.isRequired, // rejected, confirmed
-    msg: PropTypes.string.isRequired,
-    error: PropTypes.bool,
     to: PropTypes.string, // undefined if it's a contract
     toBalance: PropTypes.object, // eth BigNumber - undefined if it's a contract or until it's fetched
     txHash: PropTypes.string, // undefined if transacation is rejected
@@ -60,12 +57,11 @@ export default class TransactionFinished extends Component {
   }
 
   renderStatus () {
-    const { status, msg } = this.props;
-    const msgClassName = status === 'confirmed' ? styles.isConfirmed : styles.isRejected;
+    const { status } = this.props;
+    const klass = status === 'confirmed' ? styles.isConfirmed : styles.isRejected;
     return (
       <div>
-        { this.renderError() }
-        <span className={ msgClassName }>{ msg }</span>
+        <span className={ klass }>{ capitalize(status) }</span>
         { this.renderTxHash() }
       </div>
     );
@@ -81,19 +77,6 @@ export default class TransactionFinished extends Component {
       <div>
         Transaction hash: <br />
         <TxHashLink chain={ chain } txHash={ txHash } className={ styles.txHash } />
-      </div>
-    );
-  }
-
-  renderError () {
-    if (!this.props.error) {
-      return;
-    }
-
-    return (
-      <div className={ styles.error }>
-        <ErrorIcon className={ styles.error } />
-        <span>Error processing transaction!</span>
       </div>
     );
   }

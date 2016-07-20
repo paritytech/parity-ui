@@ -10,8 +10,8 @@ export default class Transactions extends Component {
       finished: PropTypes.array.isRequired
     }).isRequired,
     actions: PropTypes.shape({
-      confirmTransaction: PropTypes.func.isRequired,
-      rejectTransaction: PropTypes.func.isRequired
+      startConfirmTransaction: PropTypes.func.isRequired,
+      startRejectTransaction: PropTypes.func.isRequired
     }).isRequired
   };
 
@@ -44,8 +44,8 @@ export default class Transactions extends Component {
               data => (
                 <TransactionPendingWeb3
                   className={ styles.transaction }
-                  onConfirm={ actions.confirmTransaction }
-                  onReject={ actions.rejectTransaction }
+                  onConfirm={ actions.startConfirmTransaction }
+                  onReject={ actions.startRejectTransaction }
                   key={ data.id }
                   id={ data.id }
                   gasPrice={ data.transaction.gasPrice }

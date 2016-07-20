@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 
 import ReactTooltip from 'react-tooltip';
-
 import DescriptionIcon from 'material-ui/svg-icons/action/description';
 import GasIcon from 'material-ui/svg-icons/maps/local-gas-station';
 import TransactionMainDetails from '../TransactionMainDetails';
@@ -26,11 +25,12 @@ export default class TransactionPending extends Component {
     nonce: PropTypes.number,
     onConfirm: PropTypes.func.isRequired,
     onReject: PropTypes.func.isRequired,
+    isSending: PropTypes.bool.isRequired,
     className: PropTypes.string
   };
 
   static defaultProps = {
-    value: '0x0' // todo [adgo] - remove after resolving https://github.com/ethcore/parity/issues/1458
+    isSending: false
   };
 
   state = {
@@ -58,6 +58,7 @@ export default class TransactionPending extends Component {
             totalValue={ totalValue }
           />
           <TransactionPendingForm
+            isSending={ this.props.isSending }
             onConfirm={ this.onConfirm }
             onReject={ this.onReject }
           />

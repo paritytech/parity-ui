@@ -9,6 +9,7 @@ import styles from './TransactionPendingFormConfirm.css';
 export default class TransactionPendingFormConfirm extends Component {
 
   static propTypes = {
+    isSending: PropTypes.bool.isRequired,
     onConfirm: PropTypes.func.isRequired
   }
 
@@ -43,6 +44,7 @@ export default class TransactionPendingFormConfirm extends Component {
             className={ styles.confirmButton }
             fullWidth
             primary
+            disabled={ this.props.isSending }
             label='Confirm Transaction'
           />
         </div>

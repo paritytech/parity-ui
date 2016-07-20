@@ -1,5 +1,5 @@
 import logger from '../utils/logger';
-import { addRejectedTransaction, addConfirmedTransaction, addErrorTransaction, errorTransaction } from '../actions/transactions';
+import * as actions from '../actions/transactions';
 
 export default class LocalstorageMiddleware {
 
@@ -13,8 +13,8 @@ export default class LocalstorageMiddleware {
       let delegate;
       switch (action.type) {
         case 'update token': delegate = this.onUpdateToken; break;
-        case 'confirm transaction': delegate = this.onConfirm; break;
-        case 'reject transaction': delegate = this.onReject; break;
+        case 'start confirmTransaction': delegate = this.onConfirmStart; break;
+        case 'start rejectTransaction': delegate = this.onRejectStart; break;
         default:
           next(action);
           return;
@@ -33,56 +33,32 @@ export default class LocalstorageMiddleware {
     next(action);
   }
 
-  onConfirm = (store, next, action) => {
+  onConfirmStart = (store, next, action) => {
+    next(action);
     const { id, password } = action.payload;
-    const transaction = this.getTransaction(store, id); // needed for uccessful cb
-    this.send('personal_confirmTransaction', [ id, {}, password ], res => {
-      logger.log('confirm transaction cb ', res);
-
-      // wrong password
-      if (res === false) {
-        const errMsg = 'Failed to confirm transaction. Make sure the password is correct';
-        store.dispatch(errorTransaction(errMsg));
-        return next(action);
+    this.send('personal_confirmTransaction', [ id, {}, password ], (err, txHash) => {
+      logger.log('[WS MIDDLEWARE] confirm transaction cb:', err, txHash);
+      if (err) {
+        store.dispatch(actions.errorConfirmTransaction({ id, err: err.message }));
+        return;
       }
 
-      // transaction confirmation failed (probably not enough funds)
-      // todo [adgo] - replace with better errors msgs once parity returns them
-      if (res === undefined) {
-        transaction.status = 'rejected';
-        transaction.error = true;
-        transaction.msg = 'Not enough funds.';
-        store.dispatch(addErrorTransaction(transaction));
-        return next(action);
-      }
-
-      // todo [adgo] - detect errors better
-      if (typeof res === 'string') {
-        transaction.status = 'confirmed';
-        transaction.txHash = res;
-        transaction.msg = 'Confirmed';
-        store.dispatch(addConfirmedTransaction(transaction));
-      }
+      store.dispatch(actions.successConfirmTransaction({ id, txHash }));
+      return;
     });
-    return next(action);
   }
 
-  onReject = (store, next, action) => {
+  onRejectStart = (store, next, action) => {
+    next(action);
     const id = action.payload;
-    const transaction = this.getTransaction(store, id); // needed for uccessful cb
-    this.send('personal_rejectTransaction', [ id ], res => {
-      logger.log('reject transaction cb ', res);
-      if (res === true) {
-        transaction.status = 'rejected';
-        transaction.msg = 'Rejected';
-        store.dispatch(addRejectedTransaction(transaction));
+    this.send('personal_rejectTransaction', [ id ], (err, res) => {
+      logger.log('[WS MIDDLEWARE] reject transaction cb:', err, res);
+      if (err) {
+        store.dispatch(actions.errorRejectTransaction({ id, err: err.message }));
+        return;
       }
+      store.dispatch(actions.successRejectTransaction({ id }));
     });
-    return next(action);
-  }
-
-  getTransaction (store, id) {
-    return store.getState().transactions.pending.find(pt => pt.id === id);
   }
 
   send (method, params, callback) {

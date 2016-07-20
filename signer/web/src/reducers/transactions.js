@@ -15,33 +15,80 @@ export default handleActions({
     };
   },
 
-  'add confirmedTransaction' (state, action) {
-    const pending = state.pending.filter(tx => tx.id !== action.payload.id);
-
+  'start confirmTransaction' (state, action) {
+    const pending = state.pending.map(p => {
+      if (p.id === action.payload.id) {
+        p.isSending = true;
+      }
+      return p;
+    });
     return {
       ...state,
-      pending,
-      finished: [action.payload].concat(state.finished)
+      pending
     };
   },
 
-  'add errorTransaction' (state, action) {
-    const pending = state.pending.filter(tx => tx.id !== action.payload.id);
-
+  'success confirmTransaction' (state, action) {
+    const { id, txHash } = action.payload;
+    const confirmed = Object.assign({},
+      state.pending.find(p => p.id === id),
+      { txHash }, { status: 'confirmed' }
+    );
     return {
       ...state,
-      pending,
-      finished: [action.payload].concat(state.finished)
+      pending: state.pending.filter(tx => tx.id !== action.payload.id),
+      finished: [confirmed].concat(state.finished)
     };
   },
 
-  'add rejectedTransaction' (state, action) {
-    const pending = state.pending.filter(tx => tx.id !== action.payload.id);
-
+  'error confirmTransaction' (state, action) {
+    const pending = state.pending.map(p => {
+      if (p.id === action.payload.id) {
+        p.isSending = false;
+      }
+      return p;
+    });
     return {
       ...state,
-      pending,
-      finished: [action.payload].concat(state.finished)
+      pending
+    };
+  },
+
+  'start rejectTransaction' (state, action) {
+    const pending = state.pending.map(p => {
+      if (p.id === action.payload.id) {
+        p.isSending = true;
+      }
+      return p;
+    });
+    return {
+      ...state,
+      pending
+    };
+  },
+
+  'success rejectTransaction' (state, action) {
+    const { id } = action.payload;
+    const rejected = Object.assign({},
+      state.pending.find(p => p.id === id), { status: 'rejected' }
+    );
+    return {
+      ...state,
+      pending: state.pending.filter(tx => tx.id !== id),
+      finished: [rejected].concat(state.finished)
+    };
+  },
+
+  'error rejectTransaction' (state, action) {
+    const pending = state.pending.map(p => {
+      if (p.id === action.payload.id) {
+        p.isSending = false;
+      }
+      return p;
+    });
+    return {
+      ...state,
+      pending
     };
   }
 

@@ -1,11 +1,16 @@
-import { createAction } from 'redux-actions';
-import { identity } from '../utils/utils';
-import { withToastr } from '../utils/toastr';
+import { withToastr } from 'dapps-react-components/src/util/toastr';
+import { identity } from 'dapps-react-components/src/util/util';
 
-export const errorTransaction = createAction('error transaction', identity, withToastr(identity, 'error'));
-export const confirmTransaction = createAction('confirm transaction');
-export const rejectTransaction = createAction('reject transaction');
+import { createAction } from 'redux-actions';
+
 export const updatePendingTransactions = createAction('update pendingTransactions');
-export const addRejectedTransaction = createAction('add rejectedTransaction');
-export const addConfirmedTransaction = createAction('add confirmedTransaction');
-export const addErrorTransaction = createAction('add errorTransaction');
+export const startConfirmTransaction = createAction('start confirmTransaction');
+export const successConfirmTransaction = createAction('success confirmTransaction');
+export const errorConfirmTransaction = createAction('error confirmTransaction', identity,
+  withToastr(args => args.err, 'error')
+);
+export const startRejectTransaction = createAction('start rejectTransaction');
+export const successRejectTransaction = createAction('success rejectTransaction');
+export const errorRejectTransaction = createAction('error rejectTransaction', identity,
+  withToastr(args => args.err, 'error')
+);

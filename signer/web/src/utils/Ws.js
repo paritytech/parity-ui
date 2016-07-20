@@ -67,7 +67,7 @@ export default class Ws {
       return;
     }
 
-    cb(msg.result);
+    cb(msg.error, msg.result);
   }
 
   _onClose = () => {
