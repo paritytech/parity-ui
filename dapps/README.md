@@ -1,20 +1,22 @@
-[![Build Status](https://travis-ci.org/ethcore/parity-dapps-rs.svg?branch=master)](https://travis-ci.org/ethcore/parity-dapps-rs)
-# How to create parity webapplication.
+[![Build Status](https://travis-ci.org/ethcore/parity-ui.svg?branch=master)](https://travis-ci.org/ethcore/parity-ui)
+
+# How to create new builtin DApp.
 1. Clone this repository.
    
    ```bash
-   $ git clone https://github.com/ethcore/parity-dapps-rs.git
-   ```
-1. Create a new directory for your webapp. (`./parity-myapp`)
-
-   ```bash
-   $ mkdir -p ./parity-myapp/src/web
+   $ git clone https://github.com/ethcore/parity-ui.git
    ```
 
-1. Copy your frontend files to `./parity-myapp/src/web` (bundled ones)
+1. Create a new directory for your DApp. (`./myapp`)
 
    ```bash
-   $ cp -r ./myapp-src/* ./parity-myapp/src/web
+   $ mkdir -p ./parity-ui/myapp/src/web
+   ```
+
+1. Copy your frontend files to `./myapp/src/web` (bundled ones)
+
+   ```bash
+   $ cp -r ./myapp-src/* ./parity-ui/myapp/src/web
    ```
 
 1. Instead of creating `web3` in your app. Load (as the first script tag in `head`):
@@ -25,34 +27,34 @@
   
    The `inject.js` script will create global `web3` instance with proper provider that should be used by your dapp.
 
-1. Create `./parity-myapp/Cargo.toml` with you apps details. See example here: [parity-status Cargo.toml](https://github.com/ethcore/parity-status/blob/master/Cargo.toml).
+1. Create `./parity-ui/myapp/Cargo.toml` with you apps details. See example here: [parity-status Cargo.toml](https://github.com/ethcore/parity-ui/blob/master/status/Cargo.toml).
 
    ```bash
-   $ wget https://raw.githubusercontent.com/ethcore/parity-dapps-builtins-rs/master/Cargo.toml -O ./parity-myapp/Cargo.toml
-   $ wget https://raw.githubusercontent.com/ethcore/parity-dapps-builtins-rs/master/build.rs -O ./parity-myapp/build.rs
-   $ wget https://raw.githubusercontent.com/ethcore/parity-dapps-builtins-rs/master/src/lib.rs -O ./parity-myapp/src/lib.rs
-   $ wget https://raw.githubusercontent.com/ethcore/parity-dapps-builtins-rs/master/src/lib.rs.in -O ./parity-myapp/src/lib.rs.in
-   $ vim ./parity-myapp/Cargo.toml # Edit the details
-   $ vim ./parity-myapp/src/lib.rs.in # Edit the details
+   $ cd ./parity-ui/
+   $ cp ./home/Cargo.toml ./myapp/Cargo.toml
+   $ cp ./home/build.rs ./myapp/build.rs
+   $ cp ./home/src/lib.rs ./myapp/src/lib.rs
+   $ cp ./home/src/lib.rs.in ./myapp/src/lib.rs.in
+   # And edit the details of your app
+   $ vim ./myapp/Cargo.toml # Edit the details
+   $ vim ./myapp/src/lib.rs.in # Edit the details
    ```
 
-1. Commit the results and put it to some github repo.
+1. Commit the results.
 
    ```bash
-   $ git init && git add . && git commit -am "My first parity webapp".
+   $ git add myapp && git commit -am "My first Parity DApp".
    ```
 
-# How to include your webapp in `parity`?
-1. Edit `webapp/Cargo.toml` and add dependency to your application (it can be optional)
+# How to include your DApp in `Parity`?
+1. Edit `dapps/Cargo.toml` and add dependency to your application (it can be optional)
 
    ```toml
    # Use git repo and version
-   parity-myapp = { git = "https://github.com/ethcore/parity-myapp.git", version = "0.1.0" }
-   # Or just specify path (speeds-up local development)
-   parity-myapp = { path = "../../parity-myapp" }
+   parity-dapps-myapp = { git = "https://github.com/ethcore/parity-ui.git", version = "0.1.0" }
    ```
 
-1. Edit `webapp/src/apps.rs` and add your application to `all_pages` (if it's optional you need to specify two functions - see `parity-wallet` example)
+1. Edit `dapps/src/apps.rs` and add your application to `all_pages` (if it's optional you need to specify two functions - see `parity-dapps-wallet` example)
 1. Compile parity.
    
    ```bash
