@@ -4,8 +4,6 @@
 
 A set of [Parity](https://github.com/ethcore/parity) built-in DApps and UI components.
 
-[What's Parity?](https://github.com/ethcore/parity)
-
 ## List of projects
 
 * [DApps React Components](./components) - Re-usable set of React Components
