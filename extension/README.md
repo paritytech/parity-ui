@@ -1,6 +1,6 @@
-[![Add to chrome][webstore-image]][webstore-url]
-
 # Parity Trusted Signer Chrome Extension
+
+[![Add to chrome][webstore-image]][webstore-url]
 
 ## Install
 

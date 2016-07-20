@@ -1,5 +1,7 @@
 # DApps React Components
 
+[Back to parity-ui](../README.md)
+
 A set of (potentially) re-usable React components for DApp development.
 
 ## Installation
@@ -50,6 +52,8 @@ ReactDOM.render(
 
 It's currently not possible to work on components in isolation. Work on [Signer](../signer/README.md) or [Home Page](../home/README.md) instead.
 
-Head to [parity-ui](../README.md) for building Parity with your changes.
+---
+
+Head to [parity-ui](../README.md) to learn how to build Parity with your changes.
 
 
