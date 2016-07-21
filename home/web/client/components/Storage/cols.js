@@ -52,7 +52,7 @@ export default class Cols {
         this.isError = true;
         this.isLoaded = true;
         this.processQueue();
-      }, 50);
+      }, 100);
 
       // Try to ping the frame to make sure it's loaded correctly
       this.forceSendRequest({

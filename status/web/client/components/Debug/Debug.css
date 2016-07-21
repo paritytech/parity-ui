@@ -23,6 +23,8 @@
 .logs {
   width: 100%;
   overflow: auto;
+  height: 50vh;
+  min-height: 400px;
   background: #F5F4F2;
 }
 
