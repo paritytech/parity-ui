@@ -9,5 +9,10 @@ onTokenChange(initApp);
 getToken(initApp);
 
 function initApp (token) {
-  app(token, setToken, '127.0.0.1:8180');
+  app(token, onSetToken, '127.0.0.1:8180');
+}
+
+function onSetToken (token) {
+  setToken(token);
+  window.location.href = 'app.html';
 }

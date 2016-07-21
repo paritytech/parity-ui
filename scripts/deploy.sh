@@ -9,6 +9,6 @@ cargo update -p parity-dapps
 git checkout -b auto-ui-update
 git config user.name "Travis CI"
 git config user.email "admin@ethcore.io"
-git commit -am "Bumping Parity UI"
+git commit -am "Bumping Parity UI [ci skip]"
 git push --force -u origin auto-ui-update
 
