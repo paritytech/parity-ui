@@ -1,6 +1,6 @@
-# DApps React Components
+# Dapps React Components
 
-A set of (potentially) re-usable React components for DApp development.
+A set of (potentially) re-usable React components for Dapp development.
 
 [Back to parity-ui](../README.md)
 

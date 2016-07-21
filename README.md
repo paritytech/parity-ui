@@ -2,24 +2,24 @@
 
 # Parity UI
 
-A set of [Parity](https://github.com/ethcore/parity) built-in DApps and UI components.
+A set of [Parity](https://github.com/ethcore/parity) built-in Dapps and UI components.
 
 ## List of projects
 
-* [DApps React Components](./components) - Re-usable set of React Components
+* [Dapps React Components](./components) - Re-usable set of React Components
 * [Home Page & TopBar](./home) - Parity Home Page & TopBar
 * [Status Page](./status) - Status Page for your Parity node
 * [Ethereum Wallet](./wallet) - Ethereum Wallet bundled for Parity
 * [Trusted Signer](./signer) - Trusted Signer Dapp
 * [Trusted Signer Chrome Extension](./extension) - Parity Integration Chrome Extension
 
-### How to add new Builtin-DApp?
+### How to add a new Built-in Dapp?
 
 See description in [Parity Dapps](./dapps).
 
 ## Development
 
-Development procedures for each project are described in their README files.
+Development procedures for each project are described in its' README files.
 
 ### Web.sh
 
@@ -63,13 +63,13 @@ You can use [Cargo Config file](http://doc.crates.io/config.html) to use local v
 
 ```toml
 # ~/.cargo/config
-# Location of parity-ui repo: ~/workspace/parity-ui
+# Location of parity-ui repo: ~/path/to/parity-ui
 paths = [
-  "workspace/parity-ui/dapps",
-  "workspace/parity-ui/wallet",
-  "workspace/parity-ui/home",
-  "workspace/parity-ui/status",
-  "workspace/parity-ui/signer"
+  "path/to/parity-ui/dapps",
+  "path/to/parity-ui/wallet",
+  "path/to/parity-ui/home",
+  "path/to/parity-ui/status",
+  "path/to/parity-ui/signer"
 ]
 ```
 

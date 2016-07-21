@@ -1,17 +1,17 @@
-# Parity DApps
+# Parity Dapps
 
-Code generator to simplify creating a built-in Parity DApp
+Code generator to simplify creating a built-in Parity Dapp
 
 [Back to parity-ui](../README.md)
 
-# How to create new builtin DApp.
+# How to create new builtin Dapp.
 1. Clone this repository.
    
    ```bash
    $ git clone https://github.com/ethcore/parity-ui.git
    ```
 
-1. Create a new directory for your DApp. (`./myapp`)
+1. Create a new directory for your Dapp. (`./myapp`)
 
    ```bash
    $ mkdir -p ./parity-ui/myapp/src/web
@@ -47,10 +47,10 @@ Code generator to simplify creating a built-in Parity DApp
 1. Commit the results.
 
    ```bash
-   $ git add myapp && git commit -am "My first Parity DApp".
+   $ git add myapp && git commit -am "My first Parity Dapp".
    ```
 
-# How to include your DApp in `Parity`?
+# How to include your Dapp in `Parity`?
 1. Edit `dapps/Cargo.toml` and add dependency to your application (it can be optional)
 
    ```toml

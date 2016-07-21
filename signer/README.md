@@ -1,6 +1,6 @@
 # Parity Trusted Signer
 
-Parity Trusted Signer DApp.
+Parity Trusted Signer Dapp.
 
 [Back to parity-ui](../README.md)
 
