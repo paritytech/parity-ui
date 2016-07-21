@@ -23,8 +23,12 @@ export default class UnAuthorized extends Component {
   };
 
   componentWillReceiveProps (nextProps) {
-    const { token } = nextProps.ws;
-    this.setState({ token });
+    if (this.props.ws.token === nextProps.ws.token) {
+      return;
+    }
+    this.setState({
+      token: nextProps.ws.token
+    });
   }
 
   componentWillUnmount () {
