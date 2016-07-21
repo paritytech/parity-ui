@@ -1,5 +1,6 @@
 import { isEqual } from 'lodash';
 import { updateAccountsNames } from '../actions/rpc';
+import { updateIsfirstRun } from '../actions/firstRun';
 import Storage from '../components/Storage';
 
 export default class StorageMiddleware {
@@ -33,7 +34,7 @@ export default class StorageMiddleware {
   }
 
   onInitApp (store) {
-    this.handleFirstRun();
+    this.handleFirstRun(store);
     this.storage.onAccountsNames(names => {
       this.syncAccountsNames(store, names);
     });
@@ -62,8 +63,9 @@ export default class StorageMiddleware {
     );
   }
 
-  handleFirstRun () {
+  handleFirstRun (store) {
     this.storage.getNotFirstRun(notFirstRun => {
+      store.dispatch(updateIsfirstRun(!notFirstRun));
       if (notFirstRun) {
         return;
       }
