@@ -16,61 +16,45 @@ export default handleActions({
   },
 
   'start confirmTransaction' (state, action) {
-    const pending = state.pending.map(p => {
-      if (p.id === action.payload.id) {
-        p.isSending = true;
-      }
-      return p;
-    });
     return {
       ...state,
-      pending
+      pending: pendingHandler(state.pending, action.payload.id, true)
     };
   },
 
   'success confirmTransaction' (state, action) {
     const { id, txHash } = action.payload;
-    const confirmed = Object.assign({},
+    const confirmed = Object.assign(
       state.pending.find(p => p.id === id),
-      { txHash }, { status: 'confirmed' }
+      { txHash, status: 'confirmed' }
     );
+
     return {
       ...state,
-      pending: state.pending.filter(tx => tx.id !== action.payload.id),
+      pending: state.pending.filter(tx => tx.id !== id),
       finished: [confirmed].concat(state.finished)
     };
   },
 
   'error confirmTransaction' (state, action) {
-    const pending = state.pending.map(p => {
-      if (p.id === action.payload.id) {
-        p.isSending = false;
-      }
-      return p;
-    });
     return {
       ...state,
-      pending
+      pending: pendingHandler(state.pending, action.payload.id, false)
     };
   },
 
   'start rejectTransaction' (state, action) {
-    const pending = state.pending.map(p => {
-      if (p.id === action.payload.id) {
-        p.isSending = true;
-      }
-      return p;
-    });
     return {
       ...state,
-      pending
+      pending: pendingHandler(state.pending, action.payload.id, true)
     };
   },
 
   'success rejectTransaction' (state, action) {
     const { id } = action.payload;
-    const rejected = Object.assign({},
-      state.pending.find(p => p.id === id), { status: 'rejected' }
+    const rejected = Object.assign(
+      state.pending.find(p => p.id === id),
+      { status: 'rejected' }
     );
     return {
       ...state,
@@ -80,16 +64,19 @@ export default handleActions({
   },
 
   'error rejectTransaction' (state, action) {
-    const pending = state.pending.map(p => {
-      if (p.id === action.payload.id) {
-        p.isSending = false;
-      }
-      return p;
-    });
     return {
       ...state,
-      pending
+      pending: pendingHandler(state.pending, action.payload.id, false)
     };
   }
 
 }, initialState);
+
+function pendingHandler (pending, id, isSending) {
+  return pending.map(p => {
+    if (p.id === id) {
+      p.isSending = isSending;
+    }
+    return p;
+  });
+}
