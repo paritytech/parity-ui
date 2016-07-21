@@ -6,6 +6,7 @@ import dom from './dom';
 import dapps from './dapps';
 import pendingTransaction from './pendingTransaction';
 import options from './options';
+import firstRun from './firstRun';
 import rpc from './rpc';
 
 export default combineReducers({
@@ -16,5 +17,6 @@ export default combineReducers({
   dapps,
   pendingTransaction,
   options,
+  firstRun,
   rpc
 });
