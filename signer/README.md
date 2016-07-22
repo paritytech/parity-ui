@@ -1,26 +1,33 @@
-# Parity Home Page & TopBar
+# Parity Trusted Signer
 
-Parity Home Page (DApps list) and TopBar.
+Parity Trusted Signer Dapp.
 
 [Back to parity-ui](../README.md)
 
 ## Development
 
 ```bash
- $ cd parity-ui/home/web
+ $ cd parity-ui/signer/web
  $ npm install
  $ npm start # Starts development server
- $ xdg-open http://localhost:3010 || open http://localhost:3010
+ $ xdg-open http://localhost:3030 || open http://localhost:3030
 ```
 
-Make sure to have Parity running.
+You need to run Parity using:
+
+```bash
+$ cargo run --release --features signer-dev
+```
+
+to disable origin verification. Otherwise your development server will not be able to connect.
+
 
 ## Pre-compiling JS files
 
 After you finish changing the source code you need to also commit pre-compiled JS files, otherwise the build will fail.
 
 ```bash
- $ cd parity-ui/home/web
+ $ cd parity-ui/signer/web
  $ rm -rf node_modules                  # Make sure to start with fresh dependencies
  $ rm -rf ../../components/node_modules
  $ npm install --ignore-scripts         # Install dependencies (but don't link components)
