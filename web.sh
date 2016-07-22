@@ -7,9 +7,6 @@ CMD="help"
 
 # Parse CLI
 case "$1" in
-  install | i | ins | inst | insta | instal)
-    CMD="install"
-    ;;
   clean | c | cl | cle | clea)
     CMD="clean"
     ;;
@@ -32,15 +29,7 @@ shift
 # Run Command
 case "$CMD" in
   help)
-    echo "Options: install, clean, shrinkwrap, build, test, help"
-    ;;
-  install)
-    set -x
-    for P in ${PROJECTS[@]}; do
-      cd $P
-      npm install $@
-      cd -
-    done
+    echo "Options: clean, shrinkwrap, build, test, help"
     ;;
   clean)
     set -x

@@ -29,7 +29,6 @@ You can use `./web.sh` script to automate some actions for all projects.
 * `$ ./web.sh build` - Compile JS files for each project.
 * `$ ./web.sh lint` - Run linting for each project.
 * `$ ./web.sh test` - Run tests for each project.
-* `$ ./web.sh install` - Run `npm install` for each project.
 * `$ ./web.sh shrinkwrap` - Regenerate `shrinkwrap.json` file for each project.
 
 
