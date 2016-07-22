@@ -46,6 +46,7 @@ export default class Transactions extends Component {
                   className={ styles.transaction }
                   onConfirm={ actions.startConfirmTransaction }
                   onReject={ actions.startRejectTransaction }
+                  isSending = { data.isSending }
                   key={ data.id }
                   id={ data.id }
                   gasPrice={ data.transaction.gasPrice }

@@ -20,15 +20,26 @@ export default class TransactionPendingForm extends Component {
   };
 
   render () {
-    const { isSending, onConfirm, onReject, className } = this.props;
-    const Form = !this.state.isRejectOpen
-      ? <TransactionPendingFormConfirm onConfirm={ onConfirm } isSending={ isSending } />
-      : <TransactionPendingFormReject onReject={ onReject } />;
+    const { className } = this.props;
+
     return (
       <div className={ `${styles.container} ${className}` }>
-        { Form }
+        { this.renderForm() }
         { this.renderRejectToggle() }
       </div>
+    );
+  }
+
+  renderForm () {
+    const { isSending, onConfirm, onReject } = this.props;
+    if (this.state.isRejectOpen) {
+      return (
+        <TransactionPendingFormReject onReject={ onReject } />
+      );
+    }
+
+    return (
+      <TransactionPendingFormConfirm onConfirm={ onConfirm } isSending={ isSending } />
     );
   }
 

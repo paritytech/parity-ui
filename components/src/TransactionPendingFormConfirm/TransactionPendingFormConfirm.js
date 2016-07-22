@@ -20,6 +20,7 @@ export default class TransactionPendingFormConfirm extends Component {
   }
 
   render () {
+    const { isSending } = this.props;
     const { password } = this.state;
 
     return (
@@ -44,8 +45,8 @@ export default class TransactionPendingFormConfirm extends Component {
             className={ styles.confirmButton }
             fullWidth
             primary
-            disabled={ this.props.isSending }
-            label='Confirm Transaction'
+            disabled={ isSending }
+            label={ isSending ? 'Confirming...' : 'Confirm Transaction' }
           />
         </div>
         { this.renderTooltip() }

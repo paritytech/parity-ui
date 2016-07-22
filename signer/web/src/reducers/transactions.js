@@ -18,7 +18,7 @@ export default handleActions({
   'start confirmTransaction' (state, action) {
     return {
       ...state,
-      pending: pendingHandler(state.pending, action.payload.id, true)
+      pending: setIsSending(state.pending, action.payload.id, true)
     };
   },
 
@@ -31,7 +31,7 @@ export default handleActions({
 
     return {
       ...state,
-      pending: state.pending.filter(tx => tx.id !== id),
+      pending: removeWithId(state.pending, id),
       finished: [confirmed].concat(state.finished)
     };
   },
@@ -39,14 +39,14 @@ export default handleActions({
   'error confirmTransaction' (state, action) {
     return {
       ...state,
-      pending: pendingHandler(state.pending, action.payload.id, false)
+      pending: setIsSending(state.pending, action.payload.id, false)
     };
   },
 
   'start rejectTransaction' (state, action) {
     return {
       ...state,
-      pending: pendingHandler(state.pending, action.payload.id, true)
+      pending: setIsSending(state.pending, action.payload.id, true)
     };
   },
 
@@ -58,7 +58,7 @@ export default handleActions({
     );
     return {
       ...state,
-      pending: state.pending.filter(tx => tx.id !== id),
+      pending: removeWithId(state.pending, id),
       finished: [rejected].concat(state.finished)
     };
   },
@@ -66,17 +66,21 @@ export default handleActions({
   'error rejectTransaction' (state, action) {
     return {
       ...state,
-      pending: pendingHandler(state.pending, action.payload.id, false)
+      pending: setIsSending(state.pending, action.payload.id, false)
     };
   }
 
 }, initialState);
 
-function pendingHandler (pending, id, isSending) {
+function removeWithId (pending, id) {
+  return pending.filter(tx => tx.id !== id).slice();
+}
+
+function setIsSending (pending, id, isSending) {
   return pending.map(p => {
     if (p.id === id) {
       p.isSending = isSending;
     }
     return p;
-  });
+  }).slice();
 }
