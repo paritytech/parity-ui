@@ -82,7 +82,7 @@ function submitTransaction (ev) {
 function redrawSummary () {
   const $summary = el('#summary');
   const $btn = el('#form button');
-  const from = web3.defaultAccount;
+  const from = web3.eth.defaultAccount;
   const to = $recipient.value || 'Deploy contract';
   const amount = $amount.value;
   const data = $data.value || '0x';

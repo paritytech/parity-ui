@@ -64,8 +64,8 @@ export default class InterceptorProvider {
   notifyNewPendingTransaction () {
     this.store.dispatch(
       addToast({
-        type: 'default',
-        msg: 'New pending transaction'
+        type: 'success',
+        msg: 'Open Trusted Signer to confirm transaction.'
       })
     );
   }

@@ -2,24 +2,27 @@
   position: absolute;
   top: 81px;
   right: 10px;
-  width: 200px;
+  width: 250px;
 }
 
 .toast {
-  padding: 10px;
+  padding: 1.1rem;
   position: relative;
-  font-size: 16px;
-  margin-bottom: 10px;
+  font-size: 1.1rem;
+  line-height: 1.4rem;
+  margin-bottom: 1.2rem;
   animation: fadein .5s;
 }
 
 .error {
-  background: red !important;
+  background: #E53935 !important;
+  border-color: 1px solid #C62828;
   color: #fff !important;
 }
 
-.succes {
-  background: green !important;
+.success {
+  background: #43A047 !important;
+  border-color: 1px solid #2E7D32;
   color: #fff !important;
 }
 
@@ -31,12 +34,6 @@
 .error .remove,
 .success .remove {
   color: #fff !important;
-}
-
-.msg {
-  color: #000;
-  font-size: 18px;
-  text-shadow: 0px 0px 2px rgb(103, 103, 103);
 }
 
 @keyframes fadein {
