@@ -17,6 +17,7 @@ class TransactionPendingWeb3 extends Component {
     gas: PropTypes.string.isRequired, // hex
     onConfirm: PropTypes.func.isRequired,
     onReject: PropTypes.func.isRequired,
+    isSending: PropTypes.bool.isRequired,
     to: PropTypes.string, // undefined if it's a contract
     data: PropTypes.string, // hex
     nonce: PropTypes.number,

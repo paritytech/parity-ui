@@ -78,7 +78,7 @@ export default class Ws {
       return;
     }
     // callback otherwise
-    cb(msg.result);
+    cb(msg.error, msg.result);
   }
 
   send (payload, callback) {

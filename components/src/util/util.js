@@ -14,3 +14,7 @@ export function toPromise (fn) {
 export function identity (x) {
   return x;
 }
+
+export function capitalize (str) {
+  return str[0].toUpperCase() + str.slice(1).toLowerCase();
+}

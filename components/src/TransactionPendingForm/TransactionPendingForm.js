@@ -9,9 +9,10 @@ import styles from './TransactionPendingForm.css';
 export default class TransactionPendingForm extends Component {
 
   static propTypes = {
-    className: PropTypes.string,
+    isSending: PropTypes.bool.isRequired,
     onConfirm: PropTypes.func.isRequired,
-    onReject: PropTypes.func.isRequired
+    onReject: PropTypes.func.isRequired,
+    className: PropTypes.string
   };
 
   state = {
@@ -19,15 +20,26 @@ export default class TransactionPendingForm extends Component {
   };
 
   render () {
-    const { onConfirm, onReject, className } = this.props;
-    const Form = !this.state.isRejectOpen
-      ? <TransactionPendingFormConfirm onConfirm={ onConfirm } />
-      : <TransactionPendingFormReject onReject={ onReject } />;
+    const { className } = this.props;
+
     return (
       <div className={ `${styles.container} ${className}` }>
-        { Form }
+        { this.renderForm() }
         { this.renderRejectToggle() }
       </div>
+    );
+  }
+
+  renderForm () {
+    const { isSending, onConfirm, onReject } = this.props;
+    if (this.state.isRejectOpen) {
+      return (
+        <TransactionPendingFormReject onReject={ onReject } />
+      );
+    }
+
+    return (
+      <TransactionPendingFormConfirm onConfirm={ onConfirm } isSending={ isSending } />
     );
   }
 

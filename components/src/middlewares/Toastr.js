@@ -3,7 +3,7 @@ import { addToast, removeToast } from '../actions/toastr';
 
 export default class ToastrMiddleware {
 
-  constructor (time = 4000) {
+  constructor (time = 6000) {
     this._time = time;
     this._timeouts = {};
   }

@@ -24,7 +24,11 @@ export default class WsProvider {
   }
 
   fetchPendingTransactions () {
-    this.send('personal_transactionsToConfirm', [], txsWs => {
+    this.send('personal_transactionsToConfirm', [], (err, txsWs) => {
+      if (err) {
+        logger.warn('[WS Provider] error fetching pending transactions', err);
+        return;
+      }
       const txsStored = this.store.getState().transactions.pending;
       if (isEqual(txsWs, txsStored)) {
         return;

@@ -54,7 +54,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        include: [/client/, /dapps-react-components/],
+        include: [/client/, /src/],
         loaders: [
           'style',
           'css?modules&sourceMap&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]',
@@ -63,7 +63,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        exclude: [/client/, /dapps-react-components/],
+        exclude: [/client/, /src/],
         loader: 'style!css'
       },
       {
