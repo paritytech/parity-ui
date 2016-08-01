@@ -3,14 +3,14 @@ import { identity } from 'dapps-react-components/src/util/util';
 
 import { createAction } from 'redux-actions';
 
-export const updatePendingTransactions = createAction('update pendingTransactions');
-export const startConfirmTransaction = createAction('start confirmTransaction');
-export const successConfirmTransaction = createAction('success confirmTransaction');
-export const errorConfirmTransaction = createAction('error confirmTransaction', identity,
+export const updatePendingRequests = createAction('update pendingRequests');
+export const startConfirmRequest = createAction('start confirmRequest');
+export const successConfirmRequest = createAction('success confirmRequest');
+export const errorConfirmRequest = createAction('error confirmTransaction', identity,
   withToastr(args => args.err, 'error')
 );
-export const startRejectTransaction = createAction('start rejectTransaction');
-export const successRejectTransaction = createAction('success rejectTransaction');
-export const errorRejectTransaction = createAction('error rejectTransaction', identity,
+export const startRejectRequest = createAction('start rejectRequest');
+export const successRejectRequest = createAction('success rejectRequest');
+export const errorRejectRequest = createAction('error rejectRequest', identity,
   withToastr(args => args.err, 'error')
 );

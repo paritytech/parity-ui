@@ -5,56 +5,56 @@ import styles from './Transactions.css';
 export default class Transactions extends Component {
 
   static propTypes = {
-    transactions: PropTypes.shape({
+    requests: PropTypes.shape({
       pending: PropTypes.array.isRequired,
       finished: PropTypes.array.isRequired
     }).isRequired,
     actions: PropTypes.shape({
-      startConfirmTransaction: PropTypes.func.isRequired,
-      startRejectTransaction: PropTypes.func.isRequired
+      startConfirmRequest: PropTypes.func.isRequired,
+      startRejectRequest: PropTypes.func.isRequired
     }).isRequired
   };
 
   render () {
-    const { pending, finished } = this.props.transactions;
+    const { pending, finished } = this.props.requests;
 
     if (!pending.length && !finished.length) {
-      return this.renderNoTransactionsMsg();
+      return this.renderNoRequestsMsg();
     }
 
     return (
       <div>
-        { this.renderFinishedTransactions() }
-        { this.renderPendingTransactions() }
+        { this.renderFinishedRequests() }
+        { this.renderPendingRequests() }
       </div>
     );
   }
 
-  renderPendingTransactions () {
-    const { actions, transactions } = this.props;
-    if (!transactions.pending.length) {
+  renderPendingRequests () {
+    const { actions, requests } = this.props;
+    if (!requests.pending.length) {
       return;
     }
     return (
       <div>
-        <h2>Pending Transactions</h2>
+        <h2>Pending Requests</h2>
         <div>
           {
-            transactions.pending.map(
+            requests.pending.filter(tx => tx.payload.transaction).map(
               data => (
                 <TransactionPendingWeb3
                   className={ styles.transaction }
-                  onConfirm={ actions.startConfirmTransaction }
-                  onReject={ actions.startRejectTransaction }
+                  onConfirm={ actions.startConfirmRequest }
+                  onReject={ actions.startRejectRequest }
                   isSending={ data.isSending || false }
                   key={ data.id }
                   id={ data.id }
-                  gasPrice={ data.transaction.gasPrice }
-                  gas={ data.transaction.gas }
-                  data={ data.transaction.data }
-                  from={ data.transaction.from }
-                  to={ data.transaction.to }
-                  value={ data.transaction.value || '0x0' }
+                  gasPrice={ data.payload.transaction.gasPrice }
+                  gas={ data.payload.transaction.gas }
+                  data={ data.payload.transaction.data }
+                  from={ data.payload.transaction.from }
+                  to={ data.payload.transaction.to }
+                  value={ data.payload.transaction.value || '0x0' }
                 />
               )
             )
@@ -64,28 +64,28 @@ export default class Transactions extends Component {
     );
   }
 
-  renderFinishedTransactions () {
-    const { finished } = this.props.transactions;
+  renderFinishedRequests () {
+    const { finished } = this.props.requests;
     if (!finished.length) {
       return;
     }
     return (
       <div>
-        <h2>Finished Transactions</h2>
+        <h2>Finished Requests</h2>
         <div>
           {
-            finished.map(
+            finished.filter(tx => tx.payload.transaction).map(
               data => (
                 <TransactionFinishedWeb3
                   className={ styles.transaction }
                   txHash={ data.txHash }
                   key={ data.id }
                   id={ data.id }
-                  gasPrice={ data.transaction.gasPrice }
-                  gas={ data.transaction.gas }
-                  from={ data.transaction.from }
-                  to={ data.transaction.to }
-                  value={ data.transaction.value || '0x0' }
+                  gasPrice={ data.payload.transaction.gasPrice }
+                  gas={ data.payload.transaction.gas }
+                  from={ data.payload.transaction.from }
+                  to={ data.payload.transaction.to }
+                  value={ data.payload.transaction.value || '0x0' }
                   msg={ data.msg }
                   status={ data.status }
                   error={ data.error }
@@ -98,10 +98,10 @@ export default class Transactions extends Component {
     );
   }
 
-  renderNoTransactionsMsg () {
+  renderNoRequestsMsg () {
     return (
-      <div className={ styles.noTransactionsMsg }>
-        <h3>There are no transactions requiring your confirmation.</h3>
+      <div className={ styles.noRequestsMsg }>
+        <h3>There are no requests requiring your confirmation.</h3>
       </div>
     );
   }

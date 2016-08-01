@@ -4,7 +4,7 @@ import app from './app';
 import toastr from './toastr';
 import proxy from './proxy';
 import parity from './parity';
-import transactions from './transactions';
+import requests from './transactions';
 import ws from './ws';
 import logger from './logger';
 
@@ -14,7 +14,7 @@ export default combineReducers({
   toastr,
   proxy,
   parity,
-  transactions,
+  requests,
   ws,
   logger
 });

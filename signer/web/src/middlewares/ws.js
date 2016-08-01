@@ -13,8 +13,8 @@ export default class LocalstorageMiddleware {
       let delegate;
       switch (action.type) {
         case 'update token': delegate = this.onUpdateToken; break;
-        case 'start confirmTransaction': delegate = this.onConfirmStart; break;
-        case 'start rejectTransaction': delegate = this.onRejectStart; break;
+        case 'start confirmRequest': delegate = this.onConfirmStart; break;
+        case 'start rejectRequest': delegate = this.onRejectStart; break;
         default:
           next(action);
           return;
@@ -36,14 +36,14 @@ export default class LocalstorageMiddleware {
   onConfirmStart = (store, next, action) => {
     next(action);
     const { id, password } = action.payload;
-    this.send('personal_confirmTransaction', [ id, {}, password ], (err, txHash) => {
-      logger.log('[WS MIDDLEWARE] confirm transaction cb:', err, txHash);
+    this.send('personal_confirmRequest', [ id, {}, password ], (err, txHash) => {
+      logger.log('[WS MIDDLEWARE] confirm request cb:', err, txHash);
       if (err) {
-        store.dispatch(actions.errorConfirmTransaction({ id, err: err.message }));
+        store.dispatch(actions.errorConfirmRequest({ id, err: err.message }));
         return;
       }
 
-      store.dispatch(actions.successConfirmTransaction({ id, txHash }));
+      store.dispatch(actions.successConfirmRequest({ id, txHash }));
       return;
     });
   }
@@ -51,13 +51,13 @@ export default class LocalstorageMiddleware {
   onRejectStart = (store, next, action) => {
     next(action);
     const id = action.payload;
-    this.send('personal_rejectTransaction', [ id ], (err, res) => {
-      logger.log('[WS MIDDLEWARE] reject transaction cb:', err, res);
+    this.send('personal_rejectRequest', [ id ], (err, res) => {
+      logger.log('[WS MIDDLEWARE] reject request cb:', err, res);
       if (err) {
-        store.dispatch(actions.errorRejectTransaction({ id, err: err.message }));
+        store.dispatch(actions.errorRejectRequest({ id, err: err.message }));
         return;
       }
-      store.dispatch(actions.successRejectTransaction({ id }));
+      store.dispatch(actions.successRejectRequest({ id }));
     });
   }
 
