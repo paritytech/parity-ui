@@ -23,8 +23,11 @@
   padding: 0 30px;
   width: 250px;
   color: #E53935;
-  font-size: 17px;
   vertical-align: top;
+}
+
+.info p:first-child {
+  margin-top: 0;
 }
 
 /* TODO [todr] copy&paste from transactions */
@@ -32,8 +35,18 @@
   color: green;
 }
 
+.isRejected {
+  opacity: 0.7;
+}
+
 .txHash {
   word-break: break-all;
+}
+
+.actions {
+  width: 180px;
+  display: inline-block;
+  min-height: 120px;
 }
 
 .signDetails img {

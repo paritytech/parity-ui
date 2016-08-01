@@ -2,10 +2,9 @@ import React, { Component, PropTypes } from 'react';
 
 import Account from '../Account';
 import TransactionPendingForm from '../TransactionPendingForm';
-import TransactionFinished from '../TransactionFinished';
 import TxHashLink from '../TxHashLink';
 
-import styles from './styles.css';
+import styles from './SignRequest.css';
 
 export default class SignRequest extends Component {
 
@@ -44,7 +43,7 @@ export default class SignRequest extends Component {
         </div>
         <div className={ styles.info } title={ hash }>
           <p>Dapp is requesting to sign arbitrary transaction using this account.</p>
-          <p>Confirm the transaction only if you trust the app.</p>
+          <p><strong>Confirm the transaction only if you trust the app.</strong></p>
         </div>
       </div>
     );
@@ -55,18 +54,23 @@ export default class SignRequest extends Component {
 
     if (isFinished) {
       if (status === 'confirmed') {
-        const { chain, hash} = this.props;
+        const { chain, hash } = this.props;
 
         return (
-          <div>
-            <span className={ styles.isConfirmed }>Transaction confirmed:</span>
-            <TxHashLink chain={ chain } txHash={ hash } className={ styles.txHash } />
+          <div className={ styles.actions }>
+            <span className={ styles.isConfirmed }>Confirmed</span>
+            <div>
+              Transaction hash: <br />
+              <TxHashLink chain={ chain } txHash={ hash } className={ styles.txHash } />
+            </div>
           </div>
         );
       }
 
       return (
-        <span className={ styles.isRejected }>Signing rejected.</span>
+        <div className={ styles.actions }>
+          <span className={ styles.isRejected }>Rejected</span>
+        </div>
       );
     }
 

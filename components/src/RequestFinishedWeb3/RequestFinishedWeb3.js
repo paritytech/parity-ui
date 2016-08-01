@@ -15,7 +15,7 @@ class RequestFinishedWeb3 extends Component {
     result: PropTypes.any.isRequired,
     payload: PropTypes.oneOfType([
       PropTypes.shape({ transaction: PropTypes.object.isRequired }),
-      PropTypes.shape({ sign: PropTypes.object.isRequired }),
+      PropTypes.shape({ sign: PropTypes.object.isRequired })
     ]).isRequired,
     msg: PropTypes.string,
     status: PropTypes.string,
@@ -31,7 +31,7 @@ class RequestFinishedWeb3 extends Component {
       return (
         <SignWeb3
           className={ className }
-          isFinished={ true }
+          isFinished
           id={ id }
           address={ sign.address }
           hash={ sign.hash }

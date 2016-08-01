@@ -26,7 +26,7 @@ export default handleActions({
     const { id, txHash } = action.payload;
     const confirmed = Object.assign(
       state.pending.find(p => p.id === id),
-      { txHash, status: 'confirmed' }
+      { result: txHash, status: 'confirmed' }
     );
 
     return {

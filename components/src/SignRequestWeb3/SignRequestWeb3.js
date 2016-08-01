@@ -24,13 +24,13 @@ class SignRequestWeb3 extends Component {
 
   state = {
     chain: 'homestead',
-    balance: null, // avoid required prop loading warning
+    balance: null // avoid required prop loading warning
   }
 
   render () {
     const { web3 } = this.context;
     const { balance, chain } = this.state;
-    const { onConfirm, onReject, isSending, isFinished, hash, className, id, status} = this.props;
+    const { onConfirm, onReject, isSending, isFinished, hash, className, id, status } = this.props;
 
     const address = web3.toChecksumAddress(this.props.address);
 
@@ -43,7 +43,6 @@ class SignRequestWeb3 extends Component {
         onReject={ onReject }
         isSending={ isSending }
         isFinished={ isFinished }
-        hash={ hash }
         id={ id }
         chain={ chain }
         status={ status }

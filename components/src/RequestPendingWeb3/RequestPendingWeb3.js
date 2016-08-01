@@ -17,7 +17,7 @@ class RequestPendingWeb3 extends Component {
     isSending: PropTypes.bool.isRequired,
     payload: PropTypes.oneOfType([
       PropTypes.shape({ transaction: PropTypes.object.isRequired }),
-      PropTypes.shape({ sign: PropTypes.object.isRequired }),
+      PropTypes.shape({ sign: PropTypes.object.isRequired })
     ]).isRequired,
     className: PropTypes.string
   };
