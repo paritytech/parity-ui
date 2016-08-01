@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { TransactionPendingWeb3, TransactionFinishedWeb3 } from 'dapps-react-components';
+import { RequestPendingWeb3, RequestFinishedWeb3 } from 'dapps-react-components';
 import styles from './Transactions.css';
 
 export default class Transactions extends Component {
@@ -31,35 +31,15 @@ export default class Transactions extends Component {
   }
 
   renderPendingRequests () {
-    const { actions, requests } = this.props;
+    const { requests } = this.props;
     if (!requests.pending.length) {
       return;
     }
+
     return (
       <div>
         <h2>Pending Requests</h2>
-        <div>
-          {
-            requests.pending.filter(tx => tx.payload.transaction).map(
-              data => (
-                <TransactionPendingWeb3
-                  className={ styles.transaction }
-                  onConfirm={ actions.startConfirmRequest }
-                  onReject={ actions.startRejectRequest }
-                  isSending={ data.isSending || false }
-                  key={ data.id }
-                  id={ data.id }
-                  gasPrice={ data.payload.transaction.gasPrice }
-                  gas={ data.payload.transaction.gas }
-                  data={ data.payload.transaction.data }
-                  from={ data.payload.transaction.from }
-                  to={ data.payload.transaction.to }
-                  value={ data.payload.transaction.value || '0x0' }
-                />
-              )
-            )
-          }
-        </div>
+        <div>{ requests.pending.map(data => this.renderPending(data)) }</div>
       </div>
     );
   }
@@ -69,32 +49,46 @@ export default class Transactions extends Component {
     if (!finished.length) {
       return;
     }
+
     return (
       <div>
         <h2>Finished Requests</h2>
-        <div>
-          {
-            finished.filter(tx => tx.payload.transaction).map(
-              data => (
-                <TransactionFinishedWeb3
-                  className={ styles.transaction }
-                  txHash={ data.txHash }
-                  key={ data.id }
-                  id={ data.id }
-                  gasPrice={ data.payload.transaction.gasPrice }
-                  gas={ data.payload.transaction.gas }
-                  from={ data.payload.transaction.from }
-                  to={ data.payload.transaction.to }
-                  value={ data.payload.transaction.value || '0x0' }
-                  msg={ data.msg }
-                  status={ data.status }
-                  error={ data.error }
-                />
-              )
-            )
-          }
-        </div>
+        <div>{ finished.map(data => this.renderFinished(data)) }</div>
       </div>
+    );
+  }
+
+  renderPending (data) {
+    const { actions } = this.props;
+    const { payload, id, isSending } = data;
+
+    return (
+      <RequestPendingWeb3
+        className={ styles.request }
+        onConfirm={ actions.startConfirmRequest }
+        onReject={ actions.startRejectRequest }
+        isSending={ isSending || false }
+        key={ id }
+        id={ id }
+        payload={ payload }
+      />
+    );
+  }
+
+  renderFinished (data) {
+    const { payload, id, result, msg, status, error } = data;
+
+    return (
+      <RequestFinishedWeb3
+        className={ styles.request }
+        result={ result }
+        key={ id }
+        id={ id }
+        msg={ msg }
+        status={ status }
+        error={ error }
+        payload={ payload }
+        />
     );
   }
 

@@ -6,7 +6,7 @@ import { createAction } from 'redux-actions';
 export const updatePendingRequests = createAction('update pendingRequests');
 export const startConfirmRequest = createAction('start confirmRequest');
 export const successConfirmRequest = createAction('success confirmRequest');
-export const errorConfirmRequest = createAction('error confirmTransaction', identity,
+export const errorConfirmRequest = createAction('error confirmRequest', identity,
   withToastr(args => args.err, 'error')
 );
 export const startRejectRequest = createAction('start rejectRequest');
