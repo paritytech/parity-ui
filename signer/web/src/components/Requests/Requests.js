@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { RequestPendingWeb3, RequestFinishedWeb3 } from 'dapps-react-components';
-import styles from './Transactions.css';
+import styles from './Requests.css';
 
-export default class Transactions extends Component {
+export default class Requests extends Component {
 
   static propTypes = {
     requests: PropTypes.shape({
