@@ -1,6 +1,6 @@
 import { isEqual } from 'lodash';
 import logger from '../utils/logger';
-import { updatePendingTransactions } from '../actions/transactions';
+import { updatePendingRequests } from '../actions/transactions';
 
 export default class WsProvider {
 
@@ -13,29 +13,30 @@ export default class WsProvider {
   }
 
   onWsOpen () {
-    this.fetchPendingTransactions();
+    this.fetchPendingRequests();
   }
 
   onWsMsg (msg) {
     if (msg.data !== 'new_message') {
       return;
     }
-    this.fetchPendingTransactions();
+    this.fetchPendingRequests();
   }
 
-  fetchPendingTransactions () {
-    this.send('personal_transactionsToConfirm', [], (err, txsWs) => {
+  fetchPendingRequests () {
+    this.send('personal_requestsToConfirm', [], (err, txsWs) => {
       if (err) {
-        logger.warn('[WS Provider] error fetching pending transactions', err);
+        logger.warn('[WS Provider] error fetching pending requests', err);
         return;
       }
-      const txsStored = this.store.getState().transactions.pending;
+
+      const txsStored = this.store.getState().requests.pending;
       if (isEqual(txsWs, txsStored)) {
         return;
       }
 
-      logger.log('[WS Provider] transactions changed ', txsWs);
-      this.store.dispatch(updatePendingTransactions(txsWs));
+      logger.log('[WS Provider] requests changed ', txsWs);
+      this.store.dispatch(updatePendingRequests(txsWs));
     });
   }
 

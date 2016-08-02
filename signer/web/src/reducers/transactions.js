@@ -8,25 +8,25 @@ const initialState = {
 
 export default handleActions({
 
-  'update pendingTransactions' (state, action) {
+  'update pendingRequests' (state, action) {
     return {
       ...state,
       pending: action.payload
     };
   },
 
-  'start confirmTransaction' (state, action) {
+  'start confirmRequest' (state, action) {
     return {
       ...state,
       pending: setIsSending(state.pending, action.payload.id, true)
     };
   },
 
-  'success confirmTransaction' (state, action) {
+  'success confirmRequest' (state, action) {
     const { id, txHash } = action.payload;
     const confirmed = Object.assign(
       state.pending.find(p => p.id === id),
-      { txHash, status: 'confirmed' }
+      { result: txHash, status: 'confirmed' }
     );
 
     return {
@@ -36,21 +36,21 @@ export default handleActions({
     };
   },
 
-  'error confirmTransaction' (state, action) {
+  'error confirmRequest' (state, action) {
     return {
       ...state,
       pending: setIsSending(state.pending, action.payload.id, false)
     };
   },
 
-  'start rejectTransaction' (state, action) {
+  'start rejectRequest' (state, action) {
     return {
       ...state,
       pending: setIsSending(state.pending, action.payload.id, true)
     };
   },
 
-  'success rejectTransaction' (state, action) {
+  'success rejectRequest' (state, action) {
     const { id } = action.payload;
     const rejected = Object.assign(
       state.pending.find(p => p.id === id),
@@ -63,7 +63,7 @@ export default handleActions({
     };
   },
 
-  'error rejectTransaction' (state, action) {
+  'error rejectRequest' (state, action) {
     return {
       ...state,
       pending: setIsSending(state.pending, action.payload.id, false)

@@ -1,7 +1,7 @@
-.transaction:not(:first-child) {
+.request:not(:first-child) {
   border-top: 1px solid #eee;
 }
 
-.noTransactionsMsg {
+.noRequestsMsg {
   padding: 25px 0 ;
 }
