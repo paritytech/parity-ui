@@ -1,5 +1,5 @@
 import logger from '../utils/logger';
-import * as actions from '../actions/transactions';
+import * as actions from '../actions/requests';
 
 export default class LocalstorageMiddleware {
 

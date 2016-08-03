@@ -1,6 +1,6 @@
 import { isEqual } from 'lodash';
 import logger from '../utils/logger';
-import { updatePendingRequests } from '../actions/transactions';
+import { updatePendingRequests } from '../actions/requests';
 
 export default class WsProvider {
 
