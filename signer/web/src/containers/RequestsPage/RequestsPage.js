@@ -2,15 +2,15 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import * as TransactionActions from '../../actions/transactions';
+import * as RequestsActions from '../../actions/requests';
 
-import Transactions from '../../components/Transactions';
+import Requests from '../../components/Requests';
 
-class TransactionsPage extends Component {
+class RequestsPage extends Component {
   render () {
     return (
       <div>
-        <Transactions { ...this.props } />
+        <Requests { ...this.props } />
       </div>
     );
   }
@@ -22,11 +22,11 @@ function mapStateToProps (state) {
 
 function mapDispatchToProps (dispatch) {
   return {
-    actions: bindActionCreators(TransactionActions, dispatch)
+    actions: bindActionCreators(RequestsActions, dispatch)
   };
 }
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(TransactionsPage);
+)(RequestsPage);

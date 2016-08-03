@@ -8,7 +8,7 @@ import { syncHistoryWithStore } from 'react-router-redux';
 import RootContainer from '../containers/Root';
 import LoadingPage from '../containers/LoadingPage';
 import OptionsPage from '../containers/OptionsPage';
-import RequestsPage from '../containers/TransactionsPage';
+import RequestsPage from '../containers/RequestsPage';
 import UnAuthorizedPage from '../containers/UnAuthorizedPage';
 // import ParityNotRunningPage from '../containers/ParityNotRunningPage';
 
