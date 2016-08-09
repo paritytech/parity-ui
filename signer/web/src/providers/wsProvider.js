@@ -1,6 +1,6 @@
 import { isEqual } from 'lodash';
 import logger from '../utils/logger';
-import { updatePendingRequests } from '../actions/requests';
+import { updatePendingRequests, updateCompatibilityMode } from '../actions/requests';
 
 export default class WsProvider {
 
@@ -24,8 +24,21 @@ export default class WsProvider {
   }
 
   fetchPendingRequests () {
+
+    // TODO [legacy;todr] Remove
+    if (this.store.getState().requests.compatibilityMode) {
+      return this.fetchPendingTransactionsFallback();
+    }
+
     this.send('personal_requestsToConfirm', [], (err, txsWs) => {
       if (err) {
+        // TODO [legacy;todr] Remove
+        if (err.message === 'Method not found') {
+          this.store.dispatch(updateCompatibilityMode(true));
+          this.fetchPendingTransactionsFallback();
+          return;
+        }
+
         logger.warn('[WS Provider] error fetching pending requests', err);
         return;
       }
@@ -36,6 +49,37 @@ export default class WsProvider {
       }
 
       logger.log('[WS Provider] requests changed ', txsWs);
+      this.store.dispatch(updatePendingRequests(txsWs));
+    });
+  }
+
+  // TODO [legacy;todr] Remove when we stop supporting beta
+  fetchPendingTransactionsFallback () {
+    this.send('personal_transactionsToConfirm', [], (err, txsWs) => {
+      if (err) {
+        if (err.message === 'Method not found') {
+          this.store.dispatch(updateCompatibilityMode(false));
+          this.fetchPendingRequests();
+          return;
+        }
+        logger.warn('[WS Provider] error fetching pending transactions', err);
+        return;
+      }
+
+      // Convert to new format
+      txsWs = txsWs.map(transaction => {
+        transaction.payload = {
+          transaction: Object.assign({}, transaction.transaction)
+        };
+        return transaction;
+      });
+
+      const txsStored = this.store.getState().requests.pending;
+      if (isEqual(txsWs, txsStored)) {
+        return;
+      }
+
+      logger.log('[WS Provider] transactions changed ', txsWs);
       this.store.dispatch(updatePendingRequests(txsWs));
     });
   }

@@ -36,10 +36,13 @@ export default class LocalstorageMiddleware {
   onConfirmStart = (store, next, action) => {
     next(action);
     const { id, password } = action.payload;
-    this.send('personal_confirmRequest', [ id, {}, password ], (err, txHash) => {
+    // TODO [legacy;todr] Remove
+    const method = store.getState().requests.compatibilityMode ? 'personal_confirmTransaction' : 'personal_confirmRequest';
+
+    this.send(method, [ id, {}, password ], (err, txHash) => {
       logger.log('[WS MIDDLEWARE] confirm request cb:', err, txHash);
-      if (err) {
-        store.dispatch(actions.errorConfirmRequest({ id, err: err.message }));
+      if (err || !txHash) {
+        store.dispatch(actions.errorConfirmRequest({ id, err: err ? err.message : 'Unable to confirm.' }));
         return;
       }
 
@@ -51,12 +54,16 @@ export default class LocalstorageMiddleware {
   onRejectStart = (store, next, action) => {
     next(action);
     const id = action.payload;
-    this.send('personal_rejectRequest', [ id ], (err, res) => {
+    // TODO [legacy;todr] Remove
+    const method = store.getState().requests.compatibilityMode ? 'personal_rejectTransaction' : 'personal_rejectRequest';
+
+    this.send(method, [ id ], (err, res) => {
       logger.log('[WS MIDDLEWARE] reject request cb:', err, res);
       if (err) {
         store.dispatch(actions.errorRejectRequest({ id, err: err.message }));
         return;
       }
+
       store.dispatch(actions.successRejectRequest({ id }));
     });
   }
