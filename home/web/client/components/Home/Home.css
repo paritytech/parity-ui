@@ -1,5 +1,7 @@
 .home {
   font-family: 'Roboto', sans-serif;
+  background: rgb(34, 34, 40);
+  height: 100%;
 }
 .loading {
   text-align: center;
