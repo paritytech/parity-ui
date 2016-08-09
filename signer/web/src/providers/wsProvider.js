@@ -24,7 +24,6 @@ export default class WsProvider {
   }
 
   fetchPendingRequests () {
-
     // TODO [legacy;todr] Remove
     if (this.store.getState().requests.compatibilityMode) {
       return this.fetchPendingTransactionsFallback();
