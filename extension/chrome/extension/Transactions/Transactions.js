@@ -13,7 +13,7 @@ export default class Transactions {
       onClose: ::this.reset,
       onError: ::this.reset
     });
-    this.pendingTransactions = [];
+    this.pendingTransactionsLen = 0;
     chrome.storage.onChanged.addListener(this.onSysuiTokenChange);
     chrome.browserAction.setBadgeBackgroundColor({ color: '#f00' });
     chrome.browserAction.setBadgeBackgroundColor({ color: '#f00' });
@@ -25,7 +25,7 @@ export default class Transactions {
   }
 
   reset = () => {
-    this.pendingTransactions = [];
+    this.pendingTransactionsLen = 0;
     this.setBadgeText('');
   }
 
@@ -48,20 +48,30 @@ export default class Transactions {
     if (this.isBadgeAnimated) {
       return; // avoid badge flicker in middle of animation
     }
-    this.send('personal_transactionsToConfirm', [], (err, txsWs) => {
-      if (err) {
-        logger.warn('[BG WS] error fetching pending transactions:', err);
-        return;
-      }
-      if (isEqual(txsWs, this.pendingTransactions)) {
-        return;
-      }
-      logger.log('[BG WS] transactions changed', txsWs);
-      this.setBadgeText(txsWs.length);
-      if (txsWs.length > this.pendingTransactions.length) {
-        this.animateBadge(txsWs.length);
-      }
-      this.pendingTransactions = txsWs;
+
+    // TODO [todr] would be good to use Web3 instead?
+    ['personal_transactionsToConfirm', 'personal_requestsToConfirm'].map(method => {
+      this.send(method, [], (err, txsWs) => {
+        if (err) {
+          if (err.message !== 'Method not found') {
+            logger.warn('[BG WS] error fetching pending transactions:', err);
+          }
+          return;
+        }
+
+        const txsWsLen = txsWs.length;
+        if (isEqual(txsWsLen, this.pendingTransactionsLen)) {
+          return;
+        }
+
+        logger.log('[BG WS] transactions changed', txsWs);
+        this.setBadgeText(txsWsLen);
+        if (txsWsLen > this.pendingTransactionsLen) {
+          this.animateBadge(txsWsLen);
+        }
+
+        this.pendingTransactionsLen = txsWsLen;
+      });
     });
   }
 

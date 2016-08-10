@@ -2,11 +2,20 @@
 import { handleActions } from 'redux-actions';
 
 const initialState = {
+  compatibilityMode: false,
   pending: [],
   finished: []
 };
 
 export default handleActions({
+
+  // TODO [legacy;todr] Remove
+  'update compatibilityMode' (state, action) {
+    return {
+      ...state,
+      compatibilityMode: action.payload
+    };
+  },
 
   'update pendingRequests' (state, action) {
     return {

@@ -1,5 +1,5 @@
 html * {
-  font-family: "Source Sans Pro", "Helvetica Neue", arial;
+  font-family: 'Source Sans Pro', 'Helvetica Neue', arial;
 }
 
 a {
@@ -24,11 +24,11 @@ h2 {
 }
 
 h1, h2, h3, h4 {
-  font-family: 'Source Sans Pro Light', 'Source Sans Pro';
+  font-family: 'Source Sans Pro Light', 'Source Sans Pro', 'Helvetica Neue', arial;
 }
 
 strong {
-  font-family: 'Source Sans Pro Bold';
+  font-family: 'Source Sans Pro Bold', 'Helvetica Neue', arial;
 }
 
 p {
@@ -37,7 +37,7 @@ p {
 }
 
 input {
-  font-family: "Source Sans Pro", "Helvetica Neue", arial !important; /* shame on material ui using inline styles */
+  font-family: 'Source Sans Pro', 'Helvetica Neue', arial !important; /* shame on material ui using inline styles */
 }
 
 @font-face {
