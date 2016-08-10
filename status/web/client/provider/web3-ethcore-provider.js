@@ -65,8 +65,8 @@ const methods = [
     params: 0
   }),
   new Method({
-    name: 'getNetMaxPeers',
-    call: 'ethcore_netMaxPeers',
+    name: 'getNetPeers',
+    call: 'ethcore_netPeers',
     params: 0
   }),
   new Method({

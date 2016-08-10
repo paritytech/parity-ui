@@ -25,10 +25,10 @@ export default handleActions({
     };
   },
 
-  'update netMaxPeers' (state, action) {
+  'update netPeers' (state, action) {
     return {
       ...state,
-      maxPeers: action.payload
+      maxPeers: action.payload.max
     };
   },
 

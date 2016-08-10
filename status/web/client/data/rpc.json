@@ -999,10 +999,10 @@
       "outputFormatter": null
     },
     {
-      "name": "ethcore_netMaxPeers",
-      "desc": "Returns maximal number of peers.",
+      "name": "ethcore_netPeers",
+      "desc": "Returns number of peers.",
       "params": [],
-      "returns": "`QUANTITY` - Maximal number of peers",
+      "returns": "`OBJECT` - JSON object containing active, connected and max peers",
       "inputFormatters": [],
       "outputFormatter": null
     },

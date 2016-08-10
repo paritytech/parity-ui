@@ -43,6 +43,7 @@ case "$CMD" in
     set -x
     for P in ${PROJECTS[@]}; do
       cd $P
+      rm -rf node_modules
       npm install --no-progress --ignore-scripts
       NODE_ENV="production" npm run build
       cd -

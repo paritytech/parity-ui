@@ -7,7 +7,8 @@ const initialState = {
   name: 'My node',
   bestBlock: 'loading...',
   hashrate: 'loading...',
-  peers: 0,
+  connectedPeers: 0,
+  activePeers: 0,
   accounts: [],
   version: '-'
 };
@@ -35,10 +36,11 @@ export default handleActions({
     };
   },
 
-  'update peerCount' (state, action) {
+  'update netPeers' (state, action) {
     return {
       ...state,
-      peers: action.payload
+      connectedPeers: action.payload.connected,
+      activePeers: action.payload.active
     };
   },
 

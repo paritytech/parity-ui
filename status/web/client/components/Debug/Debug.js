@@ -57,12 +57,6 @@ export default class Debug extends Component {
       levels: PropTypes.string.isRequired,
       logging: PropTypes.bool.isRequired,
       logs: PropTypes.arrayOf(PropTypes.string).isRequired
-    }).isRequired,
-    status: PropTypes.shape({
-      name: PropTypes.string,
-      bestBlock: PropTypes.string.isRequired,
-      hashrate: PropTypes.string.isRequired,
-      peers: PropTypes.number.isRequired
     }).isRequired
   }
 

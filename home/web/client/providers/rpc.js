@@ -107,7 +107,7 @@ export default class RpcProvider {
       { method: this.web3.eth.getAccounts, actionMaker: actions.updateAccounts },
       { method: this.web3.eth.getSyncing, actionMaker: actions.updateSyncing },
       { method: this.web3.eth.getBlockNumber, actionMaker: actions.updateLatestBlock },
-      { method: this.web3.net.getPeerCount, actionMaker: actions.updatePeers }
+      { method: this.web3.ethcore.getNetPeers, actionMaker: actions.updatePeers }
     ];
     if (this.store.getState().rpc.signerPort) {
       arr.push({ method: this.web3.ethcore.unsignedTransactionsCount, actionMaker: actions.updateUnsignedTransactionsCount });
