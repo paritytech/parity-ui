@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Parity Web Extension",
   "scripts": {
-    "postinstall": "npm link ../signer/web && npm link ../components",
+    "link": "rm -rf ../signer/web/node_modules && npm link ../signer/web && rm -rf ../components/node_modules && npm link ../components",
     "start": "npm run devBuild -- -w",
     "devBuild": "webpack --progress --colors",
     "prebuild": "npm run clean",

@@ -19,6 +19,14 @@ $ npm start # build files to './dev', start webpack dev server
 
 * [Load unpacked extensions][dev-ext-help-url] with `./dev` folder.
 
+### Package Linking
+
+When working on `signer` and `components` at the same time you need to link those packages:
+
+```bash
+$ npm run link
+```
+
 ## Build
 
 ```bash
