@@ -36,7 +36,7 @@ Before making a PR with your changes you should pre-compile all JS files (they a
 
 ```bash
 $ cd parity-ui
-$ ./web.sh clean && ./web.sh build
+$ ./web.sh build
 ```
 
 Make sure to commit pre-compiled files.

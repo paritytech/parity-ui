@@ -15,6 +15,14 @@ Parity Status Page.
 
 Make sure to have Parity running.
 
+### Package Linking
+
+When working on `components` at the same time you need to link that package:
+
+```bash
+$ npm run link
+```
+
 ## Pre-compiling JS files
 
 After you finish changing the source code you need to also commit pre-compiled JS files, otherwise the build will fail.
@@ -31,7 +39,7 @@ You can also use:
 
 ```bash
  $ cd parity-ui
- $ ./web.sh clean && ./web.sh build
+ $ ./web.sh build
 ```
 
 to re-compile everything (recommended).

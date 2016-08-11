@@ -13,6 +13,14 @@ Parity Home Page (DApps list) and TopBar.
  $ xdg-open http://localhost:3010 || open http://localhost:3010
 ```
 
+### Package Linking
+
+When working on `components` at the same time you need to link that package:
+
+```bash
+$ npm run link
+```
+
 Make sure to have Parity running.
 
 ## Pre-compiling JS files
@@ -31,7 +39,7 @@ You can also use:
 
 ```bash
  $ cd parity-ui
- $ ./web.sh clean && ./web.sh build
+ $ ./web.sh build
 ```
 
 to re-compile everything (recommended).

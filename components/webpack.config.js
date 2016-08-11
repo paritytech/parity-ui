@@ -24,7 +24,7 @@ module.exports = {
     library: 'dapps-react-components',
     libraryTarget: 'umd',
     umdNamedDefine: true,
-    path: path.join(__dirname, './build'),
+    path: path.join(__dirname, './target'),
     filename: '[name].js'
   },
   externals: isProd ? [
@@ -114,7 +114,8 @@ module.exports = {
     hot: !isProd,
     proxy: {
       '/rpc*': {
-        target: 'http://localhost:8080'
+        target: 'http://localhost:8080',
+        changeOrigin: true
       }
     }
   }

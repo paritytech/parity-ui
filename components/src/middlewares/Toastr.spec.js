@@ -1,5 +1,5 @@
 import sinon from 'sinon';
-import ToastrMiddleware from './toastr';
+import ToastrMiddleware from './Toastr';
 import { removeToast, addToast } from '../actions/toastr';
 
 describe('MIDDLEWARE: TOASTR', () => {
@@ -11,7 +11,7 @@ describe('MIDDLEWARE: TOASTR', () => {
     cut = new ToastrMiddleware(time);
     state = {
       toastr: {
-        toastNo: toastNo
+        id: toastNo
       }
     };
   });
@@ -101,7 +101,7 @@ describe('MIDDLEWARE: TOASTR', () => {
 
       // then
       expect(next.calledWith(addToast({
-        msg, type, toastNo
+        msg, type, id: toastNo
       }))).to.be.true;
 
       expect(cut.setTimeoutFor.calledWith(toastNo, next));
