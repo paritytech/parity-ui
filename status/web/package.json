@@ -4,6 +4,7 @@
   "description": "Ethereum Node Status page",
   "main": "index.js",
   "scripts": {
+    "link": "rm -rf ../../components/node_modules && npm link ../../components",
     "start": "webpack-dev-server -d --history-api-fallback --open --hot --inline --progress --colors --port 3040",
     "startPerf": "NODE_ENV=perf-debug npm start",
     "startTest": "NODE_ENV=tests npm start",

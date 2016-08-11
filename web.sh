@@ -44,7 +44,7 @@ case "$CMD" in
     for P in ${PROJECTS[@]}; do
       cd $P
       rm -rf node_modules
-      npm install --no-progress --ignore-scripts
+      npm install --no-progress
       NODE_ENV="production" npm run build
       cd -
     done
@@ -69,7 +69,7 @@ case "$CMD" in
     set -x
     for P in ${PROJECTS[@]}; do
       cd $P
-      npm install --no-progress --ignore-scripts
+      npm install --no-progress
       npm prune --production=false
       npm shrinkwrap --dev
       cd -

@@ -21,6 +21,13 @@ $ cargo run --release --features signer-dev
 
 to disable origin verification. Otherwise your development server will not be able to connect.
 
+### Package Linking
+
+When working on `components` at the same time you need to link that package:
+
+```bash
+$ npm run link
+```
 
 ## Pre-compiling JS files
 
@@ -38,7 +45,7 @@ You can also use:
 
 ```bash
  $ cd parity-ui
- $ ./web.sh clean && ./web.sh build
+ $ ./web.sh build
 ```
 
 to re-compile everything (recommended).
