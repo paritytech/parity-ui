@@ -27,12 +27,13 @@ export default handleActions({
 
   'update isNodeRunning' (state, action) {
     const isRunning = action.payload;
+    const goesOnline = isRunning && !state.isNodeRunning;
 
     return {
       ...state,
       isNodeRunning: isRunning,
       // if node is down assume automatically that we are not connected
-      isLoading: isRunning && state.isLoading,
+      isLoading: goesOnline || (isRunning && state.isLoading),
       isConnected: isRunning && state.isConnected
     };
   },
