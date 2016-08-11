@@ -8,14 +8,16 @@ const initialState = {
   isDisconnected: false,
   signerPort: 0, // assimilate signer disabled
   unsignedTransactionsCount: 0,
-  peers: 0,
+  activePeers: 0,
+  connectedPeers: 0,
+  maxPeers: 0,
   activeAccount: '',
   accounts: [],
   accountsNames: {},
   isSyncing: false,
-  latestBlock: 1234,
-  startingBlock: 1234,
-  highestBlock: 1234,
+  latestBlock: 0,
+  startingBlock: 0,
+  highestBlock: 0,
   network: 'homestead',
   createdAccount: '',
   createdAccountError: ''
@@ -66,10 +68,13 @@ export default handleActions({
   },
 
   'update peers' (state, action) {
+    let { connected, max, active } = action.payload;
     return {
       ...state,
       ...onRpcSuccess(),
-      peers: action.payload
+      maxPeers: max,
+      connectedPeers: connected,
+      activePeers: active
     };
   },
 

@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import numeral from 'numeral';
 import LinearProgress from 'material-ui/LinearProgress';
 
 import { appLink } from '../../utils/appLink';
@@ -16,7 +17,11 @@ class StatusLine extends Component {
     latestBlock: PropTypes.number.isRequired,
     startingBlock: PropTypes.number.isRequired,
     highestBlock: PropTypes.number.isRequired,
-    peers: PropTypes.number.isRequired,
+    peers: PropTypes.shape({
+      active: PropTypes.number.isRequired,
+      connected: PropTypes.number.isRequired,
+      max: PropTypes.number.isRequired
+    }).isRequired,
     network: PropTypes.string.isRequired
   }
 
@@ -38,8 +43,13 @@ class StatusLine extends Component {
     return (
       <div className={ styles.status }>
         <ul className={ styles.info }>
-          <li>{ peers } peers</li>
-          <li>#{ latestBlock }</li>
+          <li>
+            <span title='Active Peers'>{ leftPad(peers.active) }</span>
+            /<span title='Connected Peers'>{ leftPad(peers.connected) }</span>
+            /<span title='Max (Target) Peers'>{ peers.max }</span>
+            &nbsp;peers
+          </li>
+          <li>#{ toNiceNumber(latestBlock) }</li>
           <li>{ this.renderNetwork() }</li>
           <li><a href={ appLink('status') }>more</a></li>
         </ul>
@@ -71,10 +81,22 @@ class StatusLine extends Component {
           value={ val }
           mode={ 'determinate' }
           />
-        #{ latestBlock }/{ highestBlock }...
+        #{ toNiceNumber(latestBlock) }/{ toNiceNumber(highestBlock) }...
       </div>
     );
   }
+}
+
+function toNiceNumber (num) {
+  return numeral(num).format('0,0');
+}
+
+function leftPad (num) {
+  if (num < 10) {
+    return ` ${num}`;
+  }
+
+  return num;
 }
 
 const s = {
@@ -85,15 +107,21 @@ const s = {
 };
 
 function mapStateToProps (state) {
-  const { isReady, isSyncing, latestBlock, startingBlock, highestBlock, peers, network } = state.rpc;
+  const { isReady, isSyncing, latestBlock, startingBlock, highestBlock, network } = state.rpc;
+  const { activePeers, connectedPeers, maxPeers } = state.rpc;
+
   return {
     isReady,
     isSyncing,
     latestBlock,
     startingBlock,
     highestBlock,
-    peers,
-    network
+    network,
+    peers: {
+      active: activePeers,
+      connected: connectedPeers,
+      max: maxPeers
+    }
   };
 }
 

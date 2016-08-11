@@ -22,6 +22,12 @@ export default function web3extensions (web3) {
     property: 'ethcore',
     methods: [
       new Method({
+        name: 'getNetPeers',
+        call: 'ethcore_netPeers',
+        params: 0,
+        outputFormatter: x => x
+      }),
+      new Method({
         name: 'getNetChain',
         call: 'ethcore_netChain',
         params: 0,

@@ -73,7 +73,6 @@ export class Web3Provider extends Web3Base {
     return [
       { method: this.web3.eth.getBlockNumber, actionMaker: StatusActions.updateBlockNumber },
       { method: this.web3.eth.getHashrate, actionMaker: StatusActions.updateHashrate },
-      { method: this.web3.net.getPeerCount, actionMaker: StatusActions.updatePeerCount },
       { method: this.web3.eth.getAccounts, actionMaker: StatusActions.updateAccounts },
       { method: this.web3.eth.getCoinbase, actionMaker: MiningActions.updateAuthor },
       { method: this.ethcoreWeb3.getMinGasPrice, actionMaker: MiningActions.updateMinGasPrice },
@@ -84,7 +83,7 @@ export class Web3Provider extends Web3Base {
       { method: this.ethcoreWeb3.getDevLogs, actionMaker: DebugActions.updateDevLogs },
       { method: this.ethcoreWeb3.getNetChain, actionMaker: StatusActions.updateNetChain },
       { method: this.ethcoreWeb3.getNetPort, actionMaker: StatusActions.updateNetPort },
-      { method: this.ethcoreWeb3.getNetMaxPeers, actionMaker: StatusActions.updateNetMaxPeers },
+      { method: this.ethcoreWeb3.getNetPeers, actionMaker: StatusActions.updateNetPeers },
       { method: this.ethcoreWeb3.getRpcSettings, actionMaker: StatusActions.updateRpcSettings },
       { method: this.ethcoreWeb3.getNodeName, actionMaker: StatusActions.updateNodeName }
     ];

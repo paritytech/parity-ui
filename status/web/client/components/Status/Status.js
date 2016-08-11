@@ -32,7 +32,7 @@ export default class Status extends Component {
           <div className='col col-6 mobile-full'>
             <h3>Peers</h3>
             <Value
-              value={ `${status.peers}/${settings.maxPeers}` }
+              value={ `${status.activePeers}/${status.connectedPeers}/${settings.maxPeers}` }
               { ...this._test('peers') }
               />
           </div>
