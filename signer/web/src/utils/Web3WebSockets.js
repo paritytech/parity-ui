@@ -1,4 +1,4 @@
-export default class Web3WsProvider {
+export default class WebSocketsProvider {
 
   constructor (ws) {
     this.ws = ws;

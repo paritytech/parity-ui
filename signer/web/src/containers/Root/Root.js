@@ -13,9 +13,6 @@ export default class Root extends Component {
 
   static propTypes = {
     children: PropTypes.node.isRequired,
-    app: PropTypes.shape({
-      isWsConnected: PropTypes.bool.isRequired
-    }).isRequired,
     toastr: PropTypes.shape({
       toasts: PropTypes.array.isRequired
     }).isRequired,
@@ -25,10 +22,10 @@ export default class Root extends Component {
   };
 
   render () {
-    const { app, children, toastr, actions } = this.props;
+    const { children, toastr, actions } = this.props;
     return (
       <div className={ styles.container }>
-        <Header isWsConnected={ app.isWsConnected } />
+        <Header />
         <div className={ styles.mainContainer }>
           { children }
         </div>

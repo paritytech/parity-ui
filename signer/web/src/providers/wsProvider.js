@@ -4,8 +4,7 @@ import { updatePendingRequests, updateCompatibilityMode } from '../actions/reque
 
 export default class WsProvider {
 
-  constructor (store, wsPath, ws) {
-    this.wsPath = wsPath;
+  constructor (store, ws) {
     this.store = store;
     this.ws = ws;
     this.ws.onOpen.push(::this.onWsOpen);

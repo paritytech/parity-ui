@@ -131,6 +131,12 @@ module.exports = {
   }()),
   devServer: {
     contentBase: './src',
-    hot: !isProd
+    hot: !isProd,
+    proxy: {
+      '/api/ping': {
+        forward: 'http://127.0.0.1:8180/index.html',
+        changeOrigin: true
+      }
+    }
   }
 };
