@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 
 import AppBar from 'material-ui/AppBar';
 import { isExtension } from '../../utils/extension';

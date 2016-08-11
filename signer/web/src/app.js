@@ -21,7 +21,7 @@ import WebSocketsProvider from './utils/Web3WebSockets';
 import WsDataProvider from './providers/wsProvider';
 import AppDataProvider from './providers/appProvider';
 
-import { updateUrl } from './actions/app'
+import { updateUrl } from './actions/app';
 import middlewares from './middlewares';
 import createStore from './store/configureStore';
 import Routes from './routes';
@@ -34,7 +34,7 @@ export default function app (token, setToken, parityUrl) {
 
   // TODO [todr] Extend and use Web3 instead of ws directly!
   const store = createStore(middlewares(ws, setToken));
-  store.dispatch(updateUrl(parityUrl))
+  store.dispatch(updateUrl(parityUrl));
 
   injectTapEventPlugin();
 

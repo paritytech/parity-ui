@@ -19,7 +19,7 @@ export default class appProvider {
     const url = this.store.getState().app.url;
     const { isNodeRunning, isLoading } = this.store.getState().app;
 
-    isParityRunning(url).then((isRunning) => {
+    isParityRunning(url).then(isRunning => {
       if (isRunning !== isNodeRunning || isLoading) {
         this.store.dispatch(updateIsNodeRunning(isRunning));
       }

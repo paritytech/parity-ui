@@ -1,7 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 
-import styles from './Offline.css';
-
 import { isExtension } from '../../utils/extension';
 
 export default class Offline extends Component {

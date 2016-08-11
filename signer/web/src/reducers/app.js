@@ -8,8 +8,9 @@ const initialState = {
   isNodeRunning: true,
   isConnected: false,
   logging: !isProd,
+  token: '',
   url: window.location.host,
-  proxyUrl: 'http://localhost:8080/proxy/proxy.pac',
+  proxyUrl: 'http://localhost:8080/proxy/proxy.pac'
 };
 
 export default handleActions({
@@ -56,6 +57,13 @@ export default handleActions({
     return {
       ...state,
       proxyUrl: action.payload
+    };
+  },
+
+  'update token' (state, action) {
+    return {
+      ...state,
+      token: action.payload
     };
   }
 
