@@ -14,5 +14,4 @@ function initApp (token) {
 
 function onSetToken (token) {
   setToken(token);
-  window.location.href = 'app.html';
 }

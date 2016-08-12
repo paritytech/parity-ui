@@ -4,19 +4,19 @@ import { connect } from 'react-redux';
 
 import { updateAppState } from '../../actions/app';
 
-import ParityNotRunning from '../../components/ParityNotRunning';
+import Offline from '../../components/Offline';
 
-class ParityNotRunningPage extends Component {
+class OfflinePage extends Component {
   render () {
     return (
-      <ParityNotRunning { ...this.props } />
+      <Offline { ...this.props } />
     );
   }
 }
 
 function mapStateToProps (state) {
   return {
-    paritySysuiPath: state.parity.path
+    parityUrl: state.app.url
   };
 }
 
@@ -27,4 +27,4 @@ function mapDispatchToProps (dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ParityNotRunningPage);
+)(OfflinePage);

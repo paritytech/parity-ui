@@ -4,33 +4,22 @@ export default class AppMiddleware {
 
   toMiddleware () {
     return store => next => action => {
-      let delegate;
-      switch (action.type) {
-        case 'update appState': delegate = ::this.onUpdateAppState; break;
-        default:
-          next(action);
-          return;
-      }
+      next(action);
 
-      if (!delegate) {
-        return;
+      // redirect to proper url
+      if (action.type === 'update isConnected' || action.type === 'update isNodeRunning') {
+        this.redirect(store);
       }
-
-      delegate(store, next, action);
     };
   }
 
-  onUpdateAppState (store, next, action) {
-    // call next first to update state
-    next(action);
-    // then redirect wit updated state, so routes->requireAuth would behave as expected
-    // const { isLoading, isParityRunning } = action.payload;
-    const { isLoading } = action.payload;
-    // if (!isParityRunning) {
-    // hashHistory.push('/parityNotRunning');
-    // } else
+  redirect (store) {
+    const { isLoading, isNodeRunning } = store.getState().app;
+
     if (isLoading) {
       hashHistory.push('/loading');
+    } else if (!isNodeRunning) {
+      hashHistory.push('/offline');
     } else {
       hashHistory.push('/');
     }

@@ -30,6 +30,7 @@ export default class LocalstorageMiddleware {
 
   onUpdateToken = (store, next, action) => {
     this.setToken(action.payload);
+    this.ws.init(action.payload);
     next(action);
   }
 

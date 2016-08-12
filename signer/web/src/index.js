@@ -13,5 +13,4 @@ function initApp () {
 
 function tokenSetter (token, cb) {
   window.localStorage.setItem('sysuiToken', token);
-  window.location.reload();
 }

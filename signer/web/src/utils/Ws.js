@@ -17,10 +17,10 @@ export default class Ws {
   }
 
   init = token => {
-    this._token = token; // store token for _onClose reconnect attemps
+    this.token = token; // store token for _onClose reconnect attemps
     clearTimeout(this._initTimeout);
     try {
-      const hash = this._hash(token);
+      const hash = token ? this._hash(token) : null;
       this._ws = new global.WebSocket(`ws://${this._path}`, hash);
     } catch (err) {
       logger.warn('[WS] error connecting to ws', err); // throws when port is blocked, not when hash is incorrect
@@ -75,7 +75,7 @@ export default class Ws {
     this._executeCbsWithError();
     this._isConnected = false;
     this._triggerEvent(this.onClose);
-    this.init(this._token);
+    this.init(this.token);
   }
 
   _onError = err => {
@@ -89,7 +89,7 @@ export default class Ws {
   }
 
   _initWithTimeout () {
-    return setTimeout(() => this.init(this._token), this._reconnectTimeout);
+    return setTimeout(() => this.init(this.token), this._reconnectTimeout);
   }
 
   _executeQueue () {
