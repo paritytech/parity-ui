@@ -169,7 +169,7 @@ class CreateAccount extends Component {
         label='Create'
         className={ styles.submit }
         primary
-        disabled={ !this.state.isValid || this.state.isCreatingAccount }
+        disabled={ this.state.isCreatingAccount }
         onTouchTap={ this.onSubmit }
       />
     ];
