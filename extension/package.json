@@ -1,6 +1,6 @@
 {
   "name": "parity-web-extension",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Parity Web Extension",
   "scripts": {
     "link": "rm -rf ../signer/web/node_modules && npm link ../signer/web && rm -rf ../components/node_modules && npm link ../components",

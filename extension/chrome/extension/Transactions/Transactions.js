@@ -9,14 +9,33 @@ export default class Transactions {
     this.ws = new Ws({
       path: '127.0.0.1:8180',
       onMsg: ::this.onWsMsg,
-      onOpen: ::this.fetchPendingTransactions,
+      onOpen: ::this.invokeOnOpen,
       onClose: ::this.reset,
       onError: ::this.reset
     });
+    this.onOpenListeners = [];
     this.pendingTransactionsLen = 0;
     chrome.storage.onChanged.addListener(this.onSysuiTokenChange);
     chrome.browserAction.setBadgeBackgroundColor({ color: '#f00' });
     chrome.browserAction.setBadgeBackgroundColor({ color: '#f00' });
+  }
+
+  onOpen (listener) {
+    this.onOpenListeners.push(listener);
+
+    return () => {
+      const idx = this.onOpenListeners.indexOf(listener);
+      if (idx === -1) {
+        return;
+      }
+      // Remove listener
+      this.onOpenListeners.splice(idx, 1);
+    };
+  }
+
+  invokeOnOpen () {
+    this.fetchPendingTransactions();
+    this.onOpenListeners.map(listener => listener());
   }
 
   init (token) {
