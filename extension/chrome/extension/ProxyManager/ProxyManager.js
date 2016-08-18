@@ -13,10 +13,6 @@ export default class ProxyManager {
   init () {
     chrome.proxy.settings.get({}, details => {
       logger.log('[BG PROXY] proxy details: ', details);
-      if (this.alreadyConfigured(details.value)) {
-        return logger.log('[BG PROXY] proxy is already configured at: ', this.targetPacFileUrl);
-      }
-
       logger.log('[BG PROXY] configuring proxy to use PacFile from: ', this.targetPacFileUrl);
 
       const value = {
@@ -32,10 +28,5 @@ export default class ProxyManager {
         logger.log('[BG PROXY] proxy set!');
       });
     });
-  }
-
-  alreadyConfigured (value) {
-    const { pacScript } = value;
-    return pacScript && pacScript.url === this.targetPacFileUrl;
   }
 }

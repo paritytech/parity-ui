@@ -7,9 +7,13 @@ import { getToken, onTokenChange } from '../utils/token';
 const proxyManager = new ProxyManager();
 const webMessages = new WebMessages();
 const transactions = new Transactions();
-onTokenChange(token => transactions.init(token));
 
-proxyManager.init();
 webMessages.init();
 
+transactions.onOpen(() => {
+  // Re-initialize proxy each time we are connected
+  proxyManager.init();
+});
+
+onTokenChange(token => transactions.init(token));
 getToken(token => transactions.init(token));
