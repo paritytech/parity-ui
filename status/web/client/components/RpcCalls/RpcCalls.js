@@ -320,4 +320,3 @@ export default class RpcCalls extends Component {
   }
 
 }
-export default RpcCalls;
