@@ -9,7 +9,7 @@ import Header from '../../components/Header';
 import styles from './Root.css';
 
 // todo [adgo] - add animation wrap children
-export default class Root extends Component {
+export class Root extends Component {
 
   static propTypes = {
     children: PropTypes.node.isRequired,

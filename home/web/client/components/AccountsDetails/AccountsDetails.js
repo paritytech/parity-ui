@@ -15,7 +15,7 @@ import styles from './AccountsDetails.css';
 
 import { updateAccountsNames } from '../../actions/rpc';
 
-export default class AccountsDetails extends Component {
+export class AccountsDetails extends Component {
 
   static contextTypes = {
     web3: PropTypes.object.isRequired

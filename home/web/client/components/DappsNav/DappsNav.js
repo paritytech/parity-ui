@@ -10,7 +10,7 @@ import styles from './DappsNav.css';
 
 import { gotoDapp } from '../../actions/dapps';
 
-export default class DappsNav extends Component {
+export class DappsNav extends Component {
 
   static propTypes = {
     open: PropTypes.bool.isRequired,
