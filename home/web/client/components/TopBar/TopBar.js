@@ -16,7 +16,7 @@ import { appLink } from '../../utils/appLink';
 
 import styles from './TopBar.css';
 
-export default class TopBar extends Component {
+export class TopBar extends Component {
 
   static propTypes = {
     isDomReady: PropTypes.bool.isRequired,

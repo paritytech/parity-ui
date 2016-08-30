@@ -1,6 +1,6 @@
 .toastrContainer {
   position: absolute;
-  top: 81px;
+  bottom: 0;
   right: 10px;
   width: 250px;
 }
@@ -12,6 +12,10 @@
   line-height: 1.4rem;
   margin-bottom: 1.2rem;
   animation: fadein .5s;
+}
+
+.toast:hover .remove {
+  opacity: 0.9;
 }
 
 .error {
@@ -27,8 +31,15 @@
 }
 
 .remove {
-  float: right;
+  position: absolute;
+  top: 2px;
+  right: 5px;
   cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s ease-in;
+}
+.remove:hover {
+  text-decoration: none;
 }
 
 .error .remove,

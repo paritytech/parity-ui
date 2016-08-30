@@ -32,7 +32,7 @@ export default class ToastrContainer extends Component {
           key={ t.toastNo }
           >
           <a className={ styles.remove } onClick={ removeToast }>
-            <i className='icon-trash'></i>
+            &times;
           </a>
           <span className={ styles.msg }>{ t.msg }</span>
         </Paper>
