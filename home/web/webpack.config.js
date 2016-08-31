@@ -1,10 +1,11 @@
 var rucksack = require('rucksack-css');
 var webpack = require('webpack');
 var path = require('path');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var WebpackErrorNotificationPlugin = require('webpack-error-notification');
 
 var ENV = process.env.NODE_ENV || 'development';
 var isProd = ENV === 'production';
-var WebpackErrorNotificationPlugin = require('webpack-error-notification');
 
 module.exports = {
   debug: !isProd,
@@ -12,10 +13,12 @@ module.exports = {
   devtool: isProd ? '#eval' : '#cheap-module-eval-source-map',
   context: path.join(__dirname, './client'),
   entry: isProd ? {
+    'error_pages': ['./error_pages.js'],
     'inject': ['whatwg-fetch', './inject.js'],
     'home': ['whatwg-fetch', './home.js'],
     'cols.frame': './cols.frame.js'
   } : {
+    'error_pages': ['./error_pages.js'],
     'transfer': './transfer.js',
     'inject': ['whatwg-fetch', './inject.js'],
     'parity-utils/inject': ['whatwg-fetch', './inject.js'],
@@ -55,11 +58,21 @@ module.exports = {
       {
         test: /\.css$/,
         include: [/client/, /src/],
+        exclude: /(error_pages.css$)|(normalize.css$)/,
         loaders: [
           'style',
           'css?modules&sourceMap&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]',
           'postcss'
         ]
+      },
+      {
+        test: /(error_pages.css)|(normalize.css)$/,
+        include: [/client/, /src/],
+        loader: ExtractTextPlugin.extract(
+          'style',
+          'css',
+          'postcss'
+        )
       },
       {
         test: /\.css$/,
@@ -72,11 +85,11 @@ module.exports = {
       },
       {
         test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: 'url-loader?limit=10000&mimetype=application/font-woff'
+        loader: 'url-loader?mimetype=application/font-woff'
       },
       {
         test: /\.(woff(2)|ttf|eot|svg|otf)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: 'url-loader?limit=10000'
+        loader: 'url-loader'
       }
     ],
     noParse: [
@@ -107,7 +120,8 @@ module.exports = {
           RPC_ADDRESS: JSON.stringify(process.env.RPC_ADDRESS),
           LOGGING: JSON.stringify(!isProd)
         }
-      })
+      }),
+      new ExtractTextPlugin('styles.css')
     ];
 
     if (isProd) {
@@ -134,7 +148,7 @@ module.exports = {
         target: 'http://localhost:8080',
         changeOrigin: true
       },
-      '/api*': {
+      '/api/*': {
         target: 'http://localhost:8080',
         changeOrigin: true
       },
