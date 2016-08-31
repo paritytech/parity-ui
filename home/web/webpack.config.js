@@ -121,7 +121,7 @@ module.exports = {
           LOGGING: JSON.stringify(!isProd)
         }
       }),
-      new ExtractTextPlugin("parity-utils/styles.css")
+      new ExtractTextPlugin('styles.css')
     ];
 
     if (isProd) {
