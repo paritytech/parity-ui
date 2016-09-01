@@ -34,6 +34,7 @@ pub fn handle(resource: &str) -> Option<File> {
 		"/" | "/index.html" => file(include_str!("./web/index.html"), "text/html"),
 		"/index.js" => file(include_str!("./web/index.js"), "application/javascript"),
 		"/app.js" => file(include_str!("./web/app.js"), "application/javascript"),
+		"/styles.css" => file(include_str!("../../home/src/web/styles.css"), "text/css"),
 		_ => None,
 	}
 }
