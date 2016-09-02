@@ -16,7 +16,7 @@ Parity Trusted Signer Dapp.
 You need to run Parity using:
 
 ```bash
-$ cargo run --release --features signer-dev
+$ parity --signer-no-validation
 ```
 
 to disable origin verification. Otherwise your development server will not be able to connect.
