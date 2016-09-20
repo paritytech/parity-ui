@@ -24,6 +24,14 @@ pub struct App {
 	files: HashMap<&'static str, File>,
 }
 
+impl Default for App {
+	fn default() -> App {
+		App {
+			files: Self::files(),
+		}
+	}
+}
+
 impl WebApp for App {
 	fn file(&self, path: &str) -> Option<&File> {
 		self.files.get(path)

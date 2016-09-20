@@ -14,33 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with Parity.  If not, see <http://www.gnu.org/licenses/>.
 
-extern crate parity_dapps;
+#[cfg(feature = "with-syntex")]
+include!(concat!(env!("OUT_DIR"), "/lib.rs"));
 
-pub struct File {
-	pub content: String,
-	pub mime: String,
-}
-
-#[inline]
-fn file(content: &str, mime: &str) -> Option<File> {
-	Some(File {
-		content: content.into(),
-		mime: mime.into()
-	})
-}
-
-pub fn handle(resource: &str) -> Option<File> {
-	match resource {
-		"/" | "/index.html" => file(include_str!("./web/index.html"), "text/html"),
-		"/index.js" => file(include_str!("./web/index.js"), "application/javascript"),
-		"/app.js" => file(include_str!("./web/app.js"), "application/javascript"),
-		"/styles.css" => file(include_str!("../../home/src/web/styles.css"), "text/css"),
-		_ => None,
-	}
-}
-
-#[test]
-fn test_js() {
-	::parity_dapps::js::test(concat!(env!("CARGO_MANIFEST_DIR"), "/web"))
-}
+#[cfg(not(feature = "with-syntex"))]
+include!("lib.rs.in");
 
