@@ -20,29 +20,37 @@ use std::collections::HashMap;
 use parity_dapps::{WebApp, File, Info};
 
 #[derive(WebAppFiles)]
-pub struct App {
+#[webapp(path = "./web")]
+pub struct SignerApp {
 	files: HashMap<&'static str, File>,
 }
 
-impl Default for App {
-	fn default() -> App {
-		App {
-			files: Self::files(),
+impl Default for SignerApp {
+	fn default() -> Self {
+		let mut files = Self::files();
+		files.insert("styles.css", File {
+			path: "styles.css",
+			content: include_bytes!("../../home/src/web/styles.css"),
+			content_type: "text/css",
+		});
+
+		SignerApp {
+			files: files
 		}
 	}
 }
 
-impl WebApp for App {
+impl WebApp for SignerApp {
 	fn file(&self, path: &str) -> Option<&File> {
 		self.files.get(path)
 	}
 
 	fn info(&self) -> Info {
 		Info {
-			name: "Status Page",
+			name: "Parity Trusted Signer",
 			version: env!("CARGO_PKG_VERSION"),
 			author: "Ethcore <admin@ethcore.io>",
-			description: "Status Page for Parity",
+			description: "Confirm transactions issued by other Dapps.",
 			icon_url: "icon.png",
 		}
 	}
@@ -52,3 +60,4 @@ impl WebApp for App {
 fn test_js() {
 	::parity_dapps::js::test(concat!(env!("CARGO_MANIFEST_DIR"), "/web"))
 }
+

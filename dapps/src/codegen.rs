@@ -104,22 +104,17 @@ fn implement_webapp(cx: &ExtCtxt, builder: &aster::AstBuilder, item: &Item, push
 
 	let type_name = item.ident;
 
-	let default_impl = quote_item!(cx,
-								   impl ::std::default::Default for $type_name {
-									   fn default() -> Self {
-										   let files = {
-											   let mut files = ::std::collections::HashMap::new();
-											   $statements
-		files
-										   };
-										   $type_name {
-											   files: files
-										   }
+	let files_impl = quote_item!(cx,
+								   impl $type_name {
+									   fn files() -> ::std::collections::HashMap<&'static str, File> {
+										   let mut files = ::std::collections::HashMap::new();
+										   $statements
+										   files
 									   }
 								   }
 								  ).unwrap();
 
-	push(Annotatable::Item(default_impl));
+	push(Annotatable::Item(files_impl));
 }
 
 fn extract_path(cx: &ExtCtxt, item: &Item) -> String {
