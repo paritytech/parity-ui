@@ -5,6 +5,7 @@
 .transactionDetails {
   border-right: 1px solid #eee;
   margin-right: 2rem;
+  width: 440px;
 }
 
 .mainContainer > * {

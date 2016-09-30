@@ -1,8 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 
 import TransactionPendingWeb3 from '../TransactionPendingWeb3';
+import TransactionFinishedWeb3 from '../TransactionFinishedWeb3';
 import SignWeb3 from '../SignRequestWeb3';
 import DecryptWeb3 from '../DecryptRequestWeb3';
+import DefaultRequestWeb3 from '../DefaultRequestWeb3';
 import Web3Compositor from '../Web3Compositor';
 
 class RequestPendingWeb3 extends Component {
@@ -21,13 +23,13 @@ class RequestPendingWeb3 extends Component {
     result: PropTypes.any,
     msg: PropTypes.string,
     status: PropTypes.string,
-    error: PropTypes.string,
+    error: PropTypes.string
   };
 
   render () {
     const { payload, id, className, isSending, onConfirm, onReject } = this.props;
     const { result, msg, status, error } = this.props;
-    const isFinished = !!result;
+    const isFinished = !!result || status;
 
     const components = {
       sign (sign) {
@@ -48,8 +50,8 @@ class RequestPendingWeb3 extends Component {
             />
         );
       },
-      transaction(transaction) {
-        if (result) {
+      transaction (transaction) {
+        if (isFinished) {
           return (
             <TransactionFinishedWeb3
               className={ className }
@@ -83,7 +85,7 @@ class RequestPendingWeb3 extends Component {
         );
       },
 
-      decrypt(decrypt) {
+      decrypt (decrypt) {
         return (
           <DecryptWeb3
             className={ className }
@@ -102,14 +104,30 @@ class RequestPendingWeb3 extends Component {
         );
       },
 
-      default(data) {
-        return null;
+      default (data, name) {
+        return (
+          <DefaultRequestWeb3
+            className={ className }
+            onConfirm={ onConfirm }
+            onReject={ onReject }
+            isSending={ isSending }
+            isFinished={ isFinished }
+            id={ id }
+            address={ data.address || '0x0' }
+            name={ name }
+            payload={ data }
+            result={ result }
+            msg={ msg }
+            status={ status }
+            error={ error }
+            />
+        );
       }
     };
 
     const type = Object.keys(payload)[0];
     const renderer = components[type] || components.default;
-    return renderer(payload[type]);
+    return renderer(payload[type], type);
   }
 }
 

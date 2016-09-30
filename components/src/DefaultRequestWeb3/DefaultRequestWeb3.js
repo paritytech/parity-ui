@@ -1,10 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 
-import DecryptRequest from '../DecryptRequest';
+import DefaultRequest from '../DefaultRequest';
 
 import Web3Compositor from '../Web3Compositor';
 
-class DecryptRequestWeb3 extends Component {
+class DefaultRequestWeb3 extends Component {
 
   static contextTypes = {
     web3: PropTypes.object.isRequired
@@ -13,7 +13,8 @@ class DecryptRequestWeb3 extends Component {
   static propTypes = {
     id: PropTypes.string.isRequired,
     address: PropTypes.string.isRequired,
-    message: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    payload: PropTypes.any.isRequired,
     isFinished: PropTypes.bool.isRequired,
     isSending: PropTypes.bool,
     onConfirm: PropTypes.func,
@@ -31,14 +32,13 @@ class DecryptRequestWeb3 extends Component {
   render () {
     const { web3 } = this.context;
     const { balance, chain } = this.state;
-    const { onConfirm, onReject, isSending, isFinished, message, className, id, status, result } = this.props;
+    const { onConfirm, onReject, isSending, isFinished, className, id, status, result, name, payload } = this.props;
 
     const address = web3.toChecksumAddress(this.props.address);
 
     return (
-      <DecryptRequest
+      <DefaultRequest
         address={ address }
-        message={ message }
         balance={ balance }
         onConfirm={ onConfirm }
         onReject={ onReject }
@@ -49,6 +49,8 @@ class DecryptRequestWeb3 extends Component {
         status={ status }
         result={ result }
         className={ className }
+        name={ name }
+        payload={ payload }
         />
     );
   }
@@ -84,4 +86,4 @@ class DecryptRequestWeb3 extends Component {
 
 }
 
-export default Web3Compositor(DecryptRequestWeb3);
+export default Web3Compositor(DefaultRequestWeb3);

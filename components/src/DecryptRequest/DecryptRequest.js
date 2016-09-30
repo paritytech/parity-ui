@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react';
 
 import Account from '../Account';
 import TransactionPendingForm from '../TransactionPendingForm';
-import TxHashLink from '../TxHashLink';
 
 // TODO [ToDr] Styles re-used
 import styles from '../SignRequest/SignRequest.css';
@@ -22,7 +21,7 @@ export default class DecryptRequest extends Component {
     onReject: PropTypes.func,
     status: PropTypes.string,
     className: PropTypes.string,
-    result: PropTypes.string,
+    result: PropTypes.string
   };
 
   render () {
@@ -55,7 +54,7 @@ export default class DecryptRequest extends Component {
 
     if (isFinished) {
       if (status === 'confirmed') {
-        const { chain, hash, result } = this.props;
+        const { result } = this.props;
 
         return (
           <div className={ styles.actions }>
@@ -97,7 +96,7 @@ export default class DecryptRequest extends Component {
 
 }
 
-function hex2a(hex) {
+function hex2a (hex) {
   hex = hex.toString();
   let str = '';
   for (let i = 0; i < hex.length; i += 2) {
