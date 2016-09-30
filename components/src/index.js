@@ -8,8 +8,9 @@ export Toastr from './Toastr';
 
 // TODO [todr] merge pending + finished (just a flag)
 export RequestPendingWeb3 from './RequestPendingWeb3';
-export RequestFinishedWeb3 from './RequestFinishedWeb3';
 
+export DecryptRequestWeb3 from './DecryptRequestWeb3';
+export DecryptRequest from './DecryptRequest';
 export SignRequestWeb3 from './SignRequestWeb3';
 export SignRequest from './SignRequest';
 
