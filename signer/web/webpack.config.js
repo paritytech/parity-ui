@@ -133,8 +133,8 @@ module.exports = {
     contentBase: './src',
     hot: !isProd,
     proxy: {
-      '/api/ping': {
-        forward: 'http://127.0.0.1:8180/index.html',
+      '/api/*': {
+        forward: 'http://127.0.0.1:8080/api',
         changeOrigin: true
       }
     }

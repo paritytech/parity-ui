@@ -2,17 +2,18 @@ import React, { Component, PropTypes } from 'react';
 
 import Account from '../Account';
 import TransactionPendingForm from '../TransactionPendingForm';
-import TxHashLink from '../TxHashLink';
 
-import styles from './SignRequest.css';
+// TODO [ToDr] Styles re-used
+import styles from '../SignRequest/SignRequest.css';
 
-export default class SignRequest extends Component {
+export default class DefaultRequest extends Component {
 
   // TODO [todr] re-use proptypes?
   static propTypes = {
     id: PropTypes.string.isRequired,
     address: PropTypes.string.isRequired,
-    hash: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    payload: PropTypes.any.isRequired,
     isFinished: PropTypes.bool.isRequired,
     chain: PropTypes.string.isRequired,
     balance: PropTypes.object,
@@ -20,7 +21,8 @@ export default class SignRequest extends Component {
     onConfirm: PropTypes.func,
     onReject: PropTypes.func,
     status: PropTypes.string,
-    className: PropTypes.string
+    className: PropTypes.string,
+    result: PropTypes.string
   };
 
   render () {
@@ -34,17 +36,23 @@ export default class SignRequest extends Component {
   }
 
   renderDetails () {
-    const { isFinished, address, balance, chain, hash } = this.props;
+    const { isFinished, address, balance, chain, name, payload } = this.props;
 
     return (
       <div className={ styles.signDetails }>
         <div className={ styles.address }>
           <Account address={ address } balance={ balance } chain={ chain } />
         </div>
-        <div className={ styles.info } title={ hash }>
-          <p>Dapp requested to sign arbitrary transaction using this account.</p>
+        <div className={ styles.info }>
           { isFinished ? '' : (
-            <p><strong>Confirm the transaction only if you trust the app.</strong></p>
+            <p>Unknown type of signing request. You might be using an old version of Signer.</p>
+          ) }
+          <p>
+            <code className={ styles.raw }>{ name }</code>
+            <textarea rows={ 5 } className={ styles.raw } readOnly>{ JSON.stringify(payload, null, 2) }</textarea>
+          </p>
+          { isFinished ? '' : (
+            <p><strong>Confirm ONLY if you know what you are doing!</strong></p>
           ) }
         </div>
       </div>
@@ -56,14 +64,14 @@ export default class SignRequest extends Component {
 
     if (isFinished) {
       if (status === 'confirmed') {
-        const { chain, hash } = this.props;
+        const { result } = this.props;
 
         return (
           <div className={ styles.actions }>
             <span className={ styles.isConfirmed }>Confirmed</span>
             <div>
-              Transaction hash: <br />
-              <TxHashLink chain={ chain } txHash={ hash } className={ styles.txHash } />
+              <p>Result:</p>
+              <textarea className={ styles.raw } readOnly>{ result }</textarea>
             </div>
           </div>
         );

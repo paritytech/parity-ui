@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { RequestPendingWeb3, RequestFinishedWeb3 } from 'dapps-react-components';
+import { RequestPendingWeb3 } from 'dapps-react-components';
 import styles from './Requests.css';
 
 export default class Requests extends Component {
@@ -39,7 +39,7 @@ export default class Requests extends Component {
     return (
       <div>
         <h2>Pending Requests</h2>
-        <div>{ requests.pending.map(data => this.renderPending(data)) }</div>
+        <div>{ requests.pending.map(data => this.renderRequest(data)) }</div>
       </div>
     );
   }
@@ -53,14 +53,14 @@ export default class Requests extends Component {
     return (
       <div>
         <h2>Finished Requests</h2>
-        <div>{ finished.map(data => this.renderFinished(data)) }</div>
+        <div>{ finished.map(data => this.renderRequest(data)) }</div>
       </div>
     );
   }
 
-  renderPending (data) {
+  renderRequest (data) {
     const { actions } = this.props;
-    const { payload, id, isSending } = data;
+    const { payload, id, isSending, result, msg, status, error } = data;
 
     return (
       <RequestPendingWeb3
@@ -71,24 +71,11 @@ export default class Requests extends Component {
         key={ id }
         id={ id }
         payload={ payload }
-      />
-    );
-  }
-
-  renderFinished (data) {
-    const { payload, id, result, msg, status, error } = data;
-
-    return (
-      <RequestFinishedWeb3
-        className={ styles.request }
         result={ result }
-        key={ id }
-        id={ id }
         msg={ msg }
         status={ status }
         error={ error }
-        payload={ payload }
-        />
+      />
     );
   }
 
