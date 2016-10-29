@@ -1,6 +1,12 @@
-[![Build Status][travis-image]][travis-url] [![Join the chat at https://gitter.im/ethcore/parity][gitter-image]][gitter-url] [![GPLv3][license-image]][license-url]
 
 # Parity UI
+
+This repository is deprecated, please use [Main Parity Repo](https://github.com/ethcore/parity) for issues.
+
+
+--------
+
+[![Build Status][travis-image]][travis-url] [![Join the chat at https://gitter.im/ethcore/parity][gitter-image]][gitter-url] [![GPLv3][license-image]][license-url]
 
 A set of [Parity](https://github.com/ethcore/parity) built-in Dapps and UI components.
 
