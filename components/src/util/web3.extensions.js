@@ -48,4 +48,15 @@ export default function web3extensions (web3) {
     ],
     properties: []
   }];
+}, {
+    property: 'trace',
+    methods: [
+      new Method({
+        name: 'transaction',
+        call: 'trace_transaction',
+        params: 2,
+        inputFormatter: [formatters.inputTransactionFormatter, null]
+      })
+    ],
+    properties: []
 }
